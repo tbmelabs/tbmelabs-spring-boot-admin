@@ -1,22 +1,26 @@
-# Project Title
+# TBME-TV
 
-One Paragraph of project description goes here
+TBME-TV is a free to use streaming application built and developed
+by TBME Labs organization. We do not claim any responsibility for the
+ways this application is used. Every provider is responsible for his
+installation on his own.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+[TODO] These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+* [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* [Project Lombok](https://projectlombok.org/download)
+* [Apache Maven 3.5.0](https://maven.apache.org/download.cgi)
+* [Node.Js](https://nodejs.org/en/download/)
+* [Apache Tomcat 9](https://tomcat.apache.org/download-90.cgi)
+* Your favorite IDE (We generally use Eclipse)
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+[TODO] A step by step series of examples that tell you have to get a development env running
 
 Say what the step will be
 
@@ -34,53 +38,56 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+### Backend
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+Execute all JUnit-Tests with maven:
 ```
-Give an example
+mvn clean test
 ```
 
-### And coding style tests
+### Frontent
 
-Explain what these tests test and why
-
+In your Node.Js console (or any Bash with Node.Js integration) run the following code:
 ```
-Give an example
+npm test
 ```
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Make sure your prepared your MySQL instance as stated in installing.
+
+Run `mvn clean test package install` and copy the .war-file from your local Maven repository into the deployment location of Apache Tomcat.
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Maven](https://maven.apache.org/) -Backend Dependency Management
+* [Spring](https://spring.io/) - Application Weight Management
+* [npm](https://www.npmjs.com/) - Frontend Dependency Management
+* [React](https://facebook.github.io/react/) - A JavaScript Library for Building User Interfaces
+* [Bootstrap](http://getbootstrap.com/) - Responsive Frontent Design
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+We use [Git](https://git-scm.com/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tbmelabs/tbme-tv/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Timon Borter** - *Initial Contributor & Lead Developer* - [bbortt](https://github.com/bbortt)
+* **Mirio Eggmann** - *Core Contributor & Developer* - [mirioeggmann](https://github.com/mirioeggmann)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/tbmelabs/tbme-tv/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GPL License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
+
+[TODO]
 
 * Hat tip to anyone who's code was used
 * Inspiration
