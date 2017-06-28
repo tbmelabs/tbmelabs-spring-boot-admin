@@ -7,34 +7,52 @@ installation on his own.
 
 ## Getting Started
 
-[TODO] These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+Clone the repository with in your Git Bash with `git clone https://github.com/tbmelabs/tbme-tv.git` into any location.
+
+Create a new branch (replace [BRANCH\_NAME] with the preferred name) with `git checkout -b [BRANCH_NAME]`. You might want to state the number and name in the branch name (if exists).
+
+If you have not done yet you should follow the guided installation in installing now. Right after browse into the Maven modules and run `npm install` in any web application module. Those are currently:
+ * \webapp
+
+Your local installation is now ready for changes. Remember to often stash and commit them.
+
+Create a [pull request](https://github.com/tbmelabs/tbme-tv/compare) if you think that your changes are ready to be merged.
+
+For more information about the Git Flow look at versioning.
 
 ### Prerequisites
 
 * [Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-* [Project Lombok](https://projectlombok.org/download)
 * [Apache Maven 3.5.0](https://maven.apache.org/download.cgi)
 * [Node.Js](https://nodejs.org/en/download/)
+* [MySQL](https://www.mysql.com/)
 * [Apache Tomcat 9](https://tomcat.apache.org/download-90.cgi)
 * Your favorite IDE (We generally use Eclipse)
+* [Project Lombok](https://projectlombok.org/download)
 
 ### Installing
 
-[TODO] A step by step series of examples that tell you have to get a development env running
+#### Installing Java
 
-Say what the step will be
+Double-Click the executable file to start the installation. Choose any preferred installation path. Remember to adjust the environment variable called `%JAVA_HOME%`: It should point to the root folder of the Java Development Kit.
 
-```
-Give the example
-```
+#### Preparing Maven
 
-And repeat
+Double-Click the executable file to start the installation. Choose any preferred installation path. Remember to adjust the environment variable called `%M2_HOME`: It should point to the root folder of the installation.
 
-```
-until finished
-```
+#### Configuring Node.js
 
-End with an example of getting some data out of the system or using it for a little demo
+Double-Click the executable file to start the installation. Choose any preferred installation path. Make sure you select npm (Node Package Manager) to be installed if you choose to install packages manually. Check your installation with `npm -v` in any console.
+
+#### Setting up local database (MySQL)
+
+Double-Click the executable file to start the installation. The installation settings do not matter as long as you adjust the settings of the application. Execute the script located at `[PROJECT_ROOT]\src\main\resources\setup\__init.sql`. It will initially create the database as well as add a default Flyway and Hibernate user.
+
+#### Installing Apache Tomcat
+
+Double-Click the executable file to start the installation. Choose any preferred installation path. If you are willed to develop anything to the application you might want to add Tomcat to your IDE.
+
+[TODO] End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
@@ -61,7 +79,6 @@ Run `mvn clean test package install` and copy the .war-file from your local Mave
 ## Built With
 
 * [Maven](https://maven.apache.org/) -Backend Dependency Management
-* [Spring](https://spring.io/) - Application Weight Management
 * [npm](https://www.npmjs.com/) - Frontend Dependency Management
 * [React](https://facebook.github.io/react/) - A JavaScript Library for Building User Interfaces
 * [Bootstrap](http://getbootstrap.com/) - Responsive Frontent Design
