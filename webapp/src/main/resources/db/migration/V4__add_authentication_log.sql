@@ -1,0 +1,12 @@
+CREATE TABLE authentication_log (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	created DATETIME NOT NULL,
+	last_updated DATETIME NOT NULL,
+	status VARCHAR(32) NOT NULL,
+	ip CHAR(45) NOT NULL,
+	message VARCHAR(255),
+	a_id BIGINT
+);
+
+ALTER TABLE authentication_log
+	ADD FOREIGN KEY (a_id) REFERENCES account(id) ON UPDATE CASCADE ON DELETE CASCADE;
