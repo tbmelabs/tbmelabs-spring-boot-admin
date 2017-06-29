@@ -9,7 +9,7 @@ installation on his own.
 
 Clone the repository with in your Git Bash with `git clone https://github.com/tbmelabs/tbme-tv.git` into any location.
 
-Create a new branch (replace [BRANCH\_NAME] with the preferred name) with `git checkout -b [BRANCH_NAME]`. You might want to state the number and name in the branch name (if exists).
+Create a new branch (replace [BRANCH\_NAME] with the preferred name) with `git checkout -b [BRANCH_NAME]`. You might want to state the number and name of the linked issue (if exists) in the branch name.
 
 If you have not done yet you should follow the guided installation in installing now. Right after browse into the Maven modules and run `npm install` in any web application module. Those are currently:
  * \webapp
@@ -74,7 +74,9 @@ npm test
 
 Make sure your prepared your MySQL instance as stated in installing.
 
-Run `mvn clean test package install` and copy the .war-file from your local Maven repository into the deployment location of Apache Tomcat.
+In Node.JS (means your favorite console) run `npm build` to create the final build.js.
+
+As the build has finished use `mvn clean test package install` and copy the generated .war-file from your local Maven repository into the deployment location of Apache Tomcat.
 
 ## Built With
 
