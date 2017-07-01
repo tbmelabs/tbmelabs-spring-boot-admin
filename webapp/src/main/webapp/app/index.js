@@ -3,8 +3,6 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-import {HashRouter} from 'react-router-dom';
-
 import {createStore, applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
@@ -14,6 +12,8 @@ import setAuthorizationToken from './utils/setAuthorizationToken';
 
 import jwtDecode from 'jwt-decode';
 import {setCurrentUser} from './actions/authActions';
+
+import {HashRouter, Switch, Route} from 'react-router-dom';
 
 import Router from './Router';
 
@@ -32,7 +32,7 @@ if (localStorage.jwtToken) {
 
 render(
   <Provider store={store}>
-    <HashRouter>
+    <HashRouter >
       <Router/>
     </HashRouter>
   </Provider>, document.getElementById('app')

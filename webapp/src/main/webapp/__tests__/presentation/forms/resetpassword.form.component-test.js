@@ -5,7 +5,7 @@ import React from 'react';
 import TestUtils from 'react-test-utils/ReactTestUtils';
 import expect from 'expect';
 
-import ResetPasswordForm from '../../../app/components/ResetPassword';
+import ResetPasswordForm from '../../../app/to_update/ResetPassword';
 
 describe('ResetPassword', () => {
   it('renders without problems', () => {

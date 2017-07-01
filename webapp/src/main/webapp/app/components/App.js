@@ -7,12 +7,12 @@ import FlashMessageList from '../flashmessage/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
 
+// TODO: props.messages is undefined
 class App extends React.Component {
   render() {
     return (
-      <div class='container'>
+      <div className='container'>
         <Navigation/>
-        <FlashMessageList/>
         {this.props.children}
       </div>
     );

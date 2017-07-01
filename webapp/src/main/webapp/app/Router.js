@@ -9,18 +9,16 @@ import Login from './containers/login/LoginForm';
 import Register from './containers/registration/RegistrationForm';
 import Home from './components/Home';
 
-class Router extends React.Component {
-  render() {
-    return (
+const Router = () => {
+  return (
+    <App>
       <Switch>
-        <Route path="/" component={App}>
-          <Route exact path='/' component={Home}/>
-          <Route path="login" component={Login}/>
-          <Route path="register" component={Register}/>
-        </Route>
+        <Route exact path='/' component={Home}/>
+        <Route path="login" component={Login}/>
+        <Route path="register" component={Register}/>
       </Switch>
-    );
-  }
+    </App>
+  );
 }
 
 export default Router;
