@@ -4,9 +4,12 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
+import  {connect} from 'react-redux';
+import {login} from '../../actions/authActions'
+
 import Alert from 'react-bootstrap/lib/Alert';
 import Form from 'react-bootstrap/lib/Form';
-import FromGroup from 'react-bootstrap/lib/FormGroup';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -60,7 +63,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        {errors.form && <Alert bsStyle='danger'>{errors.form}</Alert>}
+        {this.state.errors.form && <Alert bsStyle='danger'>{this.state.errors.form}</Alert>}
 
         <FormGroup controlId='username'>
           <Col componentClass='ControlLabel' sm={2}>
@@ -98,4 +101,4 @@ LoginForm.contextTypes = {
   router: PropTypes.object.isRequired
 }
 
-export default LoginForm;
+export default connect(null, {login})(LoginForm);

@@ -5,8 +5,8 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import App from './components/App';
-import Login from './containers/login/LoginForm';
-import Register from './containers/registration/RegistrationForm';
+import Login from './components/login/Login';
+import Register from './components/registration/Registration';
 import Home from './components/Home';
 
 const Router = () => {
@@ -14,8 +14,8 @@ const Router = () => {
     <App>
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route path="login" component={Login}/>
-        <Route path="register" component={Register}/>
+        <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
       </Switch>
     </App>
   );

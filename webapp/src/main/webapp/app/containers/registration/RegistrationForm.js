@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import Alert from 'react-bootstrap/lib/Alert';
 import Form from 'react-bootstrap/lib/Form';
-import FromGroup from 'react-bootstrap/lib/FormGroup';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -155,8 +155,8 @@ class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        {errors.form && <Alert bsStyle='danger'>{errors.form}</Alert>}
+      <Form onSubmit={this.handleSubmit} horizontal>
+        {this.state.errors.form && <Alert bsStyle='danger'>{this.state.errors.form}</Alert>}
 
         <FormGroup controlId='username'>
           <Col componentClass='ControlLabel' sm={2}>

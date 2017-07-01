@@ -34,7 +34,7 @@ class Registration extends React.Component {
 }
 
 Registration.propTypes = {
-  register: PropTypes.func.isRequired,
+  registerUser: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   isUsernameUnique: PropTypes.func.isRequired,
   isEmailUnique: PropTypes.func.isRequired,
