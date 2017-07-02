@@ -4,7 +4,7 @@ import validator from 'validator';
 import isEmpty from 'validate.io-empty';
 
 export default function validateInput(data) {
-  let errors = data.errors;
+  let errors = {};
 
   if (validator.isEmpty(data.username)) {
     errors.username = 'This field is required';

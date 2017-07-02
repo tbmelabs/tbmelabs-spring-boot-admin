@@ -26,7 +26,7 @@ FadableAlert.propTypes = {
   fade: PropTypes.bool.isRequired,
   style: PropTypes.string.isRequired,
   title: PropTypes.string,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string
 }
 
 export default FadableAlert;

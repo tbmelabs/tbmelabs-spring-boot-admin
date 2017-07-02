@@ -9,11 +9,13 @@ import CollapsableAlert from '../../components/common/alert/CollapsableAlert';
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import validateInput from '../../utils/validators/login'
+import InputErrorOverlay from "../../to_update/InputErrorOverlay";
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -62,29 +64,32 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        <CollapsableAlert collapse={this.state.errors.form} style='danger' message={this.state.errors.form}/>
+        <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Login failed: '
+                          message={this.state.errors.form}/>
 
-        <FormGroup controlId='username'>
-          <Col componentClass='ControlLabel' sm={2}>
-            Username
+        <FormGroup controlId='username' validationState={!!this.state.errors.username ? 'error' : 'neutral'}>
+          <Col sm={2}>
+            <ControlLabel>Username</ControlLabel>
+            <HelpBlock>{this.state.errors.username}</HelpBlock>
           </Col>
+
           <Col sm={10}>
             <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
+            <FormControl.Feedback/>
           </Col>
-          {this.state.errors.username && <HelpBlock>{this.state.errors.username}</HelpBlock>}
         </FormGroup>
 
-        <FormGroup controlId='password'>
-          <Col componentClass='ControlLabel' sm={2}>
-            Password
+        <FormGroup controlId='password' validationState={!!this.state.errors.password ? 'error' : 'neutral'}>
+          <Col sm={2}>
+            <ControlLabel>Password</ControlLabel>
+            <HelpBlock>{this.state.errors.password}</HelpBlock>
           </Col>
+
           <Col sm={10}>
             <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}/>
+            <FormControl.Feedback/>
           </Col>
-          {this.state.errors.password && <HelpBlock>{this.state.errors.password}</HelpBlock>}
         </FormGroup>
-
-        <FormControl.Feedback/>
 
         <Button type='submit'>Login</Button>
       </Form>
