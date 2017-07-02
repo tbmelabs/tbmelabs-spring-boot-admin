@@ -4,9 +4,6 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import  {connect} from 'react-redux';
-import {login} from '../../actions/authActions'
-
 import Alert from 'react-bootstrap/lib/Alert';
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
@@ -47,17 +44,19 @@ class LoginForm extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+
     if (this.isValid()) {
       this.setState({errors: {}, isLoading: true});
+
       this.props.login(this.state).then(
-        (res) => this.context.router.push('/'),
-        (err) => this.setState({errors: err.response.data.errors, isLoading: false})
+        (response) => this.context.router.push('/'),
+        (error) => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
   }
 
   onChange(event) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   render() {
@@ -70,7 +69,7 @@ class LoginForm extends React.Component {
             Username
           </Col>
           <Col sm={10}>
-            <FormControl type='text' value={this.state.username} onChange={this.onChange}/>
+            <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
           </Col>
           {this.state.errors.username && <HelpBlock>{this.state.errors.username}</HelpBlock>}
         </FormGroup>
@@ -80,7 +79,7 @@ class LoginForm extends React.Component {
             Password
           </Col>
           <Col sm={10}>
-            <FormControl type='password' value={this.state.password} onChange={this.onChange}/>
+            <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}/>
           </Col>
           {this.state.errors.password && <HelpBlock>{this.state.errors.password}</HelpBlock>}
         </FormGroup>
@@ -101,4 +100,4 @@ LoginForm.contextTypes = {
   router: PropTypes.object.isRequired
 }
 
-export default connect(null, {login})(LoginForm);
+export default LoginForm;

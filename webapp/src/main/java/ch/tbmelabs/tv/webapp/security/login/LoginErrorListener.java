@@ -26,7 +26,7 @@ public class LoginErrorListener extends SimpleUrlAuthenticationFailureHandler {
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException, ServletException {
-    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Login failed: " + exception.getLocalizedMessage());
 
     logRepository.save(new AuthenticationLog(AuthenticationStatus.AUTHENTICATION_FAILED, request.getRemoteAddr(),
         exception.getLocalizedMessage(), accountRepository.findByUsername(request.getParameter("username"))));
