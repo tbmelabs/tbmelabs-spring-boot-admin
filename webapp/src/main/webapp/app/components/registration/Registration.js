@@ -20,6 +20,7 @@ import {
 class Registration extends React.Component {
   render() {
     const {registerUser, addFlashMessage, isUsernameUnique, isEmailUnique, doesPasswordMatchFormat, doPasswordsMatch} = this.props;
+
     return (
       <RegistrationForm
         registerUser={registerUser}
@@ -41,7 +42,6 @@ Registration.propTypes = {
   doesPasswordMatchFormat: PropTypes.func.isRequired,
   doPasswordsMatch: PropTypes.func.isRequired
 }
-
 
 export default connect(null, {
   registerUser,

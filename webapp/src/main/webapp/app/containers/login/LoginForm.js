@@ -4,11 +4,11 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-import Alert from 'react-bootstrap/lib/Alert';
+import CollapsableAlert from '../../components/common/alert/CollapsableAlert';
+
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
-import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        {this.state.errors.form && <Alert bsStyle='danger'>{this.state.errors.form}</Alert>}
+        <CollapsableAlert collapse={this.state.errors.form} style='danger' message={this.state.errors.form}/>
 
         <FormGroup controlId='username'>
           <Col componentClass='ControlLabel' sm={2}>
