@@ -20,11 +20,11 @@ class Login extends React.Component {
   }
 }
 
-LoginForm.propTypes = {
+Login.propTypes = {
   login: PropTypes.func.isRequired
 }
 
-LoginForm.contextTypes = {
+Login.contextTypes = {
   router: PropTypes.object.isRequired
 }
 

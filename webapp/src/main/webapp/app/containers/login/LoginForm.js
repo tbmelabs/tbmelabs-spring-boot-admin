@@ -15,7 +15,6 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import validateInput from '../../utils/validators/login'
-import InputErrorOverlay from "../../to_update/InputErrorOverlay";
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -51,8 +50,8 @@ class LoginForm extends React.Component {
       this.setState({errors: {}, isLoading: true});
 
       this.props.login(this.state).then(
-        (response) => this.context.router.push('/'),
-        (error) => this.setState({errors: {form: error.response.data.message}, isLoading: false})
+        response => this.context.router.push('/'),
+        error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
   }
@@ -67,7 +66,7 @@ class LoginForm extends React.Component {
         <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Login failed: '
                           message={this.state.errors.form}/>
 
-        <FormGroup controlId='username' validationState={!!this.state.errors.username ? 'error' : 'neutral'}>
+        <FormGroup controlId='username' validationState={!!this.state.errors.username ? 'error' : null}>
           <Col sm={2}>
             <ControlLabel>Username</ControlLabel>
             <HelpBlock>{this.state.errors.username}</HelpBlock>
@@ -79,7 +78,7 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <FormGroup controlId='password' validationState={!!this.state.errors.password ? 'error' : 'neutral'}>
+        <FormGroup controlId='password' validationState={!!this.state.errors.password ? 'error' : null}>
           <Col sm={2}>
             <ControlLabel>Password</ControlLabel>
             <HelpBlock>{this.state.errors.password}</HelpBlock>
@@ -91,7 +90,7 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit'>Login</Button>
+        <Button type='submit' active={!this.state.isLoading}>Login</Button>
       </Form>
     );
   }

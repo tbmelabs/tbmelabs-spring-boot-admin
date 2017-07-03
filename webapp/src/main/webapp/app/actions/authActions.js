@@ -38,6 +38,7 @@ export function logout() {
   return dispatch => {
     localStorage.removeItem('auth_token');
     setAuthorizationToken(false);
+
     dispatch(setCurrentUser({}));
   }
 }

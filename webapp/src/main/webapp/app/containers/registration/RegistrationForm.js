@@ -4,7 +4,10 @@ import React from "react";
 
 import PropTypes from 'prop-types';
 
-import Alert from 'react-bootstrap/lib/Alert';
+import validator from 'validator';
+
+import CollapsableAlert from '../../components/common/alert/CollapsableAlert';
+
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
@@ -28,182 +31,192 @@ class RegistrationForm extends React.Component {
       passwordMatch: '',
       errors: {},
       isLoading: false,
-      isValid: false
     };
 
+    this.isValid = this.isValid.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.checkUserExists = this.checkUserExists.bind(this);
     this.checkEmailExists = this.checkEmailExists.bind(this);
-    this.handleValidationResponse = this.handleValidationResponse.bind(this);
     this.checkPasswordFormat = this.checkPasswordFormat.bind(this);
     this.checkPasswordsMatch = this.checkPasswordsMatch.bind(this);
   }
 
-  isValid() {
+  isValid(validate) {
     const {errors, isValid} = validateInput(this.state);
 
-    if (!isValid) {
+    if (!isValid && validate) {
       this.setState({errors});
     }
 
-    return isValid;
+    return isValid && !validator.isEmpty(this.state.username)
+      && validator.isEmpty(this.state.errors.username)
+      && !validator.isEmpty(this.state.email) && validator.isEmpty(this.state.errors.email)
+      && !validator.isEmpty(this.state.password) && validator.isEmpty(this.state.errors.password)
+      && !validator.isEmpty(this.state.errors.passwordMatch) && validator.isEmpty(this.state.errors.passwordMatch);
   }
 
   onSubmit(event) {
     event.preventDefault();
 
-    if (this.isValid()) {
+    if (this.isValid(true)) {
       this.setState({errors: {}, isLoading: true});
       this.props.registerUser(this.state).then(
-        () => {
+        response => {
           this.props.addFlashMessage({
             type: 'success',
             text: 'You signed up successfully. Welcome to TBME Labs TV!'
           });
           this.context.router.push('/');
         },
-        (err) => this.setState({errors: err.response.data, isLoading: false})
+        error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
   }
 
   onChange(event) {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({[event.target.name]: event.target.value});
   }
 
   checkUserExists(event) {
+    let errors = this.state.errors;
+
     const field = event.target.name;
     const value = event.target.value;
 
-    if (value !== '') {
-      this.props.isUsernameUnique(value).then(res => {
-        this.handleValidationResponse(field, res.data.username);
-      });
+    if (!validator.isEmpty(value)) {
+      this.props.isUsernameUnique(value).then(
+        response => {
+          errors[field] = '';
+          this.setState({errors: errors});
+        }, error => {
+          errors[field] = error.response.data.message;
+          this.setState({errors: errors});
+        }
+      );
     }
   }
 
   checkEmailExists(event) {
+    let errors = this.state.errors;
+
     const field = event.target.name;
     const value = event.target.value;
 
-    if (value !== '') {
-      this.props.isEmailUnique(value).then(res => {
-        this.handleValidationResponse(field, res.data.email);
-      });
+    if (!validator.isEmpty(value) && !validator.isEmail(value)) {
+      errors[field] = 'Please enter a valid email address';
+      this.setState({errors: errors});
+      return;
+    } else if (!validator.isEmpty(value)) {
+      this.props.isEmailUnique(value).then(
+        response => {
+          errors[field] = '';
+          this.setState({errors: errors});
+        }, error => {
+          errors[field] = error.response.data.message;
+          this.setState({errors: errors});
+        }
+      );
     }
-  }
-
-  handleValidationResponse(field, data) {
-    let errors = this.state.errors;
-    let invalid;
-
-    if (data) {
-      errors[field] = 'User with this ' + field + ' already exists';
-      invalid = true;
-    } else {
-      errors[field] = '';
-      invalid = false;
-    }
-
-    this.setState({errors, invalid});
   }
 
   checkPasswordFormat(event) {
+    let errors = this.state.errors;
+
     const field = event.target.name;
     const value = event.target.value;
 
-    if (value !== '') {
-      this.props.doesPasswordMatchFormat(value).then(res => {
-        let errors = this.state.errors;
-        let invalid;
-
-        if (data) {
-          errors[field] = 'Password does not match format';
-          invalid = true;
-        } else {
+    if (!validator.isEmpty(value)) {
+      this.props.doesPasswordMatchFormat(value).then(
+        response => {
           errors[field] = '';
-          invalid = false;
+          this.setState({errors: errors});
+        }, error => {
+          errors[field] = error.response.data.message;
+          this.setState({errors: errors});
         }
-
-        this.setState({errors, invalid});
-      });
+      );
     }
   }
 
   checkPasswordsMatch(event) {
+    let errors = this.state.errors;
+
     const field = event.target.name;
     const value = event.target.value;
 
-    if (value !== '' && this.state.password !== '') {
-      this.props.doPasswordsMatch(this.state.password, value).then(res => {
-        let errors = this.state.errors;
-        let invalid;
-
-        if (data) {
-          errors[field] = 'Passwords do not match';
-          invalid = true;
-        } else {
+    if (!validator.isEmpty(this.state.password) && !validator.isEmpty(this.state.passwordMatch)) {
+      this.props.doPasswordsMatch(this.state.password, this.state.passwordMatch).then(
+        response => {
           errors[field] = '';
-          invalid = false;
+          this.setState({errors: errors});
+        }, error => {
+          errors[field] = error.response.data.message;
+          this.setState({errors: errors});
         }
-
-        this.setState({errors, invalid});
-      });
+      );
     }
   }
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit} horizontal>
-        {this.state.errors.form && <Alert bsStyle='danger'>{this.state.errors.form}</Alert>}
+      <Form onSubmit={this.onSubmit} horizontal>
+        <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Registration failed: '
+                          message={this.state.errors.form}/>
 
-        <FormGroup controlId='username'>
-          <Col componentClass='ControlLabel' sm={2}>
-            Username
+        <FormGroup controlId='username' validationState={!!this.state.errors.username ? 'error' : null}>
+          <Col sm={2}>
+            <ControlLabel>Username</ControlLabel>
+            <HelpBlock>{this.state.errors.username}</HelpBlock>
           </Col>
+
           <Col sm={10}>
-            <FormControl type='text' value={this.state.username} onChange={this.onChange}
+            <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}
                          onBlur={this.checkUserExists}/>
+            <FormControl.Feedback />
           </Col>
-          {this.state.errors.username && <HelpBlock>{this.state.errors.username}</HelpBlock>}
         </FormGroup>
 
-        <FormGroup controlId='email'>
-          <Col componentClass='ControlLabel' sm={2}>
-            E-Mail
+        <FormGroup controlId='email' validationState={!!this.state.errors.email ? 'error' : null}>
+          <Col sm={2}>
+            <ControlLabel>E-Mail</ControlLabel>
+            <HelpBlock>{this.state.errors.email}</HelpBlock>
           </Col>
+
           <Col sm={10}>
-            <FormControl type='text' value={this.state.email} onChange={this.onChange} onBlur={this.checkEmailExists}/>
+            <FormControl name='email' type='text' value={this.state.email} onChange={this.onChange}
+                         onBlur={this.checkEmailExists}/>
+            <FormControl.Feedback />
           </Col>
-          {this.state.errors.email && <HelpBlock>{this.state.errors.email}</HelpBlock>}
         </FormGroup>
 
-        <FormGroup controlId='password'>
-          <Col componentClass='ControlLabel' sm={2}>
-            Password
+        <FormGroup controlId='password' validationState={!!this.state.errors.password ? 'error' : null}>
+          <Col sm={2}>
+            <ControlLabel>Password</ControlLabel>
+            <HelpBlock>{this.state.errors.password}</HelpBlock>
           </Col>
+
           <Col sm={10}>
-            <FormControl type='password' value={this.state.password} onChange={this.onChange}
+            <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}
                          onBlur={this.checkPasswordFormat}/>
+            <FormControl.Feedback />
           </Col>
-          {this.state.errors.username && <HelpBlock>{this.state.errors.password}</HelpBlock>}
         </FormGroup>
 
-        <FormGroup controlId='passwordMatch'>
-          <Col componentClass='ControlLabel' sm={2}>
-            Confirm password
+        <FormGroup controlId='passwordMatch' validationState={!!this.state.errors.passwordMatch ? 'error' : null}>
+          <Col sm={2}>
+            <ControlLabel>Confirm Password</ControlLabel>
+            <HelpBlock>{this.state.errors.passwordMatch}</HelpBlock>
           </Col>
+
           <Col sm={10}>
-            <FormControl type='password' value={this.state.passwordMatch} onChange={this.onChange}
+            <FormControl name='passwordMatch' type='password' value={this.state.passwordMatch} onChange={this.onChange}
                          onBlur={this.checkPasswordsMatch}/>
+            <FormControl.Feedback />
           </Col>
-          {this.state.errors.username && <HelpBlock>{this.state.errors.passwordMatch}</HelpBlock>}
         </FormGroup>
 
-        <FormControl.Feedback />
-
-        <Button type='submit'>Register</Button>
+        <Button type='submit' active={!this.state.isLoading && this.isValid(false)}>Register</Button>
       </Form>
     );
   }
