@@ -18,13 +18,13 @@ export default function (ComposedComponent) {
           type: 'danger',
           text: 'You need to login to access this page'
         });
-        this.context.router.push('/login');
+        this.context.router.history.push('/login');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.context.router.push('/');
+        this.context.router.history.push('/');
       }
     }
 

@@ -64,7 +64,7 @@ class RegistrationForm extends React.Component {
             type: 'success',
             text: 'You signed up successfully. Welcome to TBME Labs TV!'
           });
-          this.context.router.push('/');
+          this.context.router.history.push('/');
         },
         error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
@@ -223,8 +223,6 @@ class RegistrationForm extends React.Component {
             <FormControl.Feedback />
           </Col>
         </FormGroup>
-
-        <Button type='submit' active={!this.state.isLoading}>Register</Button>
 
         <Button type='submit' active={!isLoading && isValid} disabled={isLoading && !isValid}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>

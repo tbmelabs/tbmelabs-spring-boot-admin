@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-import {setAuthorizationToken} from '../utils/setAuthorizationToken';
+import setAuthorizationToken from '../utils/setAuthorizationToken';
 
 import {SET_CURRENT_USER} from './types';
 
@@ -25,13 +25,9 @@ export function login(data) {
         localStorage.setItem('auth_token', token);
         setAuthorizationToken(token);
 
-        dispatch => {
-          axios.get('/profile').then(
-            response => {
-              dispatch => setCurrentUser(response.data);
-            }
-          );
-        }
+        axios.get('/profile').then(
+          response => dispatch(setCurrentUser(response.data))
+        );
       }
     );
   }
@@ -39,9 +35,13 @@ export function login(data) {
 
 export function logout() {
   return dispatch => {
-    localStorage.removeItem('auth_token');
-    setAuthorizationToken(false);
+    return axios.get('/logout').then(
+      response => {
+        localStorage.removeItem('auth_token');
+        setAuthorizationToken(false);
 
-    dispatch => setCurrentUser({});
+        dispatch(setCurrentUser({}));
+      }
+    )
   }
 }

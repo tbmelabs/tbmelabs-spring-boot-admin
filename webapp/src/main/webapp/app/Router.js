@@ -4,7 +4,7 @@ import React from 'react';
 
 import {Route, Switch} from 'react-router-dom';
 
-import App from './components/App';
+import App from './containers/App';
 import Login from './containers/login/Login';
 import Register from './containers/registration/Registration';
 import Home from './components/Home';

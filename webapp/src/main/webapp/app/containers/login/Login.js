@@ -10,7 +10,6 @@ import {login} from '../../actions/authActions'
 
 import LoginForm from '../../components/login/LoginForm';
 
-
 class Login extends React.Component {
   render() {
     const {login} = this.props.actions;
@@ -22,7 +21,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 }
 
 Login.contextTypes = {

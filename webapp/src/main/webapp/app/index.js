@@ -8,6 +8,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
+
 import setAuthorizationToken from './utils/setAuthorizationToken';
 
 import jwtDecode from 'jwt-decode';

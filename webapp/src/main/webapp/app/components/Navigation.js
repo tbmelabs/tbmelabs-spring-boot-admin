@@ -3,13 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators}from 'redux';
-import {connect} from 'react-redux';
-
 import {Link} from 'react-router-dom';
 import {LinkContainer} from 'react-router-bootstrap';
-
-import {logout} from '../actions/authActions';
 
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -21,19 +16,41 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
+    this.catchLogout = this.catchLogout.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  logout(event) {
-    const {logout} = this.props.actions;
+  catchLogout(eventKey, event) {
+    if (eventKey === 'logout') {
+      event.preventDefault();
 
-    event.preventDefault();
-    logout();
+      this.logout();
+    }
   }
 
-  // TODO: Add logout button to navigation
+  logout() {
+    this.props.logout().then(
+      response => {
+        if (this.context.router.history.location !== '/') {
+          this.context.router.history.push('/');
+        }
+      }
+    )
+  }
+
   render() {
-    const {isAuthenticated} = this.props.auth;
+    const guestNav = (
+      <Nav>
+        <LinkContainer to='/login'><NavItem>Login</NavItem></LinkContainer>
+        <LinkContainer to='/register'><NavItem>Register</NavItem></LinkContainer>
+      </Nav>
+    );
+
+    const authenticatedNav = (
+      <Nav onSelect={this.catchLogout}>
+        <LinkContainer to='#'><NavItem eventKey='logout'>Logout</NavItem></LinkContainer>
+      </Nav>
+    );
 
     return (
       <header>
@@ -43,10 +60,7 @@ class Navigation extends React.Component {
               <Link to="/">TBME Labs TV</Link>
             </Navbar.Brand>
           </Navbar.Header>
-          <Nav>
-            {!isAuthenticated && <LinkContainer to='/login'><NavItem>Login</NavItem></LinkContainer>}
-            {!isAuthenticated && <LinkContainer to='/register'><NavItem>Register</NavItem></LinkContainer>}
-          </Nav>
+          {this.props.isAuthenticated ? authenticatedNav : guestNav}
         </Navbar>
       </header>
     );
@@ -54,22 +68,12 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  auth: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth
-  };
+Navigation.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      logout: bindActionCreators(logout, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default Navigation;

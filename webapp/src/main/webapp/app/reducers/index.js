@@ -2,12 +2,12 @@
 
 import {combineReducers} from 'redux';
 
-import flashMessage from './flashMessage';
 import auth from './auth';
+import flashMessages from './flashMessages';
 
 const reducers = combineReducers({
-  flashMessage,
-  auth
+  auth,
+  flashMessages
 });
 
 export default reducers;
