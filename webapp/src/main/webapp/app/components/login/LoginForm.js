@@ -1,10 +1,9 @@
 'use strict';
 
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
-import CollapsableAlert from '../../components/common/alert/CollapsableAlert';
+import CollapsableAlert from '../common/alert/CollapsableAlert';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
@@ -61,6 +60,8 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    let isLoading = this.state.isLoading;
+
     return (
       <Form onSubmit={this.onSubmit} horizontal>
         <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Login failed: '
@@ -90,7 +91,8 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' active={!this.state.isLoading}>Login</Button>
+        <Button type='submit' active={!isLoading} disabled={isLoading}
+                onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign in'}</Button>
       </Form>
     );
   }

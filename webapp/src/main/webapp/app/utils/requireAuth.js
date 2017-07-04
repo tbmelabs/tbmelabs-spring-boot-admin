@@ -1,17 +1,20 @@
 'use strict';
 
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
 import {addFlashMessage} from '../actions/flashMessageActions';
 
 export default function (ComposedComponent) {
   class Authenticate extends React.Component {
     componentWillMount() {
+      const {addFlashMessage} = this.props.actions;
+
       if (!this.props.isAuthenticated) {
-        this.props.addFlashMessage({
+        addFlashMessage({
           type: 'danger',
           text: 'You need to login to access this page'
         });
@@ -47,5 +50,13 @@ export default function (ComposedComponent) {
     };
   }
 
-  return connect(mapStateToProps, {addFlashMessage})(Authenticate);
+  function mapDispatchToProps(dispatch) {
+    return {
+      actions: {
+        addFlashMessage: bindActionCreators(addFlashMessage, dispatch)
+      }
+    }
+  }
+
+  return connect(mapStateToProps, mapDispatchToProps)(Authenticate);
 }

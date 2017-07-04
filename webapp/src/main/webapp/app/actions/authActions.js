@@ -19,18 +19,21 @@ export function login(data) {
   formData.append('password', data.password);
 
   return dispatch => {
-    return axios.post('/login', formData)
-      .then(response => {
+    return axios.post('/login', formData).then(
+      response => {
         const token = response.data;
         localStorage.setItem('auth_token', token);
         setAuthorizationToken(token);
 
         dispatch => {
-          axios.get('/profile').then(response => {
-            setCurrentUser(response.data);
-          });
+          axios.get('/profile').then(
+            response => {
+              dispatch => setCurrentUser(response.data);
+            }
+          );
         }
-      });
+      }
+    );
   }
 }
 
@@ -39,6 +42,6 @@ export function logout() {
     localStorage.removeItem('auth_token');
     setAuthorizationToken(false);
 
-    dispatch(setCurrentUser({}));
+    dispatch => setCurrentUser({});
   }
 }

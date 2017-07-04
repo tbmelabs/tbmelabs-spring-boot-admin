@@ -1,12 +1,9 @@
 'use strict';
 
 import React from "react";
-
 import PropTypes from 'prop-types';
 
-import validator from 'validator';
-
-import CollapsableAlert from '../../components/common/alert/CollapsableAlert';
+import CollapsableAlert from '../common/alert/CollapsableAlert';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
@@ -16,6 +13,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
+import validator from 'validator';
 import validateInput from "../../utils/validators/registration";
 
 require('bootstrap/dist/css/bootstrap.css');
@@ -31,6 +29,7 @@ class RegistrationForm extends React.Component {
       passwordMatch: '',
       errors: {},
       isLoading: false,
+      isValid: false
     };
 
     this.isValid = this.isValid.bind(this);
@@ -46,14 +45,12 @@ class RegistrationForm extends React.Component {
     const {errors, isValid} = validateInput(this.state);
 
     if (!isValid && validate) {
-      this.setState({errors});
+      this.setState({errors, isValid});
+    } else {
+      this.setState({isValid});
     }
 
-    return isValid && !validator.isEmpty(this.state.username)
-      && validator.isEmpty(this.state.errors.username)
-      && !validator.isEmpty(this.state.email) && validator.isEmpty(this.state.errors.email)
-      && !validator.isEmpty(this.state.password) && validator.isEmpty(this.state.errors.password)
-      && !validator.isEmpty(this.state.errors.passwordMatch) && validator.isEmpty(this.state.errors.passwordMatch);
+    return isValid;
   }
 
   onSubmit(event) {
@@ -88,13 +85,15 @@ class RegistrationForm extends React.Component {
       this.props.isUsernameUnique(value).then(
         response => {
           errors[field] = '';
-          this.setState({errors: errors});
+          this.setState({errors});
         }, error => {
           errors[field] = error.response.data.message;
-          this.setState({errors: errors});
+          this.setState({errors});
         }
       );
     }
+
+    this.isValid(false);
   }
 
   checkEmailExists(event) {
@@ -105,19 +104,21 @@ class RegistrationForm extends React.Component {
 
     if (!validator.isEmpty(value) && !validator.isEmail(value)) {
       errors[field] = 'Please enter a valid email address';
-      this.setState({errors: errors});
+      this.setState({errors});
       return;
     } else if (!validator.isEmpty(value)) {
       this.props.isEmailUnique(value).then(
         response => {
           errors[field] = '';
-          this.setState({errors: errors});
+          this.setState({errors});
         }, error => {
           errors[field] = error.response.data.message;
-          this.setState({errors: errors});
+          this.setState({errors});
         }
       );
     }
+
+    this.isValid(false);
   }
 
   checkPasswordFormat(event) {
@@ -130,13 +131,15 @@ class RegistrationForm extends React.Component {
       this.props.doesPasswordMatchFormat(value).then(
         response => {
           errors[field] = '';
-          this.setState({errors: errors});
+          this.setState({errors});
         }, error => {
           errors[field] = error.response.data.message;
-          this.setState({errors: errors});
+          this.setState({errors});
         }
       );
     }
+
+    this.isValid(false);
   }
 
   checkPasswordsMatch(event) {
@@ -149,16 +152,21 @@ class RegistrationForm extends React.Component {
       this.props.doPasswordsMatch(this.state.password, this.state.passwordMatch).then(
         response => {
           errors[field] = '';
-          this.setState({errors: errors});
+          this.setState({errors});
         }, error => {
           errors[field] = error.response.data.message;
-          this.setState({errors: errors});
+          this.setState({errors});
         }
       );
     }
+
+    this.isValid(false);
   }
 
   render() {
+    let isLoading = this.state.isLoading;
+    let isValid = this.state.isValid;
+
     return (
       <Form onSubmit={this.onSubmit} horizontal>
         <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Registration failed: '
@@ -216,7 +224,10 @@ class RegistrationForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' active={!this.state.isLoading && this.isValid(false)}>Register</Button>
+        <Button type='submit' active={!this.state.isLoading}>Register</Button>
+
+        <Button type='submit' active={!isLoading && isValid} disabled={isLoading && !isValid}
+                onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
       </Form>
     );
   }

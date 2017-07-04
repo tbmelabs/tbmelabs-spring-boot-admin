@@ -5,8 +5,8 @@ import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
 import App from './components/App';
-import Login from './components/login/Login';
-import Register from './components/registration/Registration';
+import Login from './containers/login/Login';
+import Register from './containers/registration/Registration';
 import Home from './components/Home';
 
 const Router = () => {

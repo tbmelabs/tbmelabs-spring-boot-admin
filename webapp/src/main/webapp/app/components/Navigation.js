@@ -1,9 +1,9 @@
 'use strict';
 
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
+import {bindActionCreators}from 'redux';
 import {connect} from 'react-redux';
 
 import {Link} from 'react-router-dom';
@@ -18,11 +18,20 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 require('bootstrap/dist/css/bootstrap.css');
 
 class Navigation extends React.Component {
-  logout(event) {
-    event.preventDefault();
-    this.props.logout();
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
   }
 
+  logout(event) {
+    const {logout} = this.props.actions;
+
+    event.preventDefault();
+    logout();
+  }
+
+  // TODO: Add logout button to navigation
   render() {
     const {isAuthenticated} = this.props.auth;
 
@@ -37,7 +46,6 @@ class Navigation extends React.Component {
           <Nav>
             {!isAuthenticated && <LinkContainer to='/login'><NavItem>Login</NavItem></LinkContainer>}
             {!isAuthenticated && <LinkContainer to='/register'><NavItem>Register</NavItem></LinkContainer>}
-            {isAuthenticated && <LinkContainer to='/home'><NavItem>Home</NavItem></LinkContainer>}
           </Nav>
         </Navbar>
       </header>
@@ -56,4 +64,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {logout})(Navigation);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      logout: bindActionCreators(logout, dispatch)
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

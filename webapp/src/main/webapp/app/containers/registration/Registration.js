@@ -1,13 +1,10 @@
 'use strict';
 
 import React from 'react';
-
 import PropTypes from 'prop-types';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-
-import RegistrationForm from '../../containers/registration/RegistrationForm';
 
 import {addFlashMessage} from '../../actions/flashMessageActions';
 import {
@@ -17,6 +14,8 @@ import {
   doesPasswordMatchFormat,
   doPasswordsMatch
 } from '../../actions/registrationActions';
+
+import RegistrationForm from '../../components/registration/RegistrationForm';
 
 class Registration extends React.Component {
   render() {

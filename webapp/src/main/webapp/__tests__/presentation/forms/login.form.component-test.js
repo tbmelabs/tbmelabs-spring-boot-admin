@@ -5,7 +5,7 @@ import React from 'react';
 import TestUtils from 'react-test-utils/ReactTestUtils';
 import expect from 'expect';
 
-import Login from '../../../app/components/login/Login';
+import Login from '../../../app/containers/login/Login';
 
 describe('Login', () => {
   it('renders without problems', () => {
