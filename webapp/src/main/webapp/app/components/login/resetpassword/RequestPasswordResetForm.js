@@ -12,7 +12,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Button from 'react-bootstrap/lib/Button';
 
 import validator from 'validator';
-import validateInput from '../../../utils/validators/requestPasswordRequestValidator';
+import validateInput from '../../../utils/validators/requestPasswordResetValidator';
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -50,6 +50,7 @@ class RequestPasswordResetForm extends React.Component {
 
     if (this.isValid()) {
       this.setState({errors: {}, isLoading: true});
+
       this.props.requestPasswordReset(this.state).then(response => {
           this.props.addFlashMessage({
             type: 'success',
@@ -72,7 +73,7 @@ class RequestPasswordResetForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} horizontal>
-        <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occured: '
+        <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occurred: '
                           message={this.state.errors.form}/>
 
         <FormGroup controlId='email' validationState={!!this.state.errors.email ? 'error' : null}>
