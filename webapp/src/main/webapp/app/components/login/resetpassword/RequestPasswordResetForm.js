@@ -7,8 +7,10 @@ import CollapsableAlert from '../../common/alert/CollapsableAlert';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import validator from 'validator';
@@ -27,7 +29,7 @@ class RequestPasswordResetForm extends React.Component {
       isLoading: false
     };
 
-    if (!validator.isEmpty(this.props.email)) {
+    if (this.props.email !== undefined && !validator.isEmpty(this.props.email)) {
       this.setState({email: this.props.email});
     }
 

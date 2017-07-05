@@ -9,8 +9,10 @@ import getQueryParams from '../../../utils/getQueryParams';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import validator from 'validator';
@@ -23,7 +25,7 @@ class ResetPasswordForm extends React.Component {
     super(props);
 
     this.state = {
-      resetToken: getQueryParams(this.props.location.search).resetToken,
+      resetToken: '',
       password: '',
       passwordMatch: '',
       errors: {},
@@ -36,6 +38,7 @@ class ResetPasswordForm extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({resetToken: getQueryParams(this.context.router.route.location.search).resetToken});
     this.isPasswordResetTokenValid();
   }
 
@@ -167,6 +170,7 @@ class ResetPasswordForm extends React.Component {
 }
 
 ResetPasswordForm.propTypes = {
+  validateResetToken: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   doesPasswordMatchFormat: PropTypes.func.isRequired,
   doPasswordsMatch: PropTypes.func.isRequired

@@ -31,7 +31,7 @@ import ch.tbmelabs.tv.webapp.security.token.SecurityTokenGenerator;
 public class PasswordResetService {
   private static final Logger LOGGER = LogManager.getLogger(PasswordResetService.class);
 
-  private static String passwordResetRoute = "#/reset-password";
+  private static String passwordResetRoute = "#/login/reset-password";
   private static String resetTokenGETArgument = "?resetToken=";
   private static String emailTemplateLocation = "email/password-reset.email.html";
 
