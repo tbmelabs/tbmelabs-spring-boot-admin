@@ -1,0 +1,107 @@
+'use strict';
+
+import React from 'react';
+import PropTypes from 'prop-types';
+
+import CollapsableAlert from '../../common/alert/CollapsableAlert';
+
+import Form from 'react-bootstrap/lib/Form';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import FormControl from 'react-bootstrap/lib/FormControl';
+import Button from 'react-bootstrap/lib/Button';
+
+import validator from 'validator';
+import validateInput from '../../../utils/validators/requestPasswordRequestValidator';
+
+require('bootstrap/dist/css/bootstrap.css');
+
+class RequestPasswordResetForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      errors: {},
+      isValid: false,
+      isLoading: false
+    };
+
+    if (!validator.isEmpty(this.props.email)) {
+      this.setState({email: this.props.email});
+    }
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  isValid() {
+    const {errors, isValid} = validateInput(this.state);
+
+    if (!isValid) {
+      this.setState({errors, isValid});
+    }
+
+    return isValid;
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    if (this.isValid()) {
+      this.setState({errors: {}, isLoading: true});
+      this.props.requestPasswordReset(this.state).then(response => {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'An email has been sent to you if you own an account associated to the email given.'
+          });
+
+          this.context.router.history.push('/login');
+        }, error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
+      );
+    }
+  }
+
+  onChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
+  render() {
+    let isValid = this.state.isLoading;
+    let isLoading = this.state.isLoading;
+
+    return (
+      <Form onSubmit={this.handleSubmit} horizontal>
+        <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occured: '
+                          message={this.state.errors.form}/>
+
+        <FormGroup controlId='email' validationState={!!this.state.errors.email ? 'error' : null}>
+          <Col sm={2}>
+            <ControlLabel>E-Mail</ControlLabel>
+            <HelpBlock>{this.state.errors.email}</HelpBlock>
+          </Col>
+
+          <Col sm={10}>
+            <FormControl name='email' type='text' value={this.state.email} onChange={this.onChange}/>
+            <FormControl.Feedback />
+          </Col>
+        </FormGroup>
+
+        <Button type='submit' active={!isLoading && isValid} disabled={isLoading && !isValid}
+                onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Send Link'}</Button>
+      </Form>
+    );
+  }
+}
+
+RequestPasswordResetForm.propTypes = {
+  email: PropTypes.string,
+  requestPasswordReset: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
+}
+
+RequestPasswordResetForm.contextTypes = {
+  router: PropTypes.object.isRequired
+}
+
+export default RequestPasswordResetForm;

@@ -13,7 +13,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
-import validateInput from '../../utils/validators/login'
+import validateInput from '../../utils/validators/loginValidator'
 
 require('bootstrap/dist/css/bootstrap.css');
 

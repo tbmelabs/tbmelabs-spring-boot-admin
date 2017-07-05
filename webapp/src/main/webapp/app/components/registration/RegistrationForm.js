@@ -14,7 +14,7 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import validator from 'validator';
-import validateInput from "../../utils/validators/registration";
+import validateInput from "../../utils/validators/registrationValidator";
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -28,8 +28,8 @@ class RegistrationForm extends React.Component {
       password: '',
       passwordMatch: '',
       errors: {},
-      isLoading: false,
-      isValid: false
+      isValid: false,
+      isLoading: false
     };
 
     this.isValid = this.isValid.bind(this);
@@ -64,9 +64,9 @@ class RegistrationForm extends React.Component {
             type: 'success',
             text: 'You signed up successfully. Welcome to TBME Labs TV!'
           });
+
           this.context.router.history.push('/');
-        },
-        error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
+        }, error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
   }
@@ -164,8 +164,8 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    let isLoading = this.state.isLoading;
     let isValid = this.state.isValid;
+    let isLoading = this.state.isLoading;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
