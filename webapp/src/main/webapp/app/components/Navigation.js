@@ -54,13 +54,16 @@ class Navigation extends React.Component {
 
     return (
       <header>
-        <Navbar>
+        <Navbar collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
               <Link to="/">TBME Labs TV</Link>
             </Navbar.Brand>
+            <Navbar.Toggle/>
           </Navbar.Header>
-          {this.props.isAuthenticated ? authenticatedNav : guestNav}
+          <Navbar.Collapse>
+            {this.props.isAuthenticated ? authenticatedNav : guestNav}
+          </Navbar.Collapse>
         </Navbar>
       </header>
     );
