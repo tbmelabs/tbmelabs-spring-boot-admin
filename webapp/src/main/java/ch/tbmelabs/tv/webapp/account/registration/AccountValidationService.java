@@ -21,6 +21,9 @@ public class AccountValidationService {
   public void validateNewAccount(Account newAccount) {
     checkAttributesSet(newAccount);
     checkUsernameNotExisting(newAccount.getUsername());
+    checkEmailNotRegistered(newAccount.getEmail());
+    newAccount.doesPasswordMatchFormat();
+    newAccount.doPasswordsMatch();
   }
 
   public void checkAttributesSet(Account account) {
