@@ -3,6 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import CollapsableAlert from '../common/alert/CollapsableAlert';
 
 import Form from 'react-bootstrap/lib/Form';
@@ -93,6 +95,8 @@ class LoginForm extends React.Component {
 
         <Button type='submit' disabled={isLoading}
                 onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign in'}</Button>
+
+        <Link className='pull-right' to='/login/request-password-reset'>Forgot your password?</Link>
       </Form>
     );
   }

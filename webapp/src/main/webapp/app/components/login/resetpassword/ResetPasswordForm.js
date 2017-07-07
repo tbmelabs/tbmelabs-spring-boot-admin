@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 
 import CollapsableAlert from '../../common/alert/CollapsableAlert';
 
-import getQueryParams from '../../../utils/getQueryParams';
-
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
@@ -14,6 +12,8 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
+
+import getQueryParams from '../../../utils/getQueryParams';
 
 import validator from 'validator';
 import validateInput from '../../../utils/validators/resetPasswordValidator';

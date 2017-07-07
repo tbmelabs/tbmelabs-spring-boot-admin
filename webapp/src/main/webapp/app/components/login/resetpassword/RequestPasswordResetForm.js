@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Button from 'react-bootstrap/lib/Button';
 
 import validator from 'validator';
@@ -29,12 +30,15 @@ class RequestPasswordResetForm extends React.Component {
       isLoading: false
     };
 
+    this.onCancel = this.onCancel.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
     if (this.props.email !== undefined && !validator.isEmpty(this.props.email)) {
       this.setState({email: this.props.email});
     }
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
 
   isValid() {
@@ -45,6 +49,10 @@ class RequestPasswordResetForm extends React.Component {
     }
 
     return isValid;
+  }
+
+  onCancel() {
+    this.context.router.history.push('/login');
   }
 
   onSubmit(event) {
@@ -90,8 +98,12 @@ class RequestPasswordResetForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' disabled={isLoading && !isValid}
-                onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Send Link'}</Button>
+        <ButtonToolbar>
+          <Button onClick={this.onCancel}>Cancel</Button>
+
+          <Button type='submit' disabled={isLoading && !isValid}
+                  onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Send Link'}</Button>
+        </ButtonToolbar>
       </Form>
     );
   }
