@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "access_level")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(callSuper = false)
 public class Role extends NicelyDocumentedEntity {
   @NotEmpty
   @Column(name = "role_name", columnDefinition = "VARCHAR(32)")

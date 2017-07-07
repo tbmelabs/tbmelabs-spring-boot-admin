@@ -78,8 +78,8 @@ class RequestPasswordResetForm extends React.Component {
   }
 
   render() {
-    let isValid = this.state.isLoading;
-    let isLoading = this.state.isLoading;
+    const isValid = this.state.isLoading;
+    const isLoading = this.state.isLoading;
 
     return (
       <Form onSubmit={this.handleSubmit} horizontal>

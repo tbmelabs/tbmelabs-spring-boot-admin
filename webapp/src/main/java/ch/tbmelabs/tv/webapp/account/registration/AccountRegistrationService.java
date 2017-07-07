@@ -80,16 +80,18 @@ public class AccountRegistrationService {
   private void writeEmailConfirmation(Account account, AccountRegistrationToken token) {
     LOGGER.debug("Creating confirmation email");
 
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-        new File(AccountRegistrationService.class.getClassLoader().getResource(emailTemplateLocation).toURI()))))) {
-      StringBuilder htmlBuilder = new StringBuilder();
-      String htmlLine;
-      while ((htmlLine = reader.readLine()) != null) {
-        htmlBuilder.append(htmlLine);
-      }
+    try (FileInputStream fileInputStream = new FileInputStream(
+        new File(AccountRegistrationService.class.getClassLoader().getResource(emailTemplateLocation).toURI()))) {
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream))) {
+        StringBuilder htmlBuilder = new StringBuilder();
+        String htmlLine;
+        while ((htmlLine = reader.readLine()) != null) {
+          htmlBuilder.append(htmlLine);
+        }
 
-      mailService.sendMail(account, "Registration to TBMELabs TV",
-          prepareEmailBody(htmlBuilder.toString(), account, token));
+        mailService.sendMail(account, "Registration to TBMELabs TV",
+            prepareEmailBody(htmlBuilder.toString(), account, token));
+      }
     } catch (IOException | URISyntaxException e) {
       throw new IllegalArgumentException(e);
     }
@@ -99,12 +101,12 @@ public class AccountRegistrationService {
     LOGGER.debug("Preparing email body: username is " + account.getUsername() + " and associated url "
         + getConfirmationUrl(token));
 
-    emailBody = emailBody.replaceAll("%USERNAME%", account.getUsername());
-    emailBody = emailBody.replaceAll("%CONFIRMATION_URL%", getConfirmationUrl(token));
+    String finalBody = emailBody.replaceAll("%USERNAME%", account.getUsername()).replaceAll("%CONFIRMATION_URL%",
+        getConfirmationUrl(token));
 
-    LOGGER.debug("Final email body is: " + emailBody);
+    LOGGER.debug("Final email body is: " + finalBody);
 
-    return emailBody;
+    return finalBody;
   }
 
   private AccountRegistrationToken createConfirmationToken(Account account) {

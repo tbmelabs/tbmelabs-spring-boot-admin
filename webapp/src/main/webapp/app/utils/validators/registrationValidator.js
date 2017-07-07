@@ -4,7 +4,7 @@ import validator from 'validator';
 import isEmpty from 'validate.io-empty';
 
 export default function validateInput(data) {
-  let errors = {};
+  const errors = {};
 
   if (!validator.isEmpty(data.errors.username)) {
     errors.username = data.errors.username;

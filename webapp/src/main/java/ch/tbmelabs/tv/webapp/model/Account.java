@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -32,6 +33,7 @@ import lombok.ToString;
 @Table(name = "account")
 @ToString(exclude = { "password", "passwordMatch" })
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(callSuper = false)
 public class Account extends NicelyDocumentedEntity {
   @Transient
   @JsonIgnore
@@ -45,34 +47,6 @@ public class Account extends NicelyDocumentedEntity {
   @Transient
   @JsonIgnore
   public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-
-  @Override
-  @PrePersist
-  public void onCreate() {
-    super.onCreate();
-
-    setIsEmailApproved(false);
-    setIsBlocked(false);
-
-    if (doesPasswordMatchFormat() && doPasswordsMatch()) {
-      setPassword(PASSWORD_ENCODER.encode(getPassword()));
-    }
-  }
-
-  @PostLoad
-  public void onLoad() {
-    setPasswordMatch(getPassword());
-  }
-
-  @Override
-  @PreUpdate
-  public void onUpdate() {
-    super.onUpdate();
-
-    if (!getPassword().equals(getPasswordMatch()) && doesPasswordMatchFormat()) {
-      setPassword(PASSWORD_ENCODER.encode(getPassword()));
-    }
-  }
 
   @NotEmpty
   @Column(columnDefinition = "VARCHAR(32)")
@@ -110,6 +84,34 @@ public class Account extends NicelyDocumentedEntity {
   // mappedBy = "account")
   // @JsonIgnoreProperties({ "account" })
   // private PasswordResetToken passwordReset;
+
+  @Override
+  @PrePersist
+  public void onCreate() {
+    super.onCreate();
+
+    setIsEmailApproved(false);
+    setIsBlocked(false);
+
+    if (doesPasswordMatchFormat() && doPasswordsMatch()) {
+      setPassword(PASSWORD_ENCODER.encode(getPassword()));
+    }
+  }
+
+  @PostLoad
+  public void onLoad() {
+    setPasswordMatch(getPassword());
+  }
+
+  @Override
+  @PreUpdate
+  public void onUpdate() {
+    super.onUpdate();
+
+    if (!getPassword().equals(getPasswordMatch()) && doesPasswordMatchFormat()) {
+      setPassword(PASSWORD_ENCODER.encode(getPassword()));
+    }
+  }
 
   public boolean doesPasswordMatchFormat() {
     if (!getPassword().matches(PASSWORD_PATTERN)) {

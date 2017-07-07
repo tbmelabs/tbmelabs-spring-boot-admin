@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ch.tbmelabs.tv.webapp.model.repository.AccountRegistrationTokenCRUDRepository;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -32,16 +33,8 @@ import lombok.ToString;
 @ToString(exclude = { "token" })
 @Table(name = "account_registration_token")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(callSuper = false)
 public class AccountRegistrationToken extends NicelyDocumentedEntity {
-  @PrePersist
-  public void onCreate() {
-    super.onCreate();
-
-    Calendar calendarInstance = Calendar.getInstance();
-    calendarInstance.set(Calendar.DAY_OF_YEAR, calendarInstance.get(Calendar.DAY_OF_YEAR) + 1);
-    expirationDate = calendarInstance.getTime();
-  }
-
   @NotEmpty
   @JsonIgnore
   @Column(name = "token_string", columnDefinition = "CHAR(36)")
@@ -54,6 +47,15 @@ public class AccountRegistrationToken extends NicelyDocumentedEntity {
   @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
   @JoinColumn(name = "a_id")
   protected Account account;
+
+  @PrePersist
+  public void onCreate() {
+    super.onCreate();
+
+    Calendar calendarInstance = Calendar.getInstance();
+    calendarInstance.set(Calendar.DAY_OF_YEAR, calendarInstance.get(Calendar.DAY_OF_YEAR) + 1);
+    expirationDate = calendarInstance.getTime();
+  }
 
   public static class AccountRegistrationTokenRemover extends TimerTask {
     protected static final Logger LOGGER = LogManager.getLogger(AccountRegistrationTokenRemover.class);

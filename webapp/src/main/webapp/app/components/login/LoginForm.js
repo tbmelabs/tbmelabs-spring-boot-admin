@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    let isLoading = this.state.isLoading;
+    const isLoading = this.state.isLoading;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>

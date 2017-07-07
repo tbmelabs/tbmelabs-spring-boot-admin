@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ch.tbmelabs.tv.webapp.model.repository.PasswordResetTokenCRUDRepository;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -32,16 +33,8 @@ import lombok.ToString;
 @ToString(exclude = { "token" })
 @Table(name = "password_reset_token")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@EqualsAndHashCode(callSuper = false)
 public class PasswordResetToken extends NicelyDocumentedEntity {
-  @PrePersist
-  public void onCreate() {
-    super.onCreate();
-
-    Calendar calendarInstance = Calendar.getInstance();
-    calendarInstance.set(Calendar.DAY_OF_YEAR, calendarInstance.get(Calendar.DAY_OF_YEAR) + 1);
-    expirationDate = calendarInstance.getTime();
-  }
-
   @NotEmpty
   @JsonIgnore
   @Column(name = "token_string", columnDefinition = "CHAR(36)")
@@ -54,6 +47,15 @@ public class PasswordResetToken extends NicelyDocumentedEntity {
   @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
   @JoinColumn(name = "a_id")
   protected Account account;
+
+  @PrePersist
+  public void onCreate() {
+    super.onCreate();
+
+    Calendar calendarInstance = Calendar.getInstance();
+    calendarInstance.set(Calendar.DAY_OF_YEAR, calendarInstance.get(Calendar.DAY_OF_YEAR) + 1);
+    expirationDate = calendarInstance.getTime();
+  }
 
   public static class PasswordResetTokenRemover extends TimerTask {
     protected static final Logger LOGGER = LogManager.getLogger(PasswordResetTokenRemover.class);

@@ -77,7 +77,7 @@ class RegistrationForm extends React.Component {
   }
 
   checkUserExists(event) {
-    let errors = this.state.errors;
+    const errors = this.state.errors;
 
     const field = event.target.name;
     const value = event.target.value;
@@ -98,7 +98,7 @@ class RegistrationForm extends React.Component {
   }
 
   checkEmailExists(event) {
-    let errors = this.state.errors;
+    const errors = this.state.errors;
 
     const field = event.target.name;
     const value = event.target.value;
@@ -123,7 +123,7 @@ class RegistrationForm extends React.Component {
   }
 
   checkPasswordFormat(event) {
-    let errors = this.state.errors;
+    const errors = this.state.errors;
 
     const field = event.target.name;
     const value = event.target.value;
@@ -144,10 +144,9 @@ class RegistrationForm extends React.Component {
   }
 
   checkPasswordsMatch(event) {
-    let errors = this.state.errors;
+    const errors = this.state.errors;
 
     const field = event.target.name;
-    const value = event.target.value;
 
     if (!validator.isEmpty(this.state.password) && !validator.isEmpty(this.state.passwordMatch)) {
       this.props.doPasswordsMatch(this.state.password, this.state.passwordMatch).then(
@@ -165,8 +164,8 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    let isValid = this.state.isValid;
-    let isLoading = this.state.isLoading;
+    const isValid = this.state.isValid;
+    const isLoading = this.state.isLoading;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
