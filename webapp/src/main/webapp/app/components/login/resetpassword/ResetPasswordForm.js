@@ -162,7 +162,7 @@ class ResetPasswordForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' active={!isLoading && isValid} disabled={isLoading && !isValid}
+        <Button type='submit' disabled={isLoading && !isValid}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Reset Password'}</Button>
       </Form>
     );

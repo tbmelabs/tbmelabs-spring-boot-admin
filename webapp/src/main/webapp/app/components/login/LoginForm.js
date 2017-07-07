@@ -91,7 +91,7 @@ class LoginForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' active={!isLoading} disabled={isLoading}
+        <Button type='submit' disabled={isLoading}
                 onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign in'}</Button>
       </Form>
     );
