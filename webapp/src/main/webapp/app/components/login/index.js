@@ -15,6 +15,9 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
+import getQueryParams from '../../utils/getQueryParams';
+
+import validator from 'validator';
 import validateInput from '../../utils/validators/loginValidator'
 
 require('bootstrap/dist/css/bootstrap.css');
@@ -30,8 +33,23 @@ class LoginForm extends React.Component {
       isLoading: false
     };
 
+    this.isValid = this.isValid.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.clearPasswordInputs = this.clearPasswordInputs.bind(this);
+  }
+
+  componentDidMount() {
+    const queryParams = getQueryParams(this.context.router.route.location.search);
+    const type = queryParams.type;
+    const message = queryParams.message;
+
+    console.log(type);
+    console.log(message);
+
+    if (type !== undefined && !validator.isEmpty(type) && message !== undefined && !validator.isEmpty(message)) {
+      this.props.addFlashMessage({type: type, text: message});
+    }
   }
 
   isValid() {
@@ -55,10 +73,16 @@ class LoginForm extends React.Component {
         error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
+
+    this.clearPasswordInputs();
   }
 
   onChange(event) {
     this.setState({[event.target.name]: event.target.value});
+  }
+
+  clearPasswordInputs() {
+    this.setState({password: ''});
   }
 
   render() {
@@ -103,7 +127,8 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
 LoginForm.contextTypes = {

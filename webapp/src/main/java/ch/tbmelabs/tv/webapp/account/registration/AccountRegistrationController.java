@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.webapp.account.registration;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,8 +50,16 @@ public class AccountRegistrationController {
 
   @RequestMapping(value = { "/register/confirm/{confirmationToken}" }, method = RequestMethod.GET)
   @ResponseBody
-  public Account confirmRegistration(
-      @PathVariable(name = "confirmationToken", required = true) String confirmationToken) {
-    return registrationService.confirmRegistration(confirmationToken);
+  public void confirmRegistration(@PathVariable(name = "confirmationToken", required = true) String confirmationToken,
+      HttpServletResponse response) throws IOException {
+    String type = "danger";
+    String message = "The token expired or is invalid!";
+
+    if (registrationService.confirmRegistration(confirmationToken)) {
+      type = "success";
+      message = "Thank you for confirming your e-mail address.";
+    }
+
+    response.sendRedirect("/#/login/?type=" + type + "&message=" + message);
   }
 }

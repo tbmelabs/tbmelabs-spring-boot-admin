@@ -53,7 +53,7 @@ public class AccountRegistrationService {
   private AccountRegistrationTokenCRUDRepository registrationTokenRepository;
 
   public Account registerAccount(Account newAccount) {
-    LOGGER.info("Registering new user " + newAccount.getUsername());
+    LOGGER.info("Registering new user " + newAccount);
 
     validationService.validateNewAccount(newAccount);
     newAccount.setAccessLevel(roleRepository.findByRoleName(SecurityRole.ROLE_USER));
@@ -64,17 +64,19 @@ public class AccountRegistrationService {
     return newAccount;
   }
 
-  public Account confirmRegistration(String token) {
-    AccountRegistrationToken registrationToken = registrationTokenRepository.findByToken(token);
+  public boolean confirmRegistration(String token) {
+    AccountRegistrationToken registrationToken;
+    if ((registrationToken = registrationTokenRepository.findByToken(token)) != null) {
+      Account approver = registrationToken.getAccount();
+      approver.setIsEmailApproved(true);
 
-    Account account = registrationToken.getAccount();
-    account.setIsEmailApproved(true);
+      LOGGER.info("Confirming registration for user " + approver);
 
-    LOGGER.info("Confirming registration for user " + account.getUsername());
+      accountRepository.save(approver);
+      registrationTokenRepository.delete(registrationToken);
+    }
 
-    registrationTokenRepository.delete(registrationToken);
-
-    return account;
+    return registrationToken != null;
   }
 
   private void writeEmailConfirmation(Account account, AccountRegistrationToken token) {

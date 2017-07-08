@@ -15,7 +15,7 @@ import {
   doPasswordsMatch
 } from '../../actions/registrationActions';
 
-import RegistrationForm from '../../components/registration/RegistrationForm';
+import RegistrationForm from '../../components/registration/index';
 
 class Registration extends React.Component {
   render() {

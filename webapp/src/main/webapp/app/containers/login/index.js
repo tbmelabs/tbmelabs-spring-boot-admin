@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
 import {bindActionCreators} from 'redux';
 import  {connect} from 'react-redux';
@@ -13,7 +13,7 @@ import {addFlashMessage} from '../../actions/flashMessageActions';
 import {requestPasswordReset, validateResetToken, resetPassword} from '../../actions/resetPasswordActions';
 import {doesPasswordMatchFormat, doPasswordsMatch} from '../../actions/registrationActions';
 
-import LoginForm from '../../components/login/LoginForm';
+import LoginForm from '../../components/login/index';
 import RequestPasswordResetForm from '../../components/login/resetpassword/RequestPasswordResetForm';
 import ResetPasswordForm from '../../components/login/resetpassword/ResetPasswordForm';
 
@@ -23,15 +23,15 @@ class Login extends React.Component {
 
     return (
       <Switch>
-        <Route exact path='/login'>
-          <LoginForm login={login}/>
+        <Route path='/login'>
+          <LoginForm login={login} addFlashMessage={addFlashMessage}/>
         </Route>
 
-        <Route exact path='/login/request-password-reset'>
+        <Route path='/login/request-password-reset'>
           <RequestPasswordResetForm requestPasswordReset={requestPasswordReset} addFlashMessage={addFlashMessage}/>
         </Route>
 
-        <Route exact path='/login/reset-password'>
+        <Route path='/login/reset-password'>
           <ResetPasswordForm validateResetToken={validateResetToken} resetPassword={resetPassword}
                              doesPasswordMatchFormat={doesPasswordMatchFormat}
                              doPasswordsMatch={doPasswordsMatch}/>

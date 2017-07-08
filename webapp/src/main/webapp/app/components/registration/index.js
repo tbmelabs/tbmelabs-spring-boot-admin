@@ -9,6 +9,8 @@ import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Tooltip from 'react-bootstrap/lib/Tooltip';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
@@ -39,6 +41,7 @@ class RegistrationForm extends React.Component {
     this.checkEmailExists = this.checkEmailExists.bind(this);
     this.checkPasswordFormat = this.checkPasswordFormat.bind(this);
     this.checkPasswordsMatch = this.checkPasswordsMatch.bind(this);
+    this.clearPasswordInputs = this.clearPasswordInputs.bind(this);
   }
 
   isValid(validate) {
@@ -70,6 +73,8 @@ class RegistrationForm extends React.Component {
         }, error => this.setState({errors: {form: error.response.data.message}, isLoading: false})
       );
     }
+
+    this.clearPasswordInputs();
   }
 
   onChange(event) {
@@ -140,6 +145,10 @@ class RegistrationForm extends React.Component {
       );
     }
 
+    if (!validator.isEmpty(this.state.passwordMatch)) {
+      this.checkPasswordsMatch({target: {name: 'passwordMatch'}});
+    }
+
     this.isValid(false);
   }
 
@@ -163,9 +172,16 @@ class RegistrationForm extends React.Component {
     this.isValid(false);
   }
 
+  clearPasswordInputs() {
+    this.setState({password: '', passwordMatch: ''});
+  }
+
   render() {
     const isValid = this.state.isValid;
     const isLoading = this.state.isLoading;
+
+    const passwordFormatTooltip = <Tooltip id='passwordFormatTooltip'>Password must contain 8-32 characters: At least
+      one lower and upper case letter, one digit and a special char.</Tooltip>;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
@@ -205,8 +221,11 @@ class RegistrationForm extends React.Component {
           </Col>
 
           <Col sm={10}>
-            <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}
-                         onBlur={this.checkPasswordFormat}/>
+            <OverlayTrigger placement='right' trigger='focus'
+                            overlay={passwordFormatTooltip} delayShow={300} delayHide={150}>
+              <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}
+                           onBlur={this.checkPasswordFormat}/>
+            </OverlayTrigger>
             <FormControl.Feedback />
           </Col>
         </FormGroup>
@@ -224,7 +243,7 @@ class RegistrationForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' disabled={isLoading && !isValid}
+        <Button type='submit' disabled={!isValid || isLoading}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
       </Form>
     );

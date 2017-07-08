@@ -6,7 +6,7 @@ import isEmpty from 'validate.io-empty';
 export default function validateInput(data) {
   let errors = {};
 
-  if (!validator.isEmpty(data.errors.email)) {
+  if (data.errors.email !== undefined && !isEmpty(data.errors.email)) {
     errors.email = data.errors.email;
   } else if (validator.isEmpty(data.email)) {
     errors.email = 'This field is required';

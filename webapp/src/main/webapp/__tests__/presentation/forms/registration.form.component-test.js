@@ -3,7 +3,7 @@
 import React from 'react';
 import TestUtils from 'react-test-utils/ReactTestUtils';
 
-import Registration from '../../../app/containers/registration/Registration';
+import Registration from '../../../app/containers/registration/index';
 
 describe('Registration', () => {
   it('renders without problems', () => {

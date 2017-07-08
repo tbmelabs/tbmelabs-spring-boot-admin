@@ -3,7 +3,7 @@
 import React from 'react';
 import TestUtils from 'react-test-utils/ReactTestUtils';
 
-import Login from '../../../app/containers/login/Login';
+import Login from '../../../app/containers/login/index';
 
 describe('Login', () => {
   it('renders without problems', () => {
