@@ -76,8 +76,7 @@ class RequestPasswordResetForm extends React.Component {
   }
 
   onChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-    this.isValid(false);
+    this.setState({[event.target.name]: event.target.value}, this.isValid);
   }
 
   render() {

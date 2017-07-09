@@ -75,8 +75,7 @@ class ResetPasswordForm extends React.Component {
   }
 
   onChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-    this.isValid(false);
+    this.setState({[event.target.name]: event.target.value}, this.isValid);
   }
 
   isPasswordResetTokenValid(token) {
@@ -146,7 +145,7 @@ class ResetPasswordForm extends React.Component {
 
           <Col sm={10}>
             <FormControl name='password' type='password' value={this.state.password} onChange={this.onChange}
-                         onBlur={this.checkPasswordFormat}/>
+                         onBlur={this.checkPasswordFormat} disabled={this.state.errors.form}/>
             <FormControl.Feedback />
           </Col>
         </FormGroup>
@@ -159,7 +158,7 @@ class ResetPasswordForm extends React.Component {
 
           <Col sm={10}>
             <FormControl name='passwordMatch' type='password' value={this.state.passwordMatch} onChange={this.onChange}
-                         onBlur={this.checkPasswordsMatch}/>
+                         onBlur={this.checkPasswordsMatch} disabled={this.state.errors.form}/>
             <FormControl.Feedback />
           </Col>
         </FormGroup>

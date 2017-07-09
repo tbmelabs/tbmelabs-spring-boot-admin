@@ -57,7 +57,7 @@ class RegistrationForm extends React.Component {
   }
 
   onSubmit(event) {
-    event.preventDefault();
+    event.preventDefault(true);
 
     if (this.isValid(true)) {
       this.setState({errors: {}, isLoading: true});
@@ -78,8 +78,7 @@ class RegistrationForm extends React.Component {
   }
 
   onChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-    this.isValid(false);
+    this.setState({[event.target.name]: event.target.value}, this.isValid);
   }
 
   checkUserExists(event) {
@@ -163,8 +162,6 @@ class RegistrationForm extends React.Component {
         }
       );
     }
-
-    this.isValid(false);
   }
 
   clearPasswordInputs() {
