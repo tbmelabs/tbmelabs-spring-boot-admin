@@ -35,11 +35,13 @@ class ResetPasswordForm extends React.Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.isPasswordResetTokenValid = this.isPasswordResetTokenValid.bind(this);
+    this.checkPasswordFormat = this.checkPasswordsMatch.bind(this);
+    this.checkPasswordsMatch = this.checkPasswordsMatch.bind(this);
   }
 
   componentDidMount() {
-    this.setState({resetToken: getQueryParams(this.context.router.route.location.search).resetToken});
-    this.isPasswordResetTokenValid();
+    this.isPasswordResetTokenValid(getQueryParams(this.context.router.route.location.search).resetToken);
   }
 
   isValid(validate) {
@@ -60,28 +62,32 @@ class ResetPasswordForm extends React.Component {
     if (this.isValid(true)) {
       this.setState({errors: {}, isLoading: true});
 
-      this.props.resetPassword(this.state).then(
-        response => this.context.router.history.push('/login'),
-        error => this.setState({errors: {form: error.response.data.message}})
+      this.props.resetPassword(this.state).then(response => {
+          this.props.addFlashMessage({
+            type: 'success',
+            text: 'Your password has been reseted.'
+          });
+
+          this.context.router.history.push('/login');
+        }, error => this.setState({errors: {form: error.response.data.message}})
       );
     }
   }
 
   onChange(event) {
     this.setState({[event.target.name]: event.target.value});
+    this.isValid(false);
   }
 
-  isPasswordResetTokenValid() {
-    const token = this.state.resetToken;
-
+  isPasswordResetTokenValid(token) {
     if (token === undefined) {
-      this.setState({passwordResetError: 'Could not find password reset token!'});
+      this.setState({errors: {form: 'Could not find password reset token!'}});
       return;
     }
 
     this.props.validateResetToken(token).then(
-      response => self.setState({errors: {token: {}}}),
-      error => self.setState({errors: {token: error.response.data.message}})
+      response => this.setState({errors: {}, resetToken: token}),
+      error => this.setState({errors: {form: error.response.data.message}})
     );
   }
 
@@ -102,8 +108,6 @@ class ResetPasswordForm extends React.Component {
         }
       );
     }
-
-    this.isValid(false);
   }
 
   checkPasswordsMatch(event) {
@@ -123,16 +127,14 @@ class ResetPasswordForm extends React.Component {
         }
       );
     }
-
-    this.isValid(false);
   }
 
   render() {
-    let isValid = this.state.isValid;
-    let isLoading = this.state.isLoading;
+    const isLoading = this.state.isLoading;
+    const isValid = this.state.isValid;
 
     return (
-      <Form onSubmit={this.handleSubmit} horizontal>
+      <Form onSubmit={this.onSubmit} horizontal>
         <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occurred: '
                           message={this.state.errors.form}/>
 
@@ -162,7 +164,7 @@ class ResetPasswordForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' disabled={isLoading && !isValid}
+        <Button type='submit' disabled={isLoading || !isValid}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Reset Password'}</Button>
       </Form>
     );
@@ -173,7 +175,8 @@ ResetPasswordForm.propTypes = {
   validateResetToken: PropTypes.func.isRequired,
   resetPassword: PropTypes.func.isRequired,
   doesPasswordMatchFormat: PropTypes.func.isRequired,
-  doPasswordsMatch: PropTypes.func.isRequired
+  doPasswordsMatch: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired
 }
 
 ResetPasswordForm.contextTypes = {

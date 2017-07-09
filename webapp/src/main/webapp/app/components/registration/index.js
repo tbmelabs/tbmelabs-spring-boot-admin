@@ -79,6 +79,7 @@ class RegistrationForm extends React.Component {
 
   onChange(event) {
     this.setState({[event.target.name]: event.target.value});
+    this.isValid(false);
   }
 
   checkUserExists(event) {
@@ -98,8 +99,6 @@ class RegistrationForm extends React.Component {
         }
       );
     }
-
-    this.isValid(false);
   }
 
   checkEmailExists(event) {
@@ -123,8 +122,6 @@ class RegistrationForm extends React.Component {
         }
       );
     }
-
-    this.isValid(false);
   }
 
   checkPasswordFormat(event) {
@@ -148,8 +145,6 @@ class RegistrationForm extends React.Component {
     if (!validator.isEmpty(this.state.passwordMatch)) {
       this.checkPasswordsMatch({target: {name: 'passwordMatch'}});
     }
-
-    this.isValid(false);
   }
 
   checkPasswordsMatch(event) {
@@ -177,8 +172,8 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    const isValid = this.state.isValid;
     const isLoading = this.state.isLoading;
+    const isValid = this.state.isValid;
 
     const passwordFormatTooltip = <Tooltip id='passwordFormatTooltip'>Password must contain 8-32 characters: At least
       one lower and upper case letter, one digit and a special char.</Tooltip>;
@@ -243,7 +238,7 @@ class RegistrationForm extends React.Component {
           </Col>
         </FormGroup>
 
-        <Button type='submit' disabled={!isValid || isLoading}
+        <Button type='submit' disabled={isLoading || !isValid}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
       </Form>
     );

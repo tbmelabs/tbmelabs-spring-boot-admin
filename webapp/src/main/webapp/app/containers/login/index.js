@@ -23,7 +23,7 @@ class Login extends React.Component {
 
     return (
       <Switch>
-        <Route path='/login'>
+        <Route exact path='/login'>
           <LoginForm login={login} addFlashMessage={addFlashMessage}/>
         </Route>
 
@@ -34,7 +34,7 @@ class Login extends React.Component {
         <Route path='/login/reset-password'>
           <ResetPasswordForm validateResetToken={validateResetToken} resetPassword={resetPassword}
                              doesPasswordMatchFormat={doesPasswordMatchFormat}
-                             doPasswordsMatch={doPasswordsMatch}/>
+                             doPasswordsMatch={doPasswordsMatch} addFlashMessage={addFlashMessage}/>
         </Route>
       </Switch>
     );

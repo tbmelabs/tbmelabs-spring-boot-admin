@@ -41,11 +41,13 @@ class RequestPasswordResetForm extends React.Component {
     }
   }
 
-  isValid() {
+  isValid(validate) {
     const {errors, isValid} = validateInput(this.state);
 
-    if (!isValid) {
+    if (!isValid && validate) {
       this.setState({errors, isValid});
+    } else {
+      this.setState({isValid});
     }
 
     return isValid;
@@ -58,7 +60,7 @@ class RequestPasswordResetForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
 
-    if (this.isValid()) {
+    if (this.isValid(true)) {
       this.setState({errors: {}, isLoading: true});
 
       this.props.requestPasswordReset(this.state).then(response => {
@@ -75,14 +77,15 @@ class RequestPasswordResetForm extends React.Component {
 
   onChange(event) {
     this.setState({[event.target.name]: event.target.value});
+    this.isValid(false);
   }
 
   render() {
-    const isValid = this.state.isLoading;
     const isLoading = this.state.isLoading;
+    const isValid = this.state.isValid;
 
     return (
-      <Form onSubmit={this.handleSubmit} horizontal>
+      <Form onSubmit={this.onSubmit} horizontal>
         <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occurred: '
                           message={this.state.errors.form}/>
 
@@ -101,7 +104,7 @@ class RequestPasswordResetForm extends React.Component {
         <ButtonToolbar>
           <Button onClick={this.onCancel}>Cancel</Button>
 
-          <Button type='submit' disabled={isLoading && !isValid}
+          <Button type='submit' disabled={isLoading || !isValid}
                   onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Send Link'}</Button>
         </ButtonToolbar>
       </Form>

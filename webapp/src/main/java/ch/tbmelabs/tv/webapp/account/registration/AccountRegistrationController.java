@@ -60,6 +60,6 @@ public class AccountRegistrationController {
       message = "Thank you for confirming your e-mail address.";
     }
 
-    response.sendRedirect("/#/login/?type=" + type + "&message=" + message);
+    response.sendRedirect("/#/login/?type=" + type + "&text=" + message);
   }
 }

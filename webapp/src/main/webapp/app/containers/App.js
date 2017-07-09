@@ -35,6 +35,10 @@ App.propTypes = {
   actions: PropTypes.object.isRequired
 }
 
+App.contextTypes = {
+  router: PropTypes.object.isRequired
+}
+
 function mapStateToProps(state) {
   return {
     auth: state.auth,

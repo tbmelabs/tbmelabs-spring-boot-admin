@@ -9,7 +9,7 @@ export function requestPasswordReset(data) {
 }
 
 export function validateResetToken(token) {
-  return dispatch=> {
+  return dispatch => {
     return axios.get('/login/reset-password/' + token);
   }
 }

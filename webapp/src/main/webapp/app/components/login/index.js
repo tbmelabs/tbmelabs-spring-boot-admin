@@ -42,13 +42,10 @@ class LoginForm extends React.Component {
   componentDidMount() {
     const queryParams = getQueryParams(this.context.router.route.location.search);
     const type = queryParams.type;
-    const message = queryParams.message;
+    const text = queryParams.text;
 
-    console.log(type);
-    console.log(message);
-
-    if (type !== undefined && !validator.isEmpty(type) && message !== undefined && !validator.isEmpty(message)) {
-      this.props.addFlashMessage({type: type, text: message});
+    if (type !== undefined && !validator.isEmpty(type) && text !== undefined && !validator.isEmpty(text)) {
+      this.props.addFlashMessage({type: type, text: text});
     }
   }
 

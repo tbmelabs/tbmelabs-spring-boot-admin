@@ -102,11 +102,15 @@ public class PasswordResetService {
   }
 
   private String prepareEmailBody(String emailBody, Account account, PasswordResetToken token) {
-    LOGGER.debug("Preparing email body");
+    LOGGER.debug(
+        "Preparing email body: username is " + account.getUsername() + " and associated url " + getResetUrl(token));
 
-    emailBody.replaceAll("%USERNAME%", account.getUsername());
-    emailBody.replaceAll("%RESET_URL%", getResetUrl(token));
-    return emailBody;
+    String finalBody = emailBody.replaceAll("%USERNAME%", account.getUsername()).replaceAll("%RESET_URL%",
+        getResetUrl(token));
+
+    LOGGER.debug("Final email body is: " + finalBody);
+
+    return finalBody;
   }
 
   private PasswordResetToken createToken(Account account) {
