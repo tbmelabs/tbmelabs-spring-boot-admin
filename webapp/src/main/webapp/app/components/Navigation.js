@@ -42,7 +42,7 @@ class Navigation extends React.Component {
     const guestNav = (
       <Nav>
         <LinkContainer to='/login'><NavItem>Login</NavItem></LinkContainer>
-        <LinkContainer to='/register'><NavItem>Register</NavItem></LinkContainer>
+        <LinkContainer to='/register'><NavItem>Sign Up</NavItem></LinkContainer>
       </Nav>
     );
 
