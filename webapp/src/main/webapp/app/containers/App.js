@@ -20,10 +20,12 @@ class App extends React.Component {
     const {logout, deleteFlashMessage} = this.props.actions;
 
     return (
-      <div className='container'>
+      <div>
         <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
-        <FlashMessageList messages={this.props.messages} deleteFlashMessage={deleteFlashMessage}/>
-        {this.props.children}
+        <div className='container'>
+          <FlashMessageList messages={this.props.messages} deleteFlashMessage={deleteFlashMessage}/>
+          {this.props.children}
+        </div>
       </div>
     );
   }

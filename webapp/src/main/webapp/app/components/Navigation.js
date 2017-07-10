@@ -16,11 +16,11 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.catchLogout = this.catchLogout.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  catchLogout(eventKey, event) {
+  handleLogout(eventKey, event) {
     if (eventKey === 'logout') {
       event.preventDefault();
 
@@ -40,16 +40,30 @@ class Navigation extends React.Component {
 
   render() {
     const guestNav = (
-      <Nav>
-        <LinkContainer to='/login'><NavItem>Login</NavItem></LinkContainer>
-        <LinkContainer to='/register'><NavItem>Sign Up</NavItem></LinkContainer>
-      </Nav>
+      <div>
+        <Nav>
+        </Nav>
+        <Nav pullRight>
+          <LinkContainer to='/login'>
+            <NavItem>Login</NavItem>
+          </LinkContainer>
+          <LinkContainer to='/register'>
+            <NavItem>Sign Up</NavItem>
+          </LinkContainer>
+        </Nav>
+      </div>
     );
 
     const authenticatedNav = (
-      <Nav onSelect={this.catchLogout}>
-        <LinkContainer to='#'><NavItem eventKey='logout'>Logout</NavItem></LinkContainer>
-      </Nav>
+      <div>
+        <Nav>
+        </Nav>
+        <Nav onSelect={this.handleLogout} pullRight>
+          <LinkContainer to='#'>
+            <NavItem eventKey='logout'>Logout</NavItem>
+          </LinkContainer>
+        </Nav>
+      </div>
     );
 
     return (
@@ -62,7 +76,7 @@ class Navigation extends React.Component {
             <Navbar.Toggle/>
           </Navbar.Header>
           <Navbar.Collapse>
-            {this.props.isAuthenticated ? authenticatedNav : guestNav}
+            {this.props.isAuthenticated ? authenticatedNav : guestNav }
           </Navbar.Collapse>
         </Navbar>
       </header>
