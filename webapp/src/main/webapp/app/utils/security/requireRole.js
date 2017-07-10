@@ -6,25 +6,25 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {addFlashMessage} from '../actions/flashMessageActions';
+import {addFlashMessage} from '../../actions/flashMessageActions';
 
-export default function (ComposedComponent) {
+export default function (ComposedComponent, requiredLevel) {
   class Authenticate extends React.Component {
     componentWillMount() {
       const {addFlashMessage} = this.props.actions;
 
-      if (!this.props.isAuthenticated) {
+      if (this.props.accessLevel < requiredLevel) {
         addFlashMessage({
           type: 'danger',
-          text: 'You need to login to access this page'
+          text: 'You have insufficent permissions to access this page!'
         });
-        this.context.router.history.push('/login');
+        this.context.router.history.back();
       }
     }
 
     componentWillUpdate(nextProps) {
-      if (!nextProps.isAuthenticated) {
-        this.context.router.history.push('/');
+      if (!nextProps.accessLevel < requiredLevel) {
+        this.context.router.history.back();
       }
     }
 
@@ -37,6 +37,7 @@ export default function (ComposedComponent) {
 
   Authenticate.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
+    accessLevel: PropTypes.int.isRequired,
     addFlashMessage: PropTypes.func.isRequired
   }
 
@@ -46,7 +47,8 @@ export default function (ComposedComponent) {
 
   function mapStateToProps(state) {
     return {
-      isAuthenticated: state.auth.isAuthenticated
+      isAuthenticated: state.auth.isAuthenticated,
+      accessLevel: state.auth.user.accessLevel.id
     };
   }
 
