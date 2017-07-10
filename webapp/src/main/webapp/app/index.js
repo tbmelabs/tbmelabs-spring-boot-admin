@@ -14,7 +14,7 @@ import setAuthorizationToken from './utils/setAuthorizationToken';
 import jwtDecode from 'jwt-decode';
 import {setCurrentUser} from './actions/authActions';
 
-import {HashRouter, Switch, Route} from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
 
 import Router from './Router';
 
