@@ -3,10 +3,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CollapsableAlert from '../common/alert/CollapsableAlert';
+
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
@@ -18,6 +21,9 @@ class RESTraveler extends React.Component {
 
     this.state = {
       currentUrl: '/rest/api',
+      data: [],
+      filter: 'id',
+      links: [],
       limit: 0,
       history: [],
       errors: {}
@@ -26,6 +32,10 @@ class RESTraveler extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onBack = this.onBack.bind(this);
     this.travel = this.travel.bind(this);
+  }
+
+  componentWillMount() {
+    this.travel(this.state.currentUrl, false);
   }
 
   onChange(event) {
@@ -44,12 +54,15 @@ class RESTraveler extends React.Component {
     const history = this.state.history;
 
     this.props.travelTo(location).then(
-      response=> {
+      response => {
+        const links = response.data._links;
+
         if (!isStepBack) {
           history.push(location);
         }
 
-        this.setState({errors: {}, history: history});
+        // data:, links:,
+        this.setState({filter: 'id', history: history, links: links, errors: {}});
       },
       error => this.setState({errors: {request: error.response.data.message}})
     );
@@ -59,19 +72,24 @@ class RESTraveler extends React.Component {
     return (
       <Grid>
         <Row>
-          <Col xs={18}>
-            <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='Login failed: '
-                              message={this.state.errors.form}/>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
+          <Col sm={6}>
             <Button>Back</Button>
           </Col>
-          <Col xs={6}>
-            <ControlLabel>Limit:</ControlLabel>
-            <FormControl name='limit' type='text' value={this.state.limit} onChange={this.onChange}/>
-          </Col>
+          <FormGroup>
+            <Col sm={2}>
+              <FormControl componentClass='select' placeholder='Travel to..'>
+                
+              </FormControl>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col sm={1}>
+              <ControlLabel>Limit:</ControlLabel>
+            </Col>
+            <Col sm={1}>
+              <FormControl name='limit' type='text' value={this.state.limit} onChange={this.onChange}/>
+            </Col>
+          </FormGroup>
         </Row>
       </Grid>
     );

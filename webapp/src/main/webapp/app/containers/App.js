@@ -16,17 +16,12 @@ require('bootstrap/dist/css/bootstrap.css');
 
 class App extends React.Component {
   render() {
-    const {isAuthenticated} = this.props.auth;
+    const {isAuthenticated, user} = this.props.auth;
     const {logout, deleteFlashMessage} = this.props.actions;
-
-    var accessLevel = 0;
-    if (this.props.auth.user.accessLevel !== undefined) {
-      accessLevel = this.props.auth.user.accessLevel.id;
-    }
 
     return (
       <div>
-        <Navigation isAuthenticated={isAuthenticated} accessLevel={accessLevel} logout={logout}/>
+        <Navigation isAuthenticated={isAuthenticated} user={user} logout={logout}/>
         <div className='container'>
           <FlashMessageList messages={this.props.messages} deleteFlashMessage={deleteFlashMessage}/>
           {this.props.children}

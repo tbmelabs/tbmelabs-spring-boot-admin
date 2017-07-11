@@ -77,7 +77,7 @@ class Navigation extends React.Component {
     const authenticatedNav = (
       <div>
         <Nav onSelect={this.handleNavigationSelect}>
-          {this.props.accessLevel >= ROLE_CONTENT_ADMIN ?
+          {this.props.isAuthenticated && this.props.user.accessLevel.id >= ROLE_CONTENT_ADMIN ?
             <NavDropdown title='Administration' id='nav-admin-dropdwon'>
               <MenuItem eventKey='restraveler'>RESTraveler</MenuItem>
             </NavDropdown> : null}
@@ -110,7 +110,7 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  accessLevel: PropTypes.number.isRequired,
+  user: PropTypes.object.isRequired,
   logout: PropTypes.func.isRequired
 }
 
