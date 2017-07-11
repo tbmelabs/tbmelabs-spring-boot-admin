@@ -19,9 +19,14 @@ class App extends React.Component {
     const {isAuthenticated} = this.props.auth;
     const {logout, deleteFlashMessage} = this.props.actions;
 
+    var accessLevel = 0;
+    if (this.props.auth.user.accessLevel !== undefined) {
+      accessLevel = this.props.auth.user.accessLevel.id;
+    }
+
     return (
       <div>
-        <Navigation isAuthenticated={isAuthenticated} logout={logout}/>
+        <Navigation isAuthenticated={isAuthenticated} accessLevel={accessLevel} logout={logout}/>
         <div className='container'>
           <FlashMessageList messages={this.props.messages} deleteFlashMessage={deleteFlashMessage}/>
           {this.props.children}

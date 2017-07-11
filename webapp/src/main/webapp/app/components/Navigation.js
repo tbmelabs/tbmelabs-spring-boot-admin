@@ -6,9 +6,19 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {LinkContainer} from 'react-router-bootstrap';
 
+import {
+  ROLE_GUEST,
+  ROLE_USER,
+  ROLE_CONTENT_ADMIN,
+  ROLE_SERVER_ADMIN,
+  ROLE_APPLICATION_ADMIN
+} from '../utils/security/roles';
+
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -16,14 +26,24 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
+    this.handleNavigationSelect = this.handleNavigationSelect.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.logout = this.logout.bind(this);
   }
 
-  handleLogout(eventKey, event) {
-    if (eventKey === 'logout') {
-      event.preventDefault();
+  handleNavigationSelect(eventKey, event) {
+    event.preventDefault();
 
+    switch (eventKey) {
+      case 'restraveler':
+        this.context.router.history.push('/admin/restraveler');
+    }
+  }
+
+  handleLogout(eventKey, event) {
+    event.preventDefault();
+
+    if (eventKey === 'logout') {
       this.logout();
     }
   }
@@ -56,7 +76,11 @@ class Navigation extends React.Component {
 
     const authenticatedNav = (
       <div>
-        <Nav>
+        <Nav onSelect={this.handleNavigationSelect}>
+          {this.props.accessLevel >= ROLE_CONTENT_ADMIN ?
+            <NavDropdown title='Administration' id='nav-admin-dropdwon'>
+              <MenuItem eventKey='restraveler'>RESTraveler</MenuItem>
+            </NavDropdown> : null}
         </Nav>
         <Nav onSelect={this.handleLogout} pullRight>
           <LinkContainer to='#'>
@@ -86,6 +110,7 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  accessLevel: PropTypes.number.isRequired,
   logout: PropTypes.func.isRequired
 }
 

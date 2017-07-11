@@ -18,7 +18,7 @@ class Administration extends React.Component {
 
     return (
       <Switch>
-        <Route path='/administration/restraveler'>
+        <Route path='/admin/restraveler'>
           <RESTraveler travelTo={travelTo}/>
         </Route>
       </Switch>
@@ -27,11 +27,11 @@ class Administration extends React.Component {
 }
 
 Administration.propTypes = {
-  actions: PropTypes.obj.isRequired
+  actions: PropTypes.object.isRequired
 }
 
 Administration.contextTypes = {
-  router: PropTypes.obj.isRequired
+  router: PropTypes.object.isRequired
 }
 
 function mapDispatchToProps(dispatch) {

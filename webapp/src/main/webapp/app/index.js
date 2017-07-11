@@ -25,10 +25,11 @@ const store = createStore(
   )
 );
 
-if (localStorage.auth_token) {
-  setAuthorizationToken(localStorage.auth_token);
-  store.dispatch(setCurrentUser(jwtDecode(localStorage.auth_token)));
-}
+// TODO: Relogin user on returning to site
+// if (localStorage.auth_token) {
+//   setAuthorizationToken(localStorage.auth_token);
+//   store.dispatch(setCurrentUser(jwtDecode(localStorage.auth_token)));
+// }
 
 render(
   <Provider store={store}>
