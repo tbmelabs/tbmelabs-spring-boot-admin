@@ -12,6 +12,8 @@ import Button from 'react-bootstrap/lib/Button';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
+import isEmpty from 'validate.io-empty';
+
 require('bootstrap/dist/css/bootstrap.css');
 
 class RESTraveler extends React.Component {
@@ -40,7 +42,8 @@ class RESTraveler extends React.Component {
 
   onBack(event) {
     const history = this.state.history;
-    const lastLocation = history.pop();
+    history.pop();
+    const lastLocation = history[history.length - 1];
 
     this.setState({history: history});
     this.travel(lastLocation, true);
@@ -59,17 +62,25 @@ class RESTraveler extends React.Component {
 
     this.props.travelTo(location).then(
       response => {
-        const rawLinks = response.data._links;
-        const links = Object.keys(rawLinks).map((key) => {
-          return {[key]: rawLinks[key].href};
-        });
+        var links = [];
+        if (response.data._links !== undefined) {
+          const rawLinks = response.data._links;
+          links = Object.keys(rawLinks).map((key) => {
+            return {[key]: rawLinks[key].href};
+          });
+        }
+
+        var data = [];
+        if (response.data._embedded !== undefined) {
+          const rawData = response.data._embedded;
+          data = rawData[Object.keys(rawData)[0]];
+        }
 
         if (!isStepBack) {
           history.push(location);
         }
 
-        // data:, links:,
-        this.setState({filter: 'id', history: history, links: links, errors: {}});
+        this.setState({currentUrl: location, data: data, filter: 'id', history: history, links: links, errors: {}});
       },
       error => this.setState({errors: {request: error.response.data.message}})
     );
@@ -110,6 +121,12 @@ class RESTraveler extends React.Component {
           <Col sm={1}>
             <FormControl componentClass='input' name='limit' type='text' value={this.state.limit}
                          onChange={this.onChange}/>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <CollapsableAlert collapse={isEmpty(this.state.data)} style='warning' title='No data found: '
+                              message='Travel to any location first.'/>
           </Col>
         </Row>
       </Grid>
