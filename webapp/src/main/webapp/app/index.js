@@ -8,13 +8,11 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
+import axios from 'axios';
 import setAuthorizationToken from './utils/setAuthorizationToken';
-
-import jwtDecode from 'jwt-decode';
-import {setCurrentUser} from './actions/authActions';
+import {setCurrentUser, logout} from './actions/authActions';
 
 import {HashRouter} from 'react-router-dom';
-
 import Router from './Router';
 
 const store = createStore(
@@ -25,16 +23,20 @@ const store = createStore(
   )
 );
 
-// TODO: Relogin user on returning to site
-// if (localStorage.auth_token) {
-//   setAuthorizationToken(localStorage.auth_token);
-//   store.dispatch(setCurrentUser(jwtDecode(localStorage.auth_token)));
-// }
+const renderApplication = () => {
+  render(
+    <Provider store={store}>
+      <HashRouter >
+        <Router/>
+      </HashRouter>
+    </Provider>, document.getElementById('app'));
+}
 
-render(
-  <Provider store={store}>
-    <HashRouter >
-      <Router/>
-    </HashRouter>
-  </Provider>, document.getElementById('app')
-);
+setAuthorizationToken(localStorage.auth_token);
+if (localStorage.auth_token) {
+  axios.get('/profile').then(
+    response => store.dispatch(setCurrentUser(response.data)).then(renderApplication())
+  ).catch(error => logout());
+} else {
+  renderApplication();
+}

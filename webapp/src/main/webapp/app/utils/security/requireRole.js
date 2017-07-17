@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import requireAuth from './requireAuth';
-
 import {addFlashMessage} from '../../actions/flashMessageActions';
 
 export default function (ComposedComponent, requiredLevel) {
@@ -20,7 +18,8 @@ export default function (ComposedComponent, requiredLevel) {
           type: 'danger',
           text: 'You have insufficent permissions to access this page!'
         });
-        this.context.router.history.back();
+
+        this.context.router.history.push('/login');
       }
     }
 
