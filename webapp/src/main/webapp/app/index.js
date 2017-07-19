@@ -36,7 +36,7 @@ setAuthorizationToken(localStorage.auth_token);
 if (localStorage.auth_token) {
   axios.get('/profile').then(
     response => store.dispatch(setCurrentUser(response.data)).then(renderApplication())
-  ).catch(error => logout());
+  ).catch(error => store.dispatch(logout()).then(renderApplication()));
 } else {
   renderApplication();
 }

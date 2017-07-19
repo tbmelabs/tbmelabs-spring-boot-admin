@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 
 import {travelTo} from '../../actions/RESTravelerActions';
 
-import RESTraveler from '../../components/administration/RESTraveler';
+import RESTraveler from '../../components/administration/restraveler/RESTraveler';
 
 class Administration extends React.Component {
   render() {

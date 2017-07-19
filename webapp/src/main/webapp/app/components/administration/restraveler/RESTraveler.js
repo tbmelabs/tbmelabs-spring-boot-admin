@@ -3,7 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import CollapsableAlert from '../common/alert/CollapsableAlert';
+import CollapsableAlert from '../../common/alert/CollapsableAlert';
+import SortingTable from './SortingTable';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -23,7 +24,6 @@ class RESTraveler extends React.Component {
     this.state = {
       currentUrl: '/rest/api',
       data: [],
-      filter: 'id',
       links: [],
       limit: 0,
       history: [],
@@ -87,12 +87,17 @@ class RESTraveler extends React.Component {
   }
 
   render() {
+    const data = this.state.data;
+
     return (
       <Grid>
         <Row>
           <CollapsableAlert collapse={!!this.state.errors.form} style='danger' title='An error occured: '
                             message={this.state.errors.form}/>
         </Row>
+
+        {this.state.errors.form ? <hr/> : null}
+
         <Row>
           <Col sm={5}>
             <Button disabled={this.state.history.length === 1} onClick={this.onBack}>Back</Button>
@@ -101,8 +106,8 @@ class RESTraveler extends React.Component {
             <FormControl componentClass='select' placeholder='default' onChange={this.onSelect}>
               <option key='default' value='default'>Travel to..</option>
               {
-                this.state.links.map((link) => {
-                  return Object.keys(link).map((key) => {
+                this.state.links.map(link => {
+                  return Object.keys(link).map(key => {
                     const name = key.charAt(0).toUpperCase() + key.slice(1);
                     const value = link[key];
 
@@ -123,11 +128,20 @@ class RESTraveler extends React.Component {
                          onChange={this.onChange}/>
           </Col>
         </Row>
+
+        <hr/>
+
         <Row>
           <Col>
-            <CollapsableAlert collapse={isEmpty(this.state.data)} style='warning' title='No data found: '
+            <CollapsableAlert collapse={isEmpty(data)} style='warning' title='No data found: '
                               message='Travel to any location first.'/>
           </Col>
+        </Row>
+        <Row>
+          {
+            isEmpty(data) ? null :
+              <SortingTable data={data}/>
+          }
         </Row>
       </Grid>
     );
