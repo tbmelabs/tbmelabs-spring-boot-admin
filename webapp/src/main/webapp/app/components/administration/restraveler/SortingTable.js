@@ -41,9 +41,7 @@ class SortingTable extends React.Component {
       newOrder = SORT_DESC;
     }
 
-    this.setState({sort: key, order: newOrder}, () => {
-      this.sortData();
-    });
+    this.setState({sort: key, order: newOrder}, this.sortData);
   }
 
   sortData() {
