@@ -3,6 +3,8 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import CollapsableAlert from '../common/alert/CollapsableAlert';
 
 import Form from 'react-bootstrap/lib/Form';
@@ -237,6 +239,10 @@ class RegistrationForm extends React.Component {
 
         <Button type='submit' disabled={isLoading || !isValid}
                 onClick={!isLoading && isValid ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
+
+        <p className='pull-right'>
+          <Link to='/login'>I already have an account.</Link>
+        </p>
       </Form>
     );
   }

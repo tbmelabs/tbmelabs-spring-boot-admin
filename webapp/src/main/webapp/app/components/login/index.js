@@ -117,7 +117,10 @@ class LoginForm extends React.Component {
         <Button type='submit' disabled={isLoading}
                 onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign in'}</Button>
 
-        <Link className='pull-right' to='/login/request-password-reset'>Forgot your password?</Link>
+        <p className='pull-right'>
+          <Link to='/register'>I have no account yet.</Link> Or <Link to='/login/request-password-reset'>I forgot
+          my password</Link>
+        </p>
       </Form>
     );
   }
