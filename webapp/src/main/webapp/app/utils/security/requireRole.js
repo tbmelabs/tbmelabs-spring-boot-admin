@@ -12,8 +12,9 @@ export default function (ComposedComponent, requiredLevel) {
   class Authenticate extends React.Component {
     componentWillMount() {
       const {addFlashMessage} = this.props.actions;
+      const {isAuthenticated, user} = this.props;
 
-      if (!this.props.isAuthenticated || this.props.accessLevel < requiredLevel) {
+      if (!isAuthenticated || user.accessLevel.id < requiredLevel) {
         addFlashMessage({
           type: 'danger',
           text: 'You have insufficent permissions to access this page!'
@@ -24,7 +25,9 @@ export default function (ComposedComponent, requiredLevel) {
     }
 
     componentWillUpdate(nextProps) {
-      if (!nextProps.isAuthenticated || nextProps.accessLevel < requiredLevel) {
+      const {isAuthenticated, user} = nextProps;
+
+      if (!isAuthenticated || user.accessLevel.id < requiredLevel) {
         this.context.router.history.back();
       }
     }
@@ -38,7 +41,7 @@ export default function (ComposedComponent, requiredLevel) {
 
   Authenticate.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    accessLevel: PropTypes.number.isRequired,
+    user: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired
   }
 
@@ -49,7 +52,7 @@ export default function (ComposedComponent, requiredLevel) {
   function mapStateToProps(state) {
     return {
       isAuthenticated: state.auth.isAuthenticated,
-      accessLevel: state.auth.user.accessLevel.id
+      user: state.auth.user
     };
   }
 

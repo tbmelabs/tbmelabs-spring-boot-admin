@@ -35,8 +35,10 @@ const renderApplication = () => {
 setAuthorizationToken(localStorage.auth_token);
 if (localStorage.auth_token) {
   axios.get('/profile').then(
-    response => store.dispatch(setCurrentUser(response.data)).then(renderApplication())
-  ).catch(error => store.dispatch(logout()).then(renderApplication()));
+    response => store.dispatch(setCurrentUser(response.data)).then(renderApplication)
+  ).catch(
+    error => store.dispatch(logout()).then(renderApplication)
+  );
 } else {
   renderApplication();
 }
