@@ -6,7 +6,7 @@
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%-4d [%t] %-5p %c - %m%n" />
 			<Filters>
-				<ThresholdFilter level="info" />
+				<ThresholdFilter level="debug" />
 			</Filters>
 		</Console>
 	</Appenders>
@@ -20,6 +20,12 @@
 		<!-- Debug web requests -->
 		<category name="org.springframework.security">
 			<priority value="debug" />
+		</category>
+
+		<!-- Remove zuul "spam" (pings) from debug log -->
+		<category
+			name="org.apache.http.impl.conn.PoolingHttpClientConnectionManager">
+			<priority value="warn" />
 		</category>
 	</Loggers>
 </Configuration>
