@@ -3,9 +3,9 @@
 	<!-- System (log4j) properties -->
 	<!-- Can be replaced by same named spring variables -->
 	<Properties>
-		<Property name="logOutputDirectory">/var/log/spring-oauth2/authorization-server
+		<Property name="logOutputDirectory">/var/log/tbme-tv/authorization-server
 		</Property>
-		<Property name="logBackupDirectory">/var/log/spring-oauth2/authorization-server/backups
+		<Property name="logBackupDirectory">/var/log/tbme-tv/authorization-server/backups
 		</Property>
 	</Properties>
 

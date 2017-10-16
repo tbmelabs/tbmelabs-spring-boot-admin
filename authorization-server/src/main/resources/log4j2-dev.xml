@@ -6,7 +6,7 @@
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout pattern="%-4d [%t] %-5p %c - %m%n" />
 			<Filters>
-				<ThresholdFilter level="info" />
+				<ThresholdFilter level="debug" />
 			</Filters>
 		</Console>
 	</Appenders>
