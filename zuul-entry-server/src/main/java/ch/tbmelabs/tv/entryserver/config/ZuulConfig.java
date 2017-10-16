@@ -16,7 +16,7 @@ public class ZuulConfig {
 
   @Configuration
   @Profile("!dev")
-  @PropertySource({ "classpath:zuul.properties", "classpath:zuul-dev.properties" })
+  @PropertySource({ "classpath:zuul.properties" })
   public class ZuulPropertyLoader {
   }
 }
