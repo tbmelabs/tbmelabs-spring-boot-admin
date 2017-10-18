@@ -57,6 +57,7 @@ public class User extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(max = 64)
+  @Column(unique = true)
   private String username;
 
   @NotEmpty
