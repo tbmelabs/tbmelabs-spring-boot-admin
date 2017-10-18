@@ -3,13 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.tbmelabs.tv</groupId>
 	<artifactId>eureka-service-discovery</artifactId>
-	<packaging>war</packaging>
 
 	<name>TBME Labs TV | Eureka-Discovery-Server</name>
 	<description>Eureka microservice manager based on Spring-Cloud integration.</description>
 
 	<properties>
-		<start-class>ch.tbmelabs.tv.discoveryserver.Application</start-class>
+		<start-class>ch.tbmelabs.tv.servicediscovery.Application</start-class>
 	</properties>
 
 	<parent>
@@ -66,30 +65,33 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
 				<configuration>
 					<addResources>true</addResources>
+					<finalName>${project.build.finalName}-bootable</finalName>
+					<goal>repackage</goal>
 					<mainClass>${start-class}</mainClass>
 				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
-			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+			<!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.0.0</version>
+
 				<configuration>
-					<archive>
-						<manifestEntries>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-						</manifestEntries>
-					</archive>
+					<baseImage>java:8</baseImage>
+					<entryPoint>["java","-jar","/${project.build.finalName}-bootable.jar"]</entryPoint>
+					<imageName>${project.artifactId}</imageName>
+
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}-bootable.jar</include>
+						</resource>
+					</resources>
 				</configuration>
 			</plugin>
 		</plugins>

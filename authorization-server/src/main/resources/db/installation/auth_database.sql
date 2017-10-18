@@ -1,6 +1,3 @@
--- initial database create
-CREATE DATABASE auth_server_database;
-
 -- user configuration
 CREATE USER auth_database_user WITH PASSWORD 'auth_database_user_password';
 GRANT CREATE, CONNECT ON DATABASE auth_server_database TO auth_database_user;
@@ -121,7 +118,7 @@ CREATE TABLE client_has_authorities (
 );
 
 ALTER TABLE ONLY client_has_authorities
-    ADD CONSTRAINT client_has_authorities_pkey PRIMARY KEY (client_id, role_id);
+    ADD CONSTRAINT client_has_authorities_pkey PRIMARY KEY (client_id, client_authority_id);
 
 ALTER TABLE ONLY client_has_authorities
     ADD CONSTRAINT client_has_authorities_client FOREIGN KEY (client_id) REFERENCES clients(id);

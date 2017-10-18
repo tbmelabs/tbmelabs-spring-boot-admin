@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
@@ -30,7 +31,6 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.sun.istack.internal.NotNull;
 
 import ch.tbmelabs.tv.authenticationserver.resource.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.authenticationserver.resource.association.clientgranttype.ClientGrantTypeAssociation;

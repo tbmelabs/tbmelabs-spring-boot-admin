@@ -36,9 +36,9 @@ public class ZuulAccessFilter extends ZuulFilter {
     HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
     HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-    LOGGER.info("REQUEST :: < " + request.getScheme() + " " + request.getLocalAddr() + ":" + request.getLocalPort());
-    LOGGER.info("REQUEST :: < " + request.getMethod() + " " + request.getRequestURI() + " " + request.getProtocol());
-    LOGGER.info("RESPONSE:: > HTTP:" + response.getStatus());
+    LOGGER.info("REQUEST  :: < " + request.getScheme() + " " + request.getLocalAddr() + ":" + request.getLocalPort());
+    LOGGER.info("REQUEST  :: < " + request.getMethod() + " " + request.getRequestURI() + " " + request.getProtocol());
+    LOGGER.info("RESPONSE :: > HTTP:" + response.getStatus());
 
     return null;
   }

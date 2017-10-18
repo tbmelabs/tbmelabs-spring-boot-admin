@@ -1,0 +1,41 @@
+version: '3'
+services:
+  oauth_tokenstore:
+    image: redis
+  oauth_datasource:
+    image: postgres
+    environment:
+      - POSTGRES_DB=auth_server_database
+      - POSTGRES_PASSWORD=af2EszT2
+      - POSTGRES_USER=oauth_admin
+    volumes:
+      - ../authorization-server/src/main/resources/db/installation/auth_database.sql:/docker-entrypoint-initdb.d/init.sql
+  authorization-server:
+    image: authorization-server
+    depends_on:
+      - oauth_tokenstore
+      - oauth_datasource
+      - eureka-server
+    environment:
+      - SERVER_PORT=88
+      - APPLICATION_NAME=LOGIN
+      - EUREKA_DEFAULT_ZONE=http://eureka-server:8761/eureka
+      - PSQL_DATABASE_JDBC_URL=jdbc:postgresql://oauth_datasource:5432/auth_server_database
+      - PSQL_DATABASE_NAME=auth_server_database
+      - PSQL_USERNAME=auth_database_user
+      - PSQL_PASSWORD=auth_database_user_password
+      - REDIS_HOST=oauth_tokenstore
+      - REDIS_PORT=6379
+  eureka-server:
+    image: eureka-service-discovery
+    environment:
+      - APPLICATION_NAME=EUREKA
+      - EUREKA_DEFAULT_ZONE=http://localhost:8761/eureka
+  zuul-server:
+    image: zuul-entry-server
+    depends_on:
+     - eureka-server
+    environment:
+      - EUREKA_SERVER_URI=http://eureka-server:8761
+    ports:
+      - "80:80"

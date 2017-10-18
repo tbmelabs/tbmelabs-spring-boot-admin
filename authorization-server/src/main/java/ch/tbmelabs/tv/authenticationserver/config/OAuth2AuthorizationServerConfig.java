@@ -1,9 +1,6 @@
 package ch.tbmelabs.tv.authenticationserver.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import ch.tbmelabs.tv.authenticationserver.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.authenticationserver.resource.user.User;
@@ -24,8 +21,7 @@ import ch.tbmelabs.tv.authenticationserver.userdetails.UserDetailsServiceImpl;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
   @Autowired
-  @Qualifier("jdbcTokenStore")
-  private DataSource jdbcTokenStore;
+  private RedisTokenStore tokenStore;
 
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
@@ -46,7 +42,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
     endpoints.authenticationManager(authenticationManagerBean()).userDetailsService(userDetailsService)
-        .tokenStore(new JdbcTokenStore(jdbcTokenStore));
+        .tokenStore(tokenStore);
   }
 
   @Override
