@@ -38,7 +38,7 @@ services:
       - authorization-server
       - eureka-server
     environment:
-      - EUREKA_SERVER_BASE_URI=http://eureka-server:8761
+      - EUREKA_DEFAULT_ZONE=http://eureka-server:8761/eureka
       - OAUTH2_USERINFO_URI=http://authorization-server:88/user
       - REDIS_HOST=oauth_tokenstore
       - REDIS_PORT=6379

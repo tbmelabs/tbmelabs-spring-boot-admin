@@ -8,8 +8,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
-import ch.tbmelabs.tv.entryserver.security.Role;
-
 @Configuration
 @EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
@@ -23,8 +21,12 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests().antMatchers("/eureka/**").hasAnyRole(Role.ROLE_EUREKA_DASHBOARD).anyRequest().permitAll()
+    // Allow anonymous requests to public (static) resources and
+    // login/registration services
+    http.authorizeRequests().antMatchers("/", "/public/**", "/login/**", "/register/**").anonymous().anyRequest()
+        .permitAll()
 
-        .and().authorizeRequests().anyRequest().anonymous().anyRequest().permitAll();
+        // Deny any other requested source unless user is authenticated
+        .and().authorizeRequests().anyRequest().authenticated();
   }
 }
