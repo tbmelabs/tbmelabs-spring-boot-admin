@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ch.tbmelabs.tv</groupId>
-	<artifactId>authorization-server</artifactId>
+	<artifactId>login-service</artifactId>
 
-	<name>TBME Labs TV | Authorization-Server</name>
-	<description>OAuth2 authorization server built on Spring.</description>
+	<name>TBME Labs TV | Login-Service</name>
+	<description>Trusted login server which manages routing to secure OAuth2 Client.</description>
 
 	<properties>
-		<start-class>ch.tbmelabs.tv.authenticationserver.Application</start-class>
+		<start-class>ch.tbmelabs.tv.loginservice.Application</start-class>
 	</properties>
 
 	<parent>
@@ -49,6 +49,12 @@
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,31 +65,6 @@
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
-		</dependency>
-
-		<!-- Shared resources -->
-		<dependency>
-			<groupId>ch.tbmelabs.tv</groupId>
-			<artifactId>shared-resources</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 	</dependencies>
 
