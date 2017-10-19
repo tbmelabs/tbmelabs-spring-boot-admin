@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.userrole;
+package ch.tbmelabs.tv.resource.authorization.association.userrole;
 
 import java.io.Serializable;
 

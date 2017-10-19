@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.clientgranttype;
+package ch.tbmelabs.tv.resource.authorization.association.clientgranttype;
 
 import java.io.Serializable;
 

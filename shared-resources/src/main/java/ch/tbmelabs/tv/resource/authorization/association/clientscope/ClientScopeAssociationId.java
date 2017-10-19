@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.clientscope;
+package ch.tbmelabs.tv.resource.authorization.association.clientscope;
 
 import java.io.Serializable;
 

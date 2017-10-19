@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.client;
+package ch.tbmelabs.tv.resource.authorization.client;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,10 +32,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import ch.tbmelabs.tv.authenticationserver.resource.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.authenticationserver.resource.association.clientgranttype.ClientGrantTypeAssociation;
-import ch.tbmelabs.tv.authenticationserver.resource.association.clientrole.ClientAuthorityAssociation;
-import ch.tbmelabs.tv.authenticationserver.resource.association.clientscope.ClientScopeAssociation;
+import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authorization.association.clientgranttype.ClientGrantTypeAssociation;
+import ch.tbmelabs.tv.resource.authorization.association.clientrole.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.resource.authorization.association.clientscope.ClientScopeAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

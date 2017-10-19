@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import ch.tbmelabs.tv.authenticationserver.resource.user.Role;
-import ch.tbmelabs.tv.authenticationserver.resource.user.User;
+import ch.tbmelabs.tv.resource.authorization.user.Role;
+import ch.tbmelabs.tv.resource.authorization.user.User;
 
 public class UserPrincipal implements UserDetails {
   private static final long serialVersionUID = 1L;

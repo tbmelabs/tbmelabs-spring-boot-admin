@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.clientrole;
+package ch.tbmelabs.tv.resource.authorization.association.userrole;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.authenticationserver.resource.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.authenticationserver.resource.client.Authority;
-import ch.tbmelabs.tv.authenticationserver.resource.client.Client;
+import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authorization.user.Role;
+import ch.tbmelabs.tv.resource.authorization.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,31 +27,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "client_has_authorities")
+@Table(name = "user_has_roles")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@IdClass(ClientAuthorityAssociationId.class)
-public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
+@IdClass(UserRoleAssociationId.class)
+public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
   @Id
   @NotNull
-  @Column(name = "client_id")
-  private Long clientId;
+  @Column(name = "user_id")
+  private Long userId;
 
   @Id
   @NotNull
-  @Column(name = "client_authority_id")
-  private Long clientAuthorityId;
+  @Column(name = "user_role_id")
+  private Long userRoleId;
 
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
-  private Client client;
+  @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
 
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "client_authority_id", referencedColumnName = "id")
-  private Authority clientAuthority;
+  @PrimaryKeyJoinColumn(name = "user_role_id", referencedColumnName = "id")
+  private Role userRole;
 }

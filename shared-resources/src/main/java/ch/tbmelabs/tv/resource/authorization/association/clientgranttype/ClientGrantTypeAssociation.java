@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.clientscope;
+package ch.tbmelabs.tv.resource.authorization.association.clientgranttype;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.authenticationserver.resource.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.authenticationserver.resource.client.Client;
-import ch.tbmelabs.tv.authenticationserver.resource.client.Scope;
+import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authorization.client.Client;
+import ch.tbmelabs.tv.resource.authorization.client.GrantType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,11 +27,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "client_has_scopes")
+@Table(name = "client_has_grant_types")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@IdClass(ClientScopeAssociationId.class)
-public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
+@IdClass(ClientGrantTypeAssociationId.class)
+public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
@@ -42,16 +42,16 @@ public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
 
   @Id
   @NotNull
-  @Column(name = "client_scope_id")
-  private Long clientScopeId;
+  @Column(name = "client_grant_type_id")
+  private Long clientGrantTypeId;
 
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
-  @JoinColumn(name = "client_scope_id", insertable = false, updatable = false)
+  @JoinColumn(name = "client_grant_type_id", insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "client_scope_id", referencedColumnName = "id")
-  private Scope scope;
+  @PrimaryKeyJoinColumn(name = "client_grant_type_id", referencedColumnName = "id")
+  private GrantType grantType;
 }

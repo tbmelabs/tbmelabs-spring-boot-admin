@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.authenticationserver.resource.association.userrole;
+package ch.tbmelabs.tv.resource.authorization.association.clientscope;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.authenticationserver.resource.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.authenticationserver.resource.user.Role;
-import ch.tbmelabs.tv.authenticationserver.resource.user.User;
+import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authorization.client.Client;
+import ch.tbmelabs.tv.resource.authorization.client.Scope;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,31 +27,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_has_roles")
+@Table(name = "client_has_scopes")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@IdClass(UserRoleAssociationId.class)
-public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
+@IdClass(ClientScopeAssociationId.class)
+public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
   @Id
   @NotNull
-  @Column(name = "user_id")
-  private Long userId;
+  @Column(name = "client_id")
+  private Long clientId;
 
   @Id
   @NotNull
-  @Column(name = "user_role_id")
-  private Long userRoleId;
+  @Column(name = "client_scope_id")
+  private Long clientScopeId;
 
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
-  private User user;
+  @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
+  private Client client;
 
-  @JoinColumn(insertable = false, updatable = false)
+  @JoinColumn(name = "client_scope_id", insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "user_role_id", referencedColumnName = "id")
-  private Role userRole;
+  @PrimaryKeyJoinColumn(name = "client_scope_id", referencedColumnName = "id")
+  private Scope scope;
 }
