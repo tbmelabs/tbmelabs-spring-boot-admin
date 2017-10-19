@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authentication.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.resource.authorization.association.userrole.UserRoleAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

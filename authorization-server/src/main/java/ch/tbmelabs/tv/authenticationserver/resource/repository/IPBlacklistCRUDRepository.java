@@ -3,9 +3,8 @@ package ch.tbmelabs.tv.authenticationserver.resource.repository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import ch.tbmelabs.tv.resource.authorization.client.Client;
+import ch.tbmelabs.tv.resource.authentication.bruteforcing.BlacklistedIp;
 
 @Repository
-public interface ClientCRUDRepository extends CrudRepository<Client, Long> {
-  Client findByName(String name);
+public interface IPBlacklistCRUDRepository extends CrudRepository<BlacklistedIp, Long> {
 }

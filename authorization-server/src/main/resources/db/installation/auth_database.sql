@@ -204,3 +204,41 @@ ALTER TABLE ONLY client_has_scopes
 
 GRANT SELECT
 	ON client_has_scopes TO auth_database_user;
+
+-----------------------------------
+---	  AUTHENTICATION LOGGING  	---
+-----------------------------------
+CREATE TABLE authentication_log (
+	id bigserial NOT NULL,
+	created timestamp without time zone NOT NULL,
+	last_updated timestamp without time zone NOT NULL,
+	state character(3) NOT NULL,
+	ip character(45) NOT NULL,
+	message character varying(256),
+	user_id bigint NOT NULL
+);
+
+ALTER TABLE ONLY authentication_log
+    ADD CONSTRAINT authentication_log_pkey PRIMARY KEY (id);
+
+ALTER TABLE ONLY authentication_log
+	ADD CONSTRAINT authentication_for_user FOREIGN KEY (user_id) REFERENCES users(id);
+
+GRANT INSERT
+	ON authentication_log TO auth_database_user;
+
+-----------------------------------
+---	  AUTHENTICATION LOGGING  	---
+-----------------------------------
+CREATE TABLE blacklisted_ips (
+	id bigserial NOT NULL,
+	created timestamp without time zone NOT NULL,
+	last_updated timestamp without time zone NOT NULL,
+	ip character(45) NOT NULL
+);
+
+ALTER TABLE ONLY blacklisted_ips
+    ADD CONSTRAINT blacklisted_ips_pkey PRIMARY KEY (id);
+
+GRANT INSERT
+	ON blacklisted_ips TO auth_database_user;

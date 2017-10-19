@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.resource.authorization;
+package ch.tbmelabs.tv.resource.authentication;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authentication.NicelyDocumentedJDBCResource;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

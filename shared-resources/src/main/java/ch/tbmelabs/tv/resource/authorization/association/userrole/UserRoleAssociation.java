@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authentication.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.resource.authorization.user.Role;
 import ch.tbmelabs.tv.resource.authorization.user.User;
 import lombok.AllArgsConstructor;

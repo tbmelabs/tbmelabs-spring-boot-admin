@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import ch.tbmelabs.tv.resource.authorization.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.resource.authentication.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.resource.authorization.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.resource.authorization.association.clientrole.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.resource.authorization.association.clientscope.ClientScopeAssociation;
