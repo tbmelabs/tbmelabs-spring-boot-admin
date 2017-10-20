@@ -37,7 +37,7 @@ services:
       - authorization-server
       - eureka-server
     environment:
-      - CLIENT_ID=eureka
+      - CLIENT_ID=zuul
       - CLIENT_SECRET=D3937202-6620-4116-88EF-93615CD80358
       - EUREKA_DEFAULT_ZONE=http://eureka-server:8761/eureka
       - OAUTH2_SERVER_BASE_URI=http://authorization-server:88

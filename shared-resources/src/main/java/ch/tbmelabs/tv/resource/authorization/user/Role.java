@@ -49,7 +49,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   private Long id;
 
   @NotEmpty
-  @Length(max = 8)
+  @Length(max = 16)
   private String name;
 
   public Role(String name) {

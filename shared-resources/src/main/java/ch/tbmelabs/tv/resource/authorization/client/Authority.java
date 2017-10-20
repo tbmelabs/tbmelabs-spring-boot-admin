@@ -43,7 +43,7 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   private Long id;
 
   @NotEmpty
-  @Length(max = 32)
+  @Length(max = 16)
   private String name;
 
   @Override

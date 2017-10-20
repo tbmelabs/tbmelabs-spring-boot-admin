@@ -30,7 +30,7 @@ CREATE TABLE user_roles (
     id bigserial NOT NULL,
     created timestamp without time zone NOT NULL,
     last_updated timestamp without time zone NOT NULL,
-    name character varying(8) NOT NULL
+    name character varying(16) NOT NULL
 );
 
 ALTER TABLE ONLY user_roles
@@ -98,7 +98,7 @@ CREATE TABLE client_authorities (
     id bigserial NOT NULL,
     created timestamp without time zone NOT NULL,
     last_updated timestamp without time zone NOT NULL,
-    name character varying(8) NOT NULL
+    name character varying(16) NOT NULL
 );
 
 ALTER TABLE ONLY client_authorities
