@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 import ch.tbmelabs.tv.authenticationserver.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.authenticationserver.userdetails.UserDetailsServiceImpl;
-import ch.tbmelabs.tv.resource.authorization.user.User;
+import ch.tbmelabs.tv.resource.authentication.user.User;
 
 @Configuration
 @EnableAuthorizationServer

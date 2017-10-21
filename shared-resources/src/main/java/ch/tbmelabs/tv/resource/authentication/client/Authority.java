@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.resource.authentication.bruteforcing;
+package ch.tbmelabs.tv.resource.authentication.client;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -23,27 +24,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "blacklisted_ips")
+@Table(name = "client_authorities")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BlacklistedIp extends NicelyDocumentedJDBCResource {
+public class Authority extends NicelyDocumentedJDBCResource implements GrantedAuthority {
   @Transient
   private static final long serialVersionUID = 1L;
 
+  @Transient
+  public static final String ROLE_PREFIX = "ROLE_";
+
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
-      @Parameter(name = "sequence_name", value = "blacklisted_ips_id_seq"),
+      @Parameter(name = "sequence_name", value = "client_authorities_id_seq"),
       @Parameter(name = "increment_size", value = "1") })
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
 
   @NotEmpty
-  @Length(max = 45)
-  @Column(columnDefinition = "bpchar(45")
-  private String ip;
+  @Length(max = 16)
+  private String name;
 
-  public BlacklistedIp(String ip) {
-    this.ip = ip;
+  @Override
+  public String getAuthority() {
+    return ROLE_PREFIX + getName();
   }
 }

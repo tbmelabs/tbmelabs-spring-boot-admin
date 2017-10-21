@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import ch.tbmelabs.tv.resource.authentication.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.resource.authorization.user.User;
+import ch.tbmelabs.tv.resource.authentication.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -54,6 +54,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(max = 45)
+  @Column(columnDefinition = "bpchar(45)")
   private String ip;
 
   @Length(max = 256)

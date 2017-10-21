@@ -7,7 +7,7 @@ import ch.tbmelabs.tv.authenticationserver.resource.repository.AuthenticationLog
 import ch.tbmelabs.tv.authenticationserver.resource.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.resource.authentication.logging.AuthenticationLog;
 import ch.tbmelabs.tv.resource.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.resource.authorization.user.User;
+import ch.tbmelabs.tv.resource.authentication.user.User;
 
 @Component
 public class AuthenticationAttemptLogger {

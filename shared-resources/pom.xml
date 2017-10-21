@@ -7,10 +7,6 @@
 	<name>TBME Labs TV | Shared-Resources</name>
 	<description>Shared datasource models (postgresql recommended).</description>
 
-	<properties>
-		<org.hibernate.hibernate-annotations-version>3.5.6-Final</org.hibernate.hibernate-annotations-version>
-	</properties>
-
 	<parent>
 		<groupId>ch.tbmelabs</groupId>
 		<artifactId>tv</artifactId>
@@ -30,11 +26,10 @@
 			<artifactId>javax.transaction-api</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations -->
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>${org.hibernate.hibernate-annotations-version}</version>
+			<artifactId>hibernate-core</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.entryserver.config;
+package ch.tbmelabs.tv.loginservice.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +21,10 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    // Allow anonymous requests to public (static) resources and
-    // login/registration services
-    http.authorizeRequests().antMatchers("/", "/public/**", "/login/**", "/register/**", "/routes").anonymous()
-        .anyRequest().permitAll()
+    // Prepare security for login endpoint
+    http.authorizeRequests().antMatchers("/").anonymous().anyRequest().permitAll()
 
-        // Deny any other requested source unless user is authenticated
-        .and().authorizeRequests().anyRequest().authenticated();
+        // Configure login endpoint
+        .and().formLogin().loginProcessingUrl("/");
   }
 }

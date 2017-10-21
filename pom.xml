@@ -43,8 +43,8 @@
 		<module>shared-resources</module>
 		<module>eureka-service-discovery</module>
 		<module>authorization-server</module>
-		<module>zuul-entry-server</module>
 		<module>login-service</module>
+		<module>zuul-entry-server</module>
 	</modules>
 
 	<reporting>
