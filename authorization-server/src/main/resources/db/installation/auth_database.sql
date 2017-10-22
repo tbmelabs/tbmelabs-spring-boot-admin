@@ -142,6 +142,13 @@ CREATE TABLE client_grant_types (
 ALTER TABLE ONLY client_grant_types
     ADD CONSTRAINT client_grant_types_pkey PRIMARY KEY (id);
 
+-- Add default values
+INSERT INTO client_grant_types (created, last_updated, name)
+	VALUES (now(), now(), 'authorization_code'),
+	(now(), now(), 'refresh_token'),
+	(now(), now(), 'implicit'),
+	(now(), now(), 'password');
+
 GRANT SELECT
 	ON client_grant_types TO auth_database_user;
 
@@ -166,7 +173,7 @@ ALTER TABLE ONLY client_has_grant_types
 
 GRANT SELECT
 	ON client_has_grant_types TO auth_database_user;
-	
+
 -----------------------------------
 ---			  SCOPES			---
 -----------------------------------
@@ -242,3 +249,24 @@ ALTER TABLE ONLY blacklisted_ips
 
 GRANT INSERT
 	ON blacklisted_ips TO auth_database_user;
+
+-----------------------------------
+---	 Add trusted login client	---
+-----------------------------------
+INSERT INTO client_authorities (created, last_updated, name)
+	VALUES (now(), now(), 'LOGIN_SERVICE');
+
+INSERT INTO client_scopes (created, last_updated, name)
+	VALUES (now(), now(), 'AUTHORIZE_USER');
+
+INSERT INTO clients (created, last_updated, name, secret, secret_required, auto_approve, access_token_validity, refresh_token_validity)
+	VALUES (now(), now(), 'login', 'C0F6463B-B1E7-4AFE-A63D-BE90C9187E82', true, false, 3600, 43200);
+
+INSERT INTO client_has_grant_types (created, last_updated, client_id, client_grant_type_id)
+	VALUES (now(), now(), 1, 4);
+
+INSERT INTO client_has_authorities (created, last_updated, client_id, client_authority_id)
+	VALUES (now(), now(), 1, 1);
+
+INSERT INTO client_has_scopes (created, last_updated, client_id, client_scope_id)
+	VALUES (now(), now(), 1, 1);

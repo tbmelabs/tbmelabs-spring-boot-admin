@@ -41,8 +41,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-    endpoints.authenticationManager(authenticationManagerBean()).userDetailsService(userDetailsService)
-        .tokenStore(tokenStore);
+    endpoints.authenticationManager(authenticationManagerBean()).tokenStore(tokenStore);
   }
 
   @Override

@@ -3,28 +3,33 @@ package ch.tbmelabs.tv.loginservice.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import ch.tbmelabs.tv.loginservice.filter.OAuth2UsernamePasswordFilter;
 
 @Configuration
 @EnableResourceServer
 public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
-  @Autowired
-  private RedisTokenStore tokenStore;
+  private static final String LOGIN_PROCESSING_URL = "/";
 
-  @Override
-  public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-    resources.tokenStore(tokenStore);
-  }
+  @Autowired
+  private OAuth2UsernamePasswordFilter oauth2UsernamePasswordFilter;
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    // Prepare security for login endpoint
-    http.authorizeRequests().antMatchers("/").anonymous().anyRequest().permitAll()
+    // Add OAuth2 authentication processing filter
+    http.addFilterBefore(oauth2UsernamePasswordFilter, UsernamePasswordAuthenticationFilter.class)
+
+        // Disable sessions
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+        // Ignore already authenticated request
+        .and().authorizeRequests().anyRequest().anonymous().anyRequest().permitAll()
 
         // Configure login endpoint
-        .and().formLogin().loginProcessingUrl("/");
+        .and().formLogin().loginProcessingUrl(LOGIN_PROCESSING_URL);
   }
 }
