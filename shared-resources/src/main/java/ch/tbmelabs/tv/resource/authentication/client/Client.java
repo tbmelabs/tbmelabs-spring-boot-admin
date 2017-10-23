@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.resource.authentication.client;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -148,8 +149,8 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
 
   @Override
   public Set<String> getResourceIds() {
-    // TODO Auto-generated method stub
-    return null;
+    // TODO
+    return new HashSet<>();
   }
 
   @Override
@@ -222,7 +223,7 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
 
   @Override
   public Map<String, Object> getAdditionalInformation() {
-    // TODO Auto-generated method stub
-    return null;
+    // TODO
+    return new HashMap<>();
   }
 }

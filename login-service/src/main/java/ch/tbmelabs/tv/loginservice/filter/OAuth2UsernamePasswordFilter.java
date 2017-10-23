@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.loginservice.filter;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 import javax.servlet.FilterChain;
@@ -13,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,10 +57,10 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
 
-    HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl)
-        .setBasicAuthorizationHeader(clientId, clientSecret).addFormField("username", request.getParameter("username"))
-        .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password").connect()
-        .getResponse();
+    HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl, clientId,
+        clientSecret).addFormField("username", request.getParameter("username"))
+            .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password")
+            .connect();
 
     forwardResponse(response, connection);
 
@@ -71,27 +71,23 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
     LOGGER.info("Response from " + connection.getURL().toString() + " is " + connection.getResponseCode() + ":"
         + connection.getResponseMessage());
 
-    if (connection.getResponseCode() >= 200 && connection.getResponseCode() <= 226) {
+    if (connection.getResponseCode() == HttpStatus.SC_OK) {
       LOGGER.debug("Channeling " + InputStream.class + " to " + ServletOutputStream.class);
+
+      response.setStatus(connection.getResponseCode());
 
       byte[] buffer = new byte[2048];
       InputStream input = connection.getInputStream();
-      OutputStream output = response.getOutputStream();
+      ServletOutputStream output = response.getOutputStream();
 
       for (int length = 0; (length = input.read(buffer)) > 0;) {
         output.write(buffer, 0, length);
       }
 
-      response.setStatus(connection.getResponseCode());
-
-      // TODO: Check if this is even required
-      output.flush();
+      input.close();
+      output.close();
     } else {
-      LOGGER.debug("Sending error from client");
-
-      // TODO: Message is null?
-      response.sendError(connection.getResponseCode(), connection.getResponseMessage());
-      // response.sendError(connection.getResponseCode());
+      response.sendError(HttpStatus.SC_UNAUTHORIZED, "Bad credentials!");
     }
   }
 }
