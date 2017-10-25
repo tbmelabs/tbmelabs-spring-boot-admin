@@ -3,6 +3,8 @@ package ch.tbmelabs.tv.loginservice.filter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -12,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,11 +41,9 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   protected void initFilterBean() throws ServletException {
     LOGGER.debug("Checking instanciated " + OAuth2UsernamePasswordFilter.class);
 
-    // TODO: Secure connection if not in docker environment
-    // if (!StringUtils.containsIgnoreCase(authorizationProcessingUrl, "HTTPS"))
-    // {
-    // throw new IllegalArgumentException("OAuth2 URL must be secure (HTTPS)!");
-    // }
+    if (!StringUtils.containsIgnoreCase(authorizationProcessingUrl, "HTTPS")) {
+      LOGGER.warn("You are using an authorization server without SSL: This is very insecure!");
+    }
 
     if (clientId.isEmpty() || clientSecret.isEmpty()) {
       throw new IllegalArgumentException("Client must be identified be id and secret / login client must be trusted!");
@@ -52,6 +53,8 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
       throws IOException, ServletException {
+    checkArguments(req);
+
     LOGGER.info("Applying " + OAuth2UsernamePasswordFilter.class);
 
     HttpServletRequest request = (HttpServletRequest) req;
@@ -65,6 +68,16 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
     forwardResponse(response, connection);
 
     connection.disconnect();
+  }
+
+  private void checkArguments(ServletRequest request) {
+    LOGGER.debug("Checking request arguments");
+
+    List<String> requestParameters = Collections.list(request.getParameterNames());
+
+    if (!requestParameters.contains("username") || !requestParameters.contains("password")) {
+      throw new IllegalArgumentException("Please login with username and password.");
+    }
   }
 
   private void forwardResponse(HttpServletResponse response, HttpURLConnection connection) throws IOException {
