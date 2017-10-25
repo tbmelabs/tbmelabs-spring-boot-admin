@@ -1,0 +1,8 @@
+########################
+### REDIS TOKENSTORE ###
+########################
+
+FROM	redis
+EXPOSE	[docker-port]:[host-port]
+
+MAINTAINER TBME Labs

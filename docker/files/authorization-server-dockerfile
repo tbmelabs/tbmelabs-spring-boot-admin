@@ -1,0 +1,9 @@
+############################
+### AUTHORIZATION SERVER ###
+############################
+
+FROM	authorization-server
+EXPOSE	[docker-port]:[host-port]
+ENV		SERVER_PORT= EUREKA_DEFAULT_ZONE= MAX_LOGIN_ATTEMPTS= PSQL_DATABASE_JDBC_URL= PSQL_DATABASE_NAME=auth_server_database PSQL_USERNAME= PSQL_PASSWORD= REDIS_HOST= REDIS_PORT=
+
+MAINTAINER TBME Labs

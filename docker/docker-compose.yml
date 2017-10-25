@@ -30,19 +30,6 @@ services:
       - PSQL_PASSWORD=auth_database_user_password
       - REDIS_HOST=oauth_tokenstore
       - REDIS_PORT=6379
-  login-service:
-    image: login-service
-    depends_on:
-      - oauth_tokenstore
-      - authorization-server
-      - eureka-server
-    environment:
-      - SERVER_PORT=88
-      - APPLICATION_NAME=login
-      - CLIENT_ID=login
-      - CLIENT_SECRET=C0F6463B-B1E7-4AFE-A63D-BE90C9187E82
-      - EUREKA_DEFAULT_ZONE=http://eureka-server:8761/eureka
-      - OAUTH2_SERVER_BASE_URI=http://authorization-server:88
   zuul-server:
     image: zuul-entry-server
     depends_on:

@@ -1,0 +1,10 @@
+#######################################
+### AUTHORIZATION SERVER DATASOURCE ###
+#######################################
+
+FROM	postgres
+EXPOSE	[docker-port]:[host-port]
+ENV		POSTGRES_DB= POSTGRES_USER= POSTGRES_PASSWORD=
+VOLUMES	["../authorization-server/src/main/resources/db/installation/auth_database.sql:/docker-entrypoint-initdb.d/init.sql"]
+
+MAINTAINER TBME Labs

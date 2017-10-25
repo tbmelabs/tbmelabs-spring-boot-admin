@@ -1,0 +1,10 @@
+#####################
+### LOGIN SERVICE ###
+#####################
+
+FROM	login-service
+EXPOSE	[docker-port]:[host-port]
+ENV		SERVER_PORT= APPLICATION_NAME= CLIENT_ID= CLIENT_SECRET= EUREKA_DEFAULT_ZONE= OAUTH2_SERVER_BASE_URI=http://authorization-server:88
+
+
+MAINTAINER TBME Labs
