@@ -23,8 +23,8 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
   public void configure(HttpSecurity http) throws Exception {
     // Allow anonymous requests to public (static) resources and
     // login/registration services
-    http.authorizeRequests().antMatchers("/", "/public/**", "/login/**", "/register/**", "/routes").anonymous()
-        .anyRequest().permitAll()
+    http.authorizeRequests().antMatchers("/", "/public/**", "/login/**", "/register/**").anonymous().anyRequest()
+        .permitAll()
 
         // Deny any other requested source unless user is authenticated
         .and().authorizeRequests().anyRequest().authenticated();
