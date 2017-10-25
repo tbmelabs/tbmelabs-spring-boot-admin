@@ -26,25 +26,10 @@
 		<version>1.5.7.RELEASE</version>
 	</parent>
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Camden.SR7</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
 	<modules>
 		<module>shared-resources</module>
-		<module>eureka-service-discovery</module>
-		<module>authorization-server</module>
-		<module>login-service</module>
-		<module>zuul-entry-server</module>
+		<module>core-server</module>
+		<module>services</module>
 	</modules>
 
 	<reporting>
