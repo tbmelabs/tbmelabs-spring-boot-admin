@@ -1,8 +1,8 @@
 #app {
-    display: flex;
+  display: flex;
 }
 
 .container {
-    margin: auto;
-    max-width: 20%;
+  margin: auto;
+  max-width: 20%;
 }

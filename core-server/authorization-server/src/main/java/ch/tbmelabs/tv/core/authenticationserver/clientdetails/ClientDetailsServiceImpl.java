@@ -6,7 +6,7 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authenticationserver.resource.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.resource.authentication.client.Client;
+import ch.tbmelabs.tv.shared.resources.authentication.client.Client;
 
 @Service
 public class ClientDetailsServiceImpl implements ClientDetailsService {

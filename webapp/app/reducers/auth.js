@@ -1,22 +1,22 @@
 'use strict';
 
-import {SET_CURRENT_USER} from '../actions/types';
+import {SET_ACCESS_TOKEN} from '../actions/types';
 
-import isEmpty from 'lodash/isEmpty';
+import isEmpty from 'validator/lib/isEmpty';
 
 const initialState = {
-    isAuthenticated: false,
-    user: {}
+  isAuthenticated: false,
+  accessToken: ''
 };
 
 export default (state = initialState, action = {}) => {
-    switch (action.type) {
-        case SET_CURRENT_USER:
-            return {
-                isAuthenticated: !isEmpty(action.user),
-                user: action.user
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case SET_ACCESS_TOKEN:
+      return {
+        isAuthenticated: !isEmpty(action.token),
+        accessToken: action.token
+      };
+    default:
+      return state;
+  }
 }

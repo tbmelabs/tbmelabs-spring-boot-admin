@@ -15,85 +15,78 @@ import CollapsableAlert from '../common/CollapsableAlert';
 require('bootstrap/dist/css/bootstrap.css');
 
 class UsernamePasswordLogin extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            username: '',
-            password: '',
-            errors: {},
-            isLoading: false
-        };
+    this.state = {
+      username: '',
+      password: '',
+      errors: {},
+      isLoading: false
+    };
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
-    onChange(event) {
-        this.setState({[event.target.name]: event.target.value});
-    }
+  onChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
 
-    onSubmit(event) {
-        event.preventDefault();
+  onSubmit(event) {
+    event.preventDefault();
 
-        this.setState({errors: {}, isLoading: true});
+    this.setState({errors: {}, isLoading: true});
 
-        this.props.authenticateUser(this.state).then(
-            response=> {
-                console.log(response);
+    this.props.authenticateUser(this.state).then(
+      response => {
+        /*
+         * TODO: Reload? Or state handled per router..
+         */
+      }, error => {
+        this.setState({errors: {form: error.response.data.message}, isLoading: false});
+      }
+    );
+  }
 
-                /*
-                 * TODO: Reload? Or state handled per router..
-                 */
-            }, error=> {
-                console.log(error);
-                this.setState({errors: {form: error.response.data.errors}, isLoading: false});
+  render() {
+    const {isLoading} = this.state;
 
-                /*
-                 * TODO: Correctly parse HTTP 401..
-                 */
-            }
-        );
-    }
+    return (
+      <Form onSubmit={this.onSubmit} horizontal>
+        <CollapsableAlert style='danger' title='Login failed: ' message={this.state.errors.form}
+                          collapse={!!this.state.errors.form}/>
 
-    render() {
-        const {isLoading} = this.state;
+        <FormGroup controlId='username'>
+          <Col componentClass={ControlLabel}>
+            Username
+          </Col>
+          <Col>
+            <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
+            <FormControl.Feedback/>
+          </Col>
+        </FormGroup>
 
-        return (
-            <Form onSubmit={this.onSubmit} horizontal>
-                <CollapsableAlert style='danger' title='Login failed: ' message={this.state.errors.form}
-                                  collapse={!!this.state.errors.form}/>
+        <FormGroup controlId='password'>
+          <Col componentClass={ControlLabel}>
+            Password
+          </Col>
+          <Col>
+            <FormControl name='password' type='password' value={this.state.password}
+                         onChange={this.onChange}/>
+            <FormControl.Feedback/>
+          </Col>
+        </FormGroup>
 
-                <FormGroup controlId='username'>
-                    <Col componentClass={ControlLabel}>
-                        Username
-                    </Col>
-                    <Col>
-                        <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
-                        <FormControl.Feedback/>
-                    </Col>
-                </FormGroup>
-
-                <FormGroup controlId='password'>
-                    <Col componentClass={ControlLabel}>
-                        Password
-                    </Col>
-                    <Col>
-                        <FormControl name='password' type='password' value={this.state.password}
-                                     onChange={this.onChange}/>
-                        <FormControl.Feedback/>
-                    </Col>
-                </FormGroup>
-
-                <Button className='pull-right' type='submit' disabled={isLoading}
-                        onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign In'}</Button>
-            </Form>
-        );
-    }
+        <Button className='pull-right' type='submit' disabled={isLoading}
+                onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign In'}</Button>
+      </Form>
+    );
+  }
 }
 
 UsernamePasswordLogin.propTypes = {
-    authenticateUser: PropTypes.func.isRequired
+  authenticateUser: PropTypes.func.isRequired
 }
 
 export default UsernamePasswordLogin;

@@ -2,28 +2,34 @@
 
 import axios from 'axios';
 
-import {SET_CURRENT_USER} from './types';
+import {SET_ACCESS_TOKEN} from './types';
 
-export function setCurrentUser(user) {
-    return {
-        type: SET_CURRENT_USER,
-        user
-    };
+export function setAccessToken(token) {
+  return {
+    type: SET_ACCESS_TOKEN,
+    token
+  };
 }
 
 export function authenticateUser(data) {
-    var formData = new FormData();
-    formData.append('username', data.username);
-    formData.append('password', data.password);
+  var formData = new FormData();
+  formData.append('username', data.username);
+  formData.append('password', data.password);
 
-    return dispatch => {
-        return axios.post('/login', formData)
-            .then(response => {
-                console.log(response);
+  return dispatch => {
+    return axios.post('/login', formData)
+      .then(response => {
+        axios.defaults.headers.common['Authorization'] = response.data.token_type + response.data.access_token;
 
-                /*
-                 * TODO: Apply bearer token to axios
-                 */
-            });
-    }
+        dispatch(setAccessToken(response.data.access_token));
+      });
+  }
+}
+
+export function logout() {
+  return dispatch => {
+    axios.defaults.headers.common['Authorization'] = '';
+
+    dispatch(setAccessToken(''));
+  }
 }

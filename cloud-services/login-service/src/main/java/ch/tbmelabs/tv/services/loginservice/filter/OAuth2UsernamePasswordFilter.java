@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
+import org.apache.http.entity.ContentType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,6 +89,7 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
       LOGGER.debug("Channeling " + InputStream.class + " to " + ServletOutputStream.class);
 
       response.setStatus(connection.getResponseCode());
+      response.setContentType(ContentType.APPLICATION_JSON.getMimeType());
 
       byte[] buffer = new byte[2048];
       InputStream input = connection.getInputStream();

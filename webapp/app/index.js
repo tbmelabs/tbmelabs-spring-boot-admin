@@ -16,29 +16,29 @@ import {Route, Switch} from 'react-router-dom';
 import Login from './container/Login';
 
 const store = createStore(
-    reducers,
-    compose(
-        applyMiddleware(thunk),
-        window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
+  reducers,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
 );
 
 require('./styles/tbme-tv.css');
 
 class App extends React.Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <CookiesProvider>
-                    <BrowserRouter>
-                        <Switch>
-                            <Route path="/" component={Login}/>
-                        </Switch>
-                    </BrowserRouter>
-                </CookiesProvider>
-            </Provider>
-        );
-    }
+  render() {
+    return (
+      <Provider store={store}>
+        <CookiesProvider>
+          <BrowserRouter>
+            <Switch>
+              <Route path="/" component={Login}/>
+            </Switch>
+          </BrowserRouter>
+        </CookiesProvider>
+      </Provider>
+    );
+  }
 }
 
 render(<App/>, document.getElementById('app'));

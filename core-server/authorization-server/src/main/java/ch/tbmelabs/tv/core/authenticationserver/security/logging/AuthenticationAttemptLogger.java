@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 
 import ch.tbmelabs.tv.core.authenticationserver.resource.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authenticationserver.resource.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.resource.authentication.logging.AuthenticationLog;
-import ch.tbmelabs.tv.resource.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.resource.authentication.user.User;
+import ch.tbmelabs.tv.shared.resources.authentication.logging.AuthenticationLog;
+import ch.tbmelabs.tv.shared.resources.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
+import ch.tbmelabs.tv.shared.resources.authentication.user.User;
 
 @Component
 public class AuthenticationAttemptLogger {

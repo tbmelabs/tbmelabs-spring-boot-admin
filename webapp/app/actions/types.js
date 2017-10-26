@@ -1,3 +1,3 @@
 'use strict';
 
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';

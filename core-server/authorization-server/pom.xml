@@ -63,8 +63,8 @@
 
 		<!-- Shared resources -->
 		<dependency>
-			<groupId>ch.tbmelabs.tv</groupId>
-			<artifactId>shared-resources</artifactId>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>resources</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 
