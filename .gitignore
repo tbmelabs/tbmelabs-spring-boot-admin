@@ -51,3 +51,7 @@ captures/
 
 # Ignore local docker files
 dockerfile.local
+
+# NPM
+node_modules/
+public/
