@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=af2EszT2
       - POSTGRES_USER=oauth_admin
     volumes:
-      - ../authorization-server/src/main/resources/db/installation/auth_database.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../core-server/authorization-server/src/main/resources/db/installation/auth_database.sql:/docker-entrypoint-initdb.d/init.sql
   eureka-server:
     image: eureka-service-discovery
     environment:
