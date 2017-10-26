@@ -27,9 +27,9 @@
 	</parent>
 
 	<modules>
-		<module>shared-resources</module>
+		<module>shared</module>
 		<module>core-server</module>
-		<module>services</module>
+		<module>cloud-services</module>
 	</modules>
 
 	<reporting>
