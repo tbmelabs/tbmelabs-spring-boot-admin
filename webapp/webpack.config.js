@@ -15,7 +15,7 @@ var config = {
     module: {
         loaders: [{
             test: /\.js$/,
-            exclude: [NODE_DIR, TEST_DIR],
+            exclude: [NODE_DIR],
             include: [APP_DIR],
             loader: 'babel-loader',
             query: {
@@ -31,7 +31,10 @@ var config = {
             test: /\.css$/,
             loader: "style-loader!css-loader"
         }, {
-            test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+            test: /\.(jpe?g|png|svg|ai)$/,
+            loader: "file-loader?publicPath=public/"
+        }, {
+            test: /\.(woff|woff2|eot|ttf)$/,
             loader: 'url-loader?limit=100000'
         }]
     },
