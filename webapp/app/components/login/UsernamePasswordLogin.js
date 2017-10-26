@@ -36,7 +36,24 @@ class UsernamePasswordLogin extends Component {
     onSubmit(event) {
         event.preventDefault();
 
-        this.setState({isLoading: true});
+        this.setState({errors: {}, isLoading: true});
+
+        this.props.authenticateUser(this.state).then(
+            response=> {
+                console.log(response);
+
+                /*
+                 * TODO: Reload? Or state handled per router..
+                 */
+            }, error=> {
+                console.log(error);
+                this.setState({errors: {form: error.response.data.errors}, isLoading: false});
+
+                /*
+                 * TODO: Correctly parse HTTP 401..
+                 */
+            }
+        );
     }
 
     render() {
@@ -73,6 +90,10 @@ class UsernamePasswordLogin extends Component {
             </Form>
         );
     }
+}
+
+UsernamePasswordLogin.propTypes = {
+    authenticateUser: PropTypes.func.isRequired
 }
 
 export default UsernamePasswordLogin;

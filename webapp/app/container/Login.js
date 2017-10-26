@@ -1,7 +1,11 @@
 'use strict';
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+import {authenticateUser} from '../actions/authActions';
 
 import UsernamePasswordLogin from '../components/login/UsernamePasswordLogin';
 
@@ -22,12 +26,22 @@ class Login extends Component {
     }
 
     render() {
+        const {authenticateUser} = this.props.actions;
+
         return (
             <div className='container'>
-                <UsernamePasswordLogin/>
+                <UsernamePasswordLogin authenticateUser={authenticateUser}/>
             </div>
         );
     }
 }
 
-export default Login;
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: {
+            authenticateUser: bindActionCreators(authenticateUser, dispatch)
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
