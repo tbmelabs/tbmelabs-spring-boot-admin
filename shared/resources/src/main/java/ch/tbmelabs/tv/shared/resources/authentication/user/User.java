@@ -61,6 +61,10 @@ public class User extends NicelyDocumentedJDBCResource {
   private String username;
 
   @NotEmpty
+  @Length(max = 128)
+  private String email;
+
+  @NotEmpty
   @Length(max = 60, min = 60)
   @Column(columnDefinition = "bpchar(60)")
   @JsonProperty(access = Access.WRITE_ONLY)
