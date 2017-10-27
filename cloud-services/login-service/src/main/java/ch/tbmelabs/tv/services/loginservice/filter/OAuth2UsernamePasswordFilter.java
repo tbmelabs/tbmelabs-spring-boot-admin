@@ -29,6 +29,9 @@ import ch.tbmelabs.tv.services.loginservice.utils.FormDataURLConnector;
 public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   private static final Logger LOGGER = LogManager.getLogger(OAuth2UsernamePasswordFilter.class);
 
+  private static final String USERNAME_REQUEST_ARGUMENT = "username";
+  private static final String PASSWORD_REQUEST_ARGUMENT = "password";
+
   @Value("${spring.oauth2.client.clientId}")
   private String clientId;
 
@@ -62,9 +65,9 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
     HttpServletResponse response = (HttpServletResponse) res;
 
     HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl, clientId,
-        clientSecret).addFormField("username", request.getParameter("username"))
-            .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password")
-            .connect();
+        clientSecret).addFormField(USERNAME_REQUEST_ARGUMENT, request.getParameter(USERNAME_REQUEST_ARGUMENT))
+            .addFormField(PASSWORD_REQUEST_ARGUMENT, request.getParameter(PASSWORD_REQUEST_ARGUMENT))
+            .addFormField("grant_type", "password").connect();
 
     forwardResponse(response, connection);
 
@@ -76,7 +79,8 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
 
     List<String> requestParameters = Collections.list(request.getParameterNames());
 
-    if (!requestParameters.contains("username") || !requestParameters.contains("password")) {
+    if (!requestParameters.contains(USERNAME_REQUEST_ARGUMENT)
+        || !requestParameters.contains(PASSWORD_REQUEST_ARGUMENT)) {
       throw new IllegalArgumentException("Please login with username and password.");
     }
   }
