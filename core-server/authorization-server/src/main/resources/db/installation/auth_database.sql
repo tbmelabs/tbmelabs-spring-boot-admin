@@ -13,6 +13,7 @@ CREATE TABLE users (
     created timestamp without time zone NOT NULL,
     last_updated timestamp without time zone NOT NULL,
     username character varying(64) NOT NULL,
+    email character varying(128) NOT NULL,
     password character(60) NOT NULL,
     is_blocked boolean NOT NULL
 );

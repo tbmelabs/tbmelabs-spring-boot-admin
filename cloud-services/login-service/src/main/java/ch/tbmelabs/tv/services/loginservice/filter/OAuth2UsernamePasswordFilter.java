@@ -30,6 +30,9 @@ import ch.tbmelabs.tv.services.loginservice.utils.FormDataURLConnector;
 public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   private static final Logger LOGGER = LogManager.getLogger(OAuth2UsernamePasswordFilter.class);
 
+  private static final String USERNAME_REQUEST_ARGUMENT = "username";
+  private static final String PASSWORD_REQUEST_ARGUMENT = "password";
+
   @Value("${security.oauth2.client.client-id}")
   private String clientId;
 
@@ -62,9 +65,9 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
       HttpServletResponse response = (HttpServletResponse) res;
 
       HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl, clientId,
-          clientSecret).addFormField("username", request.getParameter("username"))
-              .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password")
-              .connect();
+          clientSecret).addFormField(USERNAME_REQUEST_ARGUMENT, request.getParameter(USERNAME_REQUEST_ARGUMENT))
+              .addFormField(PASSWORD_REQUEST_ARGUMENT, request.getParameter(PASSWORD_REQUEST_ARGUMENT))
+              .addFormField("grant_type", "password").connect();
 
       forwardResponse(response, connection);
 
@@ -82,10 +85,10 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
     if (!((HttpServletRequest) request).getMethod().equals(HttpMethod.POST.toString())) {
       LOGGER.debug("This is not a login attempt: Request method does not equal " + HttpMethod.POST + ".");
       return false;
-    } else if (!requestParameters.contains("username")) {
+    } else if (!requestParameters.contains(USERNAME_REQUEST_ARGUMENT)) {
       LOGGER.warn("Illegal login attempt from " + request.getRemoteAddr() + ": No username provided.");
       return false;
-    } else if (!requestParameters.contains("password")) {
+    } else if (!requestParameters.contains(PASSWORD_REQUEST_ARGUMENT)) {
       LOGGER.warn("Illegal login attempt from " + request.getRemoteAddr() + ": No password provided.");
       return false;
     }
