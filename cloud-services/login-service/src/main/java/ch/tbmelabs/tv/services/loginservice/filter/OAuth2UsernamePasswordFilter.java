@@ -20,6 +20,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -29,13 +30,13 @@ import ch.tbmelabs.tv.services.loginservice.utils.FormDataURLConnector;
 public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   private static final Logger LOGGER = LogManager.getLogger(OAuth2UsernamePasswordFilter.class);
 
-  @Value("${spring.oauth2.client.clientId}")
+  @Value("${security.oauth2.client.client-id}")
   private String clientId;
 
-  @Value("${spring.oauth2.client.secret}")
+  @Value("${security.oauth2.client.client-secret}")
   private String clientSecret;
 
-  @Value("${spring.oauth2.client.accessTokenUri}")
+  @Value("${security.oauth2.client.access-token-uri}")
   private String authorizationProcessingUrl;
 
   @Override
@@ -54,31 +55,42 @@ public class OAuth2UsernamePasswordFilter extends GenericFilterBean {
   @Override
   public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
       throws IOException, ServletException {
-    checkArguments(req);
+    if (applyFilter(req)) {
+      LOGGER.info("Applying " + OAuth2UsernamePasswordFilter.class);
 
-    LOGGER.info("Applying " + OAuth2UsernamePasswordFilter.class);
+      HttpServletRequest request = (HttpServletRequest) req;
+      HttpServletResponse response = (HttpServletResponse) res;
 
-    HttpServletRequest request = (HttpServletRequest) req;
-    HttpServletResponse response = (HttpServletResponse) res;
+      HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl, clientId,
+          clientSecret).addFormField("username", request.getParameter("username"))
+              .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password")
+              .connect();
 
-    HttpURLConnection connection = new FormDataURLConnector<HttpURLConnection>(authorizationProcessingUrl, clientId,
-        clientSecret).addFormField("username", request.getParameter("username"))
-            .addFormField("password", request.getParameter("password")).addFormField("grant_type", "password")
-            .connect();
+      forwardResponse(response, connection);
 
-    forwardResponse(response, connection);
-
-    connection.disconnect();
+      connection.disconnect();
+    } else {
+      filterChain.doFilter(req, res);
+    }
   }
 
-  private void checkArguments(ServletRequest request) {
+  private boolean applyFilter(ServletRequest request) {
     LOGGER.debug("Checking request arguments");
 
     List<String> requestParameters = Collections.list(request.getParameterNames());
 
-    if (!requestParameters.contains("username") || !requestParameters.contains("password")) {
-      throw new IllegalArgumentException("Please login with username and password.");
+    if (!((HttpServletRequest) request).getMethod().equals(HttpMethod.POST.toString())) {
+      LOGGER.debug("This is not a login attempt: Request method does not equal " + HttpMethod.POST + ".");
+      return false;
+    } else if (!requestParameters.contains("username")) {
+      LOGGER.warn("Illegal login attempt from " + request.getRemoteAddr() + ": No username provided.");
+      return false;
+    } else if (!requestParameters.contains("password")) {
+      LOGGER.warn("Illegal login attempt from " + request.getRemoteAddr() + ": No password provided.");
+      return false;
     }
+
+    return true;
   }
 
   private void forwardResponse(HttpServletResponse response, HttpURLConnection connection) throws IOException {
