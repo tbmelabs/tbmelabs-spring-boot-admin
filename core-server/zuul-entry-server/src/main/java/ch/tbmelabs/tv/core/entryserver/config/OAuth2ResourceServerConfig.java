@@ -7,7 +7,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+
+import ch.tbmelabs.tv.core.security.authentication.AdvancedLoginUrlAuthenticationPoint;
 
 @Configuration
 @EnableResourceServer
@@ -16,7 +17,7 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
   private RedisTokenStore tokenStore;
 
   @Autowired
-  private LoginUrlAuthenticationEntryPoint entryPoint;
+  private AdvancedLoginUrlAuthenticationPoint entryPoint;
 
   @Override
   public void configure(ResourceServerSecurityConfigurer resources) throws Exception {

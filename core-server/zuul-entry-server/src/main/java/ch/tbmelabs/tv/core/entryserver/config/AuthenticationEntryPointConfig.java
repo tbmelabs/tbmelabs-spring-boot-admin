@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+
+import ch.tbmelabs.tv.core.security.authentication.AdvancedLoginUrlAuthenticationPoint;
 
 @Configuration
 public class AuthenticationEntryPointConfig {
@@ -13,8 +14,8 @@ public class AuthenticationEntryPointConfig {
 
   @Bean
   @Profile("!dev")
-  public LoginUrlAuthenticationEntryPoint authenticationEntryPoint() {
-    LoginUrlAuthenticationEntryPoint entryPoint = new LoginUrlAuthenticationEntryPoint(ssoLoginPath);
+  public AdvancedLoginUrlAuthenticationPoint authenticationEntryPoint() {
+    AdvancedLoginUrlAuthenticationPoint entryPoint = new AdvancedLoginUrlAuthenticationPoint(ssoLoginPath);
     entryPoint.setForceHttps(true);
 
     return entryPoint;
@@ -22,7 +23,7 @@ public class AuthenticationEntryPointConfig {
 
   @Bean
   @Profile("dev")
-  public LoginUrlAuthenticationEntryPoint authenticationDevEntryPoint() {
-    return new LoginUrlAuthenticationEntryPoint(ssoLoginPath);
+  public AdvancedLoginUrlAuthenticationPoint authenticationDevEntryPoint() {
+    return new AdvancedLoginUrlAuthenticationPoint(ssoLoginPath);
   }
 }
