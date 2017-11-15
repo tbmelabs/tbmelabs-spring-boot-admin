@@ -1,5 +1,8 @@
 package ch.tbmelabs.tv.core.security.authentication;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,13 +20,30 @@ public class AdvancedLoginUrlAuthenticationPoint extends LoginUrlAuthenticationE
   }
 
   @Override
+  public String getLoginFormUrl() {
+    try {
+      return new URL(super.getLoginFormUrl()).getPath();
+    } catch (MalformedURLException e) {
+      return super.getLoginFormUrl();
+    }
+  }
+
+  @Override
   protected String determineUrlToUseForThisRequest(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) {
     return super.determineUrlToUseForThisRequest(request, response, exception) + loginSuccessRedirectArguments(request);
   }
 
   private String loginSuccessRedirectArguments(HttpServletRequest request) {
-    return ARGUMENT_PREFIX + REDIRECT_ARGUMENT_NAME + ARGUMENT_BINDER + request.getRequestURI() + ARGUMENT_SEPARATOR
-        + request.getQueryString();
+    StringBuilder redirectUrl = new StringBuilder();
+
+    redirectUrl.append(ARGUMENT_PREFIX).append(REDIRECT_ARGUMENT_NAME).append(ARGUMENT_BINDER)
+        .append(request.getRequestURL());
+
+    if (request.getQueryString() != null) {
+      redirectUrl.append(ARGUMENT_SEPARATOR).append(request.getQueryString());
+    }
+
+    return redirectUrl.toString();
   }
 }

@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import queryString from 'query-string';
+
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
@@ -22,11 +24,16 @@ class UsernamePasswordLogin extends Component {
       username: '',
       password: '',
       errors: {},
-      isLoading: false
+      isLoading: false,
+      query: {}
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({query: queryString.parse(this.context.router.route.location.search)});
   }
 
   onChange(event) {
@@ -38,15 +45,13 @@ class UsernamePasswordLogin extends Component {
 
     this.setState({errors: {}, isLoading: true});
 
-    this.props.authenticateUser(this.state).then(
-      response => {
-        /*
-         * TODO: Reload? Or state handled per router..
-         */
-      }, error => {
-        this.setState({errors: {form: error.response.data.message}, isLoading: false});
-      }
-    );
+    this.props.authenticateUser(this.state, (response) => {
+      this.setState({errors: {}, isLoading: false});
+
+      window.location.assign(this.state.query.redirect + '?access_token=' + response.data.access_token);
+    }, (error) => {
+      this.setState({errors: {form: error.response.data.message}, isLoading: false});
+    });
   }
 
   render() {
@@ -87,6 +92,10 @@ class UsernamePasswordLogin extends Component {
 
 UsernamePasswordLogin.propTypes = {
   authenticateUser: PropTypes.func.isRequired
+}
+
+UsernamePasswordLogin.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default UsernamePasswordLogin;
