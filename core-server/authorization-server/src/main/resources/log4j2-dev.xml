@@ -16,10 +16,5 @@
 		<Root level="all">
 			<AppenderRef ref="console" />
 		</Root>
-
-		<!-- Debug web requests -->
-		<category name="org.springframework.security">
-			<priority value="debug" />
-		</category>
 	</Loggers>
 </Configuration>

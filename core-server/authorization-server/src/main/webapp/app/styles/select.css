@@ -1,0 +1,14 @@
+.container {
+  margin: auto;
+  text-align: center;
+}
+
+.option-holder {
+  max-height: 20%;
+  max-height: 20vh;
+  overflow-y: auto;
+}
+
+.option:hover {
+  cursor: pointer;
+}

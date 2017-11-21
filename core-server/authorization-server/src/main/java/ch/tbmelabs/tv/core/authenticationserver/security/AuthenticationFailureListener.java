@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import ch.tbmelabs.tv.core.authenticationserver.security.bruteforcing.BruteforceFilter;
 import ch.tbmelabs.tv.core.authenticationserver.security.logging.AuthenticationAttemptLogger;
-import ch.tbmelabs.tv.shared.resources.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
+import ch.tbmelabs.tv.shared.domain.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
 
 @Component
 public class AuthenticationFailureListener implements ApplicationListener<AuthenticationFailureBadCredentialsEvent> {

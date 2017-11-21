@@ -12,8 +12,7 @@
 	</parent>
 
 	<modules>
-		<module>login-service</module>
-		<module>user-service</module>
+		<module>registration-service</module>
 	</modules>
 
 	<dependencyManagement>

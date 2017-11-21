@@ -15,6 +15,7 @@ CREATE TABLE users (
     username character varying(64) NOT NULL,
     email character varying(128) NOT NULL,
     password character(60) NOT NULL,
+	is_enabled boolean NOT NULL,
     is_blocked boolean NOT NULL
 );
 
@@ -42,8 +43,15 @@ GRANT SELECT, INSERT
 	
 -- add default roles
 INSERT INTO user_roles(created, last_updated, name)
-	VALUES	(now(), now(), 'USER'),
-			(now(), now(), 'ADMIN');
+	VALUES	(now(), now(), 'GANDALF'),
+			(now(), now(), 'SERVER_ADMIN'),
+			(now(), now(), 'SERVER_SUPPORT'),
+			(now(), now(), 'CONTENT_ADMIN'),
+			(now(), now(), 'CONTENT_SUPPORT'),
+			(now(), now(), 'PREMIUM_USER'),
+			(now(), now(), 'USER'),
+			(now(), now(), 'GUEST'),
+			(now(), now(), 'TMP_ZUUL_USER');
 	
 REVOKE INSERT
 	ON user_roles FROM auth_database_user;
@@ -77,13 +85,14 @@ CREATE TABLE clients (
 	id bigserial NOT NULL,
 	created timestamp without time zone NOT NULL,
 	last_updated timestamp without time zone NOT NULL,
-	name character varying(64) NOT NULL,
-	secret character(36) NOT NULL,
+	client_id character(36) NOT NULL,
+	secret character(36),
 	secret_required boolean NOT NULL,
 	auto_approve boolean NOT NULL,
 	access_token_validity integer NOT NULL,
 	refresh_token_validity integer NOT NULL,
-	redirect_uri character varying(256)
+	redirect_uri character varying(256),
+	client_scope_id bigint NOT NULL
 );
 
 ALTER TABLE ONLY clients
@@ -188,30 +197,11 @@ CREATE TABLE client_scopes (
 ALTER TABLE ONLY client_scopes
     ADD CONSTRAINT client_scopes_pkey PRIMARY KEY (id);
 
+ALTER TABLE ONLY clients
+	ADD CONSTRAINT client_has_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
+
 GRANT SELECT
 	ON client_scopes TO auth_database_user;
-
------------------------------------
----		 CLIENT HAS SCOPES  	---
------------------------------------
-CREATE TABLE client_has_scopes (
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
-    client_id bigint NOT NULL,
-    client_scope_id bigint NOT NULL
-);
-
-ALTER TABLE ONLY client_has_scopes
-    ADD CONSTRAINT client_has_scopes_pkey PRIMARY KEY (client_id, client_scope_id);
-
-ALTER TABLE ONLY client_has_scopes
-    ADD CONSTRAINT client_has_scopes_client FOREIGN KEY (client_id) REFERENCES clients(id);
-
-ALTER TABLE ONLY client_has_scopes
-    ADD CONSTRAINT client_has_scopes_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
-
-GRANT SELECT
-	ON client_has_scopes TO auth_database_user;
 
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---

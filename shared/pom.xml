@@ -12,6 +12,6 @@
 	</parent>
 
 	<modules>
-		<module>resources</module>
+		<module>domain</module>
 	</modules>
 </project>
