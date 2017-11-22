@@ -3,5 +3,5 @@
 import axios from 'axios';
 
 export function loadAvailableApplications() {
-  return axios.get('api/known-applications');
+  return axios.get('public/known-applications');
 }

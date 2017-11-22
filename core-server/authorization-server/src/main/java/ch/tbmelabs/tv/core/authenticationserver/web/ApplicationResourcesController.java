@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ApplicationResourcesController {
   private static final String APPLICATIONS_FILE_NAME = "known-applications.json";
 
-  @RequestMapping(value = { "/api/known-applications" }, method = RequestMethod.GET)
+  @RequestMapping(value = { "/public/known-applications" }, method = RequestMethod.GET)
   public JsonNode getKnownApplications() throws JsonParseException, JsonMappingException, IOException {
     return new ObjectMapper().readValue(getClass().getClassLoader().getResourceAsStream(APPLICATIONS_FILE_NAME),
         JsonNode.class);

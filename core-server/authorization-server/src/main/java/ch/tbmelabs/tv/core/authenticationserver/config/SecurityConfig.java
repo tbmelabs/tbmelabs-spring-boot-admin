@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
-  public void configure(HttpSecurity http) throws Exception {
+  protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
 
         .authorizeRequests().antMatchers("/", "/public/**").anonymous()
@@ -23,5 +23,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         .and().formLogin().loginPage("/");
   }
-
 }

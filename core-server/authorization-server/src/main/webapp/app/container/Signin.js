@@ -12,12 +12,16 @@ import {authenticateUser} from '../actions/authActions';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
-import UsernamePasswordLogin from '../components/login/UsernamePasswordLogin';
+import UsernamePasswordLoginForm from '../components/signin/UsernamePasswordLoginForm';
 
 require('bootstrap/dist/css/bootstrap.css');
-require('../styles/login.css');
+require('../styles/signin.css');
 
-class Login extends Component {
+class Signin extends Component {
+  componentDidMount() {
+    document.title = 'TBME Labs | Sign In';
+  }
+
   render() {
     const {redirect} = queryString.parse(this.context.router.route.location.search);
     const {authenticateUser} = this.props.actions;
@@ -29,19 +33,19 @@ class Login extends Component {
           <p>Sign in to your TBME Labs account using your username and password.</p>
         </Jumbotron>
 
-        <div className='login-form'>
-          <UsernamePasswordLogin authenticateUser={authenticateUser} redirectUrl={redirect}/>
+        <div className='signin-form'>
+          <UsernamePasswordLoginForm authenticateUser={authenticateUser} redirectUrl={redirect}/>
         </div>
       </div>
     );
   }
 }
 
-Login.propTypes = {
+Signin.propTypes = {
   actions: PropTypes.object.isRequired
 }
 
-Login.contextTypes = {
+Signin.contextTypes = {
   router: PropTypes.object.isRequired
 }
 
@@ -53,4 +57,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Signin);

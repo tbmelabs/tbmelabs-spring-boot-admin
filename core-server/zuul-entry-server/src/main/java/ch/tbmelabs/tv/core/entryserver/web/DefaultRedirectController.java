@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DefaultRedirectController {
-  @RequestMapping(value = {"/"}, method = RequestMethod.GET)
+  @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String redirectToWebapp() {
     return "redirect:/webapp";
   }

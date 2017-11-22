@@ -10,25 +10,28 @@ import reducers from './reducers';
 
 import {CookiesProvider} from 'react-cookie';
 
+import Router from './Router';
+
 const store = createStore(
-    reducers,
-    compose(
-        applyMiddleware(thunk),
-        window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
+  reducers,
+  compose(
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
 );
 
 require('./styles/tbme-tv.css');
 
 class App extends Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <CookiesProvider>
-                </CookiesProvider>
-            </Provider>
-        );
-    }
+  render() {
+    return (
+      <Provider store={store}>
+        <CookiesProvider>
+          <Router/>
+        </CookiesProvider>
+      </Provider>
+    );
+  }
 }
 
 render(<App/>, document.getElementById('app'));

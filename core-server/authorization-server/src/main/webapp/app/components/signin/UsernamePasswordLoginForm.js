@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
@@ -14,7 +16,7 @@ import CollapsableAlert from '../common/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class UsernamePasswordLogin extends Component {
+class UsernamePasswordLoginForm extends Component {
   constructor(props) {
     super(props);
 
@@ -82,20 +84,27 @@ class UsernamePasswordLogin extends Component {
           </Col>
         </FormGroup>
 
-        <Button className='pull-right' type='submit' disabled={isLoading}
-                onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign In'}</Button>
+        <FormGroup className='link-group'>
+          <Col sm={8}>
+            <Link to='/signup'>Have no account yet?</Link>
+          </Col>
+          <Col sm={4}>
+            <Button className='pull-right' type='submit' disabled={isLoading}
+                    onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign In'}</Button>
+          </Col>
+        </FormGroup>
       </Form>
     );
   }
 }
 
-UsernamePasswordLogin.propTypes = {
+UsernamePasswordLoginForm.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
   redirectUrl: PropTypes.string
 }
 
-UsernamePasswordLogin.contextTypes = {
+UsernamePasswordLoginForm.contextTypes = {
   router: PropTypes.object.isRequired
 }
 
-export default UsernamePasswordLogin;
+export default UsernamePasswordLoginForm;
