@@ -10,13 +10,13 @@ GRANT CREATE, CONNECT ON DATABASE auth_server_database TO auth_database_user;
 -----------------------------------
 CREATE TABLE users (
     id bigserial NOT NULL,
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     username character varying(64) NOT NULL,
     email character varying(128) NOT NULL,
     password character(60) NOT NULL,
-	is_enabled boolean NOT NULL,
-    is_blocked boolean NOT NULL
+	is_enabled boolean NOT NULL DEFAULT FALSE,
+    is_blocked boolean NOT NULL DEFAULT FALSE
 );
 
 ALTER TABLE ONLY users
@@ -30,8 +30,8 @@ GRANT SELECT
 -----------------------------------
 CREATE TABLE user_roles (
     id bigserial NOT NULL,
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     name character varying(16) NOT NULL
 );
 
@@ -60,8 +60,8 @@ REVOKE INSERT
 ---		  USER HAS ROLES		---
 -----------------------------------
 CREATE TABLE user_has_roles (
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     user_id bigint NOT NULL,
     user_role_id bigint NOT NULL
 );
@@ -83,13 +83,15 @@ GRANT SELECT
 -----------------------------------
 CREATE TABLE clients (
 	id bigserial NOT NULL,
-	created timestamp without time zone NOT NULL,
-	last_updated timestamp without time zone NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	client_id character(36) NOT NULL,
 	secret character(36),
-	secret_required boolean NOT NULL,
-	auto_approve boolean NOT NULL,
+	secret_required boolean NOT NULL DEFAULT TRUE,
+	auto_approve boolean NOT NULL DEFAULT FALSE,
+	-- TODO: what is a good default value?
 	access_token_validity integer NOT NULL,
+	-- TODO: what is a good default value?
 	refresh_token_validity integer NOT NULL,
 	redirect_uri character varying(256),
 	client_scope_id bigint NOT NULL
@@ -106,8 +108,8 @@ GRANT SELECT
 -----------------------------------
 CREATE TABLE client_authorities (
     id bigserial NOT NULL,
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     name character varying(16) NOT NULL
 );
 
@@ -121,8 +123,8 @@ GRANT SELECT
 ---	  CLIENT HAS AUTHORITIES  	---
 -----------------------------------
 CREATE TABLE client_has_authorities (
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     client_id bigint NOT NULL,
     client_authority_id bigint NOT NULL
 );
@@ -144,13 +146,16 @@ GRANT SELECT
 -----------------------------------
 CREATE TABLE client_grant_types (
 	id bigserial NOT NULL,
-	created timestamp without time zone NOT NULL,
-	last_updated timestamp without time zone NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	name character varying(32) NOT NULL
 );
 
 ALTER TABLE ONLY client_grant_types
     ADD CONSTRAINT client_grant_types_pkey PRIMARY KEY (id);
+
+GRANT SELECT, INSERT
+	ON client_grant_types TO auth_database_user;
 
 -- Add default values
 INSERT INTO client_grant_types (created, last_updated, name)
@@ -159,15 +164,15 @@ INSERT INTO client_grant_types (created, last_updated, name)
 	(now(), now(), 'implicit'),
 	(now(), now(), 'password');
 
-GRANT SELECT
-	ON client_grant_types TO auth_database_user;
+REVOKE INSERT
+	ON client_grant_types FROM auth_database_user;
 
 -----------------------------------
 ---	  CLIENT HAS GRANT TYPES	---
 -----------------------------------
 CREATE TABLE client_has_grant_types (
-    created timestamp without time zone NOT NULL,
-    last_updated timestamp without time zone NOT NULL,
+    created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+    last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
     client_id bigint NOT NULL,
     client_grant_type_id bigint NOT NULL
 );
@@ -189,8 +194,8 @@ GRANT SELECT
 -----------------------------------
 CREATE TABLE client_scopes (
 	id bigserial NOT NULL,
-	created timestamp without time zone NOT NULL,
-	last_updated timestamp without time zone NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	name character varying(32) NOT NULL
 );
 
@@ -200,16 +205,23 @@ ALTER TABLE ONLY client_scopes
 ALTER TABLE ONLY clients
 	ADD CONSTRAINT client_has_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
 
-GRANT SELECT
+GRANT SELECT, INSERT
 	ON client_scopes TO auth_database_user;
+
+INSERT INTO client_scopes (created, last_updated, name)
+	VALUES (now(), now(), 'AUTHORIZE_USER'),
+	(now(), now(), 'PROXY_APPLICATION');
+
+REVOKE INSERT
+	ON client_scopes FROM auth_database_user;
 
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---
 -----------------------------------
 CREATE TABLE authentication_log (
 	id bigserial NOT NULL,
-	created timestamp without time zone NOT NULL,
-	last_updated timestamp without time zone NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	state character(3) NOT NULL,
 	ip character(45) NOT NULL,
 	message character varying(256),
@@ -230,8 +242,8 @@ GRANT INSERT
 -----------------------------------
 CREATE TABLE blacklisted_ips (
 	id bigserial NOT NULL,
-	created timestamp without time zone NOT NULL,
-	last_updated timestamp without time zone NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	ip character(45) NOT NULL
 );
 

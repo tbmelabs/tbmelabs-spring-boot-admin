@@ -38,12 +38,6 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @Transient
   public static final String ROLE_PREFIX = "ROLE_";
 
-  // TODO: Fetch from repository
-  // @Transient
-  // public static final Role ROLE_USER = new Role("USER");
-  // @Transient
-  // public static final Role ROLE_ADMIN = new Role("ADMIN");
-
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
       @Parameter(name = "sequence_name", value = "user_roles_id_seq"),
