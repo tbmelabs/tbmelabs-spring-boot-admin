@@ -3,8 +3,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
+import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 import SignupForm from '../components/signup/SignupForm';
 
@@ -13,18 +14,34 @@ require('../styles/signup.css');
 
 class Signup extends Component {
   componentDidMount() {
-    document.title = 'TBME Labs | Sign Up';
+    document.title = this.props.texts.tab_header;
   }
 
   render() {
+    const {texts} = this.props;
+
     return (
       <div className="container">
+        <Jumbotron>
+          <h1>{texts.jumbotron_title}</h1>
+        </Jumbotron>
+
         <div className='signup-form'>
-          <SignupForm/>
+          <SignupForm texts={texts}/>
         </div>
       </div>
     );
   }
 }
 
-export default connect(null, null)(Signup);
+Signup.propTypes = {
+  texts: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    texts: state.language.texts.signup
+  }
+}
+
+export default connect(mapStateToProps, null)(Signup);

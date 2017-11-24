@@ -8,4 +8,6 @@ import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 @Repository
 public interface UserCRUDRepository extends CrudRepository<User, Long> {
   User findByUsername(String username);
+
+  User findByEmail(String email);
 }

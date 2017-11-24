@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -56,19 +57,23 @@ public class User extends NicelyDocumentedJDBCResource {
   private Long id;
 
   @NotEmpty
-  @Length(max = 64)
+  @Length(min = 5, max = 64)
   @Column(unique = true)
   private String username;
 
   @NotEmpty
+  @Email
   @Length(max = 128)
   private String email;
 
   @NotEmpty
-  @Length(max = 60, min = 60)
+  @Length(min = 60, max = 60)
   @Column(columnDefinition = "bpchar(60)")
   @JsonProperty(access = Access.WRITE_ONLY)
   private String password;
+
+  @Transient
+  private String confirmation;
 
   @NotNull
   private Boolean isEnabled;

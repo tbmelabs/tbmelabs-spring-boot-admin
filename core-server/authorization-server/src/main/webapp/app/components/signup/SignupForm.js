@@ -44,50 +44,53 @@ class SignupForm extends Component {
 
   render() {
     const {isValid, isLoading} = this.state;
+    const {texts} = this.props;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        <CollapsableAlert style='danger' title='Login failed: ' message={this.state.errors.form}
+        <CollapsableAlert style='danger' title={texts.signup_failed_error_title} message={this.state.errors.form}
                           collapse={!!this.state.errors.form}/>
 
         <FormGroup controlId='username'>
           <Col componentClass={ControlLabel} sm={4}>
-            Username
+            {texts.username_form_control}
           </Col>
           <Col sm={8}>
-            <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
+            <FormControl name='username' type='text' value={this.state.username}
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
 
         <FormGroup controlId='email'>
           <Col componentClass={ControlLabel} sm={4}>
-            E-Mail
+            {texts.email_form_control}
           </Col>
           <Col sm={8}>
-            <FormControl name='email' type='email' value={this.state.email} onChange={this.onChange}/>
+            <FormControl name='email' type='email' value={this.state.email}
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
 
         <FormGroup controlId='password'>
           <Col componentClass={ControlLabel} sm={4}>
-            Password
+            {texts.password_form_control}
           </Col>
           <Col sm={8}>
             <FormControl name='password' type='password' value={this.state.password}
-                         onChange={this.onChange}/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
 
         <FormGroup controlId='confirmation'>
           <Col componentClass={ControlLabel} sm={4}>
-            Confirm password
+            {texts.password_confirmation_form_control}
           </Col>
           <Col sm={8}>
             <FormControl name='confirmation' type='password' value={this.state.confirmation}
-                         onChange={this.onChange}/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
@@ -96,16 +99,22 @@ class SignupForm extends Component {
           <Col sm={4}>
           </Col>
           <Col sm={4}>
-            <Link to='/' className='pull-left'>Already have an account?</Link>
+            <Link to='/' className='pull-left'>{texts.signin_link_text}</Link>
           </Col>
           <Col sm={4}>
             <Button className='pull-right' type='submit' disabled={!isValid || isLoading}
-                    onClick={isValid && !isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign Up'}</Button>
+                    onClick={isValid && !isLoading ? this.handleClick : null}>
+              {isLoading ? texts.signup_button_loading_text : texts.signup_button_text}
+            </Button>
           </Col>
         </FormGroup>
       </Form>
     );
   }
+}
+
+SignupForm.propTypes = {
+  texts: PropTypes.object.isRequired
 }
 
 export default SignupForm;

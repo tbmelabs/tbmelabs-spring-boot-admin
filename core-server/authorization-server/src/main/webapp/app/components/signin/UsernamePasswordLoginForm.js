@@ -57,40 +57,44 @@ class UsernamePasswordLoginForm extends Component {
 
   render() {
     const {isLoading} = this.state;
+    const {texts} = this.props;
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        <CollapsableAlert style='danger' title='Login failed: ' message={this.state.errors.form}
+        <CollapsableAlert style='danger' title={texts.login_failed_error_title} message={this.state.errors.form}
                           collapse={!!this.state.errors.form}/>
 
         <FormGroup controlId='username'>
           <Col componentClass={ControlLabel}>
-            Username
+            {texts.username_form_control}
           </Col>
           <Col>
-            <FormControl name='username' type='text' value={this.state.username} onChange={this.onChange}/>
+            <FormControl name='username' type='text' value={this.state.username}
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
 
         <FormGroup controlId='password'>
           <Col componentClass={ControlLabel}>
-            Password
+            {texts.password_form_control}
           </Col>
           <Col>
             <FormControl name='password' type='password' value={this.state.password}
-                         onChange={this.onChange}/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
 
         <FormGroup className='link-group'>
           <Col sm={8}>
-            <Link to='/signup'>Have no account yet?</Link>
+            <Link to='/signup'>{texts.signup_link_text}</Link>
           </Col>
           <Col sm={4}>
             <Button className='pull-right' type='submit' disabled={isLoading}
-                    onClick={!isLoading ? this.handleClick : null}>{isLoading ? 'Loading...' : 'Sign In'}</Button>
+                    onClick={!isLoading ? this.handleClick : null}>
+              {isLoading ? texts.signin_button_loading_text : texts.signin_button_text}
+            </Button>
           </Col>
         </FormGroup>
       </Form>
@@ -100,7 +104,8 @@ class UsernamePasswordLoginForm extends Component {
 
 UsernamePasswordLoginForm.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
-  redirectUrl: PropTypes.string
+  redirectUrl: PropTypes.string,
+  texts: PropTypes.object.isRequired
 }
 
 UsernamePasswordLoginForm.contextTypes = {

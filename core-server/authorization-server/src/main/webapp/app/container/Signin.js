@@ -19,22 +19,23 @@ require('../styles/signin.css');
 
 class Signin extends Component {
   componentDidMount() {
-    document.title = 'TBME Labs | Sign In';
+    document.title = this.props.texts.tab_header;
   }
 
   render() {
     const {redirect} = queryString.parse(this.context.router.route.location.search);
+    const {texts} = this.props;
     const {authenticateUser} = this.props.actions;
 
     return (
       <div className='container'>
         <Jumbotron>
-          <h1>TBME Labs - Sign In</h1>
-          <p>Sign in to your TBME Labs account using your username and password.</p>
+          <h1>{texts.jumbotron_title}</h1>
+          <p>{texts.jumbotron_subtitle}</p>
         </Jumbotron>
 
         <div className='signin-form'>
-          <UsernamePasswordLoginForm authenticateUser={authenticateUser} redirectUrl={redirect}/>
+          <UsernamePasswordLoginForm authenticateUser={authenticateUser} redirectUrl={redirect} texts={texts}/>
         </div>
       </div>
     );
@@ -42,12 +43,20 @@ class Signin extends Component {
 }
 
 Signin.propTypes = {
+  texts: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 }
 
 Signin.contextTypes = {
   router: PropTypes.object.isRequired
 }
+
+function mapStateToProps(state) {
+  return {
+    texts: state.language.texts.signin
+  }
+}
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -57,4 +66,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Signin);
+export default connect(mapStateToProps, mapDispatchToProps)(Signin);

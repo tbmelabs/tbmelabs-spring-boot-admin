@@ -7,7 +7,7 @@ var APP_DIR = path.resolve(__dirname, 'app');
 var TEST_DIR = path.resolve(__dirname, '__tests__');
 
 var config = {
-  entry: APP_DIR + '/SignupForm.js',
+  entry: APP_DIR + '/index.js',
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
