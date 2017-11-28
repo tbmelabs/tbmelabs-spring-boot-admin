@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
+import {validateSignupForm, signupUser} from '../actions/signupActions';
+
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 import SignupForm from '../components/signup/SignupForm';
@@ -27,7 +29,7 @@ class Signup extends Component {
         </Jumbotron>
 
         <div className='signup-form'>
-          <SignupForm texts={texts}/>
+          <SignupForm validateForm={validateSignupForm} signupUser={signupUser} texts={texts}/>
         </div>
       </div>
     );

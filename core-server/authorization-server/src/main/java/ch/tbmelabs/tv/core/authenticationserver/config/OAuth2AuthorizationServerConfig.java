@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.error.DefaultWebResponseExce
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import ch.tbmelabs.tv.core.authenticationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authenticationserver.service.ZuulProxiedApplicationTokenService;
 import ch.tbmelabs.tv.core.authenticationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authenticationserver.service.userdetails.PreAuthenticatedAuthenticationProviderImpl;
@@ -36,9 +35,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
   @Autowired
   private ClientDetailsServiceImpl clientDetailsService;
-
-  @Autowired
-  private ClientCRUDRepository clientRepository;
 
   @Autowired
   private ObjectPostProcessor<Object> objectPostProcessor;

@@ -24,11 +24,13 @@ export function authenticateUser(data) {
       auth: {
         username: require('../config/config.json').clientId
       }
-    }).then(response => {
-      setAuthorizationToken(response.data.access_token);
+    }).then(
+      response => {
+        setAuthorizationToken(response.data.access_token);
 
-      dispatch(setCurrentUser(response.data));
-    });
+        dispatch(setCurrentUser(response.data));
+      }
+    );
   };
 }
 
