@@ -36,7 +36,7 @@ public class UserSignupService {
   }
 
   public boolean doPasswordsMatch(User testUser) {
-    return testUser.getPassword().equals(testUser.getConfirmation());
+    return testUser.getConfirmation().equals(testUser.getPassword());
   }
 
   public boolean isUserValid(User testUser) {
@@ -45,6 +45,10 @@ public class UserSignupService {
   }
 
   public User signUpNewUser(User newUser) {
+    if (!isUserValid(newUser)) {
+      throw new IllegalArgumentException("Registration failed. Please check your details!");
+    }
+
     return userRepository.save(newUser);
   }
 }

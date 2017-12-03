@@ -8,14 +8,14 @@ import {connect} from 'react-redux';
 
 import queryString from 'query-string';
 
-import {authenticateUser} from '../actions/authActions';
+import {authenticateUser} from '../../actions/authActions';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
-import UsernamePasswordLoginForm from '../components/signin/UsernamePasswordLoginForm';
+import UsernamePasswordLoginForm from '../../components/signin/UsernamePasswordLoginForm';
 
 require('bootstrap/dist/css/bootstrap.css');
-require('../styles/signin.css');
+require('../../styles/signin.css');
 
 class Signin extends Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ class Signin extends Component {
     const {authenticateUser} = this.props.actions;
 
     return (
-      <div className='container'>
+      <div>
         <Jumbotron>
           <h1>{texts.jumbotron_title}</h1>
           <p>{texts.jumbotron_subtitle}</p>

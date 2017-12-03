@@ -1,4 +1,6 @@
 'use strict';
 
+export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
+export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE';
 export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
 export const SET_LANGUAGE = 'SET_LANGUAGE';

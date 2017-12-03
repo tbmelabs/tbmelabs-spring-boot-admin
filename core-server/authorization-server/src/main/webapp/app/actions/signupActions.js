@@ -24,10 +24,13 @@ export function validateSignupForm(control, data, callback) {
       validatePasswordConfirmation(password, confirmation, errors, callback);
       break
     default:
-      validateUsername(username, errors, callback);
-      validateEmail(email, errors, callback);
-      validatePassword(password, errors, callback);
-      validatePasswordConfirmation(password, confirmation, errors, callback);
+      validateUsername(username, errors, errors => {
+        validateEmail(email, errors, errors => {
+          validatePassword(password, errors, errors => {
+            validatePasswordConfirmation(password, confirmation, errors, callback);
+          });
+        });
+      });
   }
 }
 

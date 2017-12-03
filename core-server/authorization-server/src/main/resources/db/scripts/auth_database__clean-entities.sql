@@ -2,6 +2,9 @@
 \connect auth_server_database
 
 -- delete * from tables
+DELETE FROM authentication_log;
+DELETE FROM blacklisted_ips;
+
 DELETE FROM client_has_authorities;
 DELETE FROM client_has_grant_types;
 DELETE FROM client_has_scopes;

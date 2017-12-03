@@ -5,15 +5,15 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
-import {loadAvailableApplications} from '../utils/selectUtils';
+import {loadAvailableApplications} from '../../utils/selectUtils';
 
 import Panel from 'react-bootstrap/lib/Panel';
 
-import Option from '../components/select/Option';
-import CollapsableAlert from '../components/common/CollapsableAlert';
+import Option from '../../components/select/Option';
+import CollapsableAlert from '../../components/common/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
-require('../styles/select.css');
+require('../../styles/select.css');
 
 class Select extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class Select extends Component {
     const {applications} = this.state;
 
     return (
-      <div className='container'>
+      <div>
         <h1>Welcome to TBME-Labs!</h1>
         <h3 className='text-muted'>Choose your application:</h3>
 

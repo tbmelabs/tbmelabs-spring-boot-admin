@@ -6,18 +6,21 @@ import {Route, Switch, HashRouter} from 'react-router-dom';
 
 import {anonymousUsersOnly, authenticatedUsersOnly} from './utils/authUtils';
 
-import Signin from './container/Signin';
-import Signup from './container/Signup';
-import Select from './container/Select';
+import App from './container/app';
+import Signin from './container/app/Signin';
+import Signup from './container/app/Signup';
+import Select from './container/app/Select';
 
 class Router extends Component {
   render() {
     return (
       <HashRouter>
         <Switch>
-          <Route exact path="/" component={anonymousUsersOnly(Signin)}/>
-          <Route exact path="/signup" component={anonymousUsersOnly(Signup)}/>
-          <Route path="/select" component={authenticatedUsersOnly(Select)}/>
+          <App>
+            <Route exact path="/" component={anonymousUsersOnly(Signin)}/>
+            <Route path="/signup" component={anonymousUsersOnly(Signup)}/>
+            <Route path="/select" component={authenticatedUsersOnly(Select)}/>
+          </App>
         </Switch>
       </HashRouter>
     );

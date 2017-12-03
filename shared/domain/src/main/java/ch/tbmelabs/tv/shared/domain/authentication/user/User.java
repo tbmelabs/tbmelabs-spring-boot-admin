@@ -89,7 +89,11 @@ public class User extends NicelyDocumentedJDBCResource {
   public void onCreate() {
     super.onCreate();
 
-    password = PASSWORD_ENCODER.encode(password);
+    this.setPassword(PASSWORD_ENCODER.encode(this.getPassword()));
+
+    // TODO: Remove enable by default as soon as email confirmation works
+    setIsEnabled(true);
+    setIsBlocked(false);
   }
 
   public Collection<UserRoleAssociation> rolesToAssociations(List<Role> roleList) {

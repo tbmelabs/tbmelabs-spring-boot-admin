@@ -88,7 +88,9 @@ class UsernamePasswordLoginForm extends Component {
 
         <FormGroup className='link-group'>
           <Col sm={8}>
-            <Link to='/signup'>{texts.signup_link_text}</Link>
+            {require('../../config/config.json').isRegistrationEnabled ?
+              <Link to='/signup'>{texts.signup_link_text}</Link>
+              : null}
           </Col>
           <Col sm={4}>
             <Button className='pull-right' type='submit' disabled={isLoading}

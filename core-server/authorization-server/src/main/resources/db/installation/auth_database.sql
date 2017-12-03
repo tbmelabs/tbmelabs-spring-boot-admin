@@ -22,9 +22,11 @@ CREATE TABLE users (
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
-GRANT SELECT
+GRANT SELECT, INSERT, UPDATE
 	ON users TO auth_database_user;
 
+GRANT USAGE, SELECT
+	ON SEQUENCE users_id_seq TO auth_database_user;
 -----------------------------------
 ---			PRIVILEGES			---
 -----------------------------------

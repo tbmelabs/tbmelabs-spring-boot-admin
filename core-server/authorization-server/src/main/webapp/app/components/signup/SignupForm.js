@@ -28,6 +28,7 @@ class SignupForm extends Component {
       email: '',
       password: '',
       confirmation: '',
+      target: {},
       errors: {},
       isValid: false,
       isLoading: false
@@ -35,7 +36,6 @@ class SignupForm extends Component {
 
     this.isFormValid = this.isFormValid.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -45,12 +45,10 @@ class SignupForm extends Component {
   }
 
   onChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-  }
-
-  onBlur(event) {
-    this.props.validateForm(event.target.name, this.state, errors => {
-      this.setState({errors: errors, isValid: this.isFormValid(errors)});
+    this.setState({[event.target.name]: event.target.value, target: event.target}, () => {
+      this.props.validateForm(this.state.target.name, this.state, errors => {
+        this.setState({errors: errors, isValid: this.isFormValid(errors)});
+      });
     });
   }
 
@@ -61,6 +59,12 @@ class SignupForm extends Component {
       if (this.isFormValid(errors)) {
         this.props.signupUser(this.state).then(
           response => {
+            this.props.addFlashMessage({
+              type: 'success',
+              title: 'Sign up succeed:',
+              text: 'Welcome to TBME Labs TV!'
+            });
+
             this.context.router.history.push('/select');
           }, error => {
             this.setState({errors: {form: error.response.data.message}});
@@ -88,7 +92,7 @@ class SignupForm extends Component {
           </Col>
           <Col sm={8}>
             <FormControl name='username' type='text' value={this.state.username}
-                         onChange={this.onChange} onBlur={this.onBlur} required/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
@@ -100,7 +104,7 @@ class SignupForm extends Component {
           </Col>
           <Col sm={8}>
             <FormControl name='email' type='email' value={this.state.email}
-                         onChange={this.onChange} onBlur={this.onBlur} required/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
@@ -112,7 +116,7 @@ class SignupForm extends Component {
           </Col>
           <Col sm={8}>
             <FormControl name='password' type='password' value={this.state.password}
-                         onChange={this.onChange} onBlur={this.onBlur} required/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
@@ -124,7 +128,7 @@ class SignupForm extends Component {
           </Col>
           <Col sm={8}>
             <FormControl name='confirmation' type='password' value={this.state.confirmation}
-                         onChange={this.onChange} onBlur={this.onBlur} required/>
+                         onChange={this.onChange} required/>
             <FormControl.Feedback/>
           </Col>
         </FormGroup>
@@ -150,7 +154,12 @@ class SignupForm extends Component {
 SignupForm.propTypes = {
   validateForm: PropTypes.func.isRequired,
   signupUser: PropTypes.func.isRequired,
+  addFlashMessage: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
+}
+
+SignupForm.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default SignupForm;

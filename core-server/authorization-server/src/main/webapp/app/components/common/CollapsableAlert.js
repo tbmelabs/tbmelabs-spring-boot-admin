@@ -15,6 +15,7 @@ class CollapsableAlert extends React.Component {
         <Alert bsStyle={this.props.style}>
           <strong>{this.props.title}</strong>
           {this.props.message}
+          {this.props.children}
         </Alert>
       </Collapse>
     );

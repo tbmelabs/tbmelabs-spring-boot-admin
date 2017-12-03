@@ -1,6 +1,6 @@
 'use strict';
 
-import {SET_CURRENT_LANGUAGE} from '../actions/types';
+import {SET_LANGUAGE} from '../actions/types';
 
 const en = require('../languages/en.json');
 
@@ -12,13 +12,17 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case SET_CURRENT_LANGUAGE:
-      const language = require('../languages/' + action.language + '.json');
+    case SET_LANGUAGE:
+      try {
+        const language = require('../languages/' + action.language + '.json');
 
-      return {
-        name: language.name,
-        texts: language,
-        id: action.language
+        return {
+          name: language.name,
+          texts: language,
+          id: action.language
+        }
+      } catch (error) {
+        return state;
       }
     default:
       return state;
