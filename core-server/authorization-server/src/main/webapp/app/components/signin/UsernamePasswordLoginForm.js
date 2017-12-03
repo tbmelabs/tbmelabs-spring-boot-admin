@@ -50,7 +50,7 @@ class UsernamePasswordLoginForm extends Component {
           window.location.assign(this.props.redirectUrl + '?refresh_token=' + response.data.refresh_token);
         }
       }, error => {
-        this.setState({password: '', errors: {form: error.response.data.message}, isLoading: false});
+        this.setState({password: '', errors: {form: error.response.data.error_description}, isLoading: false});
       }
     );
   }
@@ -61,7 +61,7 @@ class UsernamePasswordLoginForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        <CollapsableAlert style='danger' title={texts.login_failed_error_title} message={this.state.errors.form}
+        <CollapsableAlert style='danger' title={texts.signin_failed_error_title} message={this.state.errors.form}
                           collapse={!!this.state.errors.form}/>
 
         <FormGroup controlId='username'>

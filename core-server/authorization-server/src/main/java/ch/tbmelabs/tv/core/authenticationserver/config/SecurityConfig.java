@@ -17,7 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable()
 
-        .authorizeRequests().antMatchers("/", "/signup/**", "/public/**").anonymous()
+        // TODO: Allow only authenticated clients to register new users
+        .authorizeRequests().antMatchers("/", "/public/**", "/signup/**").anonymous()
 
         .and().authorizeRequests().anyRequest().authenticated()
 

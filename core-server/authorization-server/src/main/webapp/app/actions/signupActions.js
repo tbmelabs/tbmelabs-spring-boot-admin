@@ -1,8 +1,8 @@
 'use strict';
 
-import axios from 'axios';
+import axios from '../utils/axiosUtils';
 
-import {validateUsername, validateEmail, validatePassword, validatePasswordConfirmation} from '../validators/signup';
+import {validateUsername, validateEmail, validatePassword, validatePasswordConfirmation} from '../utils/validators/signup';
 
 export function validateSignupForm(control, data, callback) {
   const {username, email, password, confirmation, errors} = data;

@@ -1,6 +1,6 @@
 'use strict';
 
-import axios from 'axios';
+import axios from '../utils/axiosUtils';
 
 import {SET_ACCESS_TOKEN} from './types';
 
@@ -20,11 +20,7 @@ export function authenticateUser(data) {
   formData.append('grant_type', 'password');
 
   return dispatch => {
-    return axios.post('oauth/token', formData, {
-      auth: {
-        username: require('../config/config.json').clientId
-      }
-    }).then(
+    return axios.post('oauth/token', formData).then(
       response => {
         setAuthorizationToken(response.data.access_token);
 

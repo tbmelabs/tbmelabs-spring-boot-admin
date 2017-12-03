@@ -1,6 +1,6 @@
 'use strict';
 
-import axios from 'axios';
+import axios from '../axiosUtils';
 
 export function validateUsername(username, errors, callback) {
   if (username == undefined || username == '') {
@@ -8,7 +8,11 @@ export function validateUsername(username, errors, callback) {
     return;
   }
 
-  axios.post('/signup/does-username-match-format', {username: username}).then(
+  axios.post('/signup/does-username-match-format', {username: username}, {
+    auth: {
+      username: require('../../config/config.json').clientId
+    }
+  }).then(
     response => {
       axios.post('/signup/is-username-unique', {username: username}).then(
         response => {

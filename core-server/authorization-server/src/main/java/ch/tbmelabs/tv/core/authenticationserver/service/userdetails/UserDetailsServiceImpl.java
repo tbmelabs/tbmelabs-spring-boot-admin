@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authenticationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -15,6 +16,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return new UserPrincipal(userRepository.findByUsername(username));
+    User user;
+
+    if ((user = userRepository.findByUsername(username)) == null) {
+      throw new UsernameNotFoundException("Username " + username + " does not exist!");
+    }
+
+    return new UserPrincipal(user);
   }
 }

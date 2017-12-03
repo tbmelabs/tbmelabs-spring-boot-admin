@@ -64,8 +64,6 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     return new DefaultWebResponseExceptionTranslator() {
       @Override
       public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
-        e.printStackTrace();
-
         ResponseEntity<OAuth2Exception> responseEntity = super.translate(e);
         HttpHeaders headers = new HttpHeaders();
         headers.setAll(responseEntity.getHeaders().toSingleValueMap());
