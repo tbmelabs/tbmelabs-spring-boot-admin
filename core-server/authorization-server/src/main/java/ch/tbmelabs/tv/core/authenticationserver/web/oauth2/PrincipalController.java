@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authenticationserver.service.userdetails;
+package ch.tbmelabs.tv.core.authenticationserver.web.oauth2;
 
 import java.security.Principal;
 
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserController {
-  @RequestMapping("/user")
-  public Principal user(Principal user) {
+public class PrincipalController {
+  @RequestMapping({ "/me", "/user" })
+  public Principal getPrincipal(Principal user) {
     return user;
   }
 }

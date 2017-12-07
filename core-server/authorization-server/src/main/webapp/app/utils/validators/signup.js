@@ -1,6 +1,6 @@
 'use strict';
 
-import axios from '../axiosUtils';
+import axios from 'axios';
 
 export function validateUsername(username, errors, callback) {
   if (username == undefined || username == '') {

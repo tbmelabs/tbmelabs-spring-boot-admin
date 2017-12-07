@@ -42,16 +42,8 @@ class UsernamePasswordLoginForm extends Component {
 
     this.props.authenticateUser(this.state).then(
       response => {
-        this.setState({errors: {}, isLoading: false});
-
-        if (this.props.redirectUrl == undefined) {
-          this.context.router.history.push('/select');
-        } else {
-          window.location.assign(this.props.redirectUrl + '?refresh_token=' + response.data.refresh_token);
-        }
-      }, error => {
-        this.setState({password: '', errors: {form: error.response.data.error_description}, isLoading: false});
-      }
+      },
+      error => this.setState({password: '', errors: {form: error.response.data.message}, isLoading: false})
     );
   }
 
@@ -106,7 +98,6 @@ class UsernamePasswordLoginForm extends Component {
 
 UsernamePasswordLoginForm.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
-  redirectUrl: PropTypes.string,
   texts: PropTypes.object.isRequired
 }
 

@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import queryString from 'query-string';
-
 import {authenticateUser} from '../../actions/authActions';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
@@ -23,9 +21,7 @@ class Signin extends Component {
   }
 
   render() {
-    const {redirect} = queryString.parse(this.context.router.route.location.search);
     const {texts} = this.props;
-    const {authenticateUser} = this.props.actions;
 
     return (
       <div>
@@ -35,7 +31,7 @@ class Signin extends Component {
         </Jumbotron>
 
         <div className='signin-form'>
-          <UsernamePasswordLoginForm authenticateUser={authenticateUser} redirectUrl={redirect} texts={texts}/>
+          <UsernamePasswordLoginForm authenticateUser={authenticateUser} texts={texts}/>
         </div>
       </div>
     );
@@ -44,7 +40,6 @@ class Signin extends Component {
 
 Signin.propTypes = {
   texts: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
 }
 
 Signin.contextTypes = {
@@ -57,13 +52,4 @@ function mapStateToProps(state) {
   }
 }
 
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      authenticateUser: bindActionCreators(authenticateUser, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Signin);
+export default connect(mapStateToProps, null)(Signin);

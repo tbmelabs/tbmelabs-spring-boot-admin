@@ -42,24 +42,10 @@
 			<artifactId>spring-security-oauth2</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-security -->
 		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.7</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-
-		<!-- Shared resources -->
-		<dependency>
-			<groupId>ch.tbmelabs.tv.shared</groupId>
-			<artifactId>domain</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-security</artifactId>
 		</dependency>
 	</dependencies>
 

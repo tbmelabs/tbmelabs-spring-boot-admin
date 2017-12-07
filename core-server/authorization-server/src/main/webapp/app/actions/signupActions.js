@@ -1,6 +1,6 @@
 'use strict';
 
-import axios from '../utils/axiosUtils';
+import axios from 'axios';
 
 import {validateUsername, validateEmail, validatePassword, validatePasswordConfirmation} from '../utils/validators/signup';
 

@@ -27,7 +27,6 @@
     "bootstrap": "^3.3.7",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "query-string": "^5.0.1",
     "react": "^16.0.0",
     "react-addons-transition-group": "^15.6.2",
     "react-bootstrap": "^0.31.5",

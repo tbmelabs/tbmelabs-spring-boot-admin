@@ -52,8 +52,7 @@ INSERT INTO user_roles(created, last_updated, name)
 			(now(), now(), 'CONTENT_SUPPORT'),
 			(now(), now(), 'PREMIUM_USER'),
 			(now(), now(), 'USER'),
-			(now(), now(), 'GUEST'),
-			(now(), now(), 'TMP_ZUUL_USER');
+			(now(), now(), 'GUEST');
 	
 REVOKE INSERT
 	ON user_roles FROM auth_database_user;
@@ -211,8 +210,7 @@ GRANT SELECT, INSERT
 	ON client_scopes TO auth_database_user;
 
 INSERT INTO client_scopes (created, last_updated, name)
-	VALUES (now(), now(), 'AUTHORIZE_USER'),
-	(now(), now(), 'PROXY_APPLICATION');
+	VALUES (now(), now(), 'PROXY_APPLICATION');
 
 REVOKE INSERT
 	ON client_scopes FROM auth_database_user;

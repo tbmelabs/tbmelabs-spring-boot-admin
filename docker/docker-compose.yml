@@ -6,8 +6,8 @@ services:
     image: postgres
     environment:
       - POSTGRES_DB=auth_server_database
-      - POSTGRES_PASSWORD=af2EszT2
-      - POSTGRES_USER=oauth_admin
+      - POSTGRES_PASSWORD=
+      - POSTGRES_USER=
     volumes:
       - ../core-server/authorization-server/src/main/resources/db/installation/auth_database.sql:/docker-entrypoint-initdb.d/init.sql
   eureka-server:
@@ -37,11 +37,9 @@ services:
       - authorization-server
       - eureka-server
     environment:
-      - CLIENT_ID=zuul
+      - CLIENT_ID=
       - CLIENT_SECRET=
       - EUREKA_DEFAULT_ZONE=http://eureka-server:8761/eureka
       - OAUTH2_SERVER_BASE_URI=http://authorization-server:88
-      - REDIS_HOST=oauth_tokenstore
-      - REDIS_PORT=6379
     ports:
       - "80:80"
