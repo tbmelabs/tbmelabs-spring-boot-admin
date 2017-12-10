@@ -53,5 +53,6 @@ captures/
 dockerfile.local
 
 # NPM
+package-lock.json
 node_modules/
 public/
