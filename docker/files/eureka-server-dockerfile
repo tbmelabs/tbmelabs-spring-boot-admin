@@ -1,9 +1,0 @@
-################################
-### EUREKA SERVICE DISCOVERY ###
-################################
-
-FROM	eureka-service-discovery
-EXPOSE	[docker-port]:[host-port]
-ENV		EUREKA_DEFAULT_ZONE=
-
-MAINTAINER TBME Labs

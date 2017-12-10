@@ -6,7 +6,6 @@ export function authenticateUser(data) {
   var formData = new FormData();
   formData.append('username', data.username);
   formData.append('password', data.password);
-  formData.append('grant_type', 'password');
 
   return axios.post('', formData);
 }

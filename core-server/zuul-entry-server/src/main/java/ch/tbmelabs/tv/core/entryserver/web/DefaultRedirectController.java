@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultRedirectController {
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String redirectToWebapp(HttpServletResponse response) throws IOException {
-    return UUID.randomUUID().toString();
-
     // response.sendRedirect("/webapp");
+
+    return UUID.randomUUID().toString();
   }
 }

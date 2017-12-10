@@ -1,9 +1,0 @@
-################################################
-### ZUUL ENTRY SERVER (RIBBON LOAD BALANCER) ###
-################################################
-
-FROM	zuul-entry-server
-EXPOSE	[docker-port]:[host-port]
-ENV		CLIENT_ID= CLIENT_SECRET= EUREKA_DEFAULT_ZONE= OAUTH2_SERVER_BASE_URI= REDIS_HOST= REDIS_PORT=
-
-MAINTAINER TBME Labs

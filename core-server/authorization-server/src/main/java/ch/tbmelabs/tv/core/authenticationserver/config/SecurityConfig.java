@@ -40,15 +40,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
-    http.csrf().disable()
-
+    http
+        
+        .csrf().disable()
+    
         .authorizeRequests().antMatchers("/", "/public/**", "/signup/**").permitAll()
 
         .and().authorizeRequests().anyRequest().authenticated()
         
         .and().formLogin().loginProcessingUrl("/")
-        .successHandler(new OAuth2LoginSuccessHandler())
         .failureHandler(new OAuth2LoginFailureHandler())
+        .successHandler(new OAuth2LoginSuccessHandler())
         .and().exceptionHandling().authenticationEntryPoint(new OAuth2LoginUrlAuthenticationEntryPoint("/"));
     // @formatter:on
   }
