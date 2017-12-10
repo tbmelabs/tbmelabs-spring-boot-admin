@@ -8,7 +8,7 @@
 	<description>OAuth2 authorization server built on Spring.</description>
 
 	<properties>
-		<start-class>ch.tbmelabs.tv.authenticationserver.Application</start-class>
+		<start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
 	</properties>
 
 	<parent>
@@ -77,9 +77,77 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
+
+			<resource>
+				<directory>src/main/webapp</directory>
+				<excludes>
+					<exclude>app</exclude>
+					<exclude>node_modules</exclude>
+					<exclude>*.json</exclude>
+					<exclude>*.js</exclude>
+				</excludes>
+				<targetPath>static</targetPath>
+			</resource>
 		</resources>
 
 		<plugins>
+			<!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+
+				<executions>
+					<!-- download nodejs and npm -->
+					<execution>
+						<id>install node and npm</id>
+						<phase>generate-resources</phase>
+
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+
+						<configuration>
+							<installDirectory>target/node</installDirectory>
+							<nodeVersion>v8.9.3</nodeVersion>
+							<npmVersion>5.5.1</npmVersion>
+						</configuration>
+					</execution>
+
+					<!-- install npm dependencies -->
+					<execution>
+						<id>npm install</id>
+						<phase>generate-resources</phase>
+
+						<goals>
+							<goal>npm</goal>
+						</goals>
+
+						<configuration>
+							<arguments>install</arguments>
+							<installDirectory>target/node</installDirectory>
+							<workingDirectory>src/main/webapp</workingDirectory>
+						</configuration>
+					</execution>
+
+					<!-- build frontend -->
+					<execution>
+						<id>npm run build</id>
+						<phase>generate-resources</phase>
+
+						<goals>
+							<goal>npm</goal>
+						</goals>
+
+						<configuration>
+							<arguments>run build</arguments>
+							<installDirectory>target/node</installDirectory>
+							<workingDirectory>src/main/webapp</workingDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
