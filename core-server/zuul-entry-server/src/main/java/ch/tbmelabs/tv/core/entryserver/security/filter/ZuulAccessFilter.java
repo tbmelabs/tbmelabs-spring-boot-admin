@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.entryserver.zuul.filter;
+package ch.tbmelabs.tv.core.entryserver.security.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

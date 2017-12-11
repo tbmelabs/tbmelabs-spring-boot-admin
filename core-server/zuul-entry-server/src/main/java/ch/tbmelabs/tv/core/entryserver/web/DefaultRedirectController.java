@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DefaultRedirectController {
+  // TODO: Is the zuul server a UI server in the mean time?
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
   public String redirectToWebapp(HttpServletResponse response) throws IOException {
     // response.sendRedirect("/webapp");
