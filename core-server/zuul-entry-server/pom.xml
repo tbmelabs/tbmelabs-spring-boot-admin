@@ -9,6 +9,7 @@
 
 	<properties>
 		<start-class>ch.tbmelabs.tv.entryserver.Application</start-class>
+		<org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
 	</properties>
 
 	<parent>
@@ -22,6 +23,20 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zuul</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

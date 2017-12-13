@@ -9,6 +9,7 @@
 
 	<properties>
 		<start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
+		<org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
 	</properties>
 
 	<parent>
@@ -18,16 +19,17 @@
 	</parent>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
@@ -36,11 +38,10 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
-		<!-- Shared resources -->
+		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
-			<groupId>ch.tbmelabs.tv.shared</groupId>
-			<artifactId>domain</artifactId>
-			<version>1.0.0</version>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
@@ -48,6 +49,13 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
+		</dependency>
+
+		<!-- Shared resources -->
+		<dependency>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>domain</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -63,8 +71,8 @@
 			<resource>
 				<directory>src/main/webapp</directory>
 				<excludes>
-					<exclude>app</exclude>
-					<exclude>node_modules</exclude>
+					<exclude>app/**</exclude>
+					<exclude>node_modules/**</exclude>
 					<exclude>*.json</exclude>
 					<exclude>*.js</exclude>
 				</excludes>

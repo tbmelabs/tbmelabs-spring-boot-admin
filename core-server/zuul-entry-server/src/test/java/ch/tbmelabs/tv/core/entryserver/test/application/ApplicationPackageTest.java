@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.ZuulEntryServerTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
 
-public class ApplicationPackageTest implements ZuulEntryServerTest {
+public class ApplicationPackageTest extends AbstractZuulApplicationContextAwareJunitTest {
   private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.tv.core.entryserver";
 
   @Test
