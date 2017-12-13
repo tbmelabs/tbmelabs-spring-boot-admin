@@ -12,16 +12,18 @@ import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJ
 public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAwareJunitTest {
   @Test
   public void zuulAccessFilterShouldBeAnnotated() {
-    assertThat(ZuulAccessFilter.class).hasAnnotation(Component.class).withFailMessage("Annotate "
-        + ZuulAccessFilter.class + " with " + Component.class + " to make it scannable for the spring application!");
+    assertThat(ZuulAccessFilter.class).hasAnnotation(Component.class).withFailMessage(
+        "Annotate %s with %s to make it scannable for the spring application!", ZuulAccessFilter.class,
+        Component.class);
 
-    assertThat(ZuulAccessFilter.class).hasAnnotation(Profile.class).withFailMessage("Annotate " + ZuulAccessFilter.class
-        + " with " + Profile.class + " because we dont want this to filter public requests!");
+    assertThat(ZuulAccessFilter.class).hasAnnotation(Profile.class).withFailMessage(
+        "Annotate %s with %s because we dont want this to filter public requests!", ZuulAccessFilter.class,
+        Profile.class);
   }
 
   @Test
   public void zuulAccessFilterShouldNotOccurInProductiveEnvironments() {
     assertThat(ZuulAccessFilter.class.getDeclaredAnnotation(Profile.class).value()).contains("dev").withFailMessage(
-        "Assing the value \"dev\" to " + Profile.class + " to keep this filter away from the productive environment!");
+        "Assing the value \"dev\" to %s to keep this filter away from the productive environment!", Profile.class);
   }
 }

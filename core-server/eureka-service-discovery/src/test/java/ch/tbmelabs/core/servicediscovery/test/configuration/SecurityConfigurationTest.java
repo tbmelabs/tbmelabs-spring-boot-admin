@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.entryserver.test.configuration;
+package ch.tbmelabs.core.servicediscovery.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,11 +9,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import ch.tbmelabs.tv.core.entryserver.configuration.OAuth2SSOZuulProxyConfiguration;
-import ch.tbmelabs.tv.core.entryserver.configuration.SecurityConfiguration;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicatoinContextAwareJunitTest;
+import ch.tbmelabs.tv.core.servicediscovery.configuration.EurekaConfiguration;
+import ch.tbmelabs.tv.core.servicediscovery.configuration.SecurityConfiguration;
 
-public class SecurityConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class SecurityConfigurationTest extends AbstractEurekaApplicatoinContextAwareJunitTest {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
@@ -30,6 +30,6 @@ public class SecurityConfigurationTest extends AbstractZuulApplicationContextAwa
 
     assertThat(SecurityConfiguration.class).hasAnnotation(Order.class).withFailMessage(
         "Annotate %s with %s to get along with %s!", SecurityConfiguration.class, Order.class,
-        OAuth2SSOZuulProxyConfiguration.class);
+        EurekaConfiguration.class);
   }
 }

@@ -1,11 +1,10 @@
-package ch.tbmelabs.tv.core.servicediscovery.config;
+package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,12 +17,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Autowired
   private Environment environment;
 
   @Override
-  @Profile("dev")
   public void configure(WebSecurity web) throws Exception {
     if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
       web.debug(true);
@@ -34,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
 
+        // TODO: Secure eureka server (dashboard and administrative endpoints)
         .authorizeRequests().anyRequest().anonymous();
   }
 }

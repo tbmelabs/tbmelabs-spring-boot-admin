@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
 
-public class WebSecurityOAuth2SSOTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationContextAwareJunitTest {
   private static final String FORWARD_HEADER_NAME = "location";
   private static final String ZUUL_AUTHENTICATION_ENTRY_POINT_URI = "http://localhost/login";
   private static final String OAUTH2_AUTHENTICATION_ENTRY_POINT_URI = "http://localhost/oauth/authorize";
