@@ -6,10 +6,10 @@ import org.junit.Test;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Configuration;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicatoinContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
 import ch.tbmelabs.tv.core.servicediscovery.configuration.EurekaConfiguration;
 
-public class EurekaConfigurationTest extends AbstractEurekaApplicatoinContextAwareJunitTest {
+public class EurekaConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
   @Test
   public void eurekaConfigurationShouldBeAnnotated() {
     assertThat(EurekaConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

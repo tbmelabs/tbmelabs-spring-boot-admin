@@ -7,7 +7,7 @@ import org.junit.Test;
 import ch.tbmelabs.tv.core.entryserver.Application;
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
 
-public class ApplicationPackageTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class ApplicationPackageNamingTest extends AbstractZuulApplicationContextAwareJunitTest {
   private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.tv.core.entryserver";
 
   @Test

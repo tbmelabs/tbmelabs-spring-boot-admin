@@ -1,6 +1,5 @@
-package ch.tbmelabs.tv.core.entryserver.test;
+package ch.tbmelabs.tv.core.authorizationserver.test;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,7 @@ import org.springframework.test.context.support.DirtiesContextBeforeModesTestExe
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
 
-import ch.tbmelabs.tv.core.entryserver.Application;
+import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
@@ -23,8 +22,5 @@ import ch.tbmelabs.tv.core.entryserver.Application;
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public abstract class AbstractZuulApplicationContextAwareJunitTest {
-  @Test
-  public void zuulApplicationContextLoads() {
-  }
+public class AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
 }

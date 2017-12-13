@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.config;
+package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import java.util.Arrays;
 
@@ -23,7 +23,7 @@ import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginUrlAuth
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Autowired
   @Qualifier("authenticationManagerBean")
   private AuthenticationManager authenticationManager;

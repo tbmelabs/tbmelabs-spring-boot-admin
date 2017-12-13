@@ -1,13 +1,14 @@
-package ch.tbmelabs.core.servicediscovery.test.application;
+package ch.tbmelabs.tv.core.authorizationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
-import ch.tbmelabs.tv.core.servicediscovery.Application;
+import ch.tbmelabs.tv.core.authorizationserver.Application;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
-public class SpringBootServletInitializerConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
+public class SpringBootServletInitializerConfigurationTest
+    extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String APPLICATION_CLASS_FIELD_NAME = "APPLICATION_SOURCE_CLASS";
 
   @Test

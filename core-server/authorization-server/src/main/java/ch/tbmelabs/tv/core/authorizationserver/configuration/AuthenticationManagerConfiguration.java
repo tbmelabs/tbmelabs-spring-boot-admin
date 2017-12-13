@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.config;
+package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsSe
 import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 
 @Configuration
-public class AuthenticationManagerConfig {
+public class AuthenticationManagerConfiguration {
   @Autowired
   private ObjectPostProcessor<Object> objectPostProcessor;
 

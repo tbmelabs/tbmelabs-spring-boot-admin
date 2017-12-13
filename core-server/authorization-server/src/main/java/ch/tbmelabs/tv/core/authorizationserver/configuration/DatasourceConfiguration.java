@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.config;
+package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import javax.sql.DataSource;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-public class DatasourceConfig {
+public class DatasourceConfiguration {
   @Bean
   @Primary
   @ConfigurationProperties(prefix = "spring.datasource")
@@ -19,7 +19,7 @@ public class DatasourceConfig {
   }
 
   @Bean
-  @Profile("dev")
+  @Profile({ "dev", "test" })
   @ConfigurationProperties(prefix = "tokenstore.datasource")
   public DataSource jdbcTokenStoreDatasource() {
     return DataSourceBuilder.create().build();

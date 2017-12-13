@@ -1,8 +1,7 @@
-package ch.tbmelabs.tv.core.authorizationserver.config;
+package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -11,9 +10,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-import ch.tbmelabs.tv.core.authorizationserver.service.ZuulProxiedApplicationTokenService;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
@@ -21,13 +20,16 @@ import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTransla
 @Configuration
 @EnableOAuth2Client
 @EnableAuthorizationServer
-public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
   @Autowired
   @Qualifier("authenticationManagerBean")
   private AuthenticationManager authenticationManager;
 
   @Autowired
   private ClientDetailsServiceImpl clientDetailsService;
+
+  @Autowired
+  private DefaultTokenServices tokenService;
 
   @Autowired
   private LoggingExceptionTranslator loggingExceptionTranslator;
@@ -38,20 +40,11 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
   @Autowired
   private UserDetailsServiceImpl userDetailsService;
 
-  @Bean
-  public ZuulProxiedApplicationTokenService tokenServiceBean() throws Exception {
-    ZuulProxiedApplicationTokenService tokenService = new ZuulProxiedApplicationTokenService();
-    tokenService.setTokenStore(tokenStore);
-    tokenService.setClientDetailsService(clientDetailsService);
-    tokenService.setAuthenticationManager(authenticationManager);
-    return tokenService;
-  }
-
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-    endpoints.tokenServices(tokenServiceBean()).tokenStore(tokenStore).reuseRefreshTokens(false)
-        .authenticationManager(authenticationManager).userDetailsService(userDetailsService)
-        .exceptionTranslator(loggingExceptionTranslator);
+    endpoints.authenticationManager(authenticationManager).exceptionTranslator(loggingExceptionTranslator)
+        .reuseRefreshTokens(false).tokenServices(tokenService).tokenStore(tokenStore)
+        .userDetailsService(userDetailsService);
   }
 
   @Override

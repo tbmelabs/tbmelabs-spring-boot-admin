@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
@@ -20,9 +19,8 @@ import ch.tbmelabs.tv.core.servicediscovery.Application;
 @ContextConfiguration
 @ActiveProfiles({ "test" })
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestPropertySource({ "classpath:application-test.properties" })
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public class AbstractEurekaApplicatoinContextAwareJunitTest {
+public class AbstractEurekaApplicationContextAwareJunitTest {
 }

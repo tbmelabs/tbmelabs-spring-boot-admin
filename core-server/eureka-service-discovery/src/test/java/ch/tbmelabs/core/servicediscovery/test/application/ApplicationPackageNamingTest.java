@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicatoinContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
-public class ApplicationPackageTest extends AbstractEurekaApplicatoinContextAwareJunitTest {
+public class ApplicationPackageNamingTest extends AbstractEurekaApplicationContextAwareJunitTest {
   private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.tv.core.servicediscovery";
 
   @Test
