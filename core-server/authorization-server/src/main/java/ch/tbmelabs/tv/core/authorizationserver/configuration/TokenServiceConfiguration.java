@@ -31,5 +31,4 @@ public class TokenServiceConfiguration {
     tokenService.setTokenStore(tokenStore);
     return tokenService;
   }
-
 }
