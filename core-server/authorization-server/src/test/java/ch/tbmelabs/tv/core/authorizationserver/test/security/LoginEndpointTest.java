@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -29,10 +28,6 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
 
   private Role testRole;
   private User testUser;
-
-  static {
-
-  }
 
   @Autowired
   private MockMvc mockMvc;
@@ -67,8 +62,6 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
     grantedAuthority.setUserRole(testRole);
 
     testUser.setGrantedAuthorities(Arrays.asList(grantedAuthority));
-
-    SecurityContextHolder.getContext().setAuthentication(null);
   }
 
   @Test
@@ -98,8 +91,9 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
     String responseMessage = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getContentAsString();
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
+        .getHeader("location");
 
-    System.out.println(responseMessage);
+    assertThat(responseMessage).isEqualTo("http://localhost/default_login_redirect");
   }
 }
