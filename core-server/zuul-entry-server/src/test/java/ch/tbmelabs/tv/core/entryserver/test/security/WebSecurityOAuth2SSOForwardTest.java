@@ -1,7 +1,8 @@
-package ch.tbmelabs.tv.core.entryserver.test.web;
+package ch.tbmelabs.tv.core.entryserver.test.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -24,8 +25,8 @@ public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationCont
 
   @Test
   public void requestToRootURLShouldForwardToLoginEndpoint() throws Exception {
-    String forwardUrl = mockMvc.perform(get("/")).andExpect(status().is3xxRedirection()).andReturn().getResponse()
-        .getHeader(FORWARD_HEADER_NAME);
+    String forwardUrl = mockMvc.perform(get("/")).andDo(print()).andExpect(status().is3xxRedirection()).andReturn()
+        .getResponse().getHeader(FORWARD_HEADER_NAME);
 
     assertThat(forwardUrl).startsWith(ZUUL_AUTHENTICATION_ENTRY_POINT_URI)
         .withFailMessage("Check if the security configuration was intentionally changed!");
@@ -33,8 +34,8 @@ public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationCont
 
   @Test
   public void requestToLoginEndpointShouldForwardToOAuth2AuthorizationEndpoint() throws Exception {
-    String forwardUrl = mockMvc.perform(get("/login")).andExpect(status().is3xxRedirection()).andReturn().getResponse()
-        .getHeader(FORWARD_HEADER_NAME);
+    String forwardUrl = mockMvc.perform(get("/login")).andDo(print()).andExpect(status().is3xxRedirection()).andReturn()
+        .getResponse().getHeader(FORWARD_HEADER_NAME);
 
     assertThat(forwardUrl).startsWith(OAUTH2_AUTHENTICATION_ENTRY_POINT_URI).contains("client_id=" + clientId)
         .contains("redirect_uri=" + ZUUL_AUTHENTICATION_ENTRY_POINT_URI).contains("response_type=code")
