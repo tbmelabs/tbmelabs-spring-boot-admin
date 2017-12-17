@@ -7,9 +7,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticatedAuthenticationProviderImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
-import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 
 @Configuration
 public class AuthenticationManagerConfiguration {

@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
-import ch.tbmelabs.tv.shared.domain.authentication.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.shared.domain.authentication.user.Role;
-import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 
 public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String LOGIN_PROCESSING_URL = "/";

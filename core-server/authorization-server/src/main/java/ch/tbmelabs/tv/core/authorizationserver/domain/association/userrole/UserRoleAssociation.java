@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.domain.authentication.association.userrole;
+package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,9 +15,9 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.shared.domain.authentication.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.shared.domain.authentication.user.Role;
-import ch.tbmelabs.tv.shared.domain.authentication.user.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

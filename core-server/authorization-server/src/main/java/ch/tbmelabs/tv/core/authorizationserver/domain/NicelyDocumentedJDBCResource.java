@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.domain.authentication;
+package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.io.Serializable;
 import java.util.Date;

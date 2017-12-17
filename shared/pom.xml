@@ -12,6 +12,5 @@
 	</parent>
 
 	<modules>
-		<module>domain</module>
 	</modules>
 </project>

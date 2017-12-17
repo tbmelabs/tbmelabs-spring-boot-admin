@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
-import ch.tbmelabs.tv.shared.domain.authentication.bruteforce.BlacklistedIp;
 
 @Service
 public class BruteforceFilterService {

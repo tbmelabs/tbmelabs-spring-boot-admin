@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.domain.authentication.logging;
+package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,8 +19,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import ch.tbmelabs.tv.shared.domain.authentication.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

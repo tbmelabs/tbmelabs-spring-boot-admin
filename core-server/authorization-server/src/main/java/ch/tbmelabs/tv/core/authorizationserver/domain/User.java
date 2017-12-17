@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.domain.authentication.user;
+package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,8 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-import ch.tbmelabs.tv.shared.domain.authentication.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.shared.domain.authentication.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

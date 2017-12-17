@@ -12,9 +12,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.shared.domain.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
 
 @Component
 public class OAuth2LoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
