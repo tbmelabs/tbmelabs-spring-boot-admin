@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.domain.authentication.bruteforcing;
+package ch.tbmelabs.tv.shared.domain.authentication.bruteforce;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,7 +40,6 @@ public class BlacklistedIp extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(max = 45)
-  @Column(columnDefinition = "bpchar(45")
   private String ip;
 
   public BlacklistedIp(String ip) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -20,12 +21,12 @@ public class TokenStoreConfiguration {
 
   @Bean
   @Autowired
-  @Profile({ "prod" })
   public RedisTokenStore redisTokenStore(RedisConnectionFactory redisConnectionFactory) {
     return new RedisTokenStore(redisConnectionFactory);
   }
 
   @Bean
+  @Primary
   @Profile({ "dev", "test" })
   public JdbcTokenStore jdbcTokenStore() {
     DataSource jdbcTokenStoreDatasource = (DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME);

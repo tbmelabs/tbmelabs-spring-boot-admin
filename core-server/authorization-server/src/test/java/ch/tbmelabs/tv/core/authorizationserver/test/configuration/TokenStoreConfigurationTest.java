@@ -9,10 +9,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
@@ -36,8 +36,7 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
 
     assertThat(redisTokenStoreConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(redisTokenStoreConfiguration.getDeclaredAnnotation(Autowired.class)).isNotNull();
-    assertThat(redisTokenStoreConfiguration.getDeclaredAnnotation(Profile.class).value()).contains("prod")
-        .withFailMessage("For high performance use the %s in productive environments!", RedisTokenStore.class);
+    assertThat(redisTokenStoreConfiguration.getDeclaredAnnotation(Profile.class)).isNull();
   }
 
   @Test
@@ -46,6 +45,7 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
         new Class[] {});
 
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
+    assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Primary.class)).isNotNull();
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Profile.class).value())
         .containsAll(Arrays.asList(new String[] { "dev", "test" })).doesNotContain("prod")
         .withFailMessage("The @%s annotation should not allow the %s to occur in productive environments!",

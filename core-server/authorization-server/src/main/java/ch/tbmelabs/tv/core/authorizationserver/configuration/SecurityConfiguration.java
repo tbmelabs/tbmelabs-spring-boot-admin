@@ -31,6 +31,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Autowired
   private Environment environment;
 
+  @Autowired
+  private OAuth2LoginFailureHandler loginFailureHandler;
+  
+  @Autowired
+  private OAuth2LoginSuccessHandler loginSuccessHandler;
+  
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
     return authenticationManager;
@@ -55,8 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and().authorizeRequests().anyRequest().authenticated()
         
         .and().formLogin().loginProcessingUrl("/")
-        .failureHandler(new OAuth2LoginFailureHandler())
-        .successHandler(new OAuth2LoginSuccessHandler())
+        .failureHandler(loginFailureHandler)
+        .successHandler(loginSuccessHandler)
         .and().exceptionHandling().authenticationEntryPoint(new OAuth2LoginUrlAuthenticationEntryPoint("/"));
     // @formatter:on
   }

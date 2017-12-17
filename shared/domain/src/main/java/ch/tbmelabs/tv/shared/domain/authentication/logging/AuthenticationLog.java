@@ -48,9 +48,8 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   private Long id;
 
   @NotEmpty
-  @Length(max = 3, min = 3)
-  @Column(columnDefinition = "bpchar(3)")
-  private AUTHENTICATION_STATE state;
+  @Length(max = 3)
+  private String state;
 
   @NotEmpty
   @Length(max = 45)
@@ -65,9 +64,13 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   private User user;
 
   public AuthenticationLog(AUTHENTICATION_STATE authenticationState, String ip, String message, User user) {
-    this.state = authenticationState;
+    this.state = authenticationState.name();
     this.ip = ip;
     this.message = message;
     this.user = user;
+  }
+
+  public void setState(AUTHENTICATION_STATE authenticationState) {
+    this.state = authenticationState.name();
   }
 }

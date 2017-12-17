@@ -244,7 +244,7 @@ CREATE TABLE blacklisted_ips (
 	id bigserial NOT NULL,
 	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
-	ip character(45) NOT NULL
+	ip character varying(45) NOT NULL
 );
 
 ALTER TABLE ONLY blacklisted_ips

@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,17 +18,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 import ch.tbmelabs.tv.shared.domain.authentication.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.shared.domain.authentication.logging.AuthenticationLog;
+import ch.tbmelabs.tv.shared.domain.authentication.logging.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.shared.domain.authentication.user.Role;
 import ch.tbmelabs.tv.shared.domain.authentication.user.User;
 
-public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class AuthenticationAttemptLoggerTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String LOGIN_PROCESSING_URL = "/";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
-  private static final String BAD_CREDENTIALS_RESPONSE = "Bad credentials";
 
   private Role testRole;
   private User testUser;
@@ -73,35 +77,46 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   }
 
   @Test
-  public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
-    String responseMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME,
-            testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+  public void loginWithInvalidUsernameShouldNotBeRegistered() throws Exception {
+    mockMvc.perform(
+        post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE);
+    assertThat(authenticationLogRepository.findAll()).hasSize(0)
+        .withFailMessage("The %s should not register bruteforce attempts!", AuthenticationAttemptLogger.class);
   }
 
   @Test
-  public void loginProcessingWithInvalidPasswordShoulFail() throws Exception {
-    String responseMessage = mockMvc
+  public void loginWithValidUsernameAndInvalidPasswordShouldBeRegistered() throws Exception {
+    mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE);
+    List<AuthenticationLog> logs = (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
+
+    assertThat(logs).hasSize(1).withFailMessage("Check that the %s registers failing login attempts of existing users!",
+        AuthenticationAttemptLogger.class);
+    assertThat(logs).extracting("state").containsExactly(AUTHENTICATION_STATE.NOK.name())
+        .withFailMessage("The %s was wrong passed!", AUTHENTICATION_STATE.class);
+    assertThat(logs).extracting("user").extracting("username").containsExactly(testUser.getUsername())
+        .withFailMessage("Wrong %s is linked in the %s!", User.class, AuthenticationLog.class);
   }
 
   @Test
-  public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
-    String responseMessage = mockMvc
+  public void loginWithValidUserShouldBeRegistered() throws Exception {
+    mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
-        .getHeader("location");
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
-    assertThat(responseMessage).isEqualTo("http://localhost/default_login_redirect");
+    List<AuthenticationLog> logs = (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
+
+    assertThat(logs).hasSize(1).withFailMessage("Check that the %s registers failing login attempts of existing users!",
+        AuthenticationAttemptLogger.class);
+    assertThat(logs).extracting("state").containsExactly(AUTHENTICATION_STATE.OK.name())
+        .withFailMessage("The %s was wrong passed!", AUTHENTICATION_STATE.class);
+    assertThat(logs).extracting("user").extracting("username").containsExactly(testUser.getUsername())
+        .withFailMessage("Wrong %s is linked in the %s!", User.class, AuthenticationLog.class);
   }
 }
