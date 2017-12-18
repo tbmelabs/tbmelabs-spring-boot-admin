@@ -45,7 +45,8 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
         post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
-    assertThat(BruteforceFilterService.getState()).hasSize(1);
+    assertThat(BruteforceFilterService.getState()).hasSize(1)
+        .withFailMessage("The %s should catch failed login attempts!", BruteforceFilterService.class);
   }
 
   @Test
@@ -60,6 +61,7 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
       }
     });
 
-    assertThat(ipBlacklistRepository.findAll()).hasSize(1).extracting("ip").containsExactly("127.0.0.1");
+    assertThat(ipBlacklistRepository.findAll()).hasSize(1).extracting("ip").containsExactly("127.0.0.1")
+        .withFailMessage("It is not possible to ban ip's if the assignment is incorrect!");
   }
 }

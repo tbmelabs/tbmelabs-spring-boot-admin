@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.security;
+package ch.tbmelabs.tv.core.authorizationserver.test.signin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,11 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -19,16 +21,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginFailureHandler;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginSuccessHandler;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
-public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String LOGIN_PROCESSING_URL = "/";
+public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+  private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
-  private static final String PASSWORD_PARAMETER_NAME = "password";
-  private static final String BAD_CREDENTIALS_RESPONSE = "Bad credentials";
+
+  private static final String USERNAME_NOT_UNIQUE_ERROR_MESSAGE = "Username already exists!";
 
   private Role testRole;
   private User testUser;
@@ -75,38 +75,21 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   }
 
   @Test
-  public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
-    String responseMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME,
-            testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+  public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
+    Exception thrownException = null;
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE)
-        .withFailMessage("Double check the %s to return a correct error message!", OAuth2LoginFailureHandler.class);
-  }
+    try {
+      mockMvc
+          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
+          .andDo(print()).andExpect(status().is5xxServerError());
+    } catch (NestedServletException e) {
+      thrownException = e;
+    }
 
-  @Test
-  public void loginProcessingWithInvalidPasswordShoulFail() throws Exception {
-    String responseMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
-            .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
-
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE)
-        .withFailMessage("Double check the %s to return a correct error message!", OAuth2LoginFailureHandler.class);
-  }
-
-  @Test
-  public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
-    String responseMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
-            .param(PASSWORD_PARAMETER_NAME, testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
-        .getHeader("location");
-
-    assertThat(responseMessage).isEqualTo("http://localhost/default_login_redirect")
-        .withFailMessage("Check that the %s redirects as expected!", OAuth2LoginSuccessHandler.class);
+    assertThat(thrownException).isNotNull();
+    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
+    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_NOT_UNIQUE_ERROR_MESSAGE)
+        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
   }
 }

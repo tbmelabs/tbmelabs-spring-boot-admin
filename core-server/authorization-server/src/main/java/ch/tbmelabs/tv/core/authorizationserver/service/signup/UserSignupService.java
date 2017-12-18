@@ -9,7 +9,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 
 @Service
 public class UserSignupService {
-  private static final String USERNAME_REGEX = "^[A-Z][a-z0-9_-]{5,64}";
+  private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,64}";
   private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
   @Autowired
