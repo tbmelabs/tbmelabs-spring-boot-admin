@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signin;
+package ch.tbmelabs.tv.core.authorizationserver.test.signin.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,6 +20,8 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
   private static final String USERNAME_PARAMETER_NAME = "username";
 
   private static final String USERNAME_VALIDATION_ERROR_MESSAGE = "Username does not match format!";
+
+  private static final String VALID_USERNAME = "ThisIsAUsername";
 
   @Autowired
   private MockMvc mockMvc;
@@ -79,5 +81,13 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
     assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
     assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE)
         .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+  }
+
+  @Test
+  public void validUsernameShouldPassValidation() throws Exception {
+    mockMvc
+        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
+        .andDo(print()).andExpect(status().is2xxSuccessful());
   }
 }

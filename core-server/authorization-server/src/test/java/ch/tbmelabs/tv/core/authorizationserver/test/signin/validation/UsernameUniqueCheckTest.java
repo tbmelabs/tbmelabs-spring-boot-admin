@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signin;
+package ch.tbmelabs.tv.core.authorizationserver.test.signin.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,6 +29,8 @@ public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicat
   private static final String USERNAME_PARAMETER_NAME = "username";
 
   private static final String USERNAME_NOT_UNIQUE_ERROR_MESSAGE = "Username already exists!";
+
+  private static final String VALID_USERNAME = "ThisIsAUsername";
 
   private Role testRole;
   private User testUser;
@@ -91,5 +93,13 @@ public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicat
     assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
     assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_NOT_UNIQUE_ERROR_MESSAGE)
         .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+  }
+
+  @Test
+  public void registrationWithNewUsernameShouldPassValidation() throws Exception {
+    mockMvc
+        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
+        .andDo(print()).andExpect(status().is2xxSuccessful());
   }
 }

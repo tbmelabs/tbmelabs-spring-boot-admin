@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signin;
+package ch.tbmelabs.tv.core.authorizationserver.test.signin.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -25,6 +25,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
   private static final String PASSWORD_MISSING_LOWERCASE_LETTERS = "ASDF123$";
   private static final String PASSWORD_MISSING_UPPERCASE_LETTERS = "asdf123$";
   private static final String PASSWORD_MISSING_SPECIAL_CHARS = "ASDfgh123";
+  private static final String VALID_PASSWORD = "ASdf99$$";
 
   @Autowired
   private MockMvc mockMvc;
@@ -122,5 +123,13 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
     assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
     assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
         .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+  }
+
+  @Test
+  public void validPasswordShouldPassValidation() throws Exception {
+    mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, VALID_PASSWORD).toString()))
+        .andDo(print()).andExpect(status().is2xxSuccessful());
   }
 }
