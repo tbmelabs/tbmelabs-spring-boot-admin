@@ -1,6 +1,11 @@
 'use strict';
 
-import axios from 'axios';
+import axios, {CancelToken} from 'axios';
+
+var cancelUsername;
+var cancelEmail;
+var cancelPassword;
+var cancelConfirmation;
 
 export function validateUsername(username, errors, callback) {
   if (username == undefined || username == '') {
@@ -8,24 +13,36 @@ export function validateUsername(username, errors, callback) {
     return;
   }
 
+  if (cancelUsername != null) {
+    cancelUsername();
+  }
+
   axios.post('/signup/does-username-match-format', {username: username}, {
-    auth: {
-      username: require('../../config/config.json').clientId
-    }
+    cancelToken: new CancelToken(function executor(c) {
+      cancelUsername = c;
+    })
   }).then(
     response => {
-      axios.post('/signup/is-username-unique', {username: username}).then(
+      axios.post('/signup/is-username-unique', {username: username}, {
+        cancelToken: new CancelToken(function executor(c) {
+          cancelUsername = c;
+        })
+      }).then(
         response => {
           delete errors.username;
           callback(errors);
         }, error => {
-          errors.username = error.response.data.message;
-          callback(errors);
+          if (!axios.isCancel(error)) {
+            errors.username = error.response.data.message;
+            callback(errors);
+          }
         }
       );
     }, error => {
-      errors.username = error.response.data.message;
-      callback(errors);
+      if (!axios.isCancel(error)) {
+        errors.username = error.response.data.message;
+        callback(errors);
+      }
     }
   );
 }
@@ -36,20 +53,36 @@ export function validateEmail(email, errors, callback) {
     return;
   }
 
-  axios.post('/signup/is-email', {email: email}).then(
+  if (cancelEmail != null) {
+    cancelEmail();
+  }
+
+  axios.post('/signup/is-email', {email: email}, {
+    cancelToken: new CancelToken(function executor(c) {
+      cancelEmail = c;
+    })
+  }).then(
     response => {
-      axios.post('/signup/is-email-unique', {email: email}).then(
+      axios.post('/signup/is-email-unique', {email: email}, {
+        cancelToken: new CancelToken(function executor(c) {
+          cancelEmail = c;
+        })
+      }).then(
         response => {
           delete errors.email;
           callback(errors);
         }, error => {
-          errors.email = error.response.data.message;
-          callback(errors);
+          if (!axios.isCancel(error)) {
+            errors.email = error.response.data.message;
+            callback(errors);
+          }
         }
       );
     }, error => {
-      errors.email = error.response.data.message;
-      callback(errors);
+      if (!axios.isCancel(error)) {
+        errors.email = error.response.data.message;
+        callback(errors);
+      }
     }
   );
 }
@@ -60,13 +93,23 @@ export function validatePassword(password, errors, callback) {
     return;
   }
 
-  axios.post('/signup/does-password-match-format', {password: password}).then(
+  if (cancelPassword != null) {
+    cancelPassword();
+  }
+
+  axios.post('/signup/does-password-match-format', {password: password}, {
+    cancelToken: new CancelToken(function executor(c) {
+      cancelPassword = c;
+    })
+  }).then(
     response => {
       delete errors.password;
       callback(errors);
     }, error => {
-      errors.password = error.response.data.message;
-      callback(errors);
+      if (!axios.isCancel(error)) {
+        errors.password = error.response.data.message;
+        callback(errors);
+      }
     }
   );
 }
@@ -77,13 +120,23 @@ export function validatePasswordConfirmation(password, confirmation, errors, cal
     return;
   }
 
-  axios.post('/signup/do-passwords-match', {password: password, confirmation: confirmation}).then(
+  if (cancelConfirmation != null) {
+    cancelConfirmation();
+  }
+
+  axios.post('/signup/do-passwords-match', {password: password, confirmation: confirmation}, {
+    cancelToken: new CancelToken(function executor(c) {
+      cancelConfirmation = c;
+    })
+  }).then(
     response => {
       delete errors.confirmation;
       callback(errors);
     }, error => {
-      errors.confirmation = error.response.data.message;
-      callback(errors);
+      if (!axios.isCancel(error)) {
+        errors.confirmation = error.response.data.message;
+        callback(errors);
+      }
     }
   );
 }
