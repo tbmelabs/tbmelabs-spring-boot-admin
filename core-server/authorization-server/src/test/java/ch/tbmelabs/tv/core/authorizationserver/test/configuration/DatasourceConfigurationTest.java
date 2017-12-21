@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String PRIMARY_DATASOURCE_NAME = "primaryDataSource";
@@ -48,7 +49,8 @@ public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationAppl
 
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Profile.class).value())
-        .containsAll(Arrays.asList(new String[] { "dev", "test" })).doesNotContain("prod")
+        .containsAll(Arrays.asList(new String[] { SpringApplicationProfile.DEV, SpringApplicationProfile.TEST }))
+        .doesNotContain(SpringApplicationProfile.PROD)
         .withFailMessage("The @%s annotation should not allow the %s to occur in productive environments!",
             Profile.class, JdbcTokenStore.class);
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(ConfigurationProperties.class).prefix())

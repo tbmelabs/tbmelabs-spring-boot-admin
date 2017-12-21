@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAwareJunitTest {
   @Test
@@ -23,7 +24,8 @@ public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAwareJun
 
   @Test
   public void zuulAccessFilterShouldNotOccurInProductiveEnvironments() {
-    assertThat(ZuulAccessFilter.class.getDeclaredAnnotation(Profile.class).value()).contains("dev").withFailMessage(
-        "Assing the value \"dev\" to %s to keep this filter away from the productive environment!", Profile.class);
+    assertThat(ZuulAccessFilter.class.getDeclaredAnnotation(Profile.class).value())
+        .contains(SpringApplicationProfile.DEV).withFailMessage(
+            "Assing the value \"dev\" to %s to keep this filter away from the productive environment!", Profile.class);
   }
 }

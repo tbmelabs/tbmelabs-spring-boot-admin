@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginSuccessHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginUrlAuthenticationEntryPoint;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 @EnableWebSecurity
@@ -33,10 +34,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private OAuth2LoginFailureHandler loginFailureHandler;
-  
+
   @Autowired
   private OAuth2LoginSuccessHandler loginSuccessHandler;
-  
+
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
     return authenticationManager;
@@ -44,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
+    if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
       web.debug(true);
     }
   }

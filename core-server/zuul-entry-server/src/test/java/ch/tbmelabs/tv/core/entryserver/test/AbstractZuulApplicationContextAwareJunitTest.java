@@ -15,10 +15,11 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.web.ServletTestExecutionListener;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
-@ActiveProfiles({ "test" })
+@ActiveProfiles({ SpringApplicationProfile.TEST })
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,

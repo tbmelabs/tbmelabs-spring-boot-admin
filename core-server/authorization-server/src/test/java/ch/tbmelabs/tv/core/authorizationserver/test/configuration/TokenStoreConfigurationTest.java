@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String REDIS_TOKEN_STORE_NAME = "redisTokenStore";
@@ -47,7 +48,8 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Primary.class)).isNotNull();
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Profile.class).value())
-        .containsAll(Arrays.asList(new String[] { "dev", "test" })).doesNotContain("prod")
+        .containsAll(Arrays.asList(new String[] { SpringApplicationProfile.DEV, SpringApplicationProfile.TEST }))
+        .doesNotContain(SpringApplicationProfile.PROD)
         .withFailMessage("The @%s annotation should not allow the %s to occur in productive environments!",
             Profile.class, JdbcTokenStore.class);
   }

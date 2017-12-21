@@ -12,6 +12,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+
 @Configuration
 public class TokenStoreConfiguration {
   private static final String JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME = "jdbcTokenStoreDatasource";
@@ -27,7 +29,7 @@ public class TokenStoreConfiguration {
 
   @Bean
   @Primary
-  @Profile({ "dev", "test" })
+  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
   public JdbcTokenStore jdbcTokenStore() {
     DataSource jdbcTokenStoreDatasource = (DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME);
 

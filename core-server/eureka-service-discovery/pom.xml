@@ -4,7 +4,7 @@
 	<groupId>ch.tbmelabs.tv.core</groupId>
 	<artifactId>eureka-service-discovery</artifactId>
 
-	<name>TBME Labs TV | Eureka-Discovery-Server</name>
+	<name>TBME TV | Eureka-Discovery-Server</name>
 	<description>Eureka microservice manager based on Spring-Cloud integration.</description>
 
 	<properties>
@@ -22,6 +22,12 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>constants</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

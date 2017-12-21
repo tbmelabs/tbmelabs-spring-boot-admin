@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+
 @Component
-@Profile("dev")
+@Profile(SpringApplicationProfile.DEV)
 public class ZuulAccessFilter extends ZuulFilter {
   private static final Logger LOGGER = LogManager.getLogger(ZuulAccessFilter.class);
 

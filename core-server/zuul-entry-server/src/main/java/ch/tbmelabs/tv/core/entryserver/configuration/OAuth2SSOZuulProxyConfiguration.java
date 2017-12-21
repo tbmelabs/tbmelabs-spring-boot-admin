@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+
 @Configuration
 @EnableZuulProxy
 @EnableOAuth2Sso
@@ -21,7 +23,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
+    if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
       web.debug(true);
     }
   }

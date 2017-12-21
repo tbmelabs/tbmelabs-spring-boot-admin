@@ -27,10 +27,6 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthority {
-  public enum DefaultRole {
-    GANDALF, SERVER_ADMIN, SERVER_SUPPORT, CONTENT_ADMIN, CONTENT_SUPPORT, PREMIUM_USER, USER, GUEST, TMP_ZUUL_USER
-  }
-
   @Transient
   private static final long serialVersionUID = 1L;
 

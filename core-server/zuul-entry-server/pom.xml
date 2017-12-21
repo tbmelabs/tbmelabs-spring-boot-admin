@@ -4,7 +4,7 @@
 	<groupId>ch.tbmelabs.tv.core</groupId>
 	<artifactId>zuul-entry-server</artifactId>
 
-	<name>TBME Labs TV | Zuul-Entry-Server</name>
+	<name>TBME TV | Zuul-Entry-Server</name>
 	<description>Load-Balancer based on Spring-Cloud integration.</description>
 
 	<properties>
@@ -30,6 +30,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 			<version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>constants</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

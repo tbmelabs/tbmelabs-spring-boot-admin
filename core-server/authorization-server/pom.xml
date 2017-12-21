@@ -4,7 +4,7 @@
 	<groupId>ch.tbmelabs.tv.core</groupId>
 	<artifactId>authorization-server</artifactId>
 
-	<name>TBME Labs TV | Authorization-Server</name>
+	<name>TBME TV | Authorization-Server</name>
 	<description>OAuth2 authorization server built on Spring.</description>
 
 	<properties>
@@ -56,6 +56,12 @@
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
 			<version>1.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>constants</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 

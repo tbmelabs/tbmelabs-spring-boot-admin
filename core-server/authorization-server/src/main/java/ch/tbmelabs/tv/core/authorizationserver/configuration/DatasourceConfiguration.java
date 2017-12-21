@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+
 @Configuration
 public class DatasourceConfiguration {
   @Bean
@@ -19,7 +21,7 @@ public class DatasourceConfiguration {
   }
 
   @Bean
-  @Profile({ "dev", "test" })
+  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.PROD })
   @ConfigurationProperties(prefix = "tokenstore.datasource")
   public DataSource jdbcTokenStoreDatasource() {
     return DataSourceBuilder.create().build();

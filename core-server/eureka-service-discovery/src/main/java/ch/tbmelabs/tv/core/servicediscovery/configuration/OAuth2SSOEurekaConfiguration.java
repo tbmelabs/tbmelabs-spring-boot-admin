@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+
 @Configuration
 @EnableEurekaServer
 @EnableOAuth2Sso
@@ -20,7 +23,7 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    if (Arrays.asList(environment.getActiveProfiles()).contains("dev")) {
+    if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
       web.debug(true);
     }
   }
@@ -30,7 +33,7 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
 
-        .authorizeRequests().antMatchers("/eureka/**").permitAll()
+        .authorizeRequests().antMatchers("/eureka/**").hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN)
         .anyRequest().authenticated();
     // @formatter:on
   }
