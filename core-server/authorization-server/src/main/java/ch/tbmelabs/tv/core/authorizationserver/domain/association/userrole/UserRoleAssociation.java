@@ -54,4 +54,18 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "user_role_id", referencedColumnName = "id")
   private Role userRole;
+
+  public UserRoleAssociation setUser(User user) {
+    this.user = user;
+    this.userId = user.getId();
+
+    return this;
+  }
+
+  public UserRoleAssociation setUserRole(Role role) {
+    this.userRole = role;
+    this.userRoleId = role.getId();
+
+    return this;
+  }
 }

@@ -7,4 +7,5 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 
 @Repository
 public interface RoleCRUDRepository extends CrudRepository<Role, Long> {
+  Role findByName(String name);
 }

@@ -54,4 +54,18 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "client_authority_id", referencedColumnName = "id")
   private Authority clientAuthority;
+
+  public ClientAuthorityAssociation setClient(Client client) {
+    this.client = client;
+    this.clientId = client.getId();
+
+    return this;
+  }
+
+  public ClientAuthorityAssociation setClientAuthority(Authority authority) {
+    this.clientAuthority = authority;
+    this.clientAuthorityId = authority.getId();
+
+    return this;
+  }
 }

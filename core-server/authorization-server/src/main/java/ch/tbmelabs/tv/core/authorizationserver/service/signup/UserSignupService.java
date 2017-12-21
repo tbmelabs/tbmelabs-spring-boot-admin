@@ -1,11 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
+import java.util.Arrays;
+
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 @Service
 public class UserSignupService {
@@ -14,6 +18,9 @@ public class UserSignupService {
 
   @Autowired
   private UserCRUDRepository userRepository;
+
+  @Autowired
+  private RoleCRUDRepository roleRepository;
 
   public boolean isUsernameUnique(User testUser) {
     return userRepository.findByUsername(testUser.getUsername()) == null;
@@ -47,6 +54,11 @@ public class UserSignupService {
   public User signUpNewUser(User newUser) {
     if (!isUserValid(newUser)) {
       throw new IllegalArgumentException("Registration failed. Please check your details!");
+    }
+
+    if (newUser.getGrantedAuthorities() == null) {
+      newUser.setGrantedAuthorities(
+          newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
     }
 
     return userRepository.save(newUser);

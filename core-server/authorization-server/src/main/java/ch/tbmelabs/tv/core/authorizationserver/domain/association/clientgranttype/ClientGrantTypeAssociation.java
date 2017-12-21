@@ -54,4 +54,18 @@ public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "client_grant_type_id", referencedColumnName = "id")
   private GrantType grantType;
+
+  public ClientGrantTypeAssociation setClient(Client client) {
+    this.client = client;
+    this.clientId = client.getId();
+
+    return this;
+  }
+
+  public ClientGrantTypeAssociation setGrantType(GrantType grantType) {
+    this.grantType = grantType;
+    this.clientGrantTypeId = grantType.getId();
+
+    return this;
+  }
 }
