@@ -13,9 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class DefaultRedirectController {
   // TODO: Is the zuul server a UI server in the mean time?
   @RequestMapping(value = { "/" }, method = RequestMethod.GET)
-  public String redirectToWebapp(HttpServletResponse response) throws IOException {
+  public String mapRootUri(HttpServletResponse response) throws IOException {
     // response.sendRedirect("/webapp");
 
-    return UUID.randomUUID().toString();
+    return "Root: " + UUID.randomUUID().toString();
+  }
+
+  @RequestMapping(value = { "/public" }, method = RequestMethod.GET)
+  public String mapPublicUri(HttpServletResponse response) throws IOException {
+    // response.sendRedirect("/webapp");
+
+    return "Public: " + UUID.randomUUID().toString();
   }
 }

@@ -1,21 +1,20 @@
-package ch.tbmelabs.tv.core.entryserver.configuration;
+package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
-@EnableZuulProxy
+@EnableEurekaServer
 @EnableOAuth2Sso
-public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapter {
+public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
   @Autowired
   private Environment environment;
 
@@ -31,10 +30,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
     // @formatter:off
     http
 
-        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-
-        .and().authorizeRequests().antMatchers("/").permitAll()
-        .antMatchers("/public/**").permitAll()
+        .authorizeRequests().antMatchers("/eureka/**").permitAll()
         .anyRequest().authenticated();
     // @formatter:on
   }

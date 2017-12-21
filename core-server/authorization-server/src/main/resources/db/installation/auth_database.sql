@@ -210,7 +210,8 @@ GRANT SELECT, INSERT
 	ON client_scopes TO auth_database_user;
 
 INSERT INTO client_scopes (created, last_updated, name)
-	VALUES (now(), now(), 'PROXY_APPLICATION');
+	VALUES (now(), now(), 'PROXY_APPLICATION'),
+		(now(), now(), 'MANAGE_MICROSERVICES');
 
 REVOKE INSERT
 	ON client_scopes FROM auth_database_user;
