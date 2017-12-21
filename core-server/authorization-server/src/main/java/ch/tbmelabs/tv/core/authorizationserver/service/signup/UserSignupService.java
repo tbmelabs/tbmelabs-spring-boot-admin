@@ -56,7 +56,7 @@ public class UserSignupService {
       throw new IllegalArgumentException("Registration failed. Please check your details!");
     }
 
-    if (newUser.getGrantedAuthorities() == null) {
+    if (newUser.getGrantedAuthorities() == null || newUser.getGrantedAuthorities().isEmpty()) {
       newUser.setGrantedAuthorities(
           newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
     }
