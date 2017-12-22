@@ -21,7 +21,7 @@ public class DatasourceConfiguration {
   }
 
   @Bean
-  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.PROD })
+  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
   @ConfigurationProperties(prefix = "tokenstore.datasource")
   public DataSource jdbcTokenStoreDatasource() {
     return DataSourceBuilder.create().build();

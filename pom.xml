@@ -7,7 +7,7 @@
 	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
-	<name>TBME Labs TV</name>
+	<name>TBME TV</name>
 	<description>Free to use streaming application.</description>
 
 	<properties>

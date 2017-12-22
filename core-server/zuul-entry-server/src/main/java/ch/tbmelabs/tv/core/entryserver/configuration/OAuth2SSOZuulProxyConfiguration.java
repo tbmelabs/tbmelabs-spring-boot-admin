@@ -35,8 +35,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
 
         .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 
-        .and().authorizeRequests().antMatchers("/").permitAll()
-        .antMatchers("/public/**").permitAll()
+        .and().authorizeRequests().antMatchers("/", "/public/**").permitAll()
         .anyRequest().authenticated();
     // @formatter:on
   }

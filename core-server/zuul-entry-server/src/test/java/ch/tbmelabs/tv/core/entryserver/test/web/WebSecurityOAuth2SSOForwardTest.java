@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.entryserver.test.security;
+package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,15 +22,6 @@ public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationCont
 
   @Value("${security.oauth2.client.clientId}")
   private String clientId;
-
-  @Test
-  public void requestToRootURLShouldForwardToLoginEndpoint() throws Exception {
-    String forwardUrl = mockMvc.perform(get("/")).andDo(print()).andExpect(status().is3xxRedirection()).andReturn()
-        .getResponse().getHeader(FORWARD_HEADER_NAME);
-
-    assertThat(forwardUrl).startsWith(ZUUL_AUTHENTICATION_ENTRY_POINT_URI)
-        .withFailMessage("Check if the security configuration was intentionally changed!");
-  }
 
   @Test
   public void requestToLoginEndpointShouldForwardToOAuth2AuthorizationEndpoint() throws Exception {
