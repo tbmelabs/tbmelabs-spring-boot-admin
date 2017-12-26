@@ -1,8 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +26,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -38,6 +41,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "users")
+@JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends NicelyDocumentedJDBCResource {
@@ -72,6 +76,7 @@ public class User extends NicelyDocumentedJDBCResource {
   private String password;
 
   @Transient
+  @JsonProperty(access = Access.WRITE_ONLY)
   private String confirmation;
 
   @NotNull
@@ -80,6 +85,7 @@ public class User extends NicelyDocumentedJDBCResource {
   @NotNull
   private Boolean isBlocked;
 
+  @JsonManagedReference("user")
   @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userId")
   private Collection<UserRoleAssociation> grantedAuthorities;
 
@@ -100,12 +106,6 @@ public class User extends NicelyDocumentedJDBCResource {
       return null;
     }
 
-    List<UserRoleAssociation> convertedRoles = new ArrayList<>();
-
-    roleList.forEach(role -> {
-      convertedRoles.add(new UserRoleAssociation(id, role.getId(), this, role));
-    });
-
-    return convertedRoles;
+    return roleList.stream().map(role -> new UserRoleAssociation(this, role)).collect(Collectors.toList());
   }
 }

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signin.validation;
+package ch.tbmelabs.tv.core.authorizationserver.test.signup.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

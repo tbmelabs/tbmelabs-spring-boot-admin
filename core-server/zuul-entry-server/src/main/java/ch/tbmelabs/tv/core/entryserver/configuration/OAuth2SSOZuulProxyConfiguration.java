@@ -10,7 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
@@ -32,11 +31,11 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-
-        .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-
-        .and().authorizeRequests().antMatchers("/", "/public/**").permitAll()
-        .anyRequest().authenticated();
+      
+      .csrf().disable()
+      
+      .authorizeRequests().antMatchers("/", "/public/**").permitAll()
+      .anyRequest().authenticated();
     // @formatter:on
   }
 }

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
+package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +20,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,53 +31,53 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-@Table(name = "user_has_roles")
+@Table(name = "client_has_scopes")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@IdClass(UserRoleAssociationId.class)
-public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
+@IdClass(ClientScopeAssociationId.class)
+public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
   @Id
   @NotNull
-  @Column(name = "user_id")
-  private Long userId;
+  @Column(name = "client_id")
+  private Long clientId;
 
   @Id
   @NotNull
-  @Column(name = "user_role_id")
-  private Long userRoleId;
+  @Column(name = "client_scope_id")
+  private Long clientScopeId;
 
-  @JsonBackReference("user")
+  @JsonBackReference("client")
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
-  private User user;
+  @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
+  private Client client;
 
-  @JsonBackReference("userRole")
+  @JsonBackReference("clientScope")
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "user_role_id", referencedColumnName = "id")
-  private Role userRole;
+  @PrimaryKeyJoinColumn(name = "client_scope_id", referencedColumnName = "id")
+  private Scope clientScope;
 
-  public UserRoleAssociation(User user, Role role) {
-    this.user = user;
-    this.userId = user.getId();
-    this.userRole = role;
-    this.userRoleId = role.getId();
+  public ClientScopeAssociation(Client client, Scope scope) {
+    this.client = client;
+    this.clientId = client.getId();
+    this.clientScope = scope;
+    this.clientScopeId = scope.getId();
   }
 
-  public UserRoleAssociation setUser(User user) {
-    this.user = user;
-    this.userId = user.getId();
+  public ClientScopeAssociation setClient(Client client) {
+    this.client = client;
+    this.clientId = client.getId();
 
     return this;
   }
 
-  public UserRoleAssociation setUserRole(Role role) {
-    this.userRole = role;
-    this.userRoleId = role.getId();
+  public ClientScopeAssociation setClientScope(Scope scope) {
+    this.clientScope = scope;
+    this.clientScopeId = scope.getId();
 
     return this;
   }

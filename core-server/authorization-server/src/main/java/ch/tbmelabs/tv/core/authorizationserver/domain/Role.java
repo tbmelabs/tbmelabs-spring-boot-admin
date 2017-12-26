@@ -1,10 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,7 +20,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,6 +33,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "user_roles")
+@JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthority {
@@ -44,6 +54,10 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @NotEmpty
   @Length(max = 16)
   private String name;
+
+  @JsonManagedReference("userRole")
+  @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
+  private Collection<UserRoleAssociation> usersWithRoles;
 
   public Role(String name) {
     this.name = name;

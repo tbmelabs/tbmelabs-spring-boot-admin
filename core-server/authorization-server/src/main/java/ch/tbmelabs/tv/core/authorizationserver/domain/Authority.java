@@ -1,21 +1,31 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,6 +33,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
+@JsonInclude(Include.NON_NULL)
 @Table(name = "client_authorities")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -44,6 +55,11 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   @NotEmpty
   @Length(max = 16)
   private String name;
+
+  @JsonManagedReference("clientAuthority")
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientAuthorityId")
+  private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
 
   @Override
   public String getAuthority() {

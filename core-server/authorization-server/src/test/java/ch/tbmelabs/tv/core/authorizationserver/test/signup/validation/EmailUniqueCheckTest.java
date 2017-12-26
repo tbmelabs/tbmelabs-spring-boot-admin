@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signin.validation;
+package ch.tbmelabs.tv.core.authorizationserver.test.signup.validation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -24,13 +24,13 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
-public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
-  private static final String USERNAME_PARAMETER_NAME = "username";
+public class EmailUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+  private static final String EMAIL_UNIQUE_CHECK_ENDPOINT = "/signup/is-email-unique";
+  private static final String EMAIL_PARAMETER_NAME = "email";
 
-  private static final String USERNAME_NOT_UNIQUE_ERROR_MESSAGE = "Username already exists!";
+  private static final String EMAIL_NOT_UNIQUE_ERROR_MESSAGE = "E-mail address already in use!";
 
-  private static final String VALID_USERNAME = "ThisIsAUsername";
+  private static final String VALID_EMAIL = "tbme@localhost.tv";
 
   private Role testRole;
   private User testUser;
@@ -77,13 +77,13 @@ public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicat
   }
 
   @Test
-  public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
+  public void registrationWithExistingEmailShouldFailValidation() throws Exception {
     Exception thrownException = null;
 
     try {
       mockMvc
-          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
+          .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+              .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUser.getEmail()).toString()))
           .andDo(print()).andExpect(status().is5xxServerError());
     } catch (NestedServletException e) {
       thrownException = e;
@@ -91,15 +91,15 @@ public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicat
 
     assertThat(thrownException).isNotNull();
     assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_NOT_UNIQUE_ERROR_MESSAGE)
+    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(EMAIL_NOT_UNIQUE_ERROR_MESSAGE)
         .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
   }
 
   @Test
-  public void registrationWithNewUsernameShouldPassValidation() throws Exception {
+  public void registrationWithNewEmailShouldPassValidation() throws Exception {
     mockMvc
-        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
+        .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIL).toString()))
         .andDo(print()).andExpect(status().is2xxSuccessful());
   }
 }

@@ -65,7 +65,7 @@ class SignupForm extends Component {
               text: 'Welcome to TBME Labs TV!'
             });
 
-            this.context.router.history.push('/select');
+            this.context.router.history.push('/');
           }, error => {
             this.setState({errors: {form: error.response.data.message}});
           }

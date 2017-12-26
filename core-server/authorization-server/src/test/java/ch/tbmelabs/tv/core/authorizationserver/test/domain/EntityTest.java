@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
 public class EntityTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_ENTITIES_COUNT = 11;
+  private static final Integer EXPECTED_ENTITIES_COUNT = 12;
 
   @Test
   public void allEntitiesShouldBeAnnotated() {

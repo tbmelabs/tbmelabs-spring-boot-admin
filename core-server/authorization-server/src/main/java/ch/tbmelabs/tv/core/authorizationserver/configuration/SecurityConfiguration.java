@@ -54,17 +54,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-        
-        .csrf().disable()
+      
+      .csrf().disable()
     
-        .authorizeRequests().antMatchers("/", "/public/**").permitAll()
-          .antMatchers("/signup/**").permitAll()
-          .anyRequest().authenticated()
+      .authorizeRequests().antMatchers("/", "/public/**").permitAll()
+      .antMatchers("/signup/**").permitAll()
+      .antMatchers("/me","/user").permitAll()
+      .anyRequest().authenticated()
         
-        .and().formLogin().loginProcessingUrl("/")
-        .failureHandler(loginFailureHandler)
-        .successHandler(loginSuccessHandler)
-        .and().exceptionHandling().authenticationEntryPoint(new OAuth2LoginUrlAuthenticationEntryPoint("/"));
+      .and().formLogin().loginProcessingUrl("/")
+      .failureHandler(loginFailureHandler)
+      .successHandler(loginSuccessHandler)
+      .and().exceptionHandling().authenticationEntryPoint(new OAuth2LoginUrlAuthenticationEntryPoint("/"));
     // @formatter:on
   }
 }

@@ -46,21 +46,25 @@ public class UserSignupService {
     return testUser.getConfirmation().equals(testUser.getPassword());
   }
 
-  public boolean isUserValid(User testUser) {
-    return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser) && isEmailAddressUnique(testUser)
-        && isEmailAddress(testUser) && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
-  }
-
   public User signUpNewUser(User newUser) {
     if (!isUserValid(newUser)) {
       throw new IllegalArgumentException("Registration failed. Please check your details!");
     }
 
     if (newUser.getGrantedAuthorities() == null || newUser.getGrantedAuthorities().isEmpty()) {
-      newUser.setGrantedAuthorities(
-          newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
+      try {
+        newUser.setGrantedAuthorities(
+            newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
+      } catch (NullPointerException e) {
+        throw new IllegalArgumentException("Unable to find default security role \"" + SecurityRole.USER + "\"!");
+      }
     }
 
     return userRepository.save(newUser);
+  }
+
+  private boolean isUserValid(User testUser) {
+    return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser) && isEmailAddressUnique(testUser)
+        && isEmailAddress(testUser) && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
   }
 }

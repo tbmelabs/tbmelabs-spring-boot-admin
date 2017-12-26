@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,16 +7,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -33,11 +30,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Table(name = "clients")
+@JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Client extends NicelyDocumentedJDBCResource implements ClientDetails {
@@ -88,36 +90,29 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
   @Length(max = 256)
   private String redirectUri;
 
-  @JoinColumn(name = "client_scope_id", referencedColumnName = "id")
-  @ManyToOne(cascade = { CascadeType.MERGE }, fetch = FetchType.EAGER)
-  private Scope scope;
-
+  @JsonManagedReference("client")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
   private Collection<ClientGrantTypeAssociation> grantTypes;
 
+  @JsonManagedReference("client")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
   private Collection<ClientAuthorityAssociation> grantedAuthorities;
 
+  @JsonManagedReference("client")
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
+  private Collection<ClientScopeAssociation> scopes;
+
   public Collection<ClientGrantTypeAssociation> grantTypesToAssociations(List<GrantType> grantTypeList) {
-    List<ClientGrantTypeAssociation> convertedGrantTypes = new ArrayList<>();
-
-    grantTypeList.forEach(grantType -> {
-      convertedGrantTypes.add(new ClientGrantTypeAssociation(id, grantType.getId(), this, grantType));
-    });
-
-    return convertedGrantTypes;
+    return grantTypeList.stream().map(grantType -> new ClientGrantTypeAssociation(this, grantType))
+        .collect(Collectors.toList());
   }
 
   public Collection<ClientAuthorityAssociation> authoritiesToAssociations(List<Authority> authorityList) {
-    List<ClientAuthorityAssociation> convertedAuthorities = new ArrayList<>();
-
-    authorityList.forEach(authority -> {
-      convertedAuthorities.add(new ClientAuthorityAssociation(id, authority.getId(), this, authority));
-    });
-
-    return convertedAuthorities;
+    return authorityList.stream().map(authority -> new ClientAuthorityAssociation(this, authority))
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -163,34 +158,24 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
 
   @Override
   public Set<String> getAuthorizedGrantTypes() {
-    Set<String> convertedAuthorizedGrantTypes = new HashSet<>();
-
-    grantTypes.forEach(association -> {
-      convertedAuthorizedGrantTypes.add(association.getGrantType().getName());
-    });
-
-    return convertedAuthorizedGrantTypes;
+    return grantTypes.stream().map(association -> association.getClientGrantType().getName())
+        .collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> getScope() {
-    return new HashSet<>(Arrays.asList(scope.getName()));
+    return scopes.stream().map(association -> association.getClientScope().getName()).collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return new HashSet<String>(Arrays.asList(new String[] { this.redirectUri }));
+    return new HashSet<String>(Arrays.asList(this.redirectUri));
   }
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
-    List<GrantedAuthority> authorities = new ArrayList<>();
-
-    grantedAuthorities.forEach(association -> {
-      authorities.add(association.getClientAuthority());
-    });
-
-    return authorities;
+    return grantedAuthorities.stream().map(association -> association.getClientAuthority())
+        .collect(Collectors.toList());
   }
 
   @Override

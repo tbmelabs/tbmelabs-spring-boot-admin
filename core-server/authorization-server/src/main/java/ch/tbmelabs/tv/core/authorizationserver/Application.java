@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
@@ -17,7 +16,6 @@ import org.springframework.web.WebApplicationInitializer;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
   private static final Class<Application> APPLICATION_SOURCE_CLASS = Application.class;
 

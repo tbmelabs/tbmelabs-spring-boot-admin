@@ -94,8 +94,7 @@ CREATE TABLE clients (
 	access_token_validity integer NOT NULL,
 	-- TODO: what is a good default value?
 	refresh_token_validity integer NOT NULL,
-	redirect_uri character varying(256),
-	client_scope_id bigint NOT NULL
+	redirect_uri character varying(256)
 );
 
 ALTER TABLE ONLY clients
@@ -197,7 +196,7 @@ CREATE TABLE client_scopes (
 	id bigserial NOT NULL,
 	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
-	name character varying(32) NOT NULL
+	name character varying(8) NOT NULL
 );
 
 ALTER TABLE ONLY client_scopes
@@ -209,12 +208,37 @@ ALTER TABLE ONLY clients
 GRANT SELECT, INSERT
 	ON client_scopes TO auth_database_user;
 
+-- Add default values
 INSERT INTO client_scopes (created, last_updated, name)
-	VALUES (now(), now(), 'PROXY_APPLICATION'),
-		(now(), now(), 'MANAGE_MICROSERVICES');
+	VALUES (now(), now(), 'read'),
+		(now(), now(), 'write'),
+		(now(), now(), 'trust');
 
 REVOKE INSERT
 	ON client_scopes FROM auth_database_user;
+
+-----------------------------------
+---			  SCOPES			---
+-----------------------------------
+CREATE TABLE client_has_scopes (
+	id bigserial NOT NULL,
+	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
+	client_id bigint NOT NULL,
+    client_scope_id bigint NOT NULL
+);
+
+ALTER TABLE ONLY client_has_scopes
+    ADD CONSTRAINT client_has_scopes_pkey PRIMARY KEY (client_id, client_scope_id);
+
+ALTER TABLE ONLY client_has_scopes
+    ADD CONSTRAINT client_has_scopes_client FOREIGN KEY (client_id) REFERENCES clients(id);
+
+ALTER TABLE ONLY client_has_scopes
+    ADD CONSTRAINT cclient_has_scopes_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
+
+GRANT SELECT
+	ON client_has_scopes TO auth_database_user;
 
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---
@@ -223,7 +247,7 @@ CREATE TABLE authentication_log (
 	id bigserial NOT NULL,
 	created timestamp without time zone NOT NULL DEFAULT now()::timestamp,
 	last_updated timestamp without time zone NOT NULL DEFAULT now()::timestamp,
-	state character(3) NOT NULL,
+	state character varying(3) NOT NULL,
 	ip character(45) NOT NULL,
 	message character varying(256),
 	user_id bigint NOT NULL
@@ -251,5 +275,5 @@ CREATE TABLE blacklisted_ips (
 ALTER TABLE ONLY blacklisted_ips
     ADD CONSTRAINT blacklisted_ips_pkey PRIMARY KEY (id);
 
-GRANT INSERT
+GRANT INSERT, SELECT
 	ON blacklisted_ips TO auth_database_user;

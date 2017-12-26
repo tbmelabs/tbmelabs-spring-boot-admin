@@ -32,9 +32,11 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-
-        .authorizeRequests().antMatchers("/eureka/**").permitAll()
-        .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN);
+      
+      .csrf().disable()
+      
+      .authorizeRequests().antMatchers("/eureka/**").permitAll()
+      .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN);
     // @formatter:on
   }
 }

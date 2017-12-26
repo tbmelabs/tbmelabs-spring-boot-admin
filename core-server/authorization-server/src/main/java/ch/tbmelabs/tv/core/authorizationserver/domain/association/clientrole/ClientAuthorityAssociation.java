@@ -13,12 +13,16 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_authorities")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -45,15 +49,24 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
   @Column(name = "client_authority_id")
   private Long clientAuthorityId;
 
+  @JsonBackReference("client")
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
+  @JsonBackReference("clientAuthority")
   @JoinColumn(insertable = false, updatable = false)
   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "client_authority_id", referencedColumnName = "id")
   private Authority clientAuthority;
+
+  public ClientAuthorityAssociation(Client client, Authority authority) {
+    this.client = client;
+    this.clientId = client.getId();
+    this.clientAuthority = authority;
+    this.clientAuthorityId = authority.getId();
+  }
 
   public ClientAuthorityAssociation setClient(Client client) {
     this.client = client;
@@ -67,5 +80,14 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
     this.clientAuthorityId = authority.getId();
 
     return this;
+  }
+
+  @Override
+  public String toString() {
+    try {
+      return new ObjectMapper().writeValueAsString(this);
+    } catch (JsonProcessingException e) {
+      return super.toString();
+    }
   }
 }
