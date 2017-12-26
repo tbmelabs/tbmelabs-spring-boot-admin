@@ -23,7 +23,7 @@ public class AuthenticationManagerConfiguration {
   private UserDetailsServiceImpl userDetailsService;
 
   @Bean
-  public AuthenticationManager authenticationManagerBean() throws Exception {
+  public AuthenticationManager authenticationManager() throws Exception {
     AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
     builder.authenticationProvider(preAuthenticationProvider).userDetailsService(userDetailsService)
         .passwordEncoder(User.PASSWORD_ENCODER);

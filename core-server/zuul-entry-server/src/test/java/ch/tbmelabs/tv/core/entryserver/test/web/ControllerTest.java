@@ -18,7 +18,7 @@ import ch.tbmelabs.tv.core.entryserver.Application;
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
 
 public class ControllerTest extends AbstractZuulApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_CONTROLLER_COUNT = 1;
+  private static final Integer EXPECTED_CONTROLLER_COUNT = 0;
 
   private static Set<Class<?>> controllers = new HashSet<>();
 

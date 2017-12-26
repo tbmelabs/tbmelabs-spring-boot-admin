@@ -253,6 +253,7 @@ CREATE TABLE authentication_log (
 	user_id bigint NOT NULL
 );
 
+-- TODO: Caused by: org.postgresql.util.PSQLException: FEHLER: keine Berechtigung für Sequenz authentication_log_id_seq
 ALTER TABLE ONLY authentication_log
     ADD CONSTRAINT authentication_log_pkey PRIMARY KEY (id);
 

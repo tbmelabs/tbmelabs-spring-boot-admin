@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
-import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
@@ -26,7 +25,7 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
   @Test
   public void tokenStoreShouldBeAnnotated() {
     assertThat(TokenStoreConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", SecurityConfiguration.class,
+        "Annotate %s with %s to make it scannable for the spring application!", TokenStoreConfiguration.class,
         Configuration.class);
   }
 

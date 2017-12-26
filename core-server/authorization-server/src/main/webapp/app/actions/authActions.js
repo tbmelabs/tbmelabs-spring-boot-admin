@@ -7,7 +7,7 @@ export function authenticateUser(data) {
   formData.append('username', data.username);
   formData.append('password', data.password);
 
-  return axios.post('', formData);
+  return axios.post('signin', formData);
 }
 
 export function logout() {

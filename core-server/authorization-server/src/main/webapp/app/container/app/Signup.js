@@ -13,7 +13,6 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 import SignupForm from '../../components/signup/SignupForm';
 
-require('bootstrap/dist/css/bootstrap.css');
 require('../../styles/signup.css');
 
 class Signup extends Component {

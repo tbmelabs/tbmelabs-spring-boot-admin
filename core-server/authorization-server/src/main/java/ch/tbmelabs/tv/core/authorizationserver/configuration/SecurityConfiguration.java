@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -14,10 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CsrfFilter;
 
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginFailureHandler;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginSuccessHandler;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginUrlAuthenticationEntryPoint;
+import ch.tbmelabs.tv.core.authorizationserver.security.csrf.CsrfHeaderFilter;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -26,17 +24,10 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Autowired
-  @Qualifier("authenticationManagerBean")
   private AuthenticationManager authenticationManager;
 
   @Autowired
   private Environment environment;
-
-  @Autowired
-  private OAuth2LoginFailureHandler loginFailureHandler;
-
-  @Autowired
-  private OAuth2LoginSuccessHandler loginSuccessHandler;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -55,17 +46,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
       
-      .csrf().disable()
-    
-      .authorizeRequests().antMatchers("/", "/public/**").permitAll()
-      .antMatchers("/signup/**").permitAll()
-      .antMatchers("/me","/user").permitAll()
+      .authorizeRequests()
+        .antMatchers("/","/public/**").permitAll()
+        .antMatchers("/signup/**").permitAll()
+        .antMatchers("/me","/user").permitAll()
       .anyRequest().authenticated()
-        
-      .and().formLogin().loginProcessingUrl("/")
-      .failureHandler(loginFailureHandler)
-      .successHandler(loginSuccessHandler)
-      .and().exceptionHandling().authenticationEntryPoint(new OAuth2LoginUrlAuthenticationEntryPoint("/"));
+      
+      .and().formLogin().loginPage("/").loginProcessingUrl("/signin")
+      
+      .and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
     // @formatter:on
   }
 }

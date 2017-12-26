@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react';
 
+import Navbar from './Navbar';
 import FlashMessageList from '../common/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
@@ -9,9 +10,13 @@ require('bootstrap/dist/css/bootstrap.css');
 class App extends Component {
   render() {
     return (
-      <div className='container'>
-        <FlashMessageList/>
-        {this.props.children}
+      <div>
+        <Navbar/>
+
+        <div className='container'>
+          <FlashMessageList/>
+          {this.props.children}
+        </div>
       </div>
     );
   }

@@ -1,11 +1,6 @@
 {
 	"properties": [
 		{
-			"name": "authorization-server.security.login.default-redirect",
-			"type": "java.lang.String",
-			"description": "The default redirect url after a successfull login (if no parameter set)."
-		},
-		{
 			"name": "authorization-server.security.max-login-attempts",
 			"type": "java.lang.String",
 			"description": "The maximum login attempts a user can try before getting banned."

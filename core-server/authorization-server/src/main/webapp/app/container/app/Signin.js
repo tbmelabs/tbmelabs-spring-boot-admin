@@ -3,7 +3,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {authenticateUser} from '../../actions/authActions';
@@ -12,7 +11,6 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 import UsernamePasswordLoginForm from '../../components/signin/UsernamePasswordLoginForm';
 
-require('bootstrap/dist/css/bootstrap.css');
 require('../../styles/signin.css');
 
 class Signin extends Component {

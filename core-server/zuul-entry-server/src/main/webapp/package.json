@@ -1,0 +1,55 @@
+{
+	"name": "tbme-tv",
+	"description": "Free to use streaming application.",
+	"version": "1.0.0",
+	"author": "TBME Labs",
+	"license": {
+		"type": "GPL",
+		"url": "https://github.com/tbmelabs/tbme-tv/blob/master/LICENSE"
+	},
+	"main": "index.html",
+	"scripts": {
+		"test": "",
+		"dev": "webpack -d --watch",
+		"build": "webpack -p"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tbmelabs/tbme-tv"
+	},
+	"bugs": {
+		"url": "https://github.com/tbmelabs/tbme-tv/issues"
+	},
+	"homepage": "https://github.com/tbmelabs/tbme-tv#readme",
+	"dependencies": {
+		"axios": "^0.17.0",
+		"bootstrap": "^3.3.7",
+		"lodash": "^4.17.4",
+		"prop-types": "^15.6.0",
+		"react": "^16.0.0",
+		"react-addons-transition-group": "^15.6.2",
+		"react-bootstrap": "^0.31.5",
+		"react-cookie": "^2.1.1",
+		"react-dom": "^16.0.0",
+		"react-redux": "^5.0.6",
+		"react-router": "^4.2.0",
+		"react-router-bootstrap": "^0.24.4",
+		"react-router-dom": "^4.2.2",
+		"redux": "^3.7.2",
+		"redux-thunk": "^2.2.0",
+		"shortid": "^2.2.8"
+	},
+	"devDependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-transform-object-rest-spread": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
+		"css-loader": "^0.28.7",
+		"file-loader": "^1.1.5",
+		"style-loader": "^0.19.0",
+		"url-loader": "^0.6.2",
+		"webpack": "^3.8.1",
+		"webpack-dev-server": "^2.9.3"
+	}
+}

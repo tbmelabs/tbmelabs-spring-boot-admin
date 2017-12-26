@@ -17,13 +17,13 @@ export function validateUsername(username, errors, callback) {
     cancelUsername();
   }
 
-  axios.post('/signup/does-username-match-format', {username: username}, {
+  axios.post('signup/does-username-match-format', {username: username}, {
     cancelToken: new CancelToken(function executor(c) {
       cancelUsername = c;
     })
   }).then(
     response => {
-      axios.post('/signup/is-username-unique', {username: username}, {
+      axios.post('signup/is-username-unique', {username: username}, {
         cancelToken: new CancelToken(function executor(c) {
           cancelUsername = c;
         })
@@ -57,13 +57,13 @@ export function validateEmail(email, errors, callback) {
     cancelEmail();
   }
 
-  axios.post('/signup/is-email', {email: email}, {
+  axios.post('signup/is-email', {email: email}, {
     cancelToken: new CancelToken(function executor(c) {
       cancelEmail = c;
     })
   }).then(
     response => {
-      axios.post('/signup/is-email-unique', {email: email}, {
+      axios.post('signup/is-email-unique', {email: email}, {
         cancelToken: new CancelToken(function executor(c) {
           cancelEmail = c;
         })
@@ -97,7 +97,7 @@ export function validatePassword(password, errors, callback) {
     cancelPassword();
   }
 
-  axios.post('/signup/does-password-match-format', {password: password}, {
+  axios.post('signup/does-password-match-format', {password: password}, {
     cancelToken: new CancelToken(function executor(c) {
       cancelPassword = c;
     })
@@ -124,7 +124,7 @@ export function validatePasswordConfirmation(password, confirmation, errors, cal
     cancelConfirmation();
   }
 
-  axios.post('/signup/do-passwords-match', {password: password, confirmation: confirmation}, {
+  axios.post('signup/do-passwords-match', {password: password, confirmation: confirmation}, {
     cancelToken: new CancelToken(function executor(c) {
       cancelConfirmation = c;
     })

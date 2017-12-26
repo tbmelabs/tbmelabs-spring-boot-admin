@@ -31,11 +31,10 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-      
+
       .csrf().disable()
-      
-      .authorizeRequests().antMatchers("/", "/public/**").permitAll()
-      .anyRequest().authenticated();
+
+      .authorizeRequests().anyRequest().authenticated();
     // @formatter:on
   }
 }

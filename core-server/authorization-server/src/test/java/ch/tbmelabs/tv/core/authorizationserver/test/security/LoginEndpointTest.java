@@ -13,19 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.OAuth2AuthorizationServerConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginFailureHandler;
-import ch.tbmelabs.tv.core.authorizationserver.security.login.OAuth2LoginSuccessHandler;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
 public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String LOGIN_PROCESSING_URL = "/";
+  private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String BAD_CREDENTIALS_RESPONSE = "Bad credentials";
@@ -82,8 +81,8 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
         .getErrorMessage();
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE)
-        .withFailMessage("Double check the %s to return a correct error message!", OAuth2LoginFailureHandler.class);
+    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE).withFailMessage(
+        "Double check the %s to return a correct error message!", OAuth2AuthorizationServerConfiguration.class);
   }
 
   @Test
@@ -94,8 +93,8 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
         .getErrorMessage();
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE)
-        .withFailMessage("Double check the %s to return a correct error message!", OAuth2LoginFailureHandler.class);
+    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE).withFailMessage(
+        "Double check the %s to return a correct error message!", OAuth2AuthorizationServerConfiguration.class);
   }
 
   @Test
@@ -107,6 +106,6 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
         .getHeader("location");
 
     assertThat(responseMessage).isEqualTo("http://localhost/default_login_redirect")
-        .withFailMessage("Check that the %s redirects as expected!", OAuth2LoginSuccessHandler.class);
+        .withFailMessage("Check that the %s redirects as expected!", OAuth2AuthorizationServerConfiguration.class);
   }
 }
