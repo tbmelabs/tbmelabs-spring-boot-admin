@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfFilter;
 
 import ch.tbmelabs.tv.core.authorizationserver.security.csrf.CsrfHeaderFilter;
+import ch.tbmelabs.tv.core.authorizationserver.security.csrf.CsrfTokenRepository;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -54,6 +55,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       
       .and().formLogin().loginPage("/").loginProcessingUrl("/signin")
       
+      .and().csrf().csrfTokenRepository(CsrfTokenRepository.getRepository())
       .and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
     // @formatter:on
   }
