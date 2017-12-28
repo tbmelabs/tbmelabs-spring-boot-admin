@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.filter.CorsFilter;
 
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
@@ -34,6 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+  @Autowired
+  private CorsFilter logoutCorsFilter;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -64,11 +68,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .loginPage("/signin")
         .loginProcessingUrl("/signin")
         .failureHandler(authenticationFailureHandler)
-        .successHandler(authenticationSuccessHandler)
+        // .successHandler(authenticationSuccessHandler)
         .permitAll()
       .and().httpBasic()
       
-      .and().logout().permitAll();
+      .and().logout()
+        .permitAll()
+      
+      .and().addFilter(logoutCorsFilter);
     // @formatter:on
   }
 }
