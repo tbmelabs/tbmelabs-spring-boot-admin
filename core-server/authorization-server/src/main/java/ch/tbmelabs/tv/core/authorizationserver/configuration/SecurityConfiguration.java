@@ -13,10 +13,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CsrfFilter;
 
-import ch.tbmelabs.tv.core.authorizationserver.security.csrf.CsrfHeaderFilter;
-import ch.tbmelabs.tv.core.authorizationserver.security.csrf.CsrfTokenRepository;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -29,6 +28,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private Environment environment;
+
+  @Autowired
+  private AuthenticationFailureHandler authenticationFailureHandler;
+
+  @Autowired
+  private AuthenticationSuccessHandler authenticationSuccessHandler;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -47,16 +52,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
       
+      .csrf().disable()
+      
       .authorizeRequests()
-        .antMatchers("/","/public/**").permitAll()
         .antMatchers("/signup/**").permitAll()
         .antMatchers("/me","/user").permitAll()
+        .antMatchers("/public/**", "/vendor/**").permitAll()
       .anyRequest().authenticated()
       
-      .and().formLogin().loginPage("/").loginProcessingUrl("/signin")
+      .and().formLogin()
+        .loginPage("/signin").permitAll()
+        .loginProcessingUrl("/signin").permitAll()
+        .failureHandler(authenticationFailureHandler)
+        .successHandler(authenticationSuccessHandler)
+      .and().httpBasic()
       
-      .and().csrf().csrfTokenRepository(CsrfTokenRepository.getRepository())
-      .and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
+      .and().logout().permitAll();
     // @formatter:on
   }
 }

@@ -33,7 +33,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
     http
 
       .csrf().disable()
-
+      
       .authorizeRequests().anyRequest().authenticated();
     // @formatter:on
   }

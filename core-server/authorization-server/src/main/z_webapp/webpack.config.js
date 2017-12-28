@@ -3,24 +3,20 @@ var path = require('path');
 
 var NODE_DIR = path.resolve(__dirname, 'node_modules');
 var BUILD_DIR = path.resolve(__dirname, 'public');
-
-var SIGNIN_APP = path.resolve(__dirname, 'signin');
-var SIGNUP_APP = path.resolve(__dirname, 'signup');
+var APP_DIR = path.resolve(__dirname, 'app');
+var TEST_DIR = path.resolve(__dirname, '__tests__');
 
 var config = {
-  entry: {
-    signin: SIGNIN_APP,
-    signup: SIGNUP_APP
-  },
+  entry: APP_DIR + '/index.js',
   output: {
     path: BUILD_DIR,
-    filename: '[name].js'
+    filename: 'bundle.js'
   },
   module: {
     loaders: [{
       test: /\.js$/,
       exclude: [NODE_DIR],
-      include: [SIGNIN_APP, SIGNUP_APP],
+      include: [APP_DIR],
       loader: 'babel-loader',
       query: {
         plugins: [
