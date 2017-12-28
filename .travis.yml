@@ -4,4 +4,6 @@ services:
   - postgresql
 
 before_script:
-  - cp config/database.yml.travis config/database.yml
+  - psql -c "CREATE DATABASE auth_test_database;" -U postgres
+  - psql -c "CREATE USER auth_test_user WITH PASSWORD 'auth_test_user_password';" -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON DATABASE auth_test_database TO auth_test_user;" -U postgres
