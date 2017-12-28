@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
@@ -38,7 +39,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -57,7 +58,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -76,7 +77,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -95,7 +96,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -114,7 +115,7 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -130,6 +131,6 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
     mockMvc
         .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, VALID_PASSWORD).toString()))
-        .andDo(print()).andExpect(status().is2xxSuccessful());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

@@ -5,6 +5,8 @@
     "jumbotron_text": "Sign in to your TBME Labs account using your username and password.",
     "signin_failed_alert_title": "Sign in failed:",
     "signin_failed_alert_text": " Please check your credentials!",
+    "logout_succeed_alert_title": "Logout succeed:",
+    "logout_succeed_alert_text": " We hope to see you again soon!",
     "username_form_control": "Username",
     "password_form_control": "Password",
     "signup_link_text": "Have no account yet?",

@@ -9,7 +9,7 @@ html, body {
   text-align: center;
 }
 
-#signin-failed-alert {
+#signin-failed-alert, #logout-succeed-alert {
   display: none;
 }
 

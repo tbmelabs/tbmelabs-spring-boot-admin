@@ -2,7 +2,12 @@
 
 import axios from 'axios';
 
-import {validateUsername, validateEmail, validatePassword, validatePasswordConfirmation} from '../utils/validators/signup';
+import {
+  validateUsername,
+  validateEmail,
+  validatePassword,
+  validatePasswordConfirmation
+} from '../utils/validators/signup';
 
 export function validateSignupForm(control, data, callback) {
   const {username, email, password, confirmation, errors} = data;
@@ -37,7 +42,7 @@ export function validateSignupForm(control, data, callback) {
 export function signupUser(data) {
   const {username, email, password, confirmation} = data;
 
-  return axios.post('signup', {
+  return axios.post('signup/do-signup', {
     username: username,
     email: email,
     password: password,

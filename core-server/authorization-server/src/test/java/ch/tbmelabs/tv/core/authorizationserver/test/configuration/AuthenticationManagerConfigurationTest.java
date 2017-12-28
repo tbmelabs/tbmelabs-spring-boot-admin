@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,13 +17,12 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 
 public class AuthenticationManagerConfigurationTest
     extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String AUTHENTICATION_MANAGER_BEAN_NAME = "authenticationManagerBean";
+  private static final String AUTHENTICATION_MANAGER_BEAN_NAME = "authenticationManager";
 
   @Autowired
   private AuthenticationManagerConfiguration authenticationManagerConfiguration;
 
   @Autowired
-  @Qualifier("authenticationManagerBean")
   private AuthenticationManager injectedAuthenticationManager;
 
   @Test
@@ -35,7 +33,7 @@ public class AuthenticationManagerConfigurationTest
   }
 
   @Test
-  public void authenticationManagerBeanShouldReturnATokenService()
+  public void authenticationManagerBeanShouldReturnAnAuthenticationManager()
       throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
     Method authenticationManagerBean = AuthenticationManagerConfiguration.class
         .getDeclaredMethod(AUTHENTICATION_MANAGER_BEAN_NAME, new Class[] {});

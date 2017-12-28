@@ -7,6 +7,8 @@ export function nameViewComponents() {
   $('#jumbotron_text').text(texts.jumbotron_text);
   $('#signin_failed_alert_title').text(texts.signin_failed_alert_title);
   $('#signin_failed_alert_text').text(texts.signin_failed_alert_text);
+  $('#logout_succeed_alert_title').text(texts.logout_succeed_alert_title);
+  $('#logout_succeed_alert_text').text(texts.logout_succeed_alert_text);
   $('#username_form_control').text(texts.username_form_control);
   $('#password_form_control').text(texts.password_form_control);
   $('#signup_link_text').text(texts.signup_link_text);

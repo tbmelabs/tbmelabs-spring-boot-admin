@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,7 +31,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String SIGNUP_ENDPOINT = "/signup";
+  private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
 
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
@@ -79,7 +80,7 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
             .content(new JSONObject(new ObjectMapper().writeValueAsString(testUser))
                 .put(PASSWORD_PARAMETER_NAME, testUser.getPassword())
                 .put(CONFIRMATION_PARAMETER_NAME, testUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is2xxSuccessful());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
     assertThat(StreamSupport.stream(userRepository.findAll().spliterator(), false).collect(Collectors.toList()).size())
         .isEqualTo(1);
@@ -92,7 +93,7 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
             .content(new JSONObject(new ObjectMapper().writeValueAsString(testUser))
                 .put(PASSWORD_PARAMETER_NAME, testUser.getPassword())
                 .put(CONFIRMATION_PARAMETER_NAME, testUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is2xxSuccessful()).andReturn().getResponse().getContentAsString());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString());
 
     Integer id = createdJsonUser.getInt("id");
     assertThat(id).isNotNull();

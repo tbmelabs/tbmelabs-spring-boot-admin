@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
@@ -34,7 +35,7 @@ public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationC
       mockMvc
           .perform(post(EMAIL_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -49,6 +50,6 @@ public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationC
     mockMvc
         .perform(post(EMAIL_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIl).toString()))
-        .andDo(print()).andExpect(status().is2xxSuccessful());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 
 @Component
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+  private static final String DEFAULT_ERROR_REDIRECT_URL = "/signin?error";
   private static final String X_FORWARDED_HEADER = "X-FORWARDED-FOR";
   private static final String USERNAME_PARAMETER = "username";
 
@@ -25,9 +27,16 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
   @Autowired
   private BruteforceFilterService bruteforceFilter;
 
+  @PostConstruct
+  public void initBean() {
+    setDefaultFailureUrl(DEFAULT_ERROR_REDIRECT_URL);
+  }
+
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
       AuthenticationException exception) throws IOException, ServletException {
+    super.onAuthenticationFailure(request, response, exception);
+
     String requestIp = request.getHeader(X_FORWARDED_HEADER);
     if (requestIp == null) {
       requestIp = request.getRemoteAddr();

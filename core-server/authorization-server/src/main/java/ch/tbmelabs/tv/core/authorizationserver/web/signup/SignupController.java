@@ -1,23 +1,21 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 
-@Controller
+@RestController
 @RequestMapping("/signup")
 public class SignupController {
   @Autowired
   private UserSignupService signupService;
 
-  @ResponseBody
-  // @PostMapping
+  @PostMapping({ "do-signup" })
   public User signup(@RequestBody(required = true) User newUser) {
     return signupService.signUpNewUser(newUser);
   }

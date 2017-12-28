@@ -5,6 +5,8 @@
     "jumbotron_title": "TBME Labs - Sign Up",
     "jumbotron_text": "Sign up once and use your account for all our applications.",
     "signup_failed_error_title": "Registration failed: ",
+    "signup_succeed_title": "Sign up succeed: ",
+    "signup_succeed_text": "Welcome to TBME Labs!",
     "username_form_control": "Username",
     "email_form_control": "E-Mail",
     "password_form_control": "Password",

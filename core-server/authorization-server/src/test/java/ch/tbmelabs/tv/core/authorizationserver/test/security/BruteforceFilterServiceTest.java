@@ -19,7 +19,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
 public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String LOGIN_PROCESSING_URL = "/";
+  private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
@@ -43,7 +43,7 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
   public void authenticationFailureListenerShouldRegisterFailingAuthentication() throws Exception {
     mockMvc.perform(
         post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
     assertThat(BruteforceFilterService.getState()).hasSize(1)
         .withFailMessage("The %s should catch failed login attempts!", BruteforceFilterService.class);
@@ -54,8 +54,7 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
     IntStream.range(0, maxLoginAttempts).forEach(iterator -> {
       try {
         mockMvc.perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid")
-            .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print())
-            .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+            .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
       } catch (Exception e) {
         throw new IllegalArgumentException(e);
       }

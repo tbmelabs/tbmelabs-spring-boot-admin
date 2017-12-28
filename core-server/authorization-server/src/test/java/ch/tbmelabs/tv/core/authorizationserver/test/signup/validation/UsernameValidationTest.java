@@ -9,6 +9,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
@@ -34,7 +35,7 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(4)).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -53,7 +54,7 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(65)).toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -72,7 +73,7 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(5) + "$").toString()))
-          .andDo(print()).andExpect(status().is5xxServerError());
+          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       thrownException = e;
     }
@@ -88,6 +89,6 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
     mockMvc
         .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
-        .andDo(print()).andExpect(status().is2xxSuccessful());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

@@ -26,7 +26,6 @@ class SignupForm extends Component {
       email: '',
       password: '',
       confirmation: '',
-      target: {},
       errors: {},
       isValid: false,
       isLoading: false
@@ -53,14 +52,26 @@ class SignupForm extends Component {
   onSubmit(event) {
     event.preventDefault();
 
+    const {texts} = this.props;
+
     this.props.validateForm(event.target.name, this.state, errors => {
       if (this.isFormValid(errors)) {
         this.props.signupUser(this.state).then(
           response => {
             this.props.addFlashMessage({
               type: 'success',
-              title: 'Sign up succeed:',
-              text: 'Welcome to TBME Labs TV!'
+              title: texts.signup_succeed_title,
+              text: texts.signup_succeed_text
+            });
+
+            this.setState({
+              username: '',
+              email: '',
+              password: '',
+              confirmation: '',
+              errors: {},
+              isValid: false,
+              isLoading: false
             });
           }, error => {
             this.setState({errors: {form: error.response.data.message}});

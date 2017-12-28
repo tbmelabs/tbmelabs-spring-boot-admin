@@ -16,9 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -28,7 +28,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
 public class AuthenticationAttemptLoggerTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final String LOGIN_PROCESSING_URL = "/";
+  private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
@@ -80,7 +80,7 @@ public class AuthenticationAttemptLoggerTest extends AbstractOAuth2Authorization
   public void loginWithInvalidUsernameShouldNotBeRegistered() throws Exception {
     mockMvc.perform(
         post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
     assertThat(authenticationLogRepository.findAll()).hasSize(0)
         .withFailMessage("The %s should not register bruteforce attempts!", AuthenticationAttemptLogger.class);
@@ -88,10 +88,8 @@ public class AuthenticationAttemptLoggerTest extends AbstractOAuth2Authorization
 
   @Test
   public void loginWithValidUsernameAndInvalidPasswordShouldBeRegistered() throws Exception {
-    mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
-            .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+    mockMvc.perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
     List<AuthenticationLog> logs = (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 

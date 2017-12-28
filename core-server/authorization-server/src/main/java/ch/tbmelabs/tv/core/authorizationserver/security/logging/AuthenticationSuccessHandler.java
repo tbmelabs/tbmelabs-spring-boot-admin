@@ -28,6 +28,8 @@ public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccess
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
+    super.onAuthenticationSuccess(request, response, authentication);
+
     String requestIp = request.getHeader(X_FORWARDED_HEADER);
     if (requestIp == null) {
       requestIp = request.getRemoteAddr();

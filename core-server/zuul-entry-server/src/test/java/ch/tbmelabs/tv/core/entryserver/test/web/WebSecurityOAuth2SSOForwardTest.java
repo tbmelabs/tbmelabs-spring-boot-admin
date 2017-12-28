@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
@@ -25,8 +26,8 @@ public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationCont
 
   @Test
   public void requestToLoginEndpointShouldForwardToOAuth2AuthorizationEndpoint() throws Exception {
-    String forwardUrl = mockMvc.perform(get("/login")).andDo(print()).andExpect(status().is3xxRedirection()).andReturn()
-        .getResponse().getHeader(FORWARD_HEADER_NAME);
+    String forwardUrl = mockMvc.perform(get("/login")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()))
+        .andReturn().getResponse().getHeader(FORWARD_HEADER_NAME);
 
     assertThat(forwardUrl).startsWith(OAUTH2_AUTHENTICATION_ENTRY_POINT_URI).contains("client_id=" + clientId)
         .contains("redirect_uri=" + ZUUL_AUTHENTICATION_ENTRY_POINT_URI).contains("response_type=code")

@@ -13,13 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.tv.core.authorizationserver.configuration.OAuth2AuthorizationServerConfiguration;
+import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
@@ -27,7 +28,9 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
-  private static final String BAD_CREDENTIALS_RESPONSE = "Bad credentials";
+
+  private static final String ERROR_FORWARD_URL = "/signin?error";
+  private static final String SUCCESS_FORWARD_URL = "/";
 
   private Role testRole;
   private User testUser;
@@ -75,37 +78,37 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
 
   @Test
   public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
-    String responseMessage = mockMvc
+    String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME,
             testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE).withFailMessage(
-        "Double check the %s to return a correct error message!", OAuth2AuthorizationServerConfiguration.class);
+    assertThat(redirectUrl).isEqualTo(ERROR_FORWARD_URL).withFailMessage(
+        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
+        AuthenticationFailureHandler.class);
   }
 
   @Test
   public void loginProcessingWithInvalidPasswordShoulFail() throws Exception {
-    String responseMessage = mockMvc
+    String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(responseMessage).isEqualTo(BAD_CREDENTIALS_RESPONSE).withFailMessage(
-        "Double check the %s to return a correct error message!", OAuth2AuthorizationServerConfiguration.class);
+    assertThat(redirectUrl).isEqualTo(ERROR_FORWARD_URL).withFailMessage(
+        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
+        AuthenticationFailureHandler.class);
   }
 
   @Test
   public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
-    String responseMessage = mockMvc
+    String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, testUser.getConfirmation()))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
-        .getHeader("location");
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(responseMessage).isEqualTo("http://localhost/default_login_redirect")
-        .withFailMessage("Check that the %s redirects as expected!", OAuth2AuthorizationServerConfiguration.class);
+    assertThat(redirectUrl).isEqualTo(SUCCESS_FORWARD_URL).withFailMessage(
+        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
+        AuthenticationFailureHandler.class);
   }
 }

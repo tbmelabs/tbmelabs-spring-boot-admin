@@ -1,7 +1,7 @@
 'use strict';
 
 import {nameViewComponents} from './controllers/LanguageController';
-import {controlAlert} from "./controllers/AlertController";
+import {controlAlerts} from "./controllers/AlertController";
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -12,5 +12,5 @@ require('bootstrap/dist/css/bootstrap.css');
  */
 $(document).ready(() => {
   nameViewComponents();
-  controlAlert();
+  controlAlerts();
 });
