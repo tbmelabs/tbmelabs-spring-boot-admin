@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  database: auth_test_database
+  username: auth_test_user
+  password: auth_test_user_password

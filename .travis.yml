@@ -1,1 +1,7 @@
 language: java
+
+services:
+  - postgresql
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
