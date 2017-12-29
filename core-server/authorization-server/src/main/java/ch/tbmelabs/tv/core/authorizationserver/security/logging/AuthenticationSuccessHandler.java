@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 @Component
-public class AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
   private static final String X_FORWARDED_HEADER = "X-FORWARDED-FOR";
   private static final String USERNAME_PARAMETER = "username";
 

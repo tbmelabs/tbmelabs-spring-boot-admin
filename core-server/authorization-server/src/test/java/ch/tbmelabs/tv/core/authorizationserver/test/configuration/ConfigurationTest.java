@@ -10,7 +10,7 @@ import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 
 public class ConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 8;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 9;
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {
