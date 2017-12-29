@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.entryserver.configuration;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -18,6 +20,8 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @EnableZuulProxy
 @EnableOAuth2Sso
 public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapter {
+  private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOZuulProxyConfiguration.class);
+
   @Autowired
   private Environment environment;
 
@@ -27,6 +31,8 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   @Override
   public void configure(WebSecurity web) throws Exception {
     if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
+      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
+
       web.debug(true);
     }
   }

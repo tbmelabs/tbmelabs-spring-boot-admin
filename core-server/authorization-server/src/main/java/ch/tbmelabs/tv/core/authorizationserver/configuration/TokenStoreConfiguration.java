@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,8 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 public class TokenStoreConfiguration {
+  private static final Logger LOGGER = LogManager.getLogger(TokenStoreConfiguration.class);
+
   private static final String JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME = "jdbcTokenStoreDatasource";
 
   @Autowired
@@ -31,6 +35,9 @@ public class TokenStoreConfiguration {
   @Primary
   @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
   public JdbcTokenStore jdbcTokenStore() {
+    LOGGER.warn("Either profile \"" + SpringApplicationProfile.DEV + "\" or \"" + SpringApplicationProfile.TEST
+        + "\" is active: tokenstore will be of type " + JdbcTokenStore.class);
+
     DataSource jdbcTokenStoreDatasource = (DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME);
 
     return new JdbcTokenStore(jdbcTokenStoreDatasource);

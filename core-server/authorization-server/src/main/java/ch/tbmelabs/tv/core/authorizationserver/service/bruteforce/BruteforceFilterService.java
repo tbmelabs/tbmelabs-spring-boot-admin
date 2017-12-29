@@ -3,6 +3,8 @@ package ch.tbmelabs.tv.core.authorizationserver.service.bruteforce;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUD
 
 @Service
 public class BruteforceFilterService {
+  private static final Logger LOGGER = LogManager.getLogger(BruteforceFilterService.class);
+
   private static Map<String, Integer> failedLoginAttempts = new HashMap<>();
 
   @Autowired
@@ -21,6 +25,8 @@ public class BruteforceFilterService {
   private Integer maxLoginAttempts;
 
   public static void resetFilter() {
+    LOGGER.warn("Filter resets!");
+
     BruteforceFilterService.failedLoginAttempts.clear();
   }
 
@@ -29,6 +35,8 @@ public class BruteforceFilterService {
   }
 
   public void authenticationFromIpFailed(String ip) {
+    LOGGER.debug("Authentication from ip \"" + ip + "\" failed");
+
     if (!BruteforceFilterService.failedLoginAttempts.containsKey(ip)) {
       BruteforceFilterService.failedLoginAttempts.put(ip, 0);
     }
@@ -36,6 +44,8 @@ public class BruteforceFilterService {
     BruteforceFilterService.failedLoginAttempts.put(ip, BruteforceFilterService.failedLoginAttempts.get(ip) + 1);
 
     if (BruteforceFilterService.failedLoginAttempts.get(ip) >= maxLoginAttempts) {
+      LOGGER.fatal("Suspecting bruteforce attempt from \"" + ip + "\"!");
+
       suspectBruteforceAttempt(ip);
     }
   }

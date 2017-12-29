@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,8 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 public class DatasourceConfiguration {
+  private static final Logger LOGGER = LogManager.getLogger(DatasourceConfiguration.class);
+
   @Bean
   @Primary
   @ConfigurationProperties(prefix = "spring.datasource")
@@ -24,6 +28,9 @@ public class DatasourceConfiguration {
   @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
   @ConfigurationProperties(prefix = "tokenstore.datasource")
   public DataSource jdbcTokenStoreDatasource() {
+    LOGGER.warn("Either profile \"" + SpringApplicationProfile.DEV + "\" or \"" + SpringApplicationProfile.TEST
+        + "\" is active: tokenstore will use a PostgreSQL database");
+
     return DataSourceBuilder.create().build();
   }
 }

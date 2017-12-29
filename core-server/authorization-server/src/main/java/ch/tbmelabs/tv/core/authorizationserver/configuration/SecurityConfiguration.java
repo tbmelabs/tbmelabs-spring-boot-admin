@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import java.util.Arrays;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,8 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+  private static final Logger LOGGER = LogManager.getLogger(SecurityConfiguration.class);
+
   @Autowired
   private AuthenticationManager authenticationManager;
 
@@ -47,6 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
+      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
+
       web.debug(true);
     }
   }

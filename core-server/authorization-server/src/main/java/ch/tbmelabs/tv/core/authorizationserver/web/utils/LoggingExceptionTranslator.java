@@ -13,7 +13,6 @@ public class LoggingExceptionTranslator extends DefaultWebResponseExceptionTrans
     ResponseEntity<OAuth2Exception> responseEntity = super.translate(e);
 
     HttpHeaders headers = new HttpHeaders();
-
     headers.setAll(responseEntity.getHeaders().toSingleValueMap());
 
     OAuth2Exception exceptionBody = responseEntity.getBody();

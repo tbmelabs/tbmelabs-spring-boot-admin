@@ -27,6 +27,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
+    // TODO: How to deny access to anonymous urls for authenticated users?
     registry.addViewController("/").setViewName("index");
     registry.addViewController("/signin").setViewName("signin");
     registry.addViewController("/signup").setViewName("signup");

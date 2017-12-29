@@ -1,13 +1,11 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.userdetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 
 public class UserPrincipal implements UserDetails {
@@ -21,13 +19,8 @@ public class UserPrincipal implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    List<Role> authorities = new ArrayList<>();
-
-    user.getGrantedAuthorities().forEach(association -> {
-      authorities.add(association.getUserRole());
-    });
-
-    return authorities;
+    return user.getGrantedAuthorities().stream().map(association -> association.getUserRole())
+        .collect(Collectors.toList());
   }
 
   @Override
