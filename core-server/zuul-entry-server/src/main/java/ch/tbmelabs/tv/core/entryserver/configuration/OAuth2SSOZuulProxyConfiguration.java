@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import ch.tbmelabs.tv.core.entryserver.security.logout.LogoutSuccessHandler;
+import ch.tbmelabs.tv.core.entryserver.security.logout.OAuth2LogoutHandler;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -22,7 +22,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   private Environment environment;
 
   @Autowired
-  private LogoutSuccessHandler logoutSuccessHandler;
+  private OAuth2LogoutHandler oauth2LogoutHandler;
 
   @Override
   public void configure(WebSecurity web) throws Exception {
@@ -38,10 +38,12 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
 
       .csrf().disable()
       
-      .authorizeRequests().anyRequest().authenticated()
+      .authorizeRequests()
+        .antMatchers("/goodbye").permitAll()
+      .anyRequest().authenticated()
       
       .and().logout()
-        .logoutSuccessHandler(logoutSuccessHandler)
+        .logoutSuccessHandler(oauth2LogoutHandler)
         .permitAll();
     // @formatter:on
   }

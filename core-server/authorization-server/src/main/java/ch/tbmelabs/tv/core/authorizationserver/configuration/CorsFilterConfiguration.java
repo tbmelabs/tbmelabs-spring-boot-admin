@@ -8,18 +8,20 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class CorsFilterConfiguration {
+  private static final String LOGIN_ENDPOINT_URI = "/signin";
+  private static final String LOGOUT_ENDPOINT_URI = "/logout";
+
   @Bean
-  public CorsFilter corsFilter() {
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowCredentials(true);
+  public CorsFilter logoutCorsFilter() {
+    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    final CorsConfiguration config = new CorsConfiguration();
+
     config.addAllowedOrigin("*");
     config.addAllowedHeader("*");
     config.addAllowedMethod("GET");
 
-    // TODO: This is a default logout flow.. might be improved?
-    source.registerCorsConfiguration("/logout", config);
-    source.registerCorsConfiguration("/signin", config);
+    source.registerCorsConfiguration(LOGIN_ENDPOINT_URI, config);
+    source.registerCorsConfiguration(LOGOUT_ENDPOINT_URI, config);
 
     return new CorsFilter(source);
   }

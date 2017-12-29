@@ -23,7 +23,14 @@ class Navigation extends Component {
   onClick(event) {
     switch (event.target.name) {
       case this.LOGOUT_EVENT:
-        this.props.logout();
+        this.props.logout().then(
+          response => {
+            window.location.replace(response.request.responseURL);
+          }, error => {
+            // TODO: Visualize error to user
+            console.log(error);
+          }
+        );
         break;
     }
   }
