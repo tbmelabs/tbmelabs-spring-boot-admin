@@ -10,7 +10,7 @@ import ch.tbmelabs.tv.core.entryserver.Application;
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
 
 public class ConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 3;
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {

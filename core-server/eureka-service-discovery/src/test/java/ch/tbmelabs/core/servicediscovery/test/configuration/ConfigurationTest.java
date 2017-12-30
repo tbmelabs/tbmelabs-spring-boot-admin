@@ -10,7 +10,7 @@ import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAw
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
 public class ConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 3;
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {
