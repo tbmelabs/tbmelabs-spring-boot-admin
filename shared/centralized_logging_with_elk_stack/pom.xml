@@ -1,21 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.tbmelabs.tv</groupId>
-	<artifactId>core-server</artifactId>
-	<packaging>pom</packaging>
+	<groupId>ch.tbmelabs.tv.shared</groupId>
+	<artifactId>centralized_logging_with_elk_stack</artifactId>
+
+	<name>TBME TV | Centralized Logging</name>
+	<description>Utility classes to configure a centralized logging instance with elasticsearch, logstash and kibana.</description>
 
 	<parent>
-		<groupId>ch.tbmelabs</groupId>
-		<artifactId>tv</artifactId>
+		<groupId>ch.tbmelabs.tv</groupId>
+		<artifactId>shared</artifactId>
 		<version>1.0.0</version>
 	</parent>
-
-	<modules>
-		<module>eureka-service-discovery</module>
-		<module>authorization-server</module>
-		<module>zuul-entry-server</module>
-	</modules>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter -->
@@ -37,37 +33,28 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
-
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-sleuth -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-sleuth-zipkin -->
 		<dependency>
-			<groupId>org.springframework.security.oauth</groupId>
-			<artifactId>spring-security-oauth2</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>constants</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
-		<dependency>
-			<groupId>org.reflections</groupId>
-			<artifactId>reflections</artifactId>
-			<version>0.9.10</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

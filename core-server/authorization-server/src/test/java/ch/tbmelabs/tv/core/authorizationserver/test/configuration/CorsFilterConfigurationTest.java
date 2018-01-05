@@ -22,7 +22,7 @@ public class CorsFilterConfigurationTest extends AbstractOAuth2AuthorizationAppl
   private CorsFilterConfiguration corsFilterConfiguration;
 
   @Autowired
-  @Qualifier("logoutCorsFilter")
+  @Qualifier(CORS_FILTER_NAME)
   private CorsFilter injectedCorsFilter;
 
   @Test
@@ -33,7 +33,7 @@ public class CorsFilterConfigurationTest extends AbstractOAuth2AuthorizationAppl
   }
 
   @Test
-  public void corsFilterShouldReturnATokenService()
+  public void corsFilterBeanShouldReturnACorsFilter()
       throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
     Method corsFilter = CorsFilterConfiguration.class.getDeclaredMethod(CORS_FILTER_NAME, new Class[] {});
 

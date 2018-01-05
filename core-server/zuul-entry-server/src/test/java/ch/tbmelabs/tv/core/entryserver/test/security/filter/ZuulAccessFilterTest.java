@@ -17,9 +17,10 @@ public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAwareJun
         "Annotate %s with %s to make it scannable for the spring application!", ZuulAccessFilter.class,
         Component.class);
 
-    assertThat(ZuulAccessFilter.class).hasAnnotation(Profile.class).withFailMessage(
-        "Annotate %s with %s because we dont want this to filter public requests!", ZuulAccessFilter.class,
-        Profile.class);
+    assertThat(ZuulAccessFilter.class.getDeclaredAnnotation(Profile.class).value())
+        .containsExactly(SpringApplicationProfile.DEV).withFailMessage(
+            "Annotate %s with %s and value \"%s\" because the filter should not apply in productive environments!",
+            ZuulAccessFilter.class, Profile.class, SpringApplicationProfile.DEV);
   }
 
   @Test

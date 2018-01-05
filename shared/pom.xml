@@ -13,5 +13,6 @@
 
 	<modules>
 		<module>constants</module>
+		<module>centralized_logging_with_elk_stack</module>
 	</modules>
 </project>

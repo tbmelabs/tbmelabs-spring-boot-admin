@@ -23,7 +23,7 @@ public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationAp
   private TokenServiceConfiguration tokenServiceConfiguration;
 
   @Autowired
-  @Qualifier("tokenServiceBean")
+  @Qualifier(TOKEN_SERVICE_BEAN_NAME)
   private DefaultTokenServices injectedTokenService;
 
   @Test
