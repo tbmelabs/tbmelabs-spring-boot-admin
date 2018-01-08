@@ -5,6 +5,10 @@
 	<artifactId>core-server</artifactId>
 	<packaging>pom</packaging>
 
+	<properties>
+		<org.reflections.reflections.version>0.9.10</org.reflections.reflections.version>
+	</properties>
+
 	<parent>
 		<groupId>ch.tbmelabs</groupId>
 		<artifactId>tv</artifactId>
@@ -67,8 +71,60 @@
 		<dependency>
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
-			<version>0.9.10</version>
+			<version>${org.reflections.reflections.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+
+				<configuration>
+					<systemPropertyVariables>
+						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+					</systemPropertyVariables>
+				</configuration>
+
+				<executions>
+					<!-- download and install JaCoCo agent -->
+					<execution>
+						<id>prepare-agent</id>
+
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+
+					<!-- report code coverage -->
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+
+					<!-- execute post unit test report -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+
+						<goals>
+							<goal>report</goal>
+						</goals>
+
+						<configuration>
+							<dataFile>target/jacoco.exec</dataFile>
+							<outputDirectory>target/coverage/jacoco-ut</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

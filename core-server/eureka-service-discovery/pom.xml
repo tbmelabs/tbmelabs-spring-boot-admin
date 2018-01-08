@@ -9,6 +9,7 @@
 
 	<properties>
 		<start-class>ch.tbmelabs.tv.servicediscovery.Application</start-class>
+		<ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
 	</properties>
 
 	<parent>
@@ -27,7 +28,7 @@
 		<dependency>
 			<groupId>ch.tbmelabs.tv.shared</groupId>
 			<artifactId>constants</artifactId>
-			<version>1.0.0</version>
+			<version>${ch.tbmelabs.tv.shared.constants.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -67,7 +68,6 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
-				<version>1.0.0</version>
 
 				<configuration>
 					<baseImage>java:8</baseImage>
