@@ -7,10 +7,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 
+import javax.transaction.Transactional;
+
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,7 +27,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
+@Transactional
+@Profile({ "!" + SpringApplicationProfile.NO_DB })
 public class UsernameUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";

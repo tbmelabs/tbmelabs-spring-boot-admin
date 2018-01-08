@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -26,7 +29,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
+@Transactional
+@Profile({ "!" + SpringApplicationProfile.NO_DB })
 public class AuthenticationAttemptLoggerTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";

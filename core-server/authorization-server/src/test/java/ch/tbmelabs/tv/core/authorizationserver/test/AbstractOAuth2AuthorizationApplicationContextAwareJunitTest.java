@@ -1,7 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.test;
 
-import javax.transaction.Transactional;
-
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +16,6 @@ import org.springframework.test.context.web.ServletTestExecutionListener;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
-@Transactional
 @AutoConfigureMockMvc
 @ContextConfiguration
 @ActiveProfiles({ SpringApplicationProfile.TEST })

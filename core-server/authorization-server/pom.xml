@@ -12,8 +12,10 @@
 		<org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
 		<commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
 		<ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
+		<com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
 		<com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
 		<com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
+		<com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
 	</properties>
 
 	<parent>
@@ -95,6 +97,7 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
 				<executions>
 					<!-- download nodejs and npm -->
@@ -172,6 +175,7 @@
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
+				<version>${com.spotify.docker-maven-plugin.version}</version>
 
 				<configuration>
 					<baseImage>java:8</baseImage>
