@@ -17,7 +17,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,10 +31,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Transactional
-@Profile({ "!" + SpringApplicationProfile.NO_DB })
 public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
 
