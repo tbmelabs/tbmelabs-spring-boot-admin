@@ -11,9 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.OAuth2AuthorizationServerConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class SecurityConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class SecurityConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

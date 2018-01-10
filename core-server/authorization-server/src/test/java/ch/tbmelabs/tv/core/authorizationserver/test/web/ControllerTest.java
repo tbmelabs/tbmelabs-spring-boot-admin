@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ControllerTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class ControllerTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final Integer EXPECTED_CONTROLLER_COUNT = 2;
 
   private static Set<Class<?>> controllers = new HashSet<>();

@@ -18,10 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 @Transactional
-public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";

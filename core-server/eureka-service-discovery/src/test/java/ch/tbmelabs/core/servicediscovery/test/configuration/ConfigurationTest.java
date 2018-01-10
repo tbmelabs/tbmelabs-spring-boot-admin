@@ -6,11 +6,11 @@ import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAware;
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
-public class ConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 3;
+public class ConfigurationTest extends AbstractEurekaApplicationContextAware {
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {

@@ -59,6 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    String loginEndpoint = "/signin";
+
     // @formatter:off
     http
       
@@ -66,13 +68,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       
       .authorizeRequests()
         .antMatchers("/me","/user").permitAll()
-        .antMatchers("/signin", "/signup/**").permitAll()
+        .antMatchers(loginEndpoint, "/signup/**").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
       .anyRequest().authenticated()
       
       .and().formLogin()
-        .loginPage("/signin")
-        .loginProcessingUrl("/signin")
+        .loginPage(loginEndpoint)
+        .loginProcessingUrl(loginEndpoint)
         .failureHandler(authenticationFailureHandler)
         .successHandler(authenticationSuccessHandler)
         .permitAll()

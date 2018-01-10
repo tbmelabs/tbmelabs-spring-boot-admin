@@ -21,7 +21,7 @@ public class TokenServiceConfiguration {
   private TokenStore tokenStore;
 
   @Bean
-  public DefaultTokenServices tokenServiceBean() throws Exception {
+  public DefaultTokenServices tokenServiceBean() {
     DefaultTokenServices tokenService = new DefaultTokenServices();
     tokenService.setAuthenticationManager(authenticationManager);
     tokenService.setClientDetailsService(clientDetailsService);

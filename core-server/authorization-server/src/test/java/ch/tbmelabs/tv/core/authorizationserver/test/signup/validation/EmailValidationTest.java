@@ -13,9 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
 
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_VALIDATION_ENDPOINT = "/signup/is-email";
   private static final String EMAIL_PARAMETER_NAME = "email";
 

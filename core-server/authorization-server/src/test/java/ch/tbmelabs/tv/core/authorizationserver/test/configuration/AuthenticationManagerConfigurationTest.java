@@ -13,10 +13,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.AuthenticationManagerConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 public class AuthenticationManagerConfigurationTest
-    extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+    extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String AUTHENTICATION_MANAGER_BEAN_NAME = "authenticationManager";
 
   @Autowired

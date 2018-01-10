@@ -20,4 +20,8 @@ public class SpringApplicationProfile {
    * Activates logging via Logstash and ELK stack.
    */
   public static final String ELK = "elk";
+
+  private SpringApplicationProfile() {
+    // Hidden constructor
+  }
 }

@@ -9,9 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import ch.tbmelabs.tv.core.entryserver.configuration.SecurityConfiguration;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class SecurityConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class SecurityConfigurationTest extends AbstractZuulApplicationContextAware {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

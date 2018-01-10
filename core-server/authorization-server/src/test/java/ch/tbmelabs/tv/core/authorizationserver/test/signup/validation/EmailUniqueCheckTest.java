@@ -25,10 +25,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 @Transactional
-public class EmailUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class EmailUniqueCheckTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_UNIQUE_CHECK_ENDPOINT = "/signup/is-email-unique";
   private static final String EMAIL_PARAMETER_NAME = "email";
 

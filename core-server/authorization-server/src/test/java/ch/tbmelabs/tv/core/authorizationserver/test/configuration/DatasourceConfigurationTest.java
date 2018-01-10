@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
-public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String PRIMARY_DATASOURCE_NAME = "primaryDataSource";
   private static final String PRIMARY_DATASOURCE_PREFIX = "spring.datasource";
   private static final String JDBC_DATASOURCE_NAME = "jdbcTokenStoreDatasource";

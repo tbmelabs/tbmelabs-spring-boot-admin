@@ -7,9 +7,9 @@ import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class ConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class ConfigurationTest extends AbstractZuulApplicationContextAware {
   private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
 
   @Test

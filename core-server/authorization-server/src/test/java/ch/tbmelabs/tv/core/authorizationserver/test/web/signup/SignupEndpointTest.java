@@ -29,11 +29,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 @Transactional
-public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
 
   private static final String PASSWORD_PARAMETER_NAME = "password";

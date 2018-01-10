@@ -34,7 +34,8 @@ public class NicelyDocumentedJDBCResource implements Serializable {
   public Date lastUpdated;
 
   protected NicelyDocumentedJDBCResource() {
-    // Private constructor
+    created = new Date();
+    lastUpdated = new Date();
   }
 
   @PrePersist

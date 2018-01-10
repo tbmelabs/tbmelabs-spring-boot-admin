@@ -23,5 +23,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public class AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class AbstractOAuth2AuthorizationApplicationContextAware {
 }

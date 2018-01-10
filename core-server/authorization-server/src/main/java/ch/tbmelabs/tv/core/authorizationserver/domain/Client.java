@@ -31,9 +31,9 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
@@ -169,13 +169,12 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return new HashSet<String>(Arrays.asList(this.redirectUri));
+    return new HashSet<>(Arrays.asList(this.redirectUri));
   }
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
-    return grantedAuthorities.stream().map(association -> association.getClientAuthority())
-        .collect(Collectors.toList());
+    return grantedAuthorities.stream().map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
   }
 
   @Override

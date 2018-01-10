@@ -8,10 +8,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAware;
 import ch.tbmelabs.tv.core.servicediscovery.configuration.SecurityConfiguration;
 
-public class SecurityConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
+public class SecurityConfigurationTest extends AbstractEurekaApplicationContextAware {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

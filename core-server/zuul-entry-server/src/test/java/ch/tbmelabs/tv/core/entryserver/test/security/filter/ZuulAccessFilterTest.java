@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
-public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class ZuulAccessFilterTest extends AbstractZuulApplicationContextAware {
   @Test
   public void zuulAccessFilterShouldBeAnnotated() {
     assertThat(ZuulAccessFilter.class).hasAnnotation(Component.class).withFailMessage(

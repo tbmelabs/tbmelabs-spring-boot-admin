@@ -8,9 +8,9 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final Integer EXPECTED_REPOSITORY_COUNT = 5;
 
   @Test

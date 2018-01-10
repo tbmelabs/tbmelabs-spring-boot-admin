@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 
 public class UserPrincipal implements UserDetails {
   private static final long serialVersionUID = 1L;
@@ -19,8 +20,7 @@ public class UserPrincipal implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return user.getGrantedAuthorities().stream().map(association -> association.getUserRole())
-        .collect(Collectors.toList());
+    return user.getGrantedAuthorities().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList());
   }
 
   @Override

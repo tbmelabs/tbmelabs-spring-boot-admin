@@ -7,9 +7,9 @@ import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ServiceTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class ServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final Integer EXPECTED_SERVICE_COUNT = 5;
 
   @Test

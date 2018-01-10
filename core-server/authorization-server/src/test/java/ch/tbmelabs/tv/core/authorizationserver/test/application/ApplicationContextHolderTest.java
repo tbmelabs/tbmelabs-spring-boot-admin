@@ -9,9 +9,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ApplicationContextHolderTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest
+public class ApplicationContextHolderTest extends AbstractOAuth2AuthorizationApplicationContextAware
     implements ApplicationContextAware {
   private ApplicationContext gettedApplicationContext;
 

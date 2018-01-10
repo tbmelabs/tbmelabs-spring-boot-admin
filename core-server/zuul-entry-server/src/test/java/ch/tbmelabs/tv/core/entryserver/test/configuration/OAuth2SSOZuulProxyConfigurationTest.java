@@ -8,9 +8,9 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.entryserver.configuration.OAuth2SSOZuulProxyConfiguration;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class OAuth2SSOZuulProxyConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class OAuth2SSOZuulProxyConfigurationTest extends AbstractZuulApplicationContextAware {
   @Test
   public void oauth2SSOZuulProxyConfigurationShouldBeAnnotated() {
     assertThat(OAuth2SSOZuulProxyConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

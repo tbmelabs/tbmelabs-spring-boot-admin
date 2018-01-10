@@ -18,22 +18,23 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 public class ProductiveEnvironmentWithoutCentralizedLoggingCheck {
   private static final Logger LOGGER = LogManager.getLogger(ProductiveEnvironmentWithoutCentralizedLoggingCheck.class);
 
+  private static final String WARNING_BORDER_LINE = "!!! ------------------------------------------------------- !!!\n";
+
   @Autowired
   private Environment environment;
 
   @PostConstruct
   public void initBean() {
-    if (!Arrays.stream(environment.getActiveProfiles()).filter(env -> env.equals(SpringApplicationProfile.ELK))
-        .findAny().isPresent()) {
+    if (!Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equals(SpringApplicationProfile.ELK))) {
       // @formatter:off
       LOGGER.warn(
             "\n\n"
-          + "!!! ------------------------------------------------------- !!!\n"
-          + "!!! ------------------------------------------------------- !!!\n"
+          + WARNING_BORDER_LINE
+          + WARNING_BORDER_LINE
           + "!!! -------- Found active profile " + SpringApplicationProfile.PROD + " without " + SpringApplicationProfile.ELK + " -------- !!!\n"
           + "!!! Consider monitoring your application with the ELK stack !!!\n"
-          + "!!! ------------------------------------------------------- !!!\n"
-          + "!!! ------------------------------------------------------- !!!\n\n"
+          + WARNING_BORDER_LINE
+          + WARNING_BORDER_LINE + "\n"
           );
       // @formatter:on
     }

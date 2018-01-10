@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -13,8 +12,12 @@ public class ApplicationContextHolder implements ApplicationContextAware {
     return ApplicationContextHolder.applicationContext;
   }
 
-  @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+  public static void setStaticApplicationContext(ApplicationContext applicationContext) {
     ApplicationContextHolder.applicationContext = applicationContext;
+  }
+
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    ApplicationContextHolder.setStaticApplicationContext(applicationContext);
   }
 }

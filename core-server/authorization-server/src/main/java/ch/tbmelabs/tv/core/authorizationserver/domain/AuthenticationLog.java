@@ -38,7 +38,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
 
   public enum AUTHENTICATION_STATE {
     OK, NOK
-  };
+  }
 
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {

@@ -14,9 +14,9 @@ import org.springframework.security.core.token.TokenService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String TOKEN_SERVICE_BEAN_NAME = "tokenServiceBean";
 
   @Autowired

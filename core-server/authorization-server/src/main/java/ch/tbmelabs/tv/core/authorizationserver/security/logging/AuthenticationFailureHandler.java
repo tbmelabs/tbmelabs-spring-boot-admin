@@ -43,7 +43,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
     }
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.NOK, requestIp, exception.getLocalizedMessage(),
-        ((HttpServletRequest) request).getParameter(USERNAME_PARAMETER));
+        request.getParameter(USERNAME_PARAMETER));
 
     bruteforceFilter.authenticationFromIpFailed(requestIp);
   }

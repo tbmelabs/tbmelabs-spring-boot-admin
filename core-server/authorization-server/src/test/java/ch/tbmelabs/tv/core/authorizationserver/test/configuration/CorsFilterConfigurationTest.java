@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CorsFilter;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.CorsFilterConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class CorsFilterConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class CorsFilterConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String CORS_FILTER_NAME = "logoutCorsFilter";
 
   @Autowired

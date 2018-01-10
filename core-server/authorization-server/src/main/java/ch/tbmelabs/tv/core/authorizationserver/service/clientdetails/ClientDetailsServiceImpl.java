@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.service.clientdetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
@@ -14,7 +13,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
   private ClientCRUDRepository clientRepository;
 
   @Override
-  public Client loadClientByClientId(String clientId) throws ClientRegistrationException {
+  public Client loadClientByClientId(String clientId) {
     return clientRepository.findByClientId(clientId);
   }
 }

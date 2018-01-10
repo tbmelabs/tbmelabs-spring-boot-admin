@@ -15,10 +15,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
-public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String REDIS_TOKEN_STORE_NAME = "redisTokenStore";
   private static final String JDBC_TOKEN_STORE_NAME = "jdbcTokenStore";
 

@@ -36,7 +36,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     }
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, requestIp, null,
-        ((HttpServletRequest) request).getParameter(USERNAME_PARAMETER));
+        request.getParameter(USERNAME_PARAMETER));
 
     bruteforceFilter.authenticationFromIpSucceed(requestIp);
   }

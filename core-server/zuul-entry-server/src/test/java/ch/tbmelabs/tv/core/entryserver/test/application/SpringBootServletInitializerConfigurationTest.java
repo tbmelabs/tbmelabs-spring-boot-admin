@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class SpringBootServletInitializerConfigurationTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class SpringBootServletInitializerConfigurationTest extends AbstractZuulApplicationContextAware {
   private static final String APPLICATION_CLASS_FIELD_NAME = "APPLICATION_SOURCE_CLASS";
 
   @Test

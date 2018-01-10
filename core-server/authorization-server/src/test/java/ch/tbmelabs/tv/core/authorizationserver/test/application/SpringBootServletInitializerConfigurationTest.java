@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 public class SpringBootServletInitializerConfigurationTest
-    extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+    extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String APPLICATION_CLASS_FIELD_NAME = "APPLICATION_SOURCE_CLASS";
 
   @Test

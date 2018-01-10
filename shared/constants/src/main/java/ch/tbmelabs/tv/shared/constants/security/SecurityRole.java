@@ -10,4 +10,8 @@ public class SecurityRole {
   public static final String USER = "USER";
   public static final String GUEST = "GUEST";
   public static final String ANONYMOUS = "ANONYMOUS";
+
+  private SecurityRole() {
+    // Hidden constructor
+  }
 }

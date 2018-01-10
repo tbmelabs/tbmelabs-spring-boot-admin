@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAwareJunitTest;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAware;
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
-public class SpringBootServletInitializerConfigurationTest extends AbstractEurekaApplicationContextAwareJunitTest {
+public class SpringBootServletInitializerConfigurationTest extends AbstractEurekaApplicationContextAware {
   private static final String APPLICATION_CLASS_FIELD_NAME = "APPLICATION_SOURCE_CLASS";
 
   @Test

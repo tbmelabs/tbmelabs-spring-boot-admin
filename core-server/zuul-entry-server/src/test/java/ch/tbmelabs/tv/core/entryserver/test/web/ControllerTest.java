@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class ControllerTest extends AbstractZuulApplicationContextAwareJunitTest {
+public class ControllerTest extends AbstractZuulApplicationContextAware {
   private static final Integer EXPECTED_CONTROLLER_COUNT = 0;
 
   private static Set<Class<?>> controllers = new HashSet<>();

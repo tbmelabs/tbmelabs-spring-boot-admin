@@ -7,9 +7,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.EurekaConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class EurekaConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAwareJunitTest {
+public class EurekaConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   @Test
   public void eurekaConfigurationShouldBeAnnotated() {
     assertThat(EurekaConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
