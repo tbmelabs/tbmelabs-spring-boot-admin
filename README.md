@@ -89,7 +89,11 @@ The default build generates .war-files using Maven. Open a command line and exec
 
 ### Docker images
 
-You may run the full application stack on Docker. It is packaged using the [com.spotify.docker-maven-plugin](https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin). To generate all images execute `mvn clean package docker:build` in the root folder.
+You may run the full application stack on Docker. It is packaged using the [com.spotify.docker-maven-plugin](https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin). To generate images execute `mvn clean package docker:build` in the specific folder. Currently dockerized Maven modules:
+
+* core-server/eureka-service-discovery
+* core-server/authorization-server
+* core-server/zuul-entry-server
 
 ## Built With
 

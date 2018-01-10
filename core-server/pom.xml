@@ -7,7 +7,6 @@
 
 	<properties>
 		<org.reflections.reflections.version>0.9.10</org.reflections.reflections.version>
-		<org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
 	</properties>
 
 	<parent>
@@ -79,53 +78,46 @@
 
 	<build>
 		<plugins>
-			<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+			<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-maven-plugin -->
 			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${org.jacoco.jacoco-maven-plugin.version}</version>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 
 				<configuration>
-					<systemPropertyVariables>
-						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
-					</systemPropertyVariables>
+					<addResources>true</addResources>
+					<finalName>${project.build.finalName}-bootable</finalName>
+					<goal>repackage</goal>
+					<mainClass>${start-class}</mainClass>
 				</configuration>
 
 				<executions>
-					<!-- download and install JaCoCo agent -->
 					<execution>
-						<id>prepare-agent</id>
-
 						<goals>
-							<goal>prepare-agent</goal>
+							<goal>repackage</goal>
 						</goals>
-					</execution>
-
-					<!-- report code coverage -->
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
-
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-
-					<!-- execute post unit test report -->
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
-
-						<goals>
-							<goal>report</goal>
-						</goals>
-
-						<configuration>
-							<dataFile>target/jacoco.exec</dataFile>
-							<outputDirectory>target/coverage/jacoco-ut</outputDirectory>
-						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>${com.spotify.docker-maven-plugin.version}</version>
+
+				<configuration>
+					<baseImage>java:8</baseImage>
+					<entryPoint>["java","-jar","/${project.build.finalName}-bootable.jar"]</entryPoint>
+					<imageName>${project.artifactId}</imageName>
+
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}-bootable.jar</include>
+						</resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
