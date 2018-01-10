@@ -10,29 +10,46 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Make sure to install the following software before starting:
 
-```
-Give examples
-```
+* [Java Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html): [This guide](https://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html) leads you through the installation.
+* [Maven](https://maven.apache.org/download.cgi): Have a look at [this page](https://maven.apache.org/install.html) for any help while installing.
+* [Node.js and npm](https://nodejs.org/en/download): Please follow the instructions in the installer.
+* [git](https://git-scm.com/downloads): Follow [this tutorial](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install git.
+* [PostgreSQL](https://www.postgresql.org/download): There are [detailed installation guides](https://wiki.postgresql.org/wiki/Detailed_installation_guides) available if you need any help.
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
+#### PostgreSQL
 
-Say what the step will be
+This application requires an installed and prepared PostgreSQL database to run. Login to the postgresql database via root account and execute the following sql-scripts:
+
+* core-server/authorization-server/src/main/resources/db/installation/auth_database.sql
+* core-server/authorization-server/src/main/resources/db/installation/development/jdbc_token_store.sql
+
+All servers and services have predefined development properties. Navigate into any Maven module containing a runnable application and execute `mvn clean spring-boot:run -Dspring.profiles.active=dev` to make use of those. Some modules might require Maven arguments as well.
+
+If you differ any configuration: Change the value via Maven arguments, not by adapting the spring properties.
+
+#### Backend development
+
+For active backend development navigate to the according Maven module in your console. Run the following command to execute the runnable application in development mode:
 
 ```
-Give the example
+mvn clean spring-boot:run -Dspring.profiles.active=dev
 ```
 
-And repeat
+The server or service will now automatically reload upon saving changes.
+
+#### Frontend development
+
+For active frontend development navigate to the according Maven module and `src/main/webapp` in your console. Run the following command to execute the application in development mode:
 
 ```
-until finished
+npm run dev
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+We use [Webpack](https://webpack.js.org/) to package the frontend libraries. Started in development mode it will reload your bundled files automatically on saving changes.
 
 ## Running the tests
 
