@@ -65,10 +65,11 @@
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+		<!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>${org.reflections.reflections.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
