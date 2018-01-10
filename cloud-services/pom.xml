@@ -11,6 +11,10 @@
 		<version>1.0.0</version>
 	</parent>
 
+	<properties>
+		<org.reflections.reflections.version>0.9.10</org.reflections.reflections.version>
+	</properties>
+
 	<modules>
 	</modules>
 
