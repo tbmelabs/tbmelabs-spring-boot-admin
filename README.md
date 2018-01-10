@@ -3,6 +3,7 @@
 A free to use streaming application.
 
 [![Build Status](https://travis-ci.org/tbmelabs/tbme-tv.svg?branch=master)](https://travis-ci.org/tbmelabs/tbme-tv)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=https://sonarcloud.io/api/badges/gate?key=ch.tbmelabs:tv:master)](https://sonarcloud.io/dashboard/index/ch.tbmelabs:tv:master)
 
 ## Getting Started
 
