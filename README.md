@@ -59,6 +59,7 @@ Use `mvn test` to execute the JUnit tests only. Nearly every Maven module includ
 
 Both the modules core-server/zuul-entry-server and core-server/authorization-server include frontend tests. Navigate to src/main/webapp and execute `npm run test` to start the Karma tests.
 
+<!--
 ### Break down into end to end tests
 
 Explain what these tests test and why
@@ -74,6 +75,7 @@ Explain what these tests test and why
 ```
 Give an example
 ```
+-->
 
 ## Deployment
 
@@ -128,8 +130,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+<!--
 ## Acknowledgments
 
 * Hat tip to anyone who's code was used
 * Inspiration
 * etc
+-->
