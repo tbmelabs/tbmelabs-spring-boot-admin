@@ -9,7 +9,7 @@ addons:
   sonarcloud:
     organization: "tbmelabs-github"
     token:
-      secure: "JxF7hmy9qV1BM7THxy652ZF7TciaPMsBUM1ADaPdx9phKnFm1+HXkyjl3fqy4b+SJsSLYWmHeWEuxzSi1hYuoMcTm9y/bm27TSmirki7gMxs8AMVtoP32gya8eWuM8YTLZxEhBa1KsenIvLzGHQjT/io0Y6wDqb3D4CnFsYxDQsFDInlouy4pguJn8O54rFBvUTaSgteJnS+HjB4iypXtHENU86yGLQUxg0DD4MSQ+0UYamahWVyjSfMABuQu9HeH+Nxuovc+H0UrSOE2Sp9b6rSBjl+LRZlLDc+rNqBnA7bU2pE+EYIoV6CUR3ocWmz5GGV7XLimApx+zPkv+kNGjTEtKsxxRTh/M8+fh96xMhdY1B6VnX9oSV/0laZqQIH4/rZWqbnl0DiQIilkW3MPM2PRwG46QDwu4Yrv4jBykt4cdVcN5ElY+M0Ez0Jx89AIpGn0OTWqGOGAaE0cMFbdLvnjb1tOctu+Us0kCO1FJ2yDn49W2jmyxsh3OGiWWdUIBxK21YIB1MhxUxPQ0osuzjf0KjHFAVaKbW5vzKCphfOLCP8gwIuzleOk3hIFuYKJekYVQ53wO62oC7Oyaz1+RU9pReM0Wu7G/gl4TUltaoZZNmsrVgbMMfgDuKfFrxGVuv6/RqFr+HiTpEDWQdkSr7T+aQfi1+fllIpxhCOyX0="
+      secure: ${SONAR_TOKEN}
     branches:
       - master
       - development
