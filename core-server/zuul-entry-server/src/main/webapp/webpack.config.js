@@ -15,7 +15,7 @@ var config = {
   module: {
     loaders: [{
       test: /\.js$/,
-      exclude: [NODE_DIR],
+      exclude: [NODE_DIR, TEST_DIR],
       include: [APP_DIR],
       loader: 'babel-loader',
       query: {

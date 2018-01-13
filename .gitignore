@@ -56,3 +56,6 @@ dockerfile.local
 package-lock.json
 node_modules/
 public/
+
+# Karma
+coverage/
