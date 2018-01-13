@@ -10,9 +10,9 @@ import {CookiesProvider} from 'react-cookie';
 
 import Router from './Router';
 
-const store = configureStore();
-
 require('./styles/tbme-tv.css');
+
+const store = configureStore();
 
 class App extends Component {
   render() {
