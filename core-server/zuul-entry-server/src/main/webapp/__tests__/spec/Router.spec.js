@@ -5,7 +5,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {expect} from 'chai';
 
-import Router from '../app/Router';
+import Router from '../../app/Router';
 
 describe('Router', () => {
   it('renders without problems', () => {
