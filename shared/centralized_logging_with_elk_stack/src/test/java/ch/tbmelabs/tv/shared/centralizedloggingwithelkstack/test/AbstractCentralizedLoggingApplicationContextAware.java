@@ -22,5 +22,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @SpringBootTest(classes = { TestApplication.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public class AbstractCentralizedLoggingApplicationContextAwareJunitTest {
+public class AbstractCentralizedLoggingApplicationContextAware {
 }

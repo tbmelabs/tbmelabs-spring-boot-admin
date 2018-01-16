@@ -12,6 +12,7 @@
 		<org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
 		<commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
 		<ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
+		<ch.tbmelabs.tv.shared.springjunitutils.version>1.0.0</ch.tbmelabs.tv.shared.springjunitutils.version>
 		<com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
 		<com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
 		<com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
@@ -67,6 +68,12 @@
 			<groupId>ch.tbmelabs.tv.shared</groupId>
 			<artifactId>constants</artifactId>
 			<version>${ch.tbmelabs.tv.shared.constants.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.tbmelabs.tv.shared</groupId>
+			<artifactId>spring_junit_utils</artifactId>
+			<version>${ch.tbmelabs.tv.shared.springjunitutils.version}</version>
 		</dependency>
 	</dependencies>
 

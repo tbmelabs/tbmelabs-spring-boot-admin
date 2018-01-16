@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAware;
 
-public class SleuthSamplerConfigurationTest extends AbstractCentralizedLoggingApplicationContextAwareJunitTest {
+public class SleuthSamplerConfigurationTest extends AbstractCentralizedLoggingApplicationContextAware {
   private static final String DEFAULT_SAMPLER_NAME = "defaultSampler";
 
   @Autowired

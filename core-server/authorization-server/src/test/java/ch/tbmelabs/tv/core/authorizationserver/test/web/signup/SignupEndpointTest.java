@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -23,35 +22,26 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.springjunithelpers.lifecicle.RequireTestUser;
 
 @Transactional
+@RequireTestUser(name = "testuser")
 public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
 
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
 
-  private User testUser;
+  private static User testUser = new User();
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
-  private AuthenticationLogCRUDRepository authenticationLogRepository;
-
-  @Autowired
   private UserCRUDRepository userRepository;
-
-  @Autowired
-  private RoleCRUDRepository authorityRepository;
 
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
@@ -59,22 +49,15 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
   @Rule
   public ExpectedException confirmationException = ExpectedException.none();
 
-  @Before
-  public void beforeTestSetUp() {
-    authenticationLogRepository.deleteAll();
-    authorityRepository.deleteAll();
-    userRepository.deleteAll();
-
-    testUser = new User();
-    testUser.setUsername("Testuser");
-    testUser.setPassword("Password99$");
-    testUser.setConfirmation("Password99$");
-    testUser.setEmail("some.test@email.ch");
-
-    authorityRepository.save(new Role(SecurityRole.USER));
-
-    BruteforceFilterService.resetFilter();
-  }
+  // @BeforeClass
+  // public void initBean() {
+  // testUser.setUsername("Testuser");
+  // testUser.setPassword("Password99$");
+  // testUser.setConfirmation("Password99$");
+  // testUser.setEmail("some.test@email.ch");
+  //
+  // testUser = new TestDataCreator().createTestUser(testUser, true);
+  // }
 
   @Test
   public void postToSignupEndpointShouldSaveNewUser() throws Exception {

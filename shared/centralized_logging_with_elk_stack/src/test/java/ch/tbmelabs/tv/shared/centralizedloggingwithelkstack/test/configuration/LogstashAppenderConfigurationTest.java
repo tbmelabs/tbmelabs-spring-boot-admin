@@ -6,9 +6,9 @@ import org.junit.Test;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAwareJunitTest;
+import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAware;
 
-public class LogstashAppenderConfigurationTest extends AbstractCentralizedLoggingApplicationContextAwareJunitTest {
+public class LogstashAppenderConfigurationTest extends AbstractCentralizedLoggingApplicationContextAware {
   @Test
   public void logstashAppenderConfigurationShouldBeAnnotated() {
     assertThat(LogstashAppenderConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(

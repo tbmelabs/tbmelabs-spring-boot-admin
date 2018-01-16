@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -22,6 +23,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-    DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
+    DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+    WithSecurityContextTestExecutionListener.class })
 public class AbstractOAuth2AuthorizationApplicationContextAware {
 }
