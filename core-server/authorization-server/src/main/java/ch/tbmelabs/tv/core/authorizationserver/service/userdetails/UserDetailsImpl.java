@@ -28,7 +28,6 @@ public class UserDetailsImpl implements UserDetails {
     return user.getUsername();
   }
 
-  // TODO: Is it common to expose the password in credentials?
   @Override
   public String getPassword() {
     return user.getPassword();

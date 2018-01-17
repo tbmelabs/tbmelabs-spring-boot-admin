@@ -12,11 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.AuthenticationManagerConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class AuthenticationManagerConfigurationTest
-    extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class AuthenticationManagerConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String AUTHENTICATION_MANAGER_BEAN_NAME = "authenticationManager";
 
   @Autowired
@@ -27,9 +25,7 @@ public class AuthenticationManagerConfigurationTest
 
   @Test
   public void authenticationManagerConfigurationShouldBeAnnotated() {
-    assertThat(AuthenticationManagerConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", TokenServiceConfiguration.class,
-        Configuration.class);
+    assertThat(AuthenticationManagerConfiguration.class).hasAnnotation(Configuration.class);
   }
 
   @Test
@@ -40,8 +36,6 @@ public class AuthenticationManagerConfigurationTest
 
     assertThat(authenticationManagerBean.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(authenticationManagerBean.invoke(authenticationManagerConfiguration, new Object[] {}))
-        .isEqualTo(injectedAuthenticationManager)
-        .withFailMessage("The configured %s should equal the primary registered %s in spring context!",
-            AuthenticationManagerConfiguration.class, Bean.class);
+        .isEqualTo(injectedAuthenticationManager);
   }
 }

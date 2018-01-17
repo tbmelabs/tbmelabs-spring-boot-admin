@@ -19,7 +19,7 @@ import org.springframework.web.util.NestedServletException;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
 @Transactional
 public class EmailUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -54,8 +54,8 @@ public class EmailUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApp
               .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUserManager.getUserUser().getEmail()).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(EMAIL_NOT_UNIQUE_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(EMAIL_NOT_UNIQUE_ERROR_MESSAGE);
 
       throw e;
     }

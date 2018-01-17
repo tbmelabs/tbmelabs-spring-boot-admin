@@ -12,11 +12,6 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 public class EurekaConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   @Test
   public void eurekaConfigurationShouldBeAnnotated() {
-    assertThat(EurekaConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", EurekaConfiguration.class,
-        Configuration.class);
-
-    assertThat(EurekaConfiguration.class).hasAnnotation(EnableEurekaClient.class).withFailMessage(
-        "Annotate %s with %s to enable the eureka client!", EurekaConfiguration.class, EnableEurekaClient.class);
+    assertThat(EurekaConfiguration.class).hasAnnotation(Configuration.class).hasAnnotation(EnableEurekaClient.class);
   }
 }

@@ -13,12 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
 @Transactional
 public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -49,12 +47,10 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
     String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME,
-            testUserManager.getUserUser().getPassword()))
+            testUserManager.getUserUser().getConfirmation()))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(redirectUrl).isEqualTo(ERROR_FORWARD_URL).withFailMessage(
-        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
-        AuthenticationFailureHandler.class);
+    assertThat(redirectUrl).isNotNull().isEqualTo(ERROR_FORWARD_URL);
   }
 
   @Test
@@ -64,20 +60,16 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
             .param(PASSWORD_PARAMETER_NAME, "invalid"))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(redirectUrl).isEqualTo(ERROR_FORWARD_URL).withFailMessage(
-        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
-        AuthenticationFailureHandler.class);
+    assertThat(redirectUrl).isNotNull().isEqualTo(ERROR_FORWARD_URL);
   }
 
   @Test
   public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
     String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername())
-            .param(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword()))
+            .param(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation()))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(redirectUrl).isEqualTo(SUCCESS_FORWARD_URL).withFailMessage(
-        "Check that the %s and %s are configured correctly!", SecurityConfiguration.class,
-        AuthenticationFailureHandler.class);
+    assertThat(redirectUrl).isNotNull().isEqualTo(SUCCESS_FORWARD_URL);
   }
 }

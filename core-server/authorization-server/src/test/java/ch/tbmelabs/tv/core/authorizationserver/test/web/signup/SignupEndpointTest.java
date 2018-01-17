@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 @Transactional
@@ -67,8 +67,8 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())).andReturn().getResponse()
           .getContentAsString();
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isNotNull().isEqualTo(USER_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(USER_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -79,7 +79,7 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
     mockMvc
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(testUserManager.getUserUser()))
-                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword())
+                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation())
                 .put(CONFIRMATION_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
@@ -91,7 +91,7 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
     JSONObject createdJsonUser = new JSONObject(mockMvc
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(testUserManager.getUserUser()))
-                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword())
+                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation())
                 .put(CONFIRMATION_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString());
 

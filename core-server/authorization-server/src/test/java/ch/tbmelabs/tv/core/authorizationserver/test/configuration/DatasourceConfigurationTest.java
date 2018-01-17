@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
@@ -25,9 +24,7 @@ public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationAppl
 
   @Test
   public void dataSourceConfigurationShouldBeAnnotated() {
-    assertThat(DatasourceConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", DatasourceConfiguration.class,
-        Configuration.class);
+    assertThat(DatasourceConfiguration.class).hasAnnotation(Configuration.class);
   }
 
   @Test
@@ -38,8 +35,7 @@ public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationAppl
     assertThat(datasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(datasourceConfiguration.getDeclaredAnnotation(Primary.class)).isNotNull();
     assertThat(datasourceConfiguration.getDeclaredAnnotation(ConfigurationProperties.class).prefix())
-        .isEqualTo(PRIMARY_DATASOURCE_PREFIX)
-        .withFailMessage("The %s should use the default \"%s\"!", datasourceConfiguration, PRIMARY_DATASOURCE_PREFIX);
+        .isEqualTo(PRIMARY_DATASOURCE_PREFIX);
   }
 
   @Test
@@ -50,11 +46,8 @@ public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationAppl
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Profile.class).value())
         .containsAll(Arrays.asList(new String[] { SpringApplicationProfile.DEV, SpringApplicationProfile.TEST }))
-        .doesNotContain(SpringApplicationProfile.PROD)
-        .withFailMessage("The @%s annotation should not allow the %s to occur in productive environments!",
-            Profile.class, JdbcTokenStore.class);
+        .doesNotContain(SpringApplicationProfile.PROD);
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(ConfigurationProperties.class).prefix())
-        .isEqualTo(JDBC_TOKEN_STORE_DATASOURCE_PREFIX).withFailMessage("The %s should use the default \"%s\"!",
-            jdbcTokenStoreDatasourceConfiguration, JDBC_TOKEN_STORE_DATASOURCE_PREFIX);
+        .isEqualTo(JDBC_TOKEN_STORE_DATASOURCE_PREFIX);
   }
 }

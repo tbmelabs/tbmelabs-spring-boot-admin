@@ -15,7 +15,6 @@ public class ApplicationContextHolderTest extends AbstractOAuth2AuthorizationApp
 
   @Test
   public void injectedApplicationContextShouldEqualGettedApplicationContext() {
-    assertThat(ApplicationContextHolder.getApplicationContext()).isEqualTo(injectedApplicationContext).withFailMessage(
-        "The %s in %s is not properly getted!", ApplicationContext.class, ApplicationContextHolder.class);
+    assertThat(ApplicationContextHolder.getApplicationContext()).isEqualTo(injectedApplicationContext);
   }
 }

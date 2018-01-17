@@ -35,8 +35,8 @@ public class EmailValidationEndpointTest extends AbstractOAuth2AuthorizationAppl
               .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(EMAIL_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(EMAIL_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }

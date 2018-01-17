@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,10 +99,6 @@ public class User extends NicelyDocumentedJDBCResource {
   }
 
   public Collection<UserRoleAssociation> rolesToAssociations(List<Role> roleList) {
-    if (roleList == null || roleList.isEmpty()) {
-      return new ArrayList<>();
-    }
-
     return roleList.stream().map(role -> new UserRoleAssociation(this, role)).collect(Collectors.toList());
   }
 }

@@ -16,14 +16,12 @@ public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContex
   @Test
   public void allRepositoriesShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain.repository")
-        .getTypesAnnotatedWith(Repository.class)).hasSize(EXPECTED_REPOSITORY_COUNT).withFailMessage(
-            "This package should only contain repository classes annotated with %s!", Repository.class);
+        .getTypesAnnotatedWith(Repository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
   }
 
   @Test
   public void allRepositoriesShouldExtendsTheCRUDRepositoryInterface() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain.repository")
-        .getSubTypesOf(CrudRepository.class)).hasSize(EXPECTED_REPOSITORY_COUNT).withFailMessage(
-            "This package should only contain repository classes extending from %s!", CrudRepository.class);
+        .getSubTypesOf(CrudRepository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
   }
 }

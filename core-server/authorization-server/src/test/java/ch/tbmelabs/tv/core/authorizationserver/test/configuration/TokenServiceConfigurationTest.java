@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
@@ -28,9 +27,7 @@ public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationAp
 
   @Test
   public void tokenServiceConfigurationShouldBeAnnotated() {
-    assertThat(TokenServiceConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", TokenServiceConfiguration.class,
-        Configuration.class);
+    assertThat(TokenServiceConfiguration.class).hasAnnotation(Configuration.class);
   }
 
   @Test
@@ -40,8 +37,6 @@ public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationAp
         new Class[] {});
 
     assertThat(tokenServiceBean.getDeclaredAnnotation(Bean.class)).isNotNull();
-    assertThat(tokenServiceBean.invoke(tokenServiceConfiguration, new Object[] {})).isEqualTo(injectedTokenService)
-        .withFailMessage("The configured %s should equal the primary registered %s in spring context!",
-            TokenService.class, Bean.class);
+    assertThat(tokenServiceBean.invoke(tokenServiceConfiguration, new Object[] {})).isEqualTo(injectedTokenService);
   }
 }

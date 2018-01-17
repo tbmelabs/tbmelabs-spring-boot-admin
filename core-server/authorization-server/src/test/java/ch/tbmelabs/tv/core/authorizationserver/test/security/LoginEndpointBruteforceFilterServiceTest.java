@@ -21,7 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 @Transactional
-public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class LoginEndpointBruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
@@ -48,8 +48,7 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
         post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
-    assertThat(BruteforceFilterService.getState()).hasSize(1)
-        .withFailMessage("The %s should catch failed login attempts!", BruteforceFilterService.class);
+    assertThat(BruteforceFilterService.getState()).hasSize(1);
   }
 
   @Test
@@ -63,7 +62,6 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
       }
     });
 
-    assertThat(ipBlacklistRepository.findAll()).hasSize(1).extracting("ip").containsExactly("127.0.0.1")
-        .withFailMessage("It is not possible to ban ip's if the assignment is incorrect!");
+    assertThat(ipBlacklistRepository.findAll()).hasSize(1).extracting("ip").containsExactly("127.0.0.1");
   }
 }

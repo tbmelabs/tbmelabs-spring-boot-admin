@@ -16,7 +16,6 @@ public class ServiceTest extends AbstractOAuth2AuthorizationApplicationContextAw
   public void allServicesShouldBeAnnotated() {
     assertThat(
         new Reflections(Application.class.getPackage().getName() + ".service").getTypesAnnotatedWith(Service.class))
-            .hasSize(EXPECTED_SERVICE_COUNT)
-            .withFailMessage("This package should only contain service classes annotated with %s!", Service.class);
+            .hasSize(EXPECTED_SERVICE_COUNT);
   }
 }

@@ -35,8 +35,8 @@ public class UsernameValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(4)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -50,8 +50,8 @@ public class UsernameValidationEndpointTest extends AbstractOAuth2AuthorizationA
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(65)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -65,8 +65,8 @@ public class UsernameValidationEndpointTest extends AbstractOAuth2AuthorizationA
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(5) + "$").toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }

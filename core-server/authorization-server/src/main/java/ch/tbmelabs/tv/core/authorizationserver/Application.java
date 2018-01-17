@@ -32,7 +32,7 @@ public class Application extends SpringBootServletInitializer implements WebAppl
   }
 
   @PostConstruct
-  public void postConstruct() {
+  public void initBean() {
     List<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
 
     if (activeProfiles.contains(SpringApplicationProfile.PROD)

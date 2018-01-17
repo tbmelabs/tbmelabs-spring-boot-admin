@@ -22,8 +22,8 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
 import lombok.Data;
@@ -60,6 +60,10 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientAuthorityId")
   private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
+
+  public Authority(String name) {
+    this.name = name;
+  }
 
   @Override
   public String getAuthority() {

@@ -12,7 +12,7 @@ public class PreAuthenticatedAuthenticationProviderImpl extends PreAuthenticated
   private PreAuthenticationUserDetailsServiceImpl userDetailsService;
 
   @PostConstruct
-  public void postConstruct() {
+  public void initBean() {
     super.setPreAuthenticatedUserDetailsService(userDetailsService);
   }
 }

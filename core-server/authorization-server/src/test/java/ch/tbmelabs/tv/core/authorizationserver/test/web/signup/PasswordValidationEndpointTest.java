@@ -39,8 +39,8 @@ public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -54,8 +54,8 @@ public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -69,8 +69,8 @@ public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -84,8 +84,8 @@ public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }
@@ -99,8 +99,8 @@ public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationA
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
+          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
       throw e;
     }

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
@@ -24,9 +23,7 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
 
   @Test
   public void tokenStoreShouldBeAnnotated() {
-    assertThat(TokenStoreConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", TokenStoreConfiguration.class,
-        Configuration.class);
+    assertThat(TokenStoreConfiguration.class).hasAnnotation(Configuration.class);
   }
 
   @Test
@@ -48,8 +45,6 @@ public class TokenStoreConfigurationTest extends AbstractOAuth2AuthorizationAppl
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Primary.class)).isNotNull();
     assertThat(jdbcTokenStoreConfiguration.getDeclaredAnnotation(Profile.class).value())
         .containsAll(Arrays.asList(new String[] { SpringApplicationProfile.DEV, SpringApplicationProfile.TEST }))
-        .doesNotContain(SpringApplicationProfile.PROD)
-        .withFailMessage("The @%s annotation should not allow the %s to occur in productive environments!",
-            Profile.class, JdbcTokenStore.class);
+        .doesNotContain(SpringApplicationProfile.PROD);
   }
 }

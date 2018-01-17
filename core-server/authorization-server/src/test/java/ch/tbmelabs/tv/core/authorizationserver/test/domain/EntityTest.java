@@ -18,14 +18,12 @@ public class EntityTest extends AbstractOAuth2AuthorizationApplicationContextAwa
   public void allEntitiesShouldBeAnnotated() {
     assertThat(
         new Reflections(Application.class.getPackage().getName() + ".domain").getTypesAnnotatedWith(Entity.class))
-            .hasSize(EXPECTED_ENTITIES_COUNT)
-            .withFailMessage("This package should only contain entities annotated with %s!", Entity.class);
+            .hasSize(EXPECTED_ENTITIES_COUNT);
   }
 
   @Test
   public void allEntitiesShouldExtendTheConfiguredSuperType() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain")
-        .getSubTypesOf(NicelyDocumentedJDBCResource.class)).hasSize(EXPECTED_ENTITIES_COUNT).withFailMessage(
-            "This package should only contain entity classes extending from %s!", NicelyDocumentedJDBCResource.class);
+        .getSubTypesOf(NicelyDocumentedJDBCResource.class)).hasSize(EXPECTED_ENTITIES_COUNT);
   }
 }

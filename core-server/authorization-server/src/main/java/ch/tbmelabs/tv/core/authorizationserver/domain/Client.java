@@ -73,11 +73,11 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
 
   @NotNull
   @Column(name = "secret_required")
-  private Boolean isSecretRequired;
+  private Boolean isSecretRequired = true;
 
   @NotNull
   @Column(name = "auto_approve")
-  private Boolean isAutoApprove;
+  private Boolean isAutoApprove = false;
 
   @NotNull
   @Column(name = "access_token_validity")

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser;
+package ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata;
 
 import javax.annotation.PostConstruct;
 
