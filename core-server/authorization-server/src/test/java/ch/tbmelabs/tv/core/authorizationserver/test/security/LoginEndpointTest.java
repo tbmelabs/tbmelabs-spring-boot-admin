@@ -18,10 +18,9 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.CreateTestUser;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
 
 @Transactional
-@CreateTestUser(username = "Testuser", email = "some.test@email.ch", password = "Password99$", confirmation = "Password99$")
 public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
@@ -30,14 +29,14 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   private static final String ERROR_FORWARD_URL = "/signin?error";
   private static final String SUCCESS_FORWARD_URL = "/";
 
-  private static final String VALID_USERNAME = "Testuser";
-  private static final String VALID_PASSWORD = "Password99$";
-
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
   private AuthenticationLogCRUDRepository authenticationLogRepository;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Before
   public void beforeTestSetUp() {
@@ -50,7 +49,7 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
     String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME,
-            VALID_PASSWORD))
+            testUserManager.getUserUser().getPassword()))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
     assertThat(redirectUrl).isEqualTo(ERROR_FORWARD_URL).withFailMessage(
@@ -61,7 +60,7 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   @Test
   public void loginProcessingWithInvalidPasswordShoulFail() throws Exception {
     String redirectUrl = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, VALID_USERNAME)
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername())
             .param(PASSWORD_PARAMETER_NAME, "invalid"))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
@@ -73,8 +72,8 @@ public class LoginEndpointTest extends AbstractOAuth2AuthorizationApplicationCon
   @Test
   public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
     String redirectUrl = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, VALID_USERNAME)
-            .param(PASSWORD_PARAMETER_NAME, VALID_PASSWORD))
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername())
+            .param(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword()))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
     assertThat(redirectUrl).isEqualTo(SUCCESS_FORWARD_URL).withFailMessage(

@@ -19,24 +19,25 @@ import org.springframework.web.util.NestedServletException;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.CreateTestUser;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
 
 @Transactional
-@CreateTestUser(username = "Testuser", email = "some.test@email.ch", password = "Password99$", confirmation = "Password99$")
 public class EmailUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_UNIQUE_CHECK_ENDPOINT = "/signup/is-email-unique";
   private static final String EMAIL_PARAMETER_NAME = "email";
 
   private static final String EMAIL_NOT_UNIQUE_ERROR_MESSAGE = "E-mail address already in use!";
 
-  private static final String EXISTING_EMAIL = "some.test@email.ch";
-  private static final String VALID_EMAIL = "tbme@localhost.tv";
+  private static final String VALID_EMAIL = "valid.email@tbme.tv";
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
   private AuthenticationLogCRUDRepository authenticationLogRepository;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Before
   public void beforeTestSetUp() {
@@ -50,7 +51,7 @@ public class EmailUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApp
     try {
       mockMvc
           .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(EMAIL_PARAMETER_NAME, EXISTING_EMAIL).toString()))
+              .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUserManager.getUserUser().getEmail()).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);

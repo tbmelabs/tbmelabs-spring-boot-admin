@@ -19,24 +19,25 @@ import org.springframework.web.util.NestedServletException;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.CreateTestUser;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
 
 @Transactional
-@CreateTestUser(username = "Testuser", email = "some.test@email.ch", password = "Password99$", confirmation = "Password99$")
 public class UsernameUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
 
   private static final String USERNAME_NOT_UNIQUE_ERROR_MESSAGE = "Username already exists!";
 
-  private static final String EXISTING_USERNAME = "Testuser";
-  private static final String VALID_USERNAME = "TBMETVUser";
+  private static final String VALID_USERNAME = "ValidUsername";
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
   private AuthenticationLogCRUDRepository authenticationLogRepository;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Before
   public void beforeTestSetUp() {
@@ -49,8 +50,8 @@ public class UsernameUniqueCheckEndpointTest extends AbstractOAuth2Authorization
   public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
     try {
       mockMvc
-          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, EXISTING_USERNAME).toString()))
+          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
+              new JSONObject().put(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername()).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);

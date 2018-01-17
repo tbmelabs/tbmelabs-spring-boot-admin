@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -25,11 +24,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.CreateTestUser;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 @Transactional
-@CreateTestUser(username = "Testuser", email = "some.test@email.ch", password = "Password99$", confirmation = "Password99$")
 public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
   private static final String PASSWORD_PARAMETER_NAME = "password";
@@ -37,13 +35,14 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
 
   private static final String USER_VALIDATION_ERROR_MESSAGE = "Registration failed. Please check your details!";
 
-  private static User testUser = new User();
-
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
   private UserCRUDRepository userRepository;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
@@ -51,18 +50,10 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
   @Rule
   public ExpectedException confirmationException = ExpectedException.none();
 
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    testUser.setUsername("SignupEndpointTestUser");
-    testUser.setPassword("Password99$");
-    testUser.setConfirmation("Password99$");
-    testUser.setEmail("signup.test@user.ch");
-  }
-
   @Before
   public void beforeTestSetUp() {
     User existingUser;
-    if ((existingUser = userRepository.findByUsername(testUser.getUsername())) != null) {
+    if ((existingUser = userRepository.findByUsername(testUserManager.getUserUser().getUsername())) != null) {
       userRepository.delete(existingUser);
     }
   }
@@ -87,21 +78,21 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
   public void postToSignupEndpointShouldSaveNewUser() throws Exception {
     mockMvc
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject(new ObjectMapper().writeValueAsString(testUser))
-                .put(PASSWORD_PARAMETER_NAME, testUser.getPassword())
-                .put(CONFIRMATION_PARAMETER_NAME, testUser.getConfirmation()).toString()))
+            .content(new JSONObject(new ObjectMapper().writeValueAsString(testUserManager.getUserUser()))
+                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword())
+                .put(CONFIRMATION_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findByUsername(testUser.getUsername())).isNotNull();
+    assertThat(userRepository.findByUsername(testUserManager.getUserUser().getUsername())).isNotNull();
   }
 
   @Test
   public void postToSignupEndpointShouldReturnCreatedUser() throws Exception {
     JSONObject createdJsonUser = new JSONObject(mockMvc
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject(new ObjectMapper().writeValueAsString(testUser))
-                .put(PASSWORD_PARAMETER_NAME, testUser.getPassword())
-                .put(CONFIRMATION_PARAMETER_NAME, testUser.getConfirmation()).toString()))
+            .content(new JSONObject(new ObjectMapper().writeValueAsString(testUserManager.getUserUser()))
+                .put(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword())
+                .put(CONFIRMATION_PARAMETER_NAME, testUserManager.getUserUser().getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString());
 
     Integer id = createdJsonUser.getInt("id");
@@ -114,10 +105,10 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
     assertThat(lastUpdated).isNotNull().isPositive();
 
     String username = createdJsonUser.getString("username");
-    assertThat(username).isNotEmpty().isEqualTo(testUser.getUsername());
+    assertThat(username).isNotEmpty().isEqualTo(testUserManager.getUserUser().getUsername());
 
     String email = createdJsonUser.getString("email");
-    assertThat(email).isNotEmpty().isEqualTo(testUser.getEmail());
+    assertThat(email).isNotEmpty().isEqualTo(testUserManager.getUserUser().getEmail());
 
     passwordException.expect(JSONException.class);
     assertThat(createdJsonUser.getString("password")).isNullOrEmpty();

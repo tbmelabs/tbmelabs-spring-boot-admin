@@ -23,23 +23,22 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.CreateTestUser;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testuser.TestUserManager;
 
 @Transactional
-@CreateTestUser(username = "Testuser", email = "some.test@email.ch", password = "Password99$", confirmation = "Password99$")
 public class AuthenticationAttemptLoggerTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
-
-  private static final String VALID_USERNAME = "Testuser";
-  private static final String VALID_PASSWORD = "Password99$";
 
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
   private AuthenticationLogCRUDRepository authenticationLogRepository;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Before
   public void beforeTestSetUp() {
@@ -60,8 +59,10 @@ public class AuthenticationAttemptLoggerTest extends AbstractOAuth2Authorization
 
   @Test
   public void loginWithValidUsernameAndInvalidPasswordShouldBeRegistered() throws Exception {
-    mockMvc.perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, VALID_USERNAME)
-        .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
+    mockMvc
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername())
+            .param(PASSWORD_PARAMETER_NAME, "invalid"))
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
     List<AuthenticationLog> logs = (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 
@@ -69,15 +70,16 @@ public class AuthenticationAttemptLoggerTest extends AbstractOAuth2Authorization
         AuthenticationAttemptLogger.class);
     assertThat(logs).extracting("state").containsExactly(AUTHENTICATION_STATE.NOK.name())
         .withFailMessage("The %s was wrong passed!", AUTHENTICATION_STATE.class);
-    assertThat(logs).extracting("user").extracting("username").containsExactly(VALID_USERNAME)
+    assertThat(logs).extracting("user").extracting("username")
+        .containsExactly(testUserManager.getUserUser().getUsername())
         .withFailMessage("Wrong %s is linked in the %s!", User.class, AuthenticationLog.class);
   }
 
   @Test
   public void loginWithValidUserShouldBeRegistered() throws Exception {
     mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, VALID_USERNAME)
-            .param(PASSWORD_PARAMETER_NAME, VALID_PASSWORD))
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername())
+            .param(PASSWORD_PARAMETER_NAME, testUserManager.getUserUser().getPassword()))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
 
     List<AuthenticationLog> logs = (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
@@ -86,7 +88,8 @@ public class AuthenticationAttemptLoggerTest extends AbstractOAuth2Authorization
         AuthenticationAttemptLogger.class);
     assertThat(logs).extracting("state").containsExactly(AUTHENTICATION_STATE.OK.name())
         .withFailMessage("The %s was wrong passed!", AUTHENTICATION_STATE.class);
-    assertThat(logs).extracting("user").extracting("username").containsExactly(VALID_USERNAME)
+    assertThat(logs).extracting("user").extracting("username")
+        .containsExactly(testUserManager.getUserUser().getUsername())
         .withFailMessage("Wrong %s is linked in the %s!", User.class, AuthenticationLog.class);
   }
 }
