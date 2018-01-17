@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.domain;
+package ch.tbmelabs.tv.core.authorizationserver.test.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,7 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final Integer EXPECTED_REPOSITORY_COUNT = 7;
+  private static final Integer EXPECTED_REPOSITORY_COUNT = 8;
 
   @Test
   public void allRepositoriesShouldBeAnnotated() {

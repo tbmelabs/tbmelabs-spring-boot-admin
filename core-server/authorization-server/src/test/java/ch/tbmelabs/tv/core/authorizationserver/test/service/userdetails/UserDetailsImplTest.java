@@ -2,15 +2,14 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestRoleManager;
@@ -18,11 +17,10 @@ import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManag
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 public class UserDetailsImplTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+  private static final String ROLE_PREFIX = "ROLE_";
+
   private User testUser;
   private UserDetailsImpl testUserDetails;
-
-  @Autowired
-  private RoleCRUDRepository roleRepository;
 
   @Autowired
   private TestRoleManager testRoleManager;
@@ -37,11 +35,12 @@ public class UserDetailsImplTest extends AbstractOAuth2AuthorizationApplicationC
   }
 
   @Test
-  @SuppressWarnings("unchecked")
   public void userDetailsImplsShouldReturnInformationEqualToUser() {
     assertThat(testUserDetails.getUsername()).isNotNull().isEqualTo(testUser.getUsername());
     assertThat(testUserDetails.getPassword()).isNotNull().isEqualTo(testUser.getPassword());
-    assertThat((ArrayList<Role>) testUserDetails.getAuthorities()).isNotNull()
-        .containsExactly(roleRepository.findByName(SecurityRole.USER), testRoleManager.getTestRole());
+    assertThat(
+        testUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+            .isNotNull().isNotEmpty()
+            .containsExactly(ROLE_PREFIX + SecurityRole.USER, ROLE_PREFIX + testRoleManager.getTestRole().getName());
   }
 }

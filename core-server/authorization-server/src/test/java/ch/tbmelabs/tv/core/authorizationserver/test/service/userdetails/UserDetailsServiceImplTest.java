@@ -2,13 +2,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
@@ -17,11 +16,10 @@ import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManag
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 public class UserDetailsServiceImplTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+  private static final String ROLE_PREFIX = "ROLE_";
 
   @Autowired
-  private RoleCRUDRepository roleRepository;
+  private UserDetailsServiceImpl userDetailsService;
 
   @Autowired
   private TestRoleManager testRoleManager;
@@ -30,14 +28,15 @@ public class UserDetailsServiceImplTest extends AbstractOAuth2AuthorizationAppli
   private TestUserManager testUserManager;
 
   @Test
-  @SuppressWarnings("unchecked")
   public void userDetailsServiceShouldLoadCorrectUserDetailsForUsername() {
     UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(testUserManager.getUserUser().getUsername());
 
     assertThat(userDetails).isNotNull();
     assertThat(userDetails.getUsername()).isNotNull().isEqualTo(testUserManager.getUserUser().getUsername());
     assertThat(userDetails.getPassword()).isNotNull().isEqualTo(testUserManager.getUserUser().getPassword());
-    assertThat((ArrayList<Role>) userDetails.getAuthorities()).isNotNull()
-        .containsExactly(roleRepository.findByName(SecurityRole.USER), testRoleManager.getTestRole());
+    assertThat(userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+        .isNotNull().isNotEmpty()
+        .containsExactly(ROLE_PREFIX + SecurityRole.USER, ROLE_PREFIX + testRoleManager.getTestRole().getName());
+
   }
 }

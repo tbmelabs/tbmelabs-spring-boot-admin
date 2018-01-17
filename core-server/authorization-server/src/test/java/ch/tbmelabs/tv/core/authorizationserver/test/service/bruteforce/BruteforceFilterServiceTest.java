@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.stream.IntStream;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,8 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String IP_ADDRESS = "127.0.0.1";
 
+  private boolean isBlacklistResetted = false;
+
   @Value("${authorization-server.security.max-login-attempts}")
   private Integer maxLoginAttempts;
 
@@ -23,6 +26,15 @@ public class BruteforceFilterServiceTest extends AbstractOAuth2AuthorizationAppl
 
   @Autowired
   private IPBlacklistCRUDRepository ipBlacklistRepository;
+
+  @Before
+  public void beforeTestSetUp() {
+    if (!isBlacklistResetted) {
+      ipBlacklistRepository.deleteAll();
+      BruteforceFilterService.resetFilter();
+      isBlacklistResetted = true;
+    }
+  }
 
   @Test
   public void bruteforceFilterShouldRememberIpsExceedingMaxLoginAttempts() {
