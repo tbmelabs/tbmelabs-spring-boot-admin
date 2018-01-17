@@ -9,12 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 
-public class UserPrincipal implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
   private static final long serialVersionUID = 1L;
 
   private User user;
 
-  public UserPrincipal(User user) {
+  public UserDetailsImpl(User user) {
     this.user = user;
   }
 
@@ -24,18 +24,19 @@ public class UserPrincipal implements UserDetails {
   }
 
   @Override
+  public String getUsername() {
+    return user.getUsername();
+  }
+
+  // TODO: Is it common to expose the password in credentials?
+  @Override
   public String getPassword() {
     return user.getPassword();
   }
 
   @Override
-  public String getUsername() {
-    return user.getUsername();
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
+  public boolean isEnabled() {
+    return user.getIsEnabled();
   }
 
   @Override
@@ -49,7 +50,7 @@ public class UserPrincipal implements UserDetails {
   }
 
   @Override
-  public boolean isEnabled() {
-    return user.getIsEnabled();
+  public boolean isAccountNonExpired() {
+    return true;
   }
 }

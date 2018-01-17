@@ -19,11 +19,11 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
-@ActiveProfiles({ SpringApplicationProfile.TEST })
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles({ SpringApplicationProfile.TEST })
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-    DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
+    DirtiesContextBeforeModesTestExecutionListener.class, DependencyInjectionTestExecutionListener.class,
     WithSecurityContextTestExecutionListener.class })
 public class AbstractOAuth2AuthorizationApplicationContextAware {
 }

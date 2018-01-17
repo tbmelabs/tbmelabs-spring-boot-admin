@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signup.validation;
+package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -15,7 +15,7 @@ import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class PasswordValidationEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String PASSWORD_VALIDATION_ENDPOINT = "/signup/does-password-match-format";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
@@ -31,99 +31,79 @@ public class PasswordValidationTest extends AbstractOAuth2AuthorizationApplicati
   @Autowired
   private MockMvc mockMvc;
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void tooShortPasswordShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void passwordWithoutNumbersFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void passwordWithoutLowercaseLettersShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void passwordWithoutUppercaseLettersShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void passwordWithoutSpecialCharShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(PASSWORD_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
   @Test

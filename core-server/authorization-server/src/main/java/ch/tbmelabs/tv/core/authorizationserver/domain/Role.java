@@ -21,8 +21,10 @@ import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import lombok.Data;
@@ -56,6 +58,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   private String name;
 
   @JsonManagedReference("userRole")
+  @JsonProperty(access = Access.WRITE_ONLY)
   @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;
 

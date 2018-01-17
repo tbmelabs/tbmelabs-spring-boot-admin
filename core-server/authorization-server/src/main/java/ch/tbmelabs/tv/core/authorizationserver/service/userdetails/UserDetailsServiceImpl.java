@@ -22,6 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
       throw new UsernameNotFoundException("Username " + username + " does not exist!");
     }
 
-    return new UserPrincipal(user);
+    return new UserDetailsImpl(user);
   }
 }

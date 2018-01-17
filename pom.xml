@@ -1,135 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.tbmelabs</groupId>
-	<artifactId>tv</artifactId>
-	<version>1.0.0</version>
-	<packaging>pom</packaging>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.tbmelabs</groupId>
+  <artifactId>tv</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
 
-	<name>TBME TV</name>
-	<description>Free to use streaming application.</description>
+  <name>TBME TV</name>
+  <description>Free to use streaming application.</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<buildNumber>${maven.build.timestamp}</buildNumber>
-		<java.version>1.8</java.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
-		<com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
-	</properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <buildNumber>${maven.build.timestamp}</buildNumber>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
+    <com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
+  </properties>
 
-	<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.7.RELEASE</version>
-	</parent>
+  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.5.7.RELEASE</version>
+  </parent>
 
-	<modules>
-		<module>shared</module>
-		<module>core-server</module>
-		<module>cloud-services</module>
-	</modules>
+  <modules>
+    <module>shared</module>
+    <module>core-server</module>
+    <module>cloud-services</module>
+  </modules>
 
-	<dependencyManagement>
-		<dependencies>
-			<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Camden.SR7</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+  <dependencyManagement>
+    <dependencies>
+      <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>Camden.SR7</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+  <build>
+    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
 
-		<plugins>
-			<!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>${org.jacoco.jacoco-maven-plugin.version}</version>
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${org.jacoco.jacoco-maven-plugin.version}</version>
 
-				<configuration>
-					<systemPropertyVariables>
-						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
-					</systemPropertyVariables>
-				</configuration>
+        <configuration>
+          <systemPropertyVariables>
+            <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+          </systemPropertyVariables>
+        </configuration>
 
-				<executions>
-					<!-- download and install JaCoCo agent -->
-					<execution>
-						<id>prepare-agent</id>
+        <executions>
+          <!-- download and install JaCoCo agent -->
+          <execution>
+            <id>prepare-agent</id>
 
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
 
-					<!-- report code coverage -->
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
+          <!-- report code coverage -->
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
 
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
 
-					<!-- execute post unit test report -->
-					<execution>
-						<id>post-unit-test</id>
-						<phase>test</phase>
+          <!-- execute post unit test report -->
+          <execution>
+            <id>post-unit-test</id>
+            <phase>test</phase>
 
-						<goals>
-							<goal>report</goal>
-						</goals>
+            <goals>
+              <goal>report</goal>
+            </goals>
 
-						<configuration>
-							<dataFile>target/jacoco.exec</dataFile>
-							<outputDirectory>target/coverage/jacoco-ut</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <configuration>
+              <dataFile>target/jacoco.exec</dataFile>
+              <outputDirectory>target/coverage/jacoco-ut</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-	<reporting>
-		<plugins>
-			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<show>public</show>
-					<nohelp>true</nohelp>
-					<aggregate>true</aggregate>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
+  <reporting>
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <show>public</show>
+          <nohelp>true</nohelp>
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

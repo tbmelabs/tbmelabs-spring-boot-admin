@@ -80,11 +80,12 @@ public class User extends NicelyDocumentedJDBCResource {
   @JsonProperty(access = Access.WRITE_ONLY)
   private String confirmation;
 
+  // TODO: Remove enable by default as soon as email confirmation works
   @NotNull
-  private Boolean isEnabled;
+  private Boolean isEnabled = true;
 
   @NotNull
-  private Boolean isBlocked;
+  private Boolean isBlocked = false;
 
   @JsonManagedReference("user")
   @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userId")
@@ -96,10 +97,6 @@ public class User extends NicelyDocumentedJDBCResource {
     super.onCreate();
 
     this.setPassword(PASSWORD_ENCODER.encode(this.getPassword()));
-
-    // TODO: Remove enable by default as soon as email confirmation works
-    setIsEnabled(true);
-    setIsBlocked(false);
   }
 
   public Collection<UserRoleAssociation> rolesToAssociations(List<Role> roleList) {

@@ -11,6 +11,6 @@ public class PreAuthenticationUserDetailsServiceImpl
     implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
   @Override
   public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) {
-    return ((UserPrincipal) ((UsernamePasswordAuthenticationToken) token.getPrincipal()).getPrincipal());
+    return ((UserDetails) ((UsernamePasswordAuthenticationToken) token.getPrincipal()).getPrincipal());
   }
 }

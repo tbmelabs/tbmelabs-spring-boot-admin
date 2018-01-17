@@ -11,7 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final Integer EXPECTED_REPOSITORY_COUNT = 5;
+  private static final Integer EXPECTED_REPOSITORY_COUNT = 7;
 
   @Test
   public void allRepositoriesShouldBeAnnotated() {

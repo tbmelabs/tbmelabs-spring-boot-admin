@@ -21,8 +21,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import lombok.Data;
@@ -56,4 +56,8 @@ public class GrantType extends NicelyDocumentedJDBCResource {
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientGrantTypeId")
   private Collection<ClientGrantTypeAssociation> clientsWithGrantTypes;
+
+  public GrantType(String name) {
+    this.name = name;
+  }
 }

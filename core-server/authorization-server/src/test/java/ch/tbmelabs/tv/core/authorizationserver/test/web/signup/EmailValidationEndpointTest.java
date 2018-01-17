@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signup.validation;
+package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -15,7 +15,7 @@ import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class EmailValidationEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_VALIDATION_ENDPOINT = "/signup/is-email";
   private static final String EMAIL_PARAMETER_NAME = "email";
 
@@ -27,22 +27,19 @@ public class EmailValidationTest extends AbstractOAuth2AuthorizationApplicationC
   @Autowired
   private MockMvc mockMvc;
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void invalidEmailShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(EMAIL_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(EMAIL_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(EMAIL_VALIDATION_ERROR_MESSAGE);
+      throw e;
+    }
   }
 
   @Test

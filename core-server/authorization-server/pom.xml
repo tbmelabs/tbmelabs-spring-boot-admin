@@ -1,158 +1,151 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.tbmelabs.tv.core</groupId>
-	<artifactId>authorization-server</artifactId>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.tbmelabs.tv.core</groupId>
+  <artifactId>authorization-server</artifactId>
 
-	<name>TBME TV | Authorization-Server</name>
-	<description>OAuth2 authorization server built on Spring.</description>
+  <name>TBME TV | Authorization-Server</name>
+  <description>OAuth2 authorization server built on Spring.</description>
 
-	<properties>
-		<start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
-		<org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
-		<commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
-		<ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
-		<ch.tbmelabs.tv.shared.springjunitutils.version>1.0.0</ch.tbmelabs.tv.shared.springjunitutils.version>
-		<com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
-		<com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
-		<com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
-	</properties>
+  <properties>
+    <start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
+    <org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
+    <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
+    <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
+    <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
+    <com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
+    <com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
+  </properties>
 
-	<parent>
-		<groupId>ch.tbmelabs.tv</groupId>
-		<artifactId>core-server</artifactId>
-		<version>1.0.0</version>
-	</parent>
+  <parent>
+    <groupId>ch.tbmelabs.tv</groupId>
+    <artifactId>core-server</artifactId>
+    <version>1.0.0</version>
+  </parent>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-			<version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
-		</dependency>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+      <version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-		</dependency>
+    <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+    </dependency>
 
-		<!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
-		<dependency>
-			<groupId>commons-validator</groupId>
-			<artifactId>commons-validator</artifactId>
-			<version>${commons-validator.commons-validator.version}</version>
-		</dependency>
+    <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+    <dependency>
+      <groupId>commons-validator</groupId>
+      <artifactId>commons-validator</artifactId>
+      <version>${commons-validator.commons-validator.version}</version>
+    </dependency>
 
-		<dependency>
-			<groupId>ch.tbmelabs.tv.shared</groupId>
-			<artifactId>constants</artifactId>
-			<version>${ch.tbmelabs.tv.shared.constants.version}</version>
-		</dependency>
+    <dependency>
+      <groupId>ch.tbmelabs.tv.shared</groupId>
+      <artifactId>constants</artifactId>
+      <version>${ch.tbmelabs.tv.shared.constants.version}</version>
+    </dependency>
+  </dependencies>
 
-		<dependency>
-			<groupId>ch.tbmelabs.tv.shared</groupId>
-			<artifactId>spring_junit_utils</artifactId>
-			<version>${ch.tbmelabs.tv.shared.springjunitutils.version}</version>
-		</dependency>
-	</dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
+      <resource>
+        <directory>src/main/webapp</directory>
+        <excludes>
+          <exclude>app/**</exclude>
+          <exclude>node_modules/**</exclude>
+          <exclude>*.json</exclude>
+          <exclude>*.js</exclude>
+        </excludes>
+        <targetPath>static</targetPath>
+      </resource>
+    </resources>
 
-			<resource>
-				<directory>src/main/webapp</directory>
-				<excludes>
-					<exclude>app/**</exclude>
-					<exclude>node_modules/**</exclude>
-					<exclude>*.json</exclude>
-					<exclude>*.js</exclude>
-				</excludes>
-				<targetPath>static</targetPath>
-			</resource>
-		</resources>
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
-		<plugins>
-			<!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
-			<plugin>
-				<groupId>com.github.eirslett</groupId>
-				<artifactId>frontend-maven-plugin</artifactId>
-				<version>${com.github.eirslett.frontend-maven-plugin.version}</version>
+        <executions>
+          <!-- download nodejs and npm -->
+          <execution>
+            <id>install node and npm</id>
+            <phase>generate-resources</phase>
 
-				<executions>
-					<!-- download nodejs and npm -->
-					<execution>
-						<id>install node and npm</id>
-						<phase>generate-resources</phase>
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
 
-						<goals>
-							<goal>install-node-and-npm</goal>
-						</goals>
+            <configuration>
+              <installDirectory>target/node</installDirectory>
+              <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
+              <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
+            </configuration>
+          </execution>
 
-						<configuration>
-							<installDirectory>target/node</installDirectory>
-							<nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
-							<npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
-						</configuration>
-					</execution>
+          <!-- install npm dependencies -->
+          <execution>
+            <id>npm install</id>
+            <phase>generate-resources</phase>
 
-					<!-- install npm dependencies -->
-					<execution>
-						<id>npm install</id>
-						<phase>generate-resources</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
 
-						<goals>
-							<goal>npm</goal>
-						</goals>
+            <configuration>
+              <arguments>install --no-save</arguments>
+              <installDirectory>target/node</installDirectory>
+              <workingDirectory>src/main/webapp</workingDirectory>
+            </configuration>
+          </execution>
 
-						<configuration>
-							<arguments>install --no-save</arguments>
-							<installDirectory>target/node</installDirectory>
-							<workingDirectory>src/main/webapp</workingDirectory>
-						</configuration>
-					</execution>
+          <!-- build frontend -->
+          <execution>
+            <id>npm run build</id>
+            <phase>generate-resources</phase>
 
-					<!-- build frontend -->
-					<execution>
-						<id>npm run build</id>
-						<phase>generate-resources</phase>
+            <goals>
+              <goal>npm</goal>
+            </goals>
 
-						<goals>
-							<goal>npm</goal>
-						</goals>
-
-						<configuration>
-							<arguments>run build</arguments>
-							<installDirectory>target/node</installDirectory>
-							<workingDirectory>src/main/webapp</workingDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+            <configuration>
+              <arguments>run build</arguments>
+              <installDirectory>target/node</installDirectory>
+              <workingDirectory>src/main/webapp</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

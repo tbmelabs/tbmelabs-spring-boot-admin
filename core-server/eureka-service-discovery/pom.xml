@@ -1,34 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>ch.tbmelabs.tv.core</groupId>
-	<artifactId>eureka-service-discovery</artifactId>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.tbmelabs.tv.core</groupId>
+  <artifactId>eureka-service-discovery</artifactId>
 
-	<name>TBME TV | Eureka-Discovery-Server</name>
-	<description>Eureka microservice manager based on Spring-Cloud integration.</description>
+  <name>TBME TV | Eureka-Discovery-Server</name>
+  <description>Eureka microservice manager based on Spring-Cloud integration.</description>
 
-	<properties>
-		<start-class>ch.tbmelabs.tv.servicediscovery.Application</start-class>
-		<ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
-	</properties>
+  <properties>
+    <start-class>ch.tbmelabs.tv.servicediscovery.Application</start-class>
+    <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
+  </properties>
 
-	<parent>
-		<groupId>ch.tbmelabs.tv</groupId>
-		<artifactId>core-server</artifactId>
-		<version>1.0.0</version>
-	</parent>
+  <parent>
+    <groupId>ch.tbmelabs.tv</groupId>
+    <artifactId>core-server</artifactId>
+    <version>1.0.0</version>
+  </parent>
 
-	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-eureka-server -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-eureka-server</artifactId>
-		</dependency>
+  <dependencies>
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-eureka-server -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-eureka-server</artifactId>
+    </dependency>
 
-		<dependency>
-			<groupId>ch.tbmelabs.tv.shared</groupId>
-			<artifactId>constants</artifactId>
-			<version>${ch.tbmelabs.tv.shared.constants.version}</version>
-		</dependency>
-	</dependencies>
+    <dependency>
+      <groupId>ch.tbmelabs.tv.shared</groupId>
+      <artifactId>constants</artifactId>
+      <version>${ch.tbmelabs.tv.shared.constants.version}</version>
+    </dependency>
+  </dependencies>
 </project>

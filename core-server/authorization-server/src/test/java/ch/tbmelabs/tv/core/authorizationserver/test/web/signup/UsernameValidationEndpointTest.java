@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.signup.validation;
+package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -16,7 +16,7 @@ import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class UsernameValidationEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String USERNAME_VALIDATION_ENDPOINT = "/signup/does-username-match-format";
   private static final String USERNAME_PARAMETER_NAME = "username";
 
@@ -27,61 +27,49 @@ public class UsernameValidationTest extends AbstractOAuth2AuthorizationApplicati
   @Autowired
   private MockMvc mockMvc;
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void tooShortUsernameShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
               .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(4)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void tooLongUsernameShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(65)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
-  @Test
+  @Test(expected = NestedServletException.class)
   public void usernameWithSpecialCharsShouldFailValidation() throws Exception {
-    Exception thrownException = null;
-
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
               new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(5) + "$").toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
-      thrownException = e;
-    }
+      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getCause().getMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE);
 
-    assertThat(thrownException).isNotNull();
-    assertThat(thrownException.getCause()).isOfAnyClassIn(IllegalArgumentException.class);
-    assertThat(thrownException.getCause().getLocalizedMessage()).isEqualTo(USERNAME_VALIDATION_ERROR_MESSAGE)
-        .withFailMessage("Dont overwrite the error message to give any information about existing users to the user!");
+      throw e;
+    }
   }
 
   @Test
