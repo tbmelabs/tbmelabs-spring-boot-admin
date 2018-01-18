@@ -38,8 +38,6 @@ public class TokenStoreConfiguration {
     LOGGER.warn("Either profile \"" + SpringApplicationProfile.DEV + "\" or \"" + SpringApplicationProfile.TEST
         + "\" is active: tokenstore will be of type " + JdbcTokenStore.class);
 
-    DataSource jdbcTokenStoreDatasource = (DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME);
-
-    return new JdbcTokenStore(jdbcTokenStoreDatasource);
+    return new JdbcTokenStore((DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME));
   }
 }

@@ -5,9 +5,7 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
@@ -24,7 +24,6 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private static final Logger LOGGER = LogManager.getLogger(SecurityConfiguration.class);
 
@@ -42,6 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private CorsFilter logoutCorsFilter;
+
+  @Autowired
+  private OAuth2AuthenticationProcessingFilter bearerTokenFilter;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -83,7 +85,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .and().logout()
         .permitAll()
       
-      .and().addFilter(logoutCorsFilter);
+      .and().addFilter(logoutCorsFilter)
+      .addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class);
     // @formatter:on
   }
 }
