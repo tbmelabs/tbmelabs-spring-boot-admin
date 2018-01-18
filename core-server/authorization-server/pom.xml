@@ -80,6 +80,7 @@
       <resource>
         <directory>src/main/webapp</directory>
         <excludes>
+          <exclude>__tests__/**</exclude>
           <exclude>app/**</exclude>
           <exclude>node_modules/**</exclude>
           <exclude>*.json</exclude>
