@@ -31,6 +31,12 @@
       <version>${org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-hystrix -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-hystrix</artifactId>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -7,14 +7,14 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
-@SpringBootApplication
+@SpringCloudApplication
 public class Application extends SpringBootServletInitializer {
   private static final Class<Application> APPLICATION_SOURCE_CLASS = Application.class;
 
