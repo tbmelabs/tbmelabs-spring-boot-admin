@@ -32,14 +32,21 @@ public class LogstashAppenderConfiguration {
 
   @PostConstruct
   public void initBean() {
+    LOGGER.info("Initializing..");
+
     if (serviceName.equals(UNDEFINED_APPLICATION_NAME)) {
       throw new IllegalArgumentException(
           "Specify an application name (\"spring.application.name\") to use the centralized logging.");
     }
 
-    LOGGER.info("Configuring new " + SocketAppender.class + " with Logstash and ELK stack");
-
     // @formatter:off
+    LOGGER.info("Configuring new " + SocketAppender.class + " with Logstash and ELK stack\n"
+        + "Using the following configuration:\n"
+        + " - Server: " + logstashHost + "\n"
+        + " - Port: " + logstashPort + "\n"
+        + " - Name: " + serviceName + "\n"
+        + " - Buffer: "+ BUFFER_SIZE);
+
     SocketAppender logstashAppender = SocketAppender.newBuilder()
         .withName("logstash")
         .withHost(logstashHost)

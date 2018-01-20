@@ -25,6 +25,8 @@ public class ProductiveEnvironmentWithoutCentralizedLoggingCheck {
 
   @PostConstruct
   public void initBean() {
+    LOGGER.info("Initializing..");
+
     if (!Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equals(SpringApplicationProfile.ELK))) {
       // @formatter:off
       LOGGER.warn(

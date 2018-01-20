@@ -41,8 +41,9 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
       
       .csrf().disable()
       
-      .authorizeRequests().antMatchers("/eureka/**").permitAll()
-      .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT);
+      .authorizeRequests()
+        .antMatchers("/eureka/**").permitAll()
+        .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT);
     // @formatter:on
   }
 }

@@ -35,7 +35,7 @@ public class BruteforceFilterService {
   }
 
   public void authenticationFromIpFailed(String ip) {
-    LOGGER.debug("Authentication from ip \"" + ip + "\" failed");
+    LOGGER.debug("Authentication from ip " + ip + " failed");
 
     if (!BruteforceFilterService.failedLoginAttempts.containsKey(ip)) {
       BruteforceFilterService.failedLoginAttempts.put(ip, 0);
@@ -44,17 +44,21 @@ public class BruteforceFilterService {
     BruteforceFilterService.failedLoginAttempts.put(ip, BruteforceFilterService.failedLoginAttempts.get(ip) + 1);
 
     if (BruteforceFilterService.failedLoginAttempts.get(ip) >= maxLoginAttempts) {
-      LOGGER.fatal("Suspecting bruteforce attempt from \"" + ip + "\"!");
+      LOGGER.fatal("Suspecting bruteforce attempt from " + ip + "!");
 
       suspectBruteforceAttempt(ip);
     }
   }
 
   private void suspectBruteforceAttempt(String ip) {
+    LOGGER.warn("Maximum login attempts from " + ip + " exceed! Suspecting bruteforcing attempt");
+
     ipBlacklistRepository.save(new BlacklistedIp(ip));
   }
 
   public void authenticationFromIpSucceed(String ip) {
+    LOGGER.debug("Authentication from " + ip + " succeed: Cache for this ip is resetted");
+
     BruteforceFilterService.failedLoginAttempts.remove(ip);
   }
 }

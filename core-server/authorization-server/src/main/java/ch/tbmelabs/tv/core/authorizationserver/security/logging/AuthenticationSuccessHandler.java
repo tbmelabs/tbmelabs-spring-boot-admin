@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -16,6 +18,8 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 
 @Component
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+  private static final Logger LOGGER = LogManager.getLogger(AuthenticationSuccessHandler.class);
+
   private static final String X_FORWARDED_HEADER = "X-FORWARDED-FOR";
   private static final String USERNAME_PARAMETER = "username";
 
@@ -29,6 +33,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException, ServletException {
     super.onAuthenticationSuccess(request, response, authentication);
+
+    LOGGER.debug("Detected successful authentication");
 
     String requestIp = request.getHeader(X_FORWARDED_HEADER);
     if (requestIp == null) {

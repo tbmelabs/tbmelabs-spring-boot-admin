@@ -70,8 +70,6 @@ public class UserSignupService {
     }
 
     if (newUser.getGrantedAuthorities() == null || newUser.getGrantedAuthorities().isEmpty()) {
-      LOGGER.fatal("Existing roles: " + Arrays.asList(roleRepository.findAll()));
-
       try {
         newUser.setGrantedAuthorities(
             newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));

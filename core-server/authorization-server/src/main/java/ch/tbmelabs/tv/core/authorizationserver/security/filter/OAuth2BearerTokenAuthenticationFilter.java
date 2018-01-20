@@ -30,6 +30,8 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
 
   @PostConstruct
   public void initBean() {
+    LOGGER.info("Initializing..");
+
     bearerTokenExtractor = new BearerTokenExtractor();
   }
 
@@ -39,7 +41,7 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
     Authentication authentication;
 
     if ((authentication = bearerTokenExtractor.extract((HttpServletRequest) request)) != null) {
-      LOGGER.debug("Bearer token found, authenticating..");
+      LOGGER.debug("Bearer token found, authenticating");
 
       SecurityContextHolder.getContext()
           .setAuthentication(tokenStore.readAuthentication((String) authentication.getPrincipal()));
