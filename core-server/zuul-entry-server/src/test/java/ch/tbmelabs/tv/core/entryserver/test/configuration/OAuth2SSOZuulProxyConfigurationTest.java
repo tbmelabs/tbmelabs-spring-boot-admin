@@ -13,16 +13,7 @@ import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 public class OAuth2SSOZuulProxyConfigurationTest extends AbstractZuulApplicationContextAware {
   @Test
   public void oauth2SSOZuulProxyConfigurationShouldBeAnnotated() {
-    assertThat(OAuth2SSOZuulProxyConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", OAuth2SSOZuulProxyConfiguration.class,
-        Configuration.class);
-
-    assertThat(OAuth2SSOZuulProxyConfiguration.class).hasAnnotation(EnableZuulProxy.class).withFailMessage(
-        "Annotate %s with %s to enable the zuul proxy service!", OAuth2SSOZuulProxyConfiguration.class,
-        EnableZuulProxy.class);
-
-    assertThat(OAuth2SSOZuulProxyConfiguration.class).hasAnnotation(EnableOAuth2Sso.class).withFailMessage(
-        "Annotate %s with %s to enable single sign on via authentication server!",
-        OAuth2SSOZuulProxyConfiguration.class, EnableOAuth2Sso.class);
+    assertThat(OAuth2SSOZuulProxyConfiguration.class).hasAnnotation(Configuration.class)
+        .hasAnnotation(EnableZuulProxy.class).hasAnnotation(EnableOAuth2Sso.class);
   }
 }

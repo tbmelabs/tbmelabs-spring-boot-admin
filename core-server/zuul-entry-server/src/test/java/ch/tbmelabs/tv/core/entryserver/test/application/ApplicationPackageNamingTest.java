@@ -12,7 +12,6 @@ public class ApplicationPackageNamingTest extends AbstractZuulApplicationContext
 
   @Test
   public void applicationPackageShouldMatchNamingConvention() {
-    assertThat(Application.class.getPackage().getName()).isEqualTo(APPLICATION_PACKAGE_NAME)
-        .withFailMessage("Do not rename this package as this may cause trouble with the naming conventions!");
+    assertThat(Application.class.getPackage().getName()).isEqualTo(APPLICATION_PACKAGE_NAME);
   }
 }

@@ -31,6 +31,6 @@ public class WebSecurityOAuth2SSOForwardTest extends AbstractZuulApplicationCont
 
     assertThat(forwardUrl).startsWith(OAUTH2_AUTHENTICATION_ENTRY_POINT_URI).contains("client_id=" + clientId)
         .contains("redirect_uri=" + ZUUL_AUTHENTICATION_ENTRY_POINT_URI).contains("response_type=code")
-        .contains("state=").withFailMessage("Check if the security configuration was intentionally changed!");
+        .contains("state=");
   }
 }

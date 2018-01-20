@@ -24,7 +24,6 @@ public class LogoutEndpointTest extends AbstractZuulApplicationContextAware {
     String redirectUrl = mockMvc.perform(post(LOGOUT_ENDPOINT_URI)).andDo(print())
         .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(redirectUrl).isEqualTo(AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL)
-        .withFailMessage("A successfull logout must forward to the authorization server to truly logout the user.");
+    assertThat(redirectUrl).isEqualTo(AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL);
   }
 }

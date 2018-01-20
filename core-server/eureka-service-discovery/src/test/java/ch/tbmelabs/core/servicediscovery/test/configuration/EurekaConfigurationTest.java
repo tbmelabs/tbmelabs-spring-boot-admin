@@ -12,11 +12,7 @@ import ch.tbmelabs.tv.core.servicediscovery.configuration.OAuth2SSOEurekaConfigu
 public class EurekaConfigurationTest extends AbstractEurekaApplicationContextAware {
   @Test
   public void eurekaConfigurationShouldBeAnnotated() {
-    assertThat(OAuth2SSOEurekaConfiguration.class).hasAnnotation(Configuration.class).withFailMessage(
-        "Annotate %s with %s to make it scannable for the spring application!", OAuth2SSOEurekaConfiguration.class,
-        Configuration.class);
-
-    assertThat(OAuth2SSOEurekaConfiguration.class).hasAnnotation(EnableEurekaServer.class).withFailMessage(
-        "Annotate %s with %s to enable the eureka server!", OAuth2SSOEurekaConfiguration.class, EnableEurekaServer.class);
+    assertThat(OAuth2SSOEurekaConfiguration.class).hasAnnotation(Configuration.class);
+    assertThat(OAuth2SSOEurekaConfiguration.class).hasAnnotation(EnableEurekaServer.class);
   }
 }

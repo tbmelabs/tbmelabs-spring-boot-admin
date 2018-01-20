@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -15,15 +14,18 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
-@WithMockUser(username = "Testuser", password = "Password99$")
+@WithMockUser(username = "Testuser", password = "UserPassword99$")
 public class PrincipalEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String ME_ENDPOINT = "/me";
   private static final String USER_ENDPOINT = "/user";
 
   @Autowired
   private MockMvc mockMvc;
+
+  @Autowired
+  private TestUserManager testUserManager;
 
   @Test
   public void meEndpointShouldReturnCorrectAuthentication() throws Exception {
@@ -38,27 +40,7 @@ public class PrincipalEndpointTest extends AbstractOAuth2AuthorizationApplicatio
   }
 
   private void runJsonCredentialAssertChain(JSONObject jsonCredential) throws JSONException {
-    JSONArray authorities = jsonCredential.getJSONArray("authorities");
-    assertThat(authorities).isNotNull();
-    assertThat(authorities.length()).isEqualTo(1);
-    assertThat(authorities.getJSONObject(0).get("authority")).isEqualTo("ROLE_" + SecurityRole.USER);
-
-    Boolean authenticated = jsonCredential.getBoolean("authenticated");
-    assertThat(authenticated).isNotNull().isTrue();
-
-    String credentials = jsonCredential.getString("credentials");
-    assertThat(credentials).isNotNull().isEqualTo("Password99$");
-
-    String name = jsonCredential.getString("name");
-    assertThat(name).isNotNull().isEqualTo("Testuser");
-
-    JSONObject principal = jsonCredential.getJSONObject("principal");
-    assertThat(principal).isNotNull();
-    assertThat(principal.getBoolean("accountNonExpired")).isNotNull().isTrue();
-    assertThat(principal.getBoolean("accountNonLocked")).isNotNull().isTrue();
-    assertThat(principal.getJSONArray("authorities").toString()).isNotNull().isEqualTo(authorities.toString());
-    assertThat(principal.getBoolean("credentialsNonExpired")).isNotNull().isTrue();
-    assertThat(principal.getString("password")).isNotNull().isEqualTo("Password99$");
-    assertThat(principal.getString("username")).isNotNull().isEqualTo("Testuser");
+    assertThat(jsonCredential.getString("login")).isNotNull().isEqualTo(testUserManager.getUserUser().getUsername());
+    assertThat(jsonCredential.getString("email")).isNotNull().isEqualTo(testUserManager.getUserUser().getEmail());
   }
 }

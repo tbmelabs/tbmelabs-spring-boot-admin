@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
@@ -32,17 +31,15 @@ public class ControllerTest extends AbstractZuulApplicationContextAware {
 
   @Test
   public void allControllersShouldBeAnnotated() {
-    assertThat(ControllerTest.controllers).hasSize(EXPECTED_CONTROLLER_COUNT).withFailMessage(
-        "This package should only contain controller classes annotated with %s or %s!", Controller.class,
-        RestController.class);
+    assertThat(ControllerTest.controllers).hasSize(EXPECTED_CONTROLLER_COUNT);
   }
 
   @Test
   public void allMappingsShouldSpecifyARequestMethod() {
-    controllers.forEach(controller -> assertThat(Arrays.stream(controller.getDeclaredMethods())
-        .filter(method -> method.getDeclaredAnnotation(RequestMapping.class) != null
-            && method.getDeclaredAnnotation(RequestMapping.class).method() == null)
-        .findAny().isPresent()).isFalse().withFailMessage("All methods mapping an url with %s should specify a %s!",
-            RequestMapping.class, RequestMethod.class));
+    controllers
+        .forEach(controller -> assertThat(Arrays.stream(controller.getDeclaredMethods())
+            .filter(method -> method.getDeclaredAnnotation(RequestMapping.class) != null
+                && method.getDeclaredAnnotation(RequestMapping.class).method() == null)
+            .findAny().isPresent()).isFalse());
   }
 }

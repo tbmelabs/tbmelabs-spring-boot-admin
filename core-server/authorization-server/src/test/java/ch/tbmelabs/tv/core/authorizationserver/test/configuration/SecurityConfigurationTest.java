@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
@@ -15,6 +14,6 @@ public class SecurityConfigurationTest extends AbstractOAuth2AuthorizationApplic
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).hasAnnotation(EnableWebSecurity.class)
-        .hasAnnotation(EnableGlobalMethodSecurity.class).hasAnnotation(Order.class);
+        .hasAnnotation(EnableGlobalMethodSecurity.class);
   }
 }

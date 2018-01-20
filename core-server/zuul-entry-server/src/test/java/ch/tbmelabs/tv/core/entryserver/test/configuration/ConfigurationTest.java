@@ -15,7 +15,6 @@ public class ConfigurationTest extends AbstractZuulApplicationContextAware {
   @Test
   public void allConfigurationsShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".configuration")
-        .getTypesAnnotatedWith(Configuration.class)).hasSize(EXPECTED_CONFIGURATION_COUNT).withFailMessage(
-            "This package should only contain configuration classes annotated with %s!", Configuration.class);
+        .getTypesAnnotatedWith(Configuration.class)).hasSize(EXPECTED_CONFIGURATION_COUNT);
   }
 }
