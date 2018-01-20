@@ -13,10 +13,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
+import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private CorsFilter logoutCorsFilter;
 
   @Autowired
-  private OAuth2AuthenticationProcessingFilter bearerTokenFilter;
+  private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -86,7 +86,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .permitAll()
       
       .and().addFilter(logoutCorsFilter)
-      .addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class);
+      .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
     // @formatter:on
   }
 }
