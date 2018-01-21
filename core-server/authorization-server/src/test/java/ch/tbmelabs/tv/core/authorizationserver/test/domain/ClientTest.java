@@ -12,13 +12,16 @@ import org.junit.Test;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 public class ClientTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final String TEST_GRANT_TYPE = "TEST";
+  private static final String TEST_CLIENT_GRANT_TYPE = "TEST";
   private static final String TEST_CLIENT_AUTHORITY = "TEST";
+  private static final String TEST_CLIENT_SCOPE = "TEST";
 
   private static Client testClient = new Client();
 
@@ -29,27 +32,37 @@ public class ClientTest extends AbstractOAuth2AuthorizationApplicationContextAwa
 
   @Test
   public void newClientShouldHaveDefaultValues() {
-    assertThat(testClient.isSecretRequired()).isTrue();
+    assertThat(testClient.getIsSecretRequired()).isTrue();
     assertThat(testClient.getIsAutoApprove()).isFalse();
   }
 
   @Test
   public void clientShouldConvertGrantTypeToClientGrantTypeAssociation() {
     List<ClientGrantTypeAssociation> newAssociation = (List<ClientGrantTypeAssociation>) testClient
-        .grantTypesToAssociations(Arrays.asList(new GrantType(TEST_GRANT_TYPE)));
+        .grantTypesToAssociations(Arrays.asList(new GrantType(TEST_CLIENT_GRANT_TYPE)));
 
     assertThat(newAssociation).isNotNull().isNotEmpty().hasSize(1);
     assertThat(newAssociation.get(0).getClient().getClientId()).isNotNull().isEqualTo(testClient.getClientId());
-    assertThat(newAssociation.get(0).getClientGrantType().getName()).isNotNull().isEqualTo(TEST_GRANT_TYPE);
+    assertThat(newAssociation.get(0).getClientGrantType().getName()).isNotNull().isEqualTo(TEST_CLIENT_GRANT_TYPE);
   }
 
   @Test
-  public void clientShouldConvertScopeToClientScopeAssociation() {
+  public void clientShouldConvertAuthorityToClientAuthorityAssociation() {
     List<ClientAuthorityAssociation> newAssociation = (List<ClientAuthorityAssociation>) testClient
         .authoritiesToAssociations(Arrays.asList(new Authority(TEST_CLIENT_AUTHORITY)));
 
     assertThat(newAssociation).isNotNull().isNotEmpty().hasSize(1);
     assertThat(newAssociation.get(0).getClient().getClientId()).isNotNull().isEqualTo(testClient.getClientId());
     assertThat(newAssociation.get(0).getClientAuthority().getName()).isNotNull().isEqualTo(TEST_CLIENT_AUTHORITY);
+  }
+
+  @Test
+  public void clientShouldConvertScopeToClientScopeAssociation() {
+    List<ClientScopeAssociation> newAssociation = (List<ClientScopeAssociation>) testClient
+        .scopesToAssociations(Arrays.asList(new Scope(TEST_CLIENT_SCOPE)));
+
+    assertThat(newAssociation).isNotNull().isNotEmpty().hasSize(1);
+    assertThat(newAssociation.get(0).getClient().getClientId()).isNotNull().isEqualTo(testClient.getClientId());
+    assertThat(newAssociation.get(0).getClientScope().getName()).isNotNull().isEqualTo(TEST_CLIENT_SCOPE);
   }
 }

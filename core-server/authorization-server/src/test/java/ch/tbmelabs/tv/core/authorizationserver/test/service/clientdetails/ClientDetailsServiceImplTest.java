@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.lang.reflect.Field;
 import java.util.UUID;
 
 import javax.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
@@ -36,10 +38,12 @@ public class ClientDetailsServiceImplTest extends AbstractOAuth2AuthorizationApp
   }
 
   @Test
-  public void clientDetailsServiceShouldReturnCorrectClientDetailsForId() {
-    Client clientDetails = clientDetailsService.loadClientByClientId(testClient.getClientId());
+  public void clientDetailsServiceShouldReturnCorrectClientDetailsForId()
+      throws IllegalAccessException, NoSuchFieldException, SecurityException {
+    ClientDetailsImpl clientDetails = clientDetailsService.loadClientByClientId(testClient.getClientId());
 
-    assertThat(clientDetails).isNotNull();
-    assertThat(clientDetails.getClientId()).isNotNull().isEqualTo(testClient.getClientId());
+    Field clientField = ClientDetailsImpl.class.getDeclaredField("client");
+    clientField.setAccessible(true);
+    assertThat(((Client) clientField.get(clientDetails)).getId()).isNotNull().isEqualTo(testClient.getId());
   }
 }

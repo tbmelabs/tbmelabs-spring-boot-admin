@@ -35,9 +35,13 @@ public class UserDetailsImplTest extends AbstractOAuth2AuthorizationApplicationC
   }
 
   @Test
-  public void userDetailsImplsShouldReturnInformationEqualToUser() {
+  public void userDetailsImplShouldReturnInformationEqualToUser() {
     assertThat(testUserDetails.getUsername()).isNotNull().isEqualTo(testUser.getUsername());
     assertThat(testUserDetails.getPassword()).isNotNull().isEqualTo(testUser.getPassword());
+    assertThat(testUserDetails.isEnabled()).isNotNull().isEqualTo(testUser.getIsEnabled());
+    assertThat(testUserDetails.isAccountNonLocked()).isNotNull().isEqualTo(!testUser.getIsBlocked());
+    assertThat(testUserDetails.isAccountNonExpired()).isNotNull().isTrue();
+    assertThat(testUserDetails.isCredentialsNonExpired()).isNotNull().isTrue();
     assertThat(
         testUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
             .isNotNull().isNotEmpty()

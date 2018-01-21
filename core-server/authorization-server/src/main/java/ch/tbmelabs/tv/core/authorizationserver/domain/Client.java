@@ -1,12 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -26,8 +21,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.provider.ClientDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -50,7 +43,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Client extends NicelyDocumentedJDBCResource implements ClientDetails {
+public class Client extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
@@ -115,71 +108,7 @@ public class Client extends NicelyDocumentedJDBCResource implements ClientDetail
         .collect(Collectors.toList());
   }
 
-  @Override
-  public String getClientId() {
-    return this.clientId;
-  }
-
-  @Override
-  public Set<String> getResourceIds() {
-    // TODO
-    return new HashSet<>();
-  }
-
-  @Override
-  public boolean isSecretRequired() {
-    return this.isSecretRequired.booleanValue();
-  }
-
-  @Override
-  public boolean isAutoApprove(String scope) {
-    return this.isAutoApprove.booleanValue();
-  }
-
-  @Override
-  public String getClientSecret() {
-    return this.secret;
-  }
-
-  @Override
-  public Integer getAccessTokenValiditySeconds() {
-    return this.accessTokenValiditySeconds;
-  }
-
-  @Override
-  public Integer getRefreshTokenValiditySeconds() {
-    return this.refreshTokenValiditySeconds;
-  }
-
-  @Override
-  public boolean isScoped() {
-    return !getScope().isEmpty();
-  }
-
-  @Override
-  public Set<String> getAuthorizedGrantTypes() {
-    return grantTypes.stream().map(association -> association.getClientGrantType().getName())
-        .collect(Collectors.toSet());
-  }
-
-  @Override
-  public Set<String> getScope() {
-    return scopes.stream().map(association -> association.getClientScope().getName()).collect(Collectors.toSet());
-  }
-
-  @Override
-  public Set<String> getRegisteredRedirectUri() {
-    return new HashSet<>(Arrays.asList(this.redirectUri));
-  }
-
-  @Override
-  public Collection<GrantedAuthority> getAuthorities() {
-    return grantedAuthorities.stream().map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
-  }
-
-  @Override
-  public Map<String, Object> getAdditionalInformation() {
-    // TODO
-    return new HashMap<>();
+  public Collection<ClientScopeAssociation> scopesToAssociations(List<Scope> scopeList) {
+    return scopeList.stream().map(scope -> new ClientScopeAssociation(this, scope)).collect(Collectors.toList());
   }
 }

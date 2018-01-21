@@ -23,12 +23,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "user_has_roles")
@@ -80,6 +78,14 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
     this.userRoleId = role.getId();
 
     return this;
+  }
+
+  public User getUser() {
+    return this.user;
+  }
+
+  public Role getUserRole() {
+    return this.userRole;
   }
 
   @Override

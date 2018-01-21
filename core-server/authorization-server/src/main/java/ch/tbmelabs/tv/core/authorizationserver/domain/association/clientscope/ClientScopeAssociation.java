@@ -23,12 +23,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_scopes")
@@ -80,6 +78,14 @@ public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
     this.clientScopeId = scope.getId();
 
     return this;
+  }
+
+  public Client getClient() {
+    return this.client;
+  }
+
+  public Scope getClientScope() {
+    return this.clientScope;
   }
 
   @Override

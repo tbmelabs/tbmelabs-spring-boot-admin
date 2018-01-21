@@ -23,12 +23,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_authorities")
@@ -80,6 +78,14 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
     this.clientAuthorityId = authority.getId();
 
     return this;
+  }
+
+  public Client getClient() {
+    return this.client;
+  }
+
+  public Authority getClientAuthority() {
+    return this.clientAuthority;
   }
 
   @Override
