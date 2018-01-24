@@ -45,7 +45,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
       .csrf().disable()
       
       .authorizeRequests()
-      .anyRequest().authenticated()
+        .anyRequest().authenticated()
       
       .and().logout()
         .logoutSuccessHandler(oauth2LogoutHandler)
