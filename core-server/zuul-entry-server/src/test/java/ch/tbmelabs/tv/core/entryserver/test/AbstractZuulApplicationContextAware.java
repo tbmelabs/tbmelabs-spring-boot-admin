@@ -18,7 +18,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
-@ActiveProfiles({ SpringApplicationProfile.TEST })
+@ActiveProfiles({ SpringApplicationProfile.TEST, SpringApplicationProfile.NO_EUREKA })
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,

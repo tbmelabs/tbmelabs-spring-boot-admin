@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 import org.junit.Test;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -45,8 +44,7 @@ public class DatasourceConfigurationTest extends AbstractOAuth2AuthorizationAppl
 
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Profile.class).value())
-        .containsAll(Arrays.asList(new String[] { SpringApplicationProfile.DEV, SpringApplicationProfile.TEST }))
-        .doesNotContain(SpringApplicationProfile.PROD);
+        .containsExactly(SpringApplicationProfile.NO_REDIS);
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(ConfigurationProperties.class).prefix())
         .isEqualTo(JDBC_TOKEN_STORE_DATASOURCE_PREFIX);
   }

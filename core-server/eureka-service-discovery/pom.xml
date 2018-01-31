@@ -8,7 +8,7 @@
   <description>Eureka microservice manager based on Spring-Cloud integration.</description>
 
   <properties>
-    <start-class>ch.tbmelabs.tv.servicediscovery.Application</start-class>
+    <start-class>ch.tbmelabs.tv.core.servicediscovery.Application</start-class>
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
   </properties>
 
@@ -37,6 +37,10 @@
       <version>${ch.tbmelabs.tv.shared.constants.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <defaultGoal>spring-boot:run</defaultGoal>
+  </build>
 
   <profiles>
     <profile>

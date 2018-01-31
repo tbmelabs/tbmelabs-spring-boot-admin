@@ -8,7 +8,7 @@
   <description>Load-Balancer based on Spring-Cloud integration.</description>
 
   <properties>
-    <start-class>ch.tbmelabs.tv.entryserver.Application</start-class>
+    <start-class>ch.tbmelabs.tv.core.entryserver.Application</start-class>
     <org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>1.4.0.RELEASE</org.springframework.cloud.spring-cloud-starter-netflix-eureka-client.version>
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
@@ -44,6 +44,8 @@
   </dependencies>
 
   <build>
+    <defaultGoal>spring-boot:run</defaultGoal>
+
     <resources>
       <resource>
         <directory>src/main/resources</directory>
