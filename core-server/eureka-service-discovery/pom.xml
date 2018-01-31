@@ -37,4 +37,27 @@
       <version>${ch.tbmelabs.tv.shared.constants.version}</version>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <properties>
+        <run.profiles>,dev</run.profiles>
+      </properties>
+
+      <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-devtools</artifactId>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 </project>
