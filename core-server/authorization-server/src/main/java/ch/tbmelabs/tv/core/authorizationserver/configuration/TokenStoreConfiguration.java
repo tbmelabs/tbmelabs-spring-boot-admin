@@ -33,10 +33,10 @@ public class TokenStoreConfiguration {
 
   @Bean
   @Primary
-  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
+  @Profile({ SpringApplicationProfile.NO_REDIS })
   public JdbcTokenStore jdbcTokenStore() {
-    LOGGER.warn("Either profile \"" + SpringApplicationProfile.DEV + "\" or \"" + SpringApplicationProfile.TEST
-        + "\" is active: tokenstore will be of type " + JdbcTokenStore.class);
+    LOGGER.warn("Profile \"" + SpringApplicationProfile.NO_REDIS + "\" is active: tokenstore will be of type "
+        + JdbcTokenStore.class);
 
     return new JdbcTokenStore((DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME));
   }

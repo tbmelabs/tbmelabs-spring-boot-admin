@@ -21,6 +21,16 @@ public class SpringApplicationProfile {
    */
   public static final String ELK = "elk";
 
+  /**
+   * Disables the Eureka discovery client if present.
+   */
+  public static final String NO_EUREKA = "no-eureka";
+
+  /**
+   * Disables chaching via REDIS-Server.
+   */
+  public static final String NO_REDIS = "no-redis";
+
   private SpringApplicationProfile() {
     // Hidden constructor
   }

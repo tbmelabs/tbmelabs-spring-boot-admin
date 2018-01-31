@@ -77,6 +77,8 @@
   </dependencies>
 
   <build>
+    <defaultGoal>spring-boot:run</defaultGoal>
+
     <resources>
       <resource>
         <directory>src/main/resources</directory>
@@ -95,64 +97,192 @@
         <targetPath>static</targetPath>
       </resource>
     </resources>
-
-    <plugins>
-      <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
-      <plugin>
-        <groupId>com.github.eirslett</groupId>
-        <artifactId>frontend-maven-plugin</artifactId>
-        <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
-
-        <executions>
-          <!-- download nodejs and npm -->
-          <execution>
-            <id>install node and npm</id>
-            <phase>generate-resources</phase>
-
-            <goals>
-              <goal>install-node-and-npm</goal>
-            </goals>
-
-            <configuration>
-              <installDirectory>target/node</installDirectory>
-              <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
-              <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
-            </configuration>
-          </execution>
-
-          <!-- install npm dependencies -->
-          <execution>
-            <id>npm install</id>
-            <phase>generate-resources</phase>
-
-            <goals>
-              <goal>npm</goal>
-            </goals>
-
-            <configuration>
-              <arguments>install --no-save</arguments>
-              <installDirectory>target/node</installDirectory>
-              <workingDirectory>src/main/webapp</workingDirectory>
-            </configuration>
-          </execution>
-
-          <!-- build frontend -->
-          <execution>
-            <id>npm run build</id>
-            <phase>generate-resources</phase>
-
-            <goals>
-              <goal>npm</goal>
-            </goals>
-
-            <configuration>
-              <arguments>run build</arguments>
-              <installDirectory>target/node</installDirectory>
-              <workingDirectory>src/main/webapp</workingDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>no-eureka</id>
+
+      <properties>
+        <run.jvmArguments>-Deureka.client.enabled=false</run.jvmArguments>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>no-redis</id>
+
+      <properties>
+        <run.profiles>,no-redis</run.profiles>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>webpack</id>
+
+      <build>
+        <plugins>
+          <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
+
+            <executions>
+              <!-- download nodejs and npm -->
+              <execution>
+                <id>install node and npm</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+
+                <configuration>
+                  <installDirectory>target/node</installDirectory>
+                  <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
+                  <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
+                </configuration>
+              </execution>
+
+              <!-- install npm dependencies -->
+              <execution>
+                <id>npm install</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>install --no-save</arguments>
+                  <installDirectory>target/node</installDirectory>
+                  <workingDirectory>src/main/webapp</workingDirectory>
+                </configuration>
+              </execution>
+
+              <!-- watch frontend -->
+              <execution>
+                <id>npm run dev</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>run dev</arguments>
+                  <installDirectory>target/node</installDirectory>
+                  <workingDirectory>src/main/webapp</workingDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>dev</id>
+
+      <activation>
+        <property>
+          <name>!prod</name>
+        </property>
+      </activation>
+
+      <properties>
+        <run.profiles>,dev</run.profiles>
+      </properties>
+
+      <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-devtools</artifactId>
+          <optional>true</optional>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>prod</id>
+
+      <build>
+        <plugins>
+          <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
+
+            <executions>
+              <!-- download nodejs and npm -->
+              <execution>
+                <id>install node and npm</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+
+                <configuration>
+                  <installDirectory>target/node</installDirectory>
+                  <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
+                  <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
+                </configuration>
+              </execution>
+
+              <!-- install npm dependencies -->
+              <execution>
+                <id>npm install</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>install --no-save</arguments>
+                  <installDirectory>target/node</installDirectory>
+                  <workingDirectory>src/main/webapp</workingDirectory>
+                </configuration>
+              </execution>
+
+              <!-- test application -->
+              <execution>
+                <id>npm run test</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>run test</arguments>
+                  <installDirectory>target/node</installDirectory>
+                  <workingDirectory>src/main/webapp</workingDirectory>
+                </configuration>
+              </execution>
+
+              <!-- build frontend -->
+              <execution>
+                <id>npm run build</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>run build</arguments>
+                  <installDirectory>target/node</installDirectory>
+                  <workingDirectory>src/main/webapp</workingDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

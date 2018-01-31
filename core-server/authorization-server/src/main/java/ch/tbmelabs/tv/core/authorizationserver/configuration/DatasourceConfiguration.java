@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
@@ -25,11 +26,11 @@ public class DatasourceConfiguration {
   }
 
   @Bean
-  @Profile({ SpringApplicationProfile.DEV, SpringApplicationProfile.TEST })
+  @Profile({ SpringApplicationProfile.NO_REDIS })
   @ConfigurationProperties(prefix = "tokenstore.datasource")
   public DataSource jdbcTokenStoreDatasource() {
-    LOGGER.warn("Either profile \"" + SpringApplicationProfile.DEV + "\" or \"" + SpringApplicationProfile.TEST
-        + "\" is active: tokenstore will use a PostgreSQL database");
+    LOGGER.warn("Profile \"" + SpringApplicationProfile.NO_REDIS + "\" is active: tokenstore will be of type "
+        + JdbcTokenStore.class);
 
     return DataSourceBuilder.create().build();
   }
