@@ -18,10 +18,10 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
-@ActiveProfiles({ SpringApplicationProfile.TEST, SpringApplicationProfile.NO_EUREKA })
 @RunWith(SpringJUnit4ClassRunner.class)
+@ActiveProfiles({ SpringApplicationProfile.TEST, SpringApplicationProfile.NO_EUREKA })
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public abstract class AbstractZuulApplicationContextAware {
+public abstract class AbstractZuulApplicationContextAwareIntegrationTest {
 }

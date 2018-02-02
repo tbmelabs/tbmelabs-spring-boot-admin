@@ -7,10 +7,15 @@ import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class ConfigurationTest extends AbstractZuulApplicationContextAware {
+public class ConfigurationTest {
   private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+
+  @Test
+  public void packageShouldOnlyContainConfigurations() {
+    new Reflections(Application.class.getPackage().getName() + ".configuration").getSubTypesOf(Object.class)
+        .forEach(configuration -> assertThat(configuration.getClass().getSimpleName()).contains("Configuration"));
+  }
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {

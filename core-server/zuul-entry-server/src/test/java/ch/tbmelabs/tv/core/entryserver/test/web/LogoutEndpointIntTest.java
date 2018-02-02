@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.entryserver.test.security.logout;
+package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareIntegrationTest;
 
-public class LogoutEndpointTest extends AbstractZuulApplicationContextAware {
+public class LogoutEndpointIntTest extends AbstractZuulApplicationContextAwareIntegrationTest {
   private static final String LOGOUT_ENDPOINT_URI = "/logout";
   private static final String AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL = "http://localhost/logout";
 

@@ -8,9 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import ch.tbmelabs.tv.core.entryserver.configuration.SecurityConfiguration;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class SecurityConfigurationTest extends AbstractZuulApplicationContextAware {
+public class SecurityConfigurationTest {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class);

@@ -21,17 +21,8 @@ public class Application extends SpringBootServletInitializer {
   @Autowired
   private Environment environment;
 
-  public static void main(String[] args) {
-    SpringApplication.run(APPLICATION_SOURCE_CLASS, args);
-  }
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder applicationBuilder) {
-    return applicationBuilder.sources(APPLICATION_SOURCE_CLASS);
-  }
-
   @PostConstruct
-  public void postConstruct() {
+  public void initBean() {
     List<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
 
     if (activeProfiles.contains(SpringApplicationProfile.PROD)
@@ -39,5 +30,14 @@ public class Application extends SpringBootServletInitializer {
       throw new IllegalArgumentException(
           "Do not attempt to run an application in productive and development environment at the same time!");
     }
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(APPLICATION_SOURCE_CLASS, args);
+  }
+
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder applicationBuilder) {
+    return applicationBuilder.sources(APPLICATION_SOURCE_CLASS);
   }
 }
