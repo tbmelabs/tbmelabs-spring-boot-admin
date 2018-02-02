@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
 
 import ch.tbmelabs.tv.core.entryserver.Application;
@@ -30,6 +31,11 @@ public class ApplicationTest {
     Field environment = Application.class.getDeclaredField("environment");
     environment.setAccessible(true);
     environment.set(fixture, mockEnvironment);
+  }
+
+  @Test
+  public void applicationShouldBeAnnotated() {
+    assertThat(Application.class).hasAnnotation(SpringCloudApplication.class);
   }
 
   @Test(expected = InvocationTargetException.class)
