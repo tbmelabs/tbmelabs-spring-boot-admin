@@ -7,10 +7,15 @@ import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class ConfigurationTest {
   private static final Integer EXPECTED_CONFIGURATION_COUNT = 8;
+
+  @Test
+  public void packageShouldOnlyContainConfigurations() {
+    new Reflections(Application.class.getPackage().getName() + ".configuration").getSubTypesOf(Object.class)
+        .forEach(configuration -> assertThat(configuration.getClass().getSimpleName()).contains("Configuration"));
+  }
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {

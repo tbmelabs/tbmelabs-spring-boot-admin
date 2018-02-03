@@ -36,8 +36,7 @@ public class OAuth2SSOEurekaConfigurationTest {
   public void beforeTestSetUp() throws Exception {
     initMocks(this);
 
-    when(environment.getActiveProfiles())
-        .thenReturn(new String[] { SpringApplicationProfile.PROD, SpringApplicationProfile.DEV });
+    when(environment.getActiveProfiles()).thenReturn(new String[] { SpringApplicationProfile.DEV });
 
     doCallRealMethod().when(fixture).init(webSecurity);
   }
@@ -49,7 +48,7 @@ public class OAuth2SSOEurekaConfigurationTest {
   }
 
   @Test
-  public void initBeanShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
+  public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
     fixture.configure(webSecurity);
 
     verify(webSecurity, times(1)).debug(true);

@@ -1,27 +1,49 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.AuthenticationManagerConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticatedAuthenticationProviderImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 
-public class AuthenticationManagerConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final String AUTHENTICATION_MANAGER_BEAN_NAME = "authenticationManager";
+public class AuthenticationManagerConfigurationTest {
+  @Mock
+  private PreAuthenticatedAuthenticationProviderImpl preAuthProviderImpl;
 
-  @Autowired
-  private AuthenticationManagerConfiguration authenticationManagerConfiguration;
+  @Mock
+  private UserDetailsServiceImpl userDetailsServiceImpl;
 
-  @Autowired
-  private AuthenticationManager injectedAuthenticationManager;
+  @Spy
+  @InjectMocks
+  private AuthenticationManagerConfiguration fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    ReflectionTestUtils.setField(fixture, "objectPostProcessor", new ObjectPostProcessor<Object>() {
+      @Override
+      public <O extends Object> O postProcess(O object) {
+        return object;
+      }
+    });
+  }
 
   @Test
   public void authenticationManagerConfigurationShouldBeAnnotated() {
@@ -29,13 +51,21 @@ public class AuthenticationManagerConfigurationTest extends AbstractOAuth2Author
   }
 
   @Test
-  public void authenticationManagerBeanShouldReturnAnAuthenticationManager()
-      throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
-    Method authenticationManagerBean = AuthenticationManagerConfiguration.class
-        .getDeclaredMethod(AUTHENTICATION_MANAGER_BEAN_NAME, new Class[] {});
+  public void authenticationManagerBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
+    assertThat(AuthenticationManagerConfiguration.class.getDeclaredMethod("authenticationManager", new Class<?>[] {})
+        .getDeclaredAnnotation(Bean.class)).isNotNull();
+  }
 
-    assertThat(authenticationManagerBean.getDeclaredAnnotation(Bean.class)).isNotNull();
-    assertThat(authenticationManagerBean.invoke(authenticationManagerConfiguration, new Object[] {}))
-        .isEqualTo(injectedAuthenticationManager);
+  @Test
+  public void authenticationManagerBeanShouldReturnAnAuthenticationManager() throws Exception {
+    assertThat(((ProviderManager) fixture.authenticationManager()).getProviders()).isNotNull().hasSize(2)
+        .contains(preAuthProviderImpl);
+
+    Optional<AuthenticationProvider> daoProvider = ((ProviderManager) fixture.authenticationManager()).getProviders()
+        .stream().filter(provider -> DaoAuthenticationProvider.class.isAssignableFrom(provider.getClass())).findFirst();
+
+    assertThat(daoProvider.isPresent()).isTrue();
+    assertThat((DaoAuthenticationProvider) daoProvider.get()).hasFieldOrPropertyWithValue("userDetailsService",
+        userDetailsServiceImpl);
   }
 }

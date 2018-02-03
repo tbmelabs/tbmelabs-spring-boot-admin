@@ -1,29 +1,44 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 
-public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final String TOKEN_SERVICE_BEAN_NAME = "tokenServiceBean";
+public class TokenServiceConfigurationTest {
+  @Mock
+  private AuthenticationManager authenticationManager;
 
-  @Autowired
-  private TokenServiceConfiguration tokenServiceConfiguration;
+  @Mock
+  private ClientDetailsServiceImpl clientDetailsService;
 
-  @Autowired
-  @Qualifier(TOKEN_SERVICE_BEAN_NAME)
-  private DefaultTokenServices injectedTokenService;
+  @Mock
+  private TokenStore tokenStore;
+
+  @Spy
+  @InjectMocks
+  private TokenServiceConfiguration fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    doCallRealMethod().when(fixture).tokenServiceBean();
+  }
 
   @Test
   public void tokenServiceConfigurationShouldBeAnnotated() {
@@ -31,12 +46,17 @@ public class TokenServiceConfigurationTest extends AbstractOAuth2AuthorizationAp
   }
 
   @Test
+  public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
+    assertThat(TokenServiceConfiguration.class.getDeclaredMethod("tokenServiceBean", new Class<?>[] {})
+        .getDeclaredAnnotation(Bean.class)).isNotNull();
+  }
+
+  @Test
   public void tokenServiceBeanShouldReturnATokenService()
       throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
-    Method tokenServiceBean = TokenServiceConfiguration.class.getDeclaredMethod(TOKEN_SERVICE_BEAN_NAME,
-        new Class[] {});
-
-    assertThat(tokenServiceBean.getDeclaredAnnotation(Bean.class)).isNotNull();
-    assertThat(tokenServiceBean.invoke(tokenServiceConfiguration, new Object[] {})).isEqualTo(injectedTokenService);
+    assertThat(fixture.tokenServiceBean()).isNotNull()
+        .hasFieldOrPropertyWithValue("authenticationManager", authenticationManager)
+        .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsService)
+        .hasFieldOrPropertyWithValue("tokenStore", tokenStore).hasFieldOrPropertyWithValue("reuseRefreshToken", true);
   }
 }

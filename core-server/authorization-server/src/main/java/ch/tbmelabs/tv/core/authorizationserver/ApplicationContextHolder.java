@@ -12,7 +12,7 @@ public class ApplicationContextHolder implements ApplicationContextAware {
     return ApplicationContextHolder.applicationContext;
   }
 
-  public static void setStaticApplicationContext(ApplicationContext applicationContext) {
+  private static void setStaticApplicationContext(ApplicationContext applicationContext) {
     ApplicationContextHolder.applicationContext = applicationContext;
   }
 
