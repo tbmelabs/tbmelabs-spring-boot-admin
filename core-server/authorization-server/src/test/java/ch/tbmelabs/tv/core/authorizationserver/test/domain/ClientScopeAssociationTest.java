@@ -1,36 +1,35 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Random;
 
 import javax.persistence.IdClass;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociationId;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ClientScopeAssociationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static Client testClient = new Client();
-  private static Scope testClientScope = new Scope();
+public class ClientScopeAssociationTest {
+  @Mock
+  private Client clientFixture;
 
-  private ClientScopeAssociation testAssociation;
-
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    testClient.setId(new Random().nextLong());
-    testClientScope.setId(new Random().nextLong());
-  }
+  @Mock
+  private Scope scopeFixture;
 
   @Before
   public void beforeTestSetUp() {
-    testAssociation = new ClientScopeAssociation();
+    initMocks(this);
+
+    when(clientFixture.getId()).thenReturn(new Random().nextLong());
+    when(scopeFixture.getId()).thenReturn(new Random().nextLong());
   }
 
   @Test
@@ -42,26 +41,35 @@ public class ClientScopeAssociationTest extends AbstractOAuth2AuthorizationAppli
 
   @Test
   public void constructorShouldSaveIdsAndEntities() {
-    testAssociation = new ClientScopeAssociation(testClient, testClientScope);
-
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientId", testClient.getId())
-        .hasFieldOrPropertyWithValue("clientScopeId", testClientScope.getId())
-        .hasFieldOrPropertyWithValue("client", testClient).hasFieldOrPropertyWithValue("clientScope", testClientScope);
+    assertThat(new ClientScopeAssociation(clientFixture, scopeFixture))
+        .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
+        .hasFieldOrPropertyWithValue("clientScopeId", scopeFixture.getId())
+        .hasFieldOrPropertyWithValue("client", clientFixture).hasFieldOrPropertyWithValue("clientScope", scopeFixture);
   }
 
   @Test
   public void clientSetterShouldSaveId() {
-    testAssociation.setClient(testClient);
+    ClientScopeAssociation fixture = new ClientScopeAssociation();
+    fixture.setClient(clientFixture);
 
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientId", testClient.getId())
-        .hasFieldOrPropertyWithValue("client", testClient);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
+        .hasFieldOrPropertyWithValue("client", clientFixture);
   }
 
   @Test
   public void clientScopeSetterShouldSaveId() {
-    testAssociation.setClientScope(testClientScope);
+    ClientScopeAssociation fixture = new ClientScopeAssociation();
+    fixture.setClientScope(scopeFixture);
 
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientScopeId", testClientScope.getId())
-        .hasFieldOrPropertyWithValue("clientScope", testClientScope);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientScopeId", scopeFixture.getId())
+        .hasFieldOrPropertyWithValue("clientScope", scopeFixture);
+  }
+
+  @Test
+  public void gettersShouldReturnCorrectEntities() {
+    ClientScopeAssociation fixture = new ClientScopeAssociation(clientFixture, scopeFixture);
+
+    assertThat(fixture.getClient()).isEqualTo(clientFixture);
+    assertThat(fixture.getClientScope()).isEqualTo(scopeFixture);
   }
 }

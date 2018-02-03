@@ -9,9 +9,8 @@ import org.reflections.Reflections;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class EntityTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class EntityTest {
   private static final Integer EXPECTED_ENTITIES_COUNT = 12;
 
   @Test

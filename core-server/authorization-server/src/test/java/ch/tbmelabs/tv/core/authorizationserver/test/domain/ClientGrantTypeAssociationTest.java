@@ -1,36 +1,35 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Random;
 
 import javax.persistence.IdClass;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociationId;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ClientGrantTypeAssociationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static Client testClient = new Client();
-  private static GrantType testClientGrantType = new GrantType();
+public class ClientGrantTypeAssociationTest {
+  @Mock
+  private Client clientFixture;
 
-  private ClientGrantTypeAssociation testAssociation;
-
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    testClient.setId(new Random().nextLong());
-    testClientGrantType.setId(new Random().nextLong());
-  }
+  @Mock
+  private GrantType grantTypeFixture;
 
   @Before
   public void beforeTestSetUp() {
-    testAssociation = new ClientGrantTypeAssociation();
+    initMocks(this);
+
+    when(clientFixture.getId()).thenReturn(new Random().nextLong());
+    when(grantTypeFixture.getId()).thenReturn(new Random().nextLong());
   }
 
   @Test
@@ -42,27 +41,36 @@ public class ClientGrantTypeAssociationTest extends AbstractOAuth2AuthorizationA
 
   @Test
   public void constructorShouldSaveIdsAndEntities() {
-    testAssociation = new ClientGrantTypeAssociation(testClient, testClientGrantType);
-
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientId", testClient.getId())
-        .hasFieldOrPropertyWithValue("clientGrantTypeId", testClientGrantType.getId())
-        .hasFieldOrPropertyWithValue("client", testClient)
-        .hasFieldOrPropertyWithValue("clientGrantType", testClientGrantType);
+    assertThat(new ClientGrantTypeAssociation(clientFixture, grantTypeFixture))
+        .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
+        .hasFieldOrPropertyWithValue("clientGrantTypeId", grantTypeFixture.getId())
+        .hasFieldOrPropertyWithValue("client", clientFixture)
+        .hasFieldOrPropertyWithValue("clientGrantType", grantTypeFixture);
   }
 
   @Test
   public void clientSetterShouldSaveId() {
-    testAssociation.setClient(testClient);
+    ClientGrantTypeAssociation fixture = new ClientGrantTypeAssociation();
+    fixture.setClient(clientFixture);
 
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientId", testClient.getId())
-        .hasFieldOrPropertyWithValue("client", testClient);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
+        .hasFieldOrPropertyWithValue("client", clientFixture);
   }
 
   @Test
   public void clientGrantTypeSetterShouldSaveId() {
-    testAssociation.setGrantType(testClientGrantType);
+    ClientGrantTypeAssociation fixture = new ClientGrantTypeAssociation();
+    fixture.setGrantType(grantTypeFixture);
 
-    assertThat(testAssociation).hasFieldOrPropertyWithValue("clientGrantTypeId", testClientGrantType.getId())
-        .hasFieldOrPropertyWithValue("clientGrantType", testClientGrantType);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientGrantTypeId", grantTypeFixture.getId())
+        .hasFieldOrPropertyWithValue("clientGrantType", grantTypeFixture);
+  }
+
+  @Test
+  public void gettersShouldReturnCorrectEntities() {
+    ClientGrantTypeAssociation fixture = new ClientGrantTypeAssociation(clientFixture, grantTypeFixture);
+
+    assertThat(fixture.getClient()).isEqualTo(clientFixture);
+    assertThat(fixture.getClientGrantType()).isEqualTo(grantTypeFixture);
   }
 }
