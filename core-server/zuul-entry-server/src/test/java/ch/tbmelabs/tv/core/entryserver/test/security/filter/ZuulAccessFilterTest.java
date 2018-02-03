@@ -1,9 +1,12 @@
 package ch.tbmelabs.tv.core.entryserver.test.security.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +14,16 @@ import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ZuulAccessFilterTest {
-  private static ZuulAccessFilter fixture;
+  @Mock
+  private ZuulAccessFilter fixture;
 
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    fixture = new ZuulAccessFilter();
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    doCallRealMethod().when(fixture).filterType();
+    doCallRealMethod().when(fixture).filterOrder();
+    doCallRealMethod().when(fixture).shouldFilter();
   }
 
   @Test
@@ -38,6 +46,5 @@ public class ZuulAccessFilterTest {
   @Test
   public void filterShouldBeActive() {
     assertThat(fixture.shouldFilter()).isTrue();
-    assertThat(fixture.isFilterDisabled()).isFalse();
   }
 }

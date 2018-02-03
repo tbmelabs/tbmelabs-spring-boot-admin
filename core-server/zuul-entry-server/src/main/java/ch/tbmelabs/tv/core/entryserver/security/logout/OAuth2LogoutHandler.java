@@ -21,6 +21,6 @@ public class OAuth2LogoutHandler extends SimpleUrlLogoutSuccessHandler {
   public void initBean() {
     LOGGER.info("Initializing..");
 
-    super.setDefaultTargetUrl(oauth2ServerUri + LOGOUT_ENDPOINT_URI);
+    setDefaultTargetUrl(oauth2ServerUri + LOGOUT_ENDPOINT_URI);
   }
 }

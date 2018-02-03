@@ -6,11 +6,16 @@ import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAware;
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
-public class ConfigurationTest extends AbstractEurekaApplicationContextAware {
+public class ConfigurationTest {
   private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+
+  @Test
+  public void packageShouldOnlyContainConfigurations() {
+    new Reflections(Application.class.getPackage().getName() + ".configuration").getSubTypesOf(Object.class)
+        .forEach(configuration -> assertThat(configuration.getClass().getSimpleName()).contains("Configuration"));
+  }
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {

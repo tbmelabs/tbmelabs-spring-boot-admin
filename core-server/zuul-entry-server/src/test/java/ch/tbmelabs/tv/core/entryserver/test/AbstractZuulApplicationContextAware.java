@@ -23,5 +23,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class })
-public abstract class AbstractZuulApplicationContextAwareIntegrationTest {
+public abstract class AbstractZuulApplicationContextAware {
 }

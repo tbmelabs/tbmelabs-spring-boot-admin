@@ -12,8 +12,7 @@ import ch.tbmelabs.tv.core.entryserver.configuration.SecurityConfiguration;
 public class SecurityConfigurationTest {
   @Test
   public void securityConfigurationShouldBeAnnotated() {
-    assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class);
-    assertThat(SecurityConfiguration.class).hasAnnotation(EnableWebSecurity.class);
-    assertThat(SecurityConfiguration.class).hasAnnotation(EnableGlobalMethodSecurity.class);
+    assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).hasAnnotation(EnableWebSecurity.class)
+        .hasAnnotation(EnableGlobalMethodSecurity.class);
   }
 }

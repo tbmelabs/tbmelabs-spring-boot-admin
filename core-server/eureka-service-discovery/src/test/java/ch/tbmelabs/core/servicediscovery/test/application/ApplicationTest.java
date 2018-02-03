@@ -1,9 +1,11 @@
-package ch.tbmelabs.tv.core.entryserver.test.application;
+package ch.tbmelabs.core.servicediscovery.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +15,7 @@ import org.mockito.Spy;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
 
-import ch.tbmelabs.tv.core.entryserver.Application;
+import ch.tbmelabs.tv.core.servicediscovery.Application;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ApplicationTest {
@@ -24,7 +26,7 @@ public class ApplicationTest {
 
   @Spy
   @InjectMocks
-  private Application fixture;
+  private static Application fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -42,7 +44,9 @@ public class ApplicationTest {
   }
 
   @Test(expected = IllegalArgumentException.class)
-  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
+  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive()
+      throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
+
     try {
       fixture.initBean();
     } catch (Exception e) {

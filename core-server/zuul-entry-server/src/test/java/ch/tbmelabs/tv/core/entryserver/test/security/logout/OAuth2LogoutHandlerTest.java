@@ -1,14 +1,16 @@
 package ch.tbmelabs.tv.core.entryserver.test.security.logout;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.stereotype.Component;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.entryserver.security.logout.OAuth2LogoutHandler;
 
@@ -16,15 +18,16 @@ public class OAuth2LogoutHandlerTest {
   private static final String OAUTH2_SERVER_URI = "http://localhost";
   private static final String AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL = "http://localhost/logout";
 
-  private static OAuth2LogoutHandler fixture;
+  @Mock
+  private OAuth2LogoutHandler fixture;
 
-  @BeforeClass
-  public static void beforeClassSetUp() throws IllegalAccessException, NoSuchFieldException, SecurityException {
-    fixture = new OAuth2LogoutHandler();
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
 
-    Field oauth2ServerUri = OAuth2LogoutHandler.class.getDeclaredField("oauth2ServerUri");
-    oauth2ServerUri.setAccessible(true);
-    oauth2ServerUri.set(fixture, OAUTH2_SERVER_URI);
+    ReflectionTestUtils.setField(fixture, "oauth2ServerUri", OAUTH2_SERVER_URI);
+
+    doCallRealMethod().when(fixture).initBean();
   }
 
   @Test
@@ -33,15 +36,9 @@ public class OAuth2LogoutHandlerTest {
   }
 
   @Test
-  public void initBeanShouldSetOAuth2LogoutRedirectUrl()
-      throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, SecurityException {
-    Method initBean = OAuth2LogoutHandler.class.getDeclaredMethod("initBean", new Class<?>[] {});
+  public void initBeanShouldSetOAuth2LogoutRedirectUrl() {
+    fixture.initBean();
 
-    assertThat(initBean.isAccessible()).isFalse();
-
-    initBean.setAccessible(true);
-    initBean.invoke(fixture, new Object[] {});
-
-    assertThat(fixture).hasFieldOrPropertyWithValue("defaultTargetUrl", AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL);
+    verify(fixture, times(1)).setDefaultTargetUrl(AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL);
   }
 }

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAwareIntegrationTest;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
-public class LogoutEndpointIntTest extends AbstractZuulApplicationContextAwareIntegrationTest {
+public class LogoutEndpointIntTest extends AbstractZuulApplicationContextAware {
   private static final String LOGOUT_ENDPOINT_URI = "/logout";
   private static final String AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL = "http://localhost/logout";
 
