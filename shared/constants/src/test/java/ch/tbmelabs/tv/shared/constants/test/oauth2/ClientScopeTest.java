@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.shared.constants.test.oauth2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class ClientScopeTest {
 
   @Test
   public void staticHolderClassShouldNotHaveAnyAccessableConstructor() {
-    assertThat(Arrays.stream(ClientScope.class.getDeclaredConstructors()).anyMatch(Constructor::isAccessible))
-        .isFalse();
+    assertThat(Arrays.stream(ClientScope.class.getDeclaredConstructors())
+        .anyMatch(constructor -> Modifier.isPublic(constructor.getModifiers()))).isFalse();
   }
 }

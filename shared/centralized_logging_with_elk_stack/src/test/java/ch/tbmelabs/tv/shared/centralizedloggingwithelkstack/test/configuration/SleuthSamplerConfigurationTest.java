@@ -1,29 +1,28 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.mockito.Mock;
 import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAware;
 
-public class SleuthSamplerConfigurationTest extends AbstractCentralizedLoggingApplicationContextAware {
-  private static final String DEFAULT_SAMPLER_NAME = "defaultSampler";
+public class SleuthSamplerConfigurationTest {
+  @Mock
+  private SleuthSamplerConfiguration fixture;
 
-  @Autowired
-  private SleuthSamplerConfiguration sleuthSamplerConfiguration;
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
 
-  @Autowired
-  @Qualifier(DEFAULT_SAMPLER_NAME)
-  private AlwaysSampler injectedSampler;
+    doCallRealMethod().when(fixture).defaultSampler();
+  }
 
   @Test
   public void sleuthSamplerConfigurationShouldBeAnnotated() {
@@ -31,11 +30,13 @@ public class SleuthSamplerConfigurationTest extends AbstractCentralizedLoggingAp
   }
 
   @Test
-  public void samplerBeanShouldReturnAnAlwaysSampler()
-      throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
-    Method alwaysSampler = SleuthSamplerConfiguration.class.getDeclaredMethod(DEFAULT_SAMPLER_NAME, new Class[] {});
+  public void defaultSamplerShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
+    assertThat(SleuthSamplerConfiguration.class.getDeclaredMethod("defaultSampler", new Class<?>[] {})
+        .getDeclaredAnnotation(Bean.class)).isNotNull();
+  }
 
-    assertThat(alwaysSampler.getDeclaredAnnotation(Bean.class)).isNotNull();
-    assertThat(alwaysSampler.invoke(sleuthSamplerConfiguration, new Object[] {})).isEqualTo(injectedSampler);
+  @Test
+  public void samplerBeanShouldReturnAnAlwaysSampler() {
+    assertThat(fixture.defaultSampler()).isOfAnyClassIn(AlwaysSampler.class);
   }
 }

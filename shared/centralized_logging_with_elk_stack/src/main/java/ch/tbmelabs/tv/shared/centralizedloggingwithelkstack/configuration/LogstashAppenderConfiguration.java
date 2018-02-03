@@ -17,9 +17,9 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 public class LogstashAppenderConfiguration {
   private static final Logger LOGGER = LogManager.getLogger(LogstashAppenderConfiguration.class);
 
-  private static final String UNDEFINED_APPLICATION_NAME = "undefined_application_name";
-
   private static final Integer BUFFER_SIZE = 2048;
+
+  private static String appenderName = "logstash";
 
   @Value("${LOGSTASH_HOST}")
   private String logstashHost;
@@ -27,14 +27,14 @@ public class LogstashAppenderConfiguration {
   @Value("${LOGSTASH_PORT}")
   private Integer logstashPort;
 
-  @Value("${spring.application.name:" + UNDEFINED_APPLICATION_NAME + "}")
+  @Value("${spring.application.name:null}")
   private String serviceName;
 
   @PostConstruct
   public void initBean() {
     LOGGER.info("Initializing..");
 
-    if (serviceName.equals(UNDEFINED_APPLICATION_NAME)) {
+    if (serviceName == null) {
       throw new IllegalArgumentException(
           "Specify an application name (\"spring.application.name\") to use the centralized logging.");
     }
@@ -48,7 +48,7 @@ public class LogstashAppenderConfiguration {
         + " - Buffer: "+ BUFFER_SIZE);
 
     SocketAppender logstashAppender = SocketAppender.newBuilder()
-        .withName("logstash")
+        .withName(appenderName)
         .withHost(logstashHost)
         .withPort(logstashPort)
         .withImmediateFail(false)
@@ -77,5 +77,13 @@ public class LogstashAppenderConfiguration {
 
     logstashAppender.start();
     ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addAppender(logstashAppender);
+  }
+
+  public static String getAppenderName() {
+    return LogstashAppenderConfiguration.appenderName;
+  }
+
+  public static void setAppenderName(String appenderName) {
+    LogstashAppenderConfiguration.appenderName = appenderName;
   }
 }

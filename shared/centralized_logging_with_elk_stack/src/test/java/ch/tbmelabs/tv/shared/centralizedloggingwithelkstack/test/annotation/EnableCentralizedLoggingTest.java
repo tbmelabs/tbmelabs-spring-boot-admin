@@ -14,9 +14,8 @@ import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.annotation.EnableCen
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.production.ProductiveEnvironmentWithoutCentralizedLoggingCheck;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.AbstractCentralizedLoggingApplicationContextAware;
 
-public class EnableCentralizedLoggingTest extends AbstractCentralizedLoggingApplicationContextAware {
+public class EnableCentralizedLoggingTest {
   @Test
   public void annotationShouldApplyToTypesOnly() {
     assertThat(EnableCentralizedLogging.class).hasAnnotation(Target.class);
@@ -37,6 +36,5 @@ public class EnableCentralizedLoggingTest extends AbstractCentralizedLoggingAppl
     assertThat(EnableCentralizedLogging.class.getDeclaredAnnotation(Import.class).value()).isNotNull().containsExactly(
         LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class,
         ProductiveEnvironmentWithoutCentralizedLoggingCheck.class);
-
   }
 }
