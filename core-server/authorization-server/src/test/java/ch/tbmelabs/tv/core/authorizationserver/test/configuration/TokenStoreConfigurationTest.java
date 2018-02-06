@@ -23,7 +23,7 @@ public class TokenStoreConfigurationTest {
 
   @Test
   public void redisTokenStoreShouldOccurInProductiveEnvironmentOnly() throws NoSuchMethodException, SecurityException {
-    Method redisTokenStoreConfiguration = TokenStoreConfiguration.class.getDeclaredMethod("redisTokenStore",
+    Method redisTokenStoreConfiguration = TokenStoreConfiguration.class.getDeclaredMethod("tokenStore",
         new Class[] { RedisConnectionFactory.class });
 
     assertThat(redisTokenStoreConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();

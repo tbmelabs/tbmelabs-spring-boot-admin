@@ -57,6 +57,6 @@ public class TokenServiceConfigurationTest {
     assertThat(fixture.tokenServiceBean()).isNotNull()
         .hasFieldOrPropertyWithValue("authenticationManager", authenticationManager)
         .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsService)
-        .hasFieldOrPropertyWithValue("tokenStore", tokenStore).hasFieldOrPropertyWithValue("reuseRefreshToken", true);
+        .hasFieldOrPropertyWithValue("reuseRefreshToken", false).hasFieldOrPropertyWithValue("tokenStore", tokenStore);
   }
 }
