@@ -11,16 +11,15 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
 
-public class LoggingExceptionTranslatorTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class LoggingExceptionTranslatorIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String TEST_EXCEPTION_MESSAGE = "This is just a test.";
 
   @Autowired
-  private LoggingExceptionTranslator loggingExceptionTranslator;
+  private LoggingExceptionTranslator fixture;
 
   @Test
   public void loggingExceptionTranslatorShouldTranslateExceptionToResponseEntity() throws Exception {
-    ResponseEntity<OAuth2Exception> response = loggingExceptionTranslator
-        .translate(new Exception(TEST_EXCEPTION_MESSAGE));
+    ResponseEntity<OAuth2Exception> response = fixture.translate(new Exception(TEST_EXCEPTION_MESSAGE));
 
     assertThat(response.getStatusCode()).isNotNull().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     assertThat(response.getBody().getCause()).isNotNull().isOfAnyClassIn(Exception.class)

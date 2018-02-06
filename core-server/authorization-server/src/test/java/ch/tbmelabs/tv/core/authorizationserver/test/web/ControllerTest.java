@@ -14,29 +14,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ControllerTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class ControllerTest {
   private static final Integer EXPECTED_CONTROLLER_COUNT = 2;
 
-  private static Set<Class<?>> controllers = new HashSet<>();
+  private static Set<Class<?>> allControllers = new HashSet<>();
+  private static Set<Class<?>> annotatedControllers = new HashSet<>();
 
   @BeforeClass
   public static void beforeClassSetUp() {
-    controllers.addAll(
+    allControllers
+        .addAll(new Reflections(Application.class.getPackage().getName() + ".web").getSubTypesOf(Object.class));
+
+    annotatedControllers.addAll(
         new Reflections(Application.class.getPackage().getName() + ".web").getTypesAnnotatedWith(Controller.class));
-    controllers.addAll(
+    annotatedControllers.addAll(
         new Reflections(Application.class.getPackage().getName() + ".web").getTypesAnnotatedWith(RestController.class));
   }
 
   @Test
+  public void packageShouldOnlyContainControllers() {
+    allControllers.forEach(controller -> assertThat(controller.getClass().getSimpleName()).contains("Controller"));
+  }
+
+  @Test
   public void allControllersShouldBeAnnotated() {
-    assertThat(ControllerTest.controllers).hasSize(EXPECTED_CONTROLLER_COUNT);
+    assertThat(ControllerTest.annotatedControllers).hasSize(EXPECTED_CONTROLLER_COUNT);
   }
 
   @Test
   public void allMappingsShouldSpecifyARequestMethod() {
-    controllers
+    annotatedControllers
         .forEach(controller -> assertThat(Arrays.stream(controller.getDeclaredMethods())
             .filter(method -> method.getDeclaredAnnotation(RequestMapping.class) != null
                 && method.getDeclaredAnnotation(RequestMapping.class).method() == null)

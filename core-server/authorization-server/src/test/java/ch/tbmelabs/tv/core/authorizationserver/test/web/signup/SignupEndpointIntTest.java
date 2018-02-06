@@ -1,12 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -14,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,11 +29,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
 @Transactional
-public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
@@ -44,8 +47,8 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
   @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
-  private TestUserManager testUserManager;
+  @Mock
+  private User userFixture;
 
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
@@ -64,6 +67,10 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
 
   @Before
   public void beforeTestSetUp() {
+    initMocks(this);
+
+    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getEmail();
+
     User existingUser;
     if ((existingUser = userRepository.findByUsername(unexistingUser.getUsername())) != null) {
       userRepository.delete(existingUser);
@@ -75,7 +82,7 @@ public class SignupEndpointTest extends AbstractOAuth2AuthorizationApplicationCo
     try {
       mockMvc
           .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new ObjectMapper().writeValueAsString(testUserManager.getUserUser())))
+              .content(new ObjectMapper().writeValueAsString(userFixture)))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())).andReturn().getResponse()
           .getContentAsString();
     } catch (NestedServletException e) {

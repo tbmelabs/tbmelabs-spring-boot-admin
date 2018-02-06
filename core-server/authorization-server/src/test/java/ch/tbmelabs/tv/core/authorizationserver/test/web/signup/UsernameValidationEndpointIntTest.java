@@ -16,7 +16,7 @@ import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class UsernameValidationEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class UsernameValidationEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String USERNAME_VALIDATION_ENDPOINT = "/signup/does-username-match-format";
   private static final String USERNAME_PARAMETER_NAME = "username";
 

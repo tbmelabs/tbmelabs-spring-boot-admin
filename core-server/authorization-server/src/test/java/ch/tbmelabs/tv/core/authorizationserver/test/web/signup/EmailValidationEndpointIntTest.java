@@ -15,7 +15,7 @@ import org.springframework.web.util.NestedServletException;
 
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class EmailValidationEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class EmailValidationEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_VALIDATION_ENDPOINT = "/signup/is-email";
   private static final String EMAIL_PARAMETER_NAME = "email";
 

@@ -1,28 +1,32 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
 @Transactional
-public class UsernameUniqueCheckEndpointTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
 
@@ -36,13 +40,16 @@ public class UsernameUniqueCheckEndpointTest extends AbstractOAuth2Authorization
   @Autowired
   private AuthenticationLogCRUDRepository authenticationLogRepository;
 
-  @Autowired
-  private TestUserManager testUserManager;
+  @Mock
+  private User userFixture;
 
   @Before
   public void beforeTestSetUp() {
-    authenticationLogRepository.deleteAll();
+    initMocks(this);
 
+    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getUsername();
+
+    authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
   }
 
@@ -50,8 +57,8 @@ public class UsernameUniqueCheckEndpointTest extends AbstractOAuth2Authorization
   public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
     try {
       mockMvc
-          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
-              new JSONObject().put(USERNAME_PARAMETER_NAME, testUserManager.getUserUser().getUsername()).toString()))
+          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, userFixture.getUsername()).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
