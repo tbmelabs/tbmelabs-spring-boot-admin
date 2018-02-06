@@ -1,59 +1,149 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.stream.Collectors;
+import java.util.Random;
 
-import javax.transaction.Transactional;
-
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
 
-@Transactional
-public class UserSignupServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  private static final String REGISTRATION_FAILED_ERROR_MESSAGE = "Registration failed. Please check your details!";
+public class UserSignupServiceTest {
+  private static final String SIGNUP_FAILED_ERROR_MESSAGE = "Registration failed. Please check your details!";
 
-  @Autowired
-  private UserSignupService userSignupService;
+  @Mock
+  private UserCRUDRepository userRepositoryFixture;
 
-  @Autowired
-  private UserCRUDRepository userRepository;
+  @Mock
+  private RoleCRUDRepository roleRepositoryFixture;
 
-  @Autowired
-  private TestUserManager testUserManager;
+  @Spy
+  @InjectMocks
+  private UserSignupService fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    doAnswer(new Answer<User>() {
+      @Override
+      public User answer(InvocationOnMock invocation) throws Throwable {
+        User newUser = invocation.getArgument(0);
+        newUser.setId(new Random().nextLong());
+        return newUser;
+      }
+    }).when(userRepositoryFixture).save(Mockito.any(User.class));
+
+    doReturn(new Role("USER")).when(roleRepositoryFixture).findByName("USER");
+
+    doReturn(true).when(fixture).isUsernameUnique(Mockito.any(User.class));
+    doReturn(true).when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
+    doReturn(true).when(fixture).isEmailAddressUnique(Mockito.any(User.class));
+    doReturn(true).when(fixture).isEmailAddress(Mockito.any(User.class));
+    doReturn(true).when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
+    doReturn(true).when(fixture).doPasswordsMatch(Mockito.any(User.class));
+  }
 
   @Test(expected = IllegalArgumentException.class)
-  public void userSignupServiceShouldNotRegisterAlreadyExistingUser() {
+  public void userSignupServiceShouldNotSaveUserOnUsernameNotUnique() {
+    doReturn(false).when(fixture).isUsernameUnique(Mockito.any(User.class));
+
     try {
-      userSignupService.signUpNewUser(testUserManager.getUserUser());
-    } catch (IllegalArgumentException e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class).hasMessage(REGISTRATION_FAILED_ERROR_MESSAGE);
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
+
+      throw e;
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userSignupServiceShouldNotSaveUserOnUsernameWrongFormat() {
+    doReturn(false).when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
+
+    try {
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
+
+      throw e;
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userSignupServiceShouldNotSaveUserOnEmailNotUnique() {
+    doReturn(false).when(fixture).isEmailAddressUnique(Mockito.any(User.class));
+
+    try {
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
+
+      throw e;
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userSignupServiceShouldNotSaveUserOnEmailWrongFormat() {
+    doReturn(false).when(fixture).isEmailAddress(Mockito.any(User.class));
+
+    try {
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
+
+      throw e;
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userSignupServiceShouldNotSaveUserOnPasswordWrongFormat() {
+    doReturn(false).when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
+
+    try {
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
+
+      throw e;
+    }
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void userSignupServiceShouldNotSaveUserOnPasswordsDoNotMatch() {
+    doReturn(false).when(fixture).doPasswordsMatch(Mockito.any(User.class));
+
+    try {
+      fixture.signUpNewUser(new User());
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
+      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
 
       throw e;
     }
   }
 
   @Test
-  public void userSignupServiceShouldRegisterNewUser() {
-    User newUser = new User();
-    newUser.setUsername("NewUsername");
-    newUser.setEmail("new.user@tbme.tv");
-    newUser.setPassword("Password$99");
-    newUser.setConfirmation("Password$99");
-
-    User createdUser = userSignupService.signUpNewUser(newUser);
-
-    assertThat(userRepository.findByUsername(createdUser.getUsername())).isNotNull();
-    assertThat(createdUser.getGrantedAuthorities().stream().map(UserRoleAssociation::getUserRole).map(Role::getName)
-        .collect(Collectors.toList())).isNotNull().isNotEmpty().hasSize(1).containsExactly(SecurityRole.USER);
+  public void userSignupServiceShouldSaveValidUser() {
+    assertThat(fixture.signUpNewUser(new User()).getId()).isNotNull().isOfAnyClassIn(Long.class);
   }
 }

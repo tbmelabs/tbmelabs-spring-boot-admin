@@ -1,6 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,53 +13,55 @@ import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ClientDetailsImplTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class ClientDetailsImplTest {
   private static final String CLIENT_REDIRECT_URIS = "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR
       + "uritwo";
 
-  private Client testClient;
-  private ClientDetailsImpl testClientDetails;
+  @Mock
+  private Client clientFixture;
+
+  private ClientDetailsImpl clientDetailsImpl;
 
   @Before
   public void beforeTestSetUp() {
-    testClient = new Client();
-    testClient.setClientId(UUID.randomUUID().toString());
-    testClient.setSecret(UUID.randomUUID().toString());
-    testClient.setAccessTokenValiditySeconds(3600);
-    testClient.setRefreshTokenValiditySeconds(7200);
-    testClient.setRedirectUri(CLIENT_REDIRECT_URIS);
-    testClient.setGrantTypes(testClient.grantTypesToAssociations(Arrays.asList(new GrantType("TEST"))));
-    testClient.setGrantedAuthorities(testClient.authoritiesToAssociations(Arrays.asList(new Authority("TEST"))));
-    testClient.setScopes(testClient.scopesToAssociations(Arrays.asList(new Scope("TEST"))));
+    initMocks(this);
 
-    testClientDetails = new ClientDetailsImpl(testClient);
+    doCallRealMethod().when(clientFixture).grantTypesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(clientFixture).authoritiesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(clientFixture).scopesToAssociations(Mockito.anyList());
+
+    when(clientFixture.getClientId()).thenReturn(UUID.randomUUID().toString());
+    when(clientFixture.getSecret()).thenReturn(UUID.randomUUID().toString());
+    when(clientFixture.getAccessTokenValiditySeconds()).thenReturn(3600);
+    when(clientFixture.getRefreshTokenValiditySeconds()).thenReturn(7200);
+    when(clientFixture.getRedirectUri()).thenReturn(CLIENT_REDIRECT_URIS);
+
+    clientDetailsImpl = new ClientDetailsImpl(clientFixture);
   }
 
   @Test
   public void clientDetailsImplShouldReturnInformationEquelToUser() {
-    assertThat(testClientDetails.getClientId()).isNotNull().isEqualTo(testClient.getClientId());
-    assertThat(testClientDetails.getResourceIds()).isNotNull().isEqualTo(new HashSet<>());
-    assertThat(testClientDetails.isSecretRequired()).isNotNull().isEqualTo(testClient.getIsSecretRequired());
-    assertThat(testClientDetails.isAutoApprove(new String())).isNotNull().isEqualTo(testClient.getIsAutoApprove());
-    assertThat(testClient.getSecret()).isNotNull().isEqualTo(testClient.getSecret());
-    assertThat(testClient.getAccessTokenValiditySeconds()).isNotNull()
-        .isEqualTo(testClient.getAccessTokenValiditySeconds());
-    assertThat(testClient.getRefreshTokenValiditySeconds()).isNotNull()
-        .isEqualTo(testClient.getRefreshTokenValiditySeconds());
-    assertThat(testClientDetails.isScoped()).isNotNull().isEqualTo(!testClient.getScopes().isEmpty());
-    assertThat(testClientDetails.getRegisteredRedirectUri()).isNotNull().isEqualTo(
+    assertThat(clientDetailsImpl.getClientId()).isNotNull().isEqualTo(clientFixture.getClientId());
+    assertThat(clientDetailsImpl.getResourceIds()).isNotNull().isEqualTo(new HashSet<>());
+    assertThat(clientDetailsImpl.isSecretRequired()).isNotNull().isEqualTo(clientFixture.getIsSecretRequired());
+    assertThat(clientDetailsImpl.isAutoApprove(new String())).isNotNull().isEqualTo(clientFixture.getIsAutoApprove());
+    assertThat(clientDetailsImpl.getClientSecret()).isNotNull().isEqualTo(clientFixture.getSecret());
+    assertThat(clientDetailsImpl.getAccessTokenValiditySeconds()).isNotNull()
+        .isEqualTo(clientDetailsImpl.getAccessTokenValiditySeconds());
+    assertThat(clientDetailsImpl.getRefreshTokenValiditySeconds()).isNotNull()
+        .isEqualTo(clientDetailsImpl.getRefreshTokenValiditySeconds());
+    assertThat(clientDetailsImpl.isScoped()).isNotNull().isEqualTo(!clientFixture.getScopes().isEmpty());
+    assertThat(clientDetailsImpl.getRegisteredRedirectUri()).isNotNull().isEqualTo(
         new HashSet<>(Arrays.asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
-    assertThat(testClientDetails.getAuthorities()).isNotNull().isEqualTo(testClient.getGrantedAuthorities().stream()
+    assertThat(clientDetailsImpl.getAuthorities()).isNotNull().isEqualTo(clientFixture.getGrantedAuthorities().stream()
         .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList()));
-    assertThat(testClientDetails.getAdditionalInformation()).isNotNull().isEqualTo(new HashMap<>());
+    assertThat(clientDetailsImpl.getAdditionalInformation()).isNotNull().isEqualTo(new HashMap<>());
   }
 }

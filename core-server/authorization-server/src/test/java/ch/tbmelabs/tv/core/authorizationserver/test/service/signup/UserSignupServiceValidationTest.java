@@ -1,85 +1,144 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
-public class UserSignupServiceValidationTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  @Autowired
-  private UserSignupService userSignupService;
+public class UserSignupServiceValidationTest {
+  private static User existingUser = new User();
 
-  @Autowired
-  private TestUserManager testUserManager;
+  @Mock
+  private UserCRUDRepository userRepository;
+
+  @Mock
+  private RoleCRUDRepository roleRepository;
+
+  @Spy
+  @InjectMocks
+  private UserSignupService fixture;
+
+  @BeforeClass
+  public static void beforeClassSetUp() {
+    UserSignupServiceValidationTest.existingUser.setUsername(RandomStringUtils.randomAlphabetic(11));
+    UserSignupServiceValidationTest.existingUser.setEmail(RandomStringUtils.randomAlphabetic(11));
+  }
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    doAnswer(new Answer<User>() {
+      @Override
+      public User answer(InvocationOnMock invocation) throws Throwable {
+        if (((String) invocation.getArgument(0)).equals(existingUser.getUsername())) {
+          return existingUser;
+        }
+
+        return null;
+      }
+    }).when(userRepository).findByUsername(Mockito.anyString());
+
+    doAnswer(new Answer<User>() {
+      @Override
+      public User answer(InvocationOnMock invocation) throws Throwable {
+        if (((String) invocation.getArgument(0)).equals(existingUser.getEmail())) {
+          return existingUser;
+        }
+
+        return null;
+      }
+    }).when(userRepository).findByEmail(Mockito.anyString());
+
+    doCallRealMethod().when(fixture).isUsernameUnique(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).isEmailAddressUnique(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).isEmailAddress(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).doPasswordsMatch(Mockito.any(User.class));
+  }
 
   @Test
   public void userSignupServiceShouldInvalidateExistingUsername() {
-    User userWithUnexistingUsername = new User();
-    userWithUnexistingUsername.setUsername(RandomStringUtils.randomAlphabetic(11));
+    User unexistingUser = new User();
+    unexistingUser.setUsername(RandomStringUtils.randomAlphabetic(11));
 
-    assertThat(userSignupService.isUsernameUnique(testUserManager.getUserUser())).isFalse();
-    assertThat(userSignupService.isUsernameUnique(userWithUnexistingUsername)).isTrue();
+    assertThat(fixture.isUsernameUnique(existingUser)).isFalse();
+    assertThat(fixture.isUsernameUnique(unexistingUser)).isTrue();
   }
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingUsername() {
-    User userWithInvalidUsername = new User();
-    userWithInvalidUsername.setUsername(RandomStringUtils.randomAscii(10) + "$");
+    User invalidUser = new User();
+    invalidUser.setUsername(RandomStringUtils.randomAscii(10) + "$");
 
-    User userWithValidUsername = new User();
-    userWithValidUsername.setUsername(RandomStringUtils.randomAlphabetic(11));
+    User validUser = new User();
+    validUser.setUsername(RandomStringUtils.randomAlphabetic(11));
 
-    assertThat(userSignupService.doesUsernameMatchFormat(userWithInvalidUsername)).isFalse();
-    assertThat(userSignupService.doesUsernameMatchFormat(userWithValidUsername)).isTrue();
+    assertThat(fixture.doesUsernameMatchFormat(invalidUser)).isFalse();
+    assertThat(fixture.doesUsernameMatchFormat(validUser)).isTrue();
   }
 
   @Test
   public void userSignupServiceShouldInvalidateExistingEmail() {
-    User userWithUnexistingEmail = new User();
-    userWithUnexistingEmail.setEmail(RandomStringUtils.randomAlphabetic(11));
+    User unexistingUser = new User();
+    unexistingUser.setEmail(RandomStringUtils.randomAlphabetic(11));
 
-    assertThat(userSignupService.isEmailAddressUnique(testUserManager.getUserUser())).isFalse();
-    assertThat(userSignupService.isEmailAddressUnique(userWithUnexistingEmail)).isTrue();
+    assertThat(fixture.isEmailAddressUnique(existingUser)).isFalse();
+    assertThat(fixture.isEmailAddressUnique(unexistingUser)).isTrue();
   }
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingEmail() {
-    User userWithInvalidEmail = new User();
-    userWithInvalidEmail.setEmail(RandomStringUtils.randomAlphabetic(11));
+    User invalidUser = new User();
+    invalidUser.setEmail(RandomStringUtils.randomAlphabetic(11));
 
-    User userWithValidEmail = new User();
-    userWithValidEmail.setEmail("valid.email@tbme.tv");
+    User validUser = new User();
+    validUser.setEmail("valid.email@tbme.tv");
 
-    assertThat(userSignupService.isEmailAddress(userWithInvalidEmail)).isFalse();
-    assertThat(userSignupService.isEmailAddress(userWithValidEmail)).isTrue();
+    assertThat(fixture.isEmailAddress(invalidUser)).isFalse();
+    assertThat(fixture.isEmailAddress(validUser)).isTrue();
   }
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingPassword() {
-    User userWithInvalidPassword = new User();
-    userWithInvalidPassword.setPassword(RandomStringUtils.randomAlphabetic(11));
+    User invalidUser = new User();
+    invalidUser.setPassword(RandomStringUtils.randomAlphabetic(11));
 
-    User userWithValidPassword = new User();
-    userWithValidPassword.setPassword("V@l1dP@$$w0rd");
+    User validUser = new User();
+    validUser.setPassword("V@l1dP@$$w0rd");
 
-    assertThat(userSignupService.doesPasswordMatchFormat(userWithInvalidPassword)).isFalse();
-    assertThat(userSignupService.doesPasswordMatchFormat(userWithValidPassword)).isTrue();
+    assertThat(fixture.doesPasswordMatchFormat(invalidUser)).isFalse();
+    assertThat(fixture.doesPasswordMatchFormat(validUser)).isTrue();
   }
 
   @Test
   public void userSignupServiceShouldInvalidatePasswordAndConfirmationIfTheyDontMatch() {
-    User userWithoutMatchingPasswords = new User();
-    userWithoutMatchingPasswords.setPassword("APassword$99");
-    userWithoutMatchingPasswords.setConfirmation("NotQuiteAPassword$99");
+    User invalidUser = new User();
+    invalidUser.setPassword("APassword$99");
+    invalidUser.setConfirmation("NotQuiteAPassword$99");
 
-    User userWithMatchingPasswords = new User();
-    userWithMatchingPasswords.setPassword("V@l1dP@$$w0rd");
-    userWithMatchingPasswords.setConfirmation(userWithMatchingPasswords.getPassword());
+    User validUser = new User();
+    validUser.setPassword("V@l1dP@$$w0rd");
+    validUser.setConfirmation(validUser.getPassword());
+
+    assertThat(fixture.doPasswordsMatch(invalidUser)).isFalse();
+    assertThat(fixture.doPasswordsMatch(validUser)).isTrue();
   }
 }

@@ -7,10 +7,15 @@ import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class ServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class ServiceTest {
   private static final Integer EXPECTED_SERVICE_COUNT = 5;
+
+  @Test
+  public void packageShouldOnlyContainServices() {
+    new Reflections(Application.class.getPackage().getName() + ".service").getSubTypesOf(Object.class)
+        .forEach(service -> assertThat(service.getClass().getSimpleName()).contains("Service"));
+  }
 
   @Test
   public void allServicesShouldBeAnnotated() {

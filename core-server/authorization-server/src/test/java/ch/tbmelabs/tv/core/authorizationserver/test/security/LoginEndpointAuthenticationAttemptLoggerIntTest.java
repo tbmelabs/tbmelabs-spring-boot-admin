@@ -24,7 +24,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
 @Transactional
-public class LoginEndpointAuthenticationAttemptLoggerTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class LoginEndpointAuthenticationAttemptLoggerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";

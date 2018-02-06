@@ -8,10 +8,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
-public class RepositoryTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class RepositoryTest {
   private static final Integer EXPECTED_REPOSITORY_COUNT = 8;
+
+  @Test
+  public void packageShouldOnlyContainRepositories() {
+    new Reflections(Application.class.getPackage().getName() + ".domain.repository").getSubTypesOf(Object.class)
+        .forEach(repository -> assertThat(repository.getClass().getSimpleName()).contains("Repository"));
+  }
 
   @Test
   public void allRepositoriesShouldBeAnnotated() {

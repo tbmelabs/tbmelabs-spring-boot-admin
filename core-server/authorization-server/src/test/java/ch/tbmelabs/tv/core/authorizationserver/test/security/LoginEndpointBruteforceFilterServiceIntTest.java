@@ -21,7 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 
 @Transactional
-public class LoginEndpointBruteforceFilterServiceTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class LoginEndpointBruteforceFilterServiceIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";

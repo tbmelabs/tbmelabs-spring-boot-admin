@@ -1,33 +1,44 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.lang.reflect.Field;
-
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.utils.testdata.TestUserManager;
 
-public class UserDetailsServiceImplTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  @Autowired
-  private UserDetailsServiceImpl userDetailsService;
+public class UserDetailsServiceImplTest {
+  @Mock
+  private UserCRUDRepository userRepositoryFixture;
 
-  @Autowired
-  private TestUserManager testUserManager;
+  @Spy
+  @InjectMocks
+  private UserDetailsServiceImpl fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+
+    doReturn(new User()).when(userRepositoryFixture).findByUsername(Mockito.anyString());
+  }
 
   @Test
   public void userDetailsServiceShouldLoadCorrectUserDetailsForUsername()
       throws IllegalAccessException, NoSuchFieldException, SecurityException {
-    UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(testUserManager.getUserUser().getUsername());
+    UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.randomAlphabetic(11));
 
-    Field userField = UserDetailsImpl.class.getDeclaredField("user");
-    userField.setAccessible(true);
-    assertThat(((User) userField.get(userDetails)).getId()).isNotNull()
-        .isEqualTo(testUserManager.getUserUser().getId());
+    assertThat(ReflectionTestUtils.getField(userDetails, "user"))
+        .isEqualTo(userRepositoryFixture.findByUsername(RandomStringUtils.randomAlphabetic(11)));
   }
 }
