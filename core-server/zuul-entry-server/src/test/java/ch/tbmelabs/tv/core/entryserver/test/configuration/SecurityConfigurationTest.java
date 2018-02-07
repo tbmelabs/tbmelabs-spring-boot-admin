@@ -15,4 +15,9 @@ public class SecurityConfigurationTest {
     assertThat(SecurityConfiguration.class).hasAnnotation(Configuration.class).hasAnnotation(EnableWebSecurity.class)
         .hasAnnotation(EnableGlobalMethodSecurity.class);
   }
+
+  @Test
+  public void securityConfigHasPublicConstructor() {
+    assertThat(new SecurityConfiguration()).isNotNull();
+  }
 }

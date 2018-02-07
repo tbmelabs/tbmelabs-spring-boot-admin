@@ -2,9 +2,9 @@ package ch.tbmelabs.tv.core.entryserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
@@ -23,10 +23,10 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class OAuth2SSOZuulProxyConfigurationTest {
   @Mock
-  private WebSecurity webSecurity;
+  private WebSecurity webSecurityFixture;
 
   @Mock
-  private Environment environment;
+  private Environment environmentFixture;
 
   @Spy
   @InjectMocks
@@ -36,9 +36,9 @@ public class OAuth2SSOZuulProxyConfigurationTest {
   public void beforeTestSetUp() throws Exception {
     initMocks(this);
 
-    when(environment.getActiveProfiles()).thenReturn(new String[] { SpringApplicationProfile.DEV });
+    doReturn(new String[] { SpringApplicationProfile.DEV }).when(environmentFixture).getActiveProfiles();
 
-    doCallRealMethod().when(fixture).configure(webSecurity);
+    doCallRealMethod().when(fixture).configure(webSecurityFixture);
   }
 
   @Test
@@ -48,9 +48,14 @@ public class OAuth2SSOZuulProxyConfigurationTest {
   }
 
   @Test
-  public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
-    fixture.configure(webSecurity);
+  public void oauth2SSOZuulProxyConfigurationHasPublicConstructor() {
+    assertThat(new OAuth2SSOZuulProxyConfiguration()).isNotNull();
+  }
 
-    verify(webSecurity, times(1)).debug(true);
+  @Test
+  public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
+    fixture.configure(webSecurityFixture);
+
+    verify(webSecurityFixture, times(1)).debug(true);
   }
 }

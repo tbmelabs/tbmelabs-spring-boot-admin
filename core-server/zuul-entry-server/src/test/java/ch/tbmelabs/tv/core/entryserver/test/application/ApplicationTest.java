@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.core.entryserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
@@ -20,7 +20,7 @@ public class ApplicationTest {
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE = "Do not attempt to run an application in productive and development environment at the same time!";
 
   @Mock
-  private Environment environment;
+  private Environment environmentFixture;
 
   @Spy
   @InjectMocks
@@ -30,8 +30,8 @@ public class ApplicationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    when(environment.getActiveProfiles())
-        .thenReturn(new String[] { SpringApplicationProfile.PROD, SpringApplicationProfile.DEV });
+    doReturn(new String[] { SpringApplicationProfile.PROD, SpringApplicationProfile.DEV }).when(environmentFixture)
+        .getActiveProfiles();
 
     doCallRealMethod().when(fixture).initBean();
   }
@@ -39,6 +39,11 @@ public class ApplicationTest {
   @Test
   public void applicationShouldBeAnnotated() {
     assertThat(Application.class).hasAnnotation(SpringCloudApplication.class);
+  }
+
+  @Test
+  public void applicationShouldHavePublicConstructor() {
+    assertThat(new Application()).isNotNull();
   }
 
   @Test(expected = IllegalArgumentException.class)
