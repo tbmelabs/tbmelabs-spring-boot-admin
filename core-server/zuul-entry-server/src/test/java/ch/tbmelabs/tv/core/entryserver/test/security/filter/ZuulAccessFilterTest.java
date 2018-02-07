@@ -102,6 +102,6 @@ public class ZuulAccessFilterTest {
     fixture.run();
 
     assertThat(mockOut.toString(StandardCharsets.UTF_8.name())).contains("REQUEST  :: < HTTPS 127.0.0.1:80")
-        .contains("REQUEST  :: < GET http://tbme.tv/ SSL").contains("RESPONSE :: > HTTP:200");
+        .contains("REQUEST  :: < GET https://tbme.tv/ SSL").contains("RESPONSE :: > HTTP:200");
   }
 }
