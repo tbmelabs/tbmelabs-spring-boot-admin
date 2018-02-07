@@ -3,9 +3,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Random;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -51,10 +54,70 @@ public class AuthenticationLogTest {
   }
 
   @Test
-  public void constructorShouldCreateNewInstanceWithArguments() {
+  public void authenticationLogShouldHaveNoArgsConstructor() {
+    assertThat(new AuthenticationLog()).isNotNull();
+  }
+
+  @Test
+  public void authenticationLogShouldHaveAllArgsConstructor() {
     assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, userFixture))
         .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE.name())
         .hasFieldOrPropertyWithValue("ip", TEST_IP).hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
         .hasFieldOrPropertyWithValue("user", userFixture);
+  }
+
+  @Test
+  public void authenticationLogShouldHaveIdGetterAndSetter() {
+    AuthenticationLog fixture = new AuthenticationLog();
+    Long id = new Random().nextLong();
+
+    fixture.setId(id);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("id", id);
+    assertThat(fixture.getId()).isEqualTo(id);
+  }
+
+  @Test
+  public void authenticationLogShouldHaveStateGetterAndSetter() {
+    AuthenticationLog fixture = new AuthenticationLog();
+    AUTHENTICATION_STATE state = AUTHENTICATION_STATE.OK;
+
+    fixture.setState(state);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("state", state.name());
+    assertThat(fixture.getState()).isEqualTo(state.name());
+  }
+
+  @Test
+  public void authenticationLogShouldHaveIpGetterAndSetter() {
+    AuthenticationLog fixture = new AuthenticationLog();
+    String ip = "127.0.0.1";
+
+    fixture.setIp(ip);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("ip", ip);
+    assertThat(fixture.getIp()).isEqualTo(ip);
+  }
+
+  @Test
+  public void authenticationLogShouldHaveMessageGetterAndSetter() {
+    AuthenticationLog fixture = new AuthenticationLog();
+    String message = RandomStringUtils.randomAlphabetic(11);
+
+    fixture.setMessage(message);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("message", message);
+    assertThat(fixture.getMessage()).isEqualTo(message);
+  }
+
+  @Test
+  public void authenticationLogShoudlHaveUserGetterAndSetter() {
+    AuthenticationLog fixture = new AuthenticationLog();
+    User user = new User();
+
+    fixture.setUser(user);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("user", user);
+    assertThat(fixture.getUser()).isEqualTo(user);
   }
 }

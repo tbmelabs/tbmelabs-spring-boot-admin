@@ -2,9 +2,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Random;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,7 +36,34 @@ public class ScopeTest {
   }
 
   @Test
-  public void constructorShouldCreateNewInstanceWithArguments() {
+  public void scopeShouldHaveNoArgsConstructor() {
+    assertThat(new Scope()).isNotNull();
+  }
+
+  @Test
+  public void scopeShouldHaveAllArgsConstructor() {
     assertThat(new Scope(TEST_SCOPE_NAME)).hasFieldOrPropertyWithValue("name", TEST_SCOPE_NAME);
+  }
+
+  @Test
+  public void scopeTypeShouldHaveIdGetterAndSetter() {
+    Scope fixture = new Scope();
+    Long id = new Random().nextLong();
+
+    fixture.setId(id);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("id", id);
+    assertThat(fixture.getId()).isEqualTo(id);
+  }
+
+  @Test
+  public void scopeShouldHaveNameGetterAndSetter() {
+    Scope fixture = new Scope();
+    String name = RandomStringUtils.randomAlphabetic(11);
+
+    fixture.setName(name);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("name", name);
+    assertThat(fixture.getName()).isEqualTo(name);
   }
 }

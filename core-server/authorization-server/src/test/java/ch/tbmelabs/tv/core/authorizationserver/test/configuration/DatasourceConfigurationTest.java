@@ -24,6 +24,11 @@ public class DatasourceConfigurationTest {
   }
 
   @Test
+  public void dataSourceConfigurationShouldHavePublicConstructor() {
+    assertThat(new DatasourceConfiguration()).isNotNull();
+  }
+
+  @Test
   public void springDataSourceShouldBeAnnotatedAsPrimaryBean() throws NoSuchMethodException, SecurityException {
     Method datasourceConfiguration = DatasourceConfiguration.class.getDeclaredMethod("dataSource", new Class[] {});
 

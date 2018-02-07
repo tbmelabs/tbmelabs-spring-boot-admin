@@ -21,13 +21,13 @@ import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetai
 
 public class TokenServiceConfigurationTest {
   @Mock
-  private AuthenticationManager authenticationManager;
+  private AuthenticationManager authenticationManagerFixture;
 
   @Mock
-  private ClientDetailsServiceImpl clientDetailsService;
+  private ClientDetailsServiceImpl clientDetailsServiceFixture;
 
   @Mock
-  private TokenStore tokenStore;
+  private TokenStore tokenStoreFixture;
 
   @Spy
   @InjectMocks
@@ -46,6 +46,11 @@ public class TokenServiceConfigurationTest {
   }
 
   @Test
+  public void tokenServiceConfigurationShouldHavePublicConstructor() {
+    assertThat(new TokenServiceConfiguration()).isNotNull();
+  }
+
+  @Test
   public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(TokenServiceConfiguration.class.getDeclaredMethod("tokenServiceBean", new Class<?>[] {})
         .getDeclaredAnnotation(Bean.class)).isNotNull();
@@ -55,8 +60,9 @@ public class TokenServiceConfigurationTest {
   public void tokenServiceBeanShouldReturnATokenService()
       throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
     assertThat(fixture.tokenServiceBean()).isNotNull()
-        .hasFieldOrPropertyWithValue("authenticationManager", authenticationManager)
-        .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsService)
-        .hasFieldOrPropertyWithValue("reuseRefreshToken", false).hasFieldOrPropertyWithValue("tokenStore", tokenStore);
+        .hasFieldOrPropertyWithValue("authenticationManager", authenticationManagerFixture)
+        .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsServiceFixture)
+        .hasFieldOrPropertyWithValue("reuseRefreshToken", false)
+        .hasFieldOrPropertyWithValue("tokenStore", tokenStoreFixture);
   }
 }

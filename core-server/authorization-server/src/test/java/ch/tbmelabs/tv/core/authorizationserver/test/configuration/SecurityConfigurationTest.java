@@ -2,9 +2,9 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
@@ -23,10 +23,10 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class SecurityConfigurationTest {
   @Mock
-  private WebSecurity webSecurity;
+  private WebSecurity webSecurityFixture;
 
   @Mock
-  private Environment environment;
+  private Environment environmentFixture;
 
   @Spy
   @InjectMocks
@@ -36,9 +36,9 @@ public class SecurityConfigurationTest {
   public void beforeTestSetUp() throws Exception {
     initMocks(this);
 
-    when(environment.getActiveProfiles()).thenReturn(new String[] { SpringApplicationProfile.DEV });
+    doReturn(new String[] { SpringApplicationProfile.DEV }).when(environmentFixture).getActiveProfiles();
 
-    doCallRealMethod().when(fixture).init(webSecurity);
+    doCallRealMethod().when(fixture).init(webSecurityFixture);
   }
 
   @Test
@@ -48,9 +48,14 @@ public class SecurityConfigurationTest {
   }
 
   @Test
-  public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
-    fixture.configure(webSecurity);
+  public void securityConfigurationShouldHavePublicConstructor() {
+    assertThat(new SecurityConfiguration()).isNotNull();
+  }
 
-    verify(webSecurity, times(1)).debug(true);
+  @Test
+  public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
+    fixture.configure(webSecurityFixture);
+
+    verify(webSecurityFixture, times(1)).debug(true);
   }
 }

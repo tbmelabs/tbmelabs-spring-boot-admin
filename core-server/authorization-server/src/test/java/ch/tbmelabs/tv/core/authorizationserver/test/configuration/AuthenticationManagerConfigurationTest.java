@@ -24,10 +24,10 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsSe
 
 public class AuthenticationManagerConfigurationTest {
   @Mock
-  private PreAuthenticatedAuthenticationProviderImpl preAuthProviderImpl;
+  private PreAuthenticatedAuthenticationProviderImpl preAuthProviderImplFixture;
 
   @Mock
-  private UserDetailsServiceImpl userDetailsServiceImpl;
+  private UserDetailsServiceImpl userDetailsServiceImplFixture;
 
   @Spy
   @InjectMocks
@@ -59,13 +59,13 @@ public class AuthenticationManagerConfigurationTest {
   @Test
   public void authenticationManagerBeanShouldReturnAnAuthenticationManager() throws Exception {
     assertThat(((ProviderManager) fixture.authenticationManager()).getProviders()).isNotNull().hasSize(2)
-        .contains(preAuthProviderImpl);
+        .contains(preAuthProviderImplFixture);
 
     Optional<AuthenticationProvider> daoProvider = ((ProviderManager) fixture.authenticationManager()).getProviders()
         .stream().filter(provider -> DaoAuthenticationProvider.class.isAssignableFrom(provider.getClass())).findFirst();
 
     assertThat(daoProvider.isPresent()).isTrue();
     assertThat((DaoAuthenticationProvider) daoProvider.get()).hasFieldOrPropertyWithValue("userDetailsService",
-        userDetailsServiceImpl);
+        userDetailsServiceImplFixture);
   }
 }

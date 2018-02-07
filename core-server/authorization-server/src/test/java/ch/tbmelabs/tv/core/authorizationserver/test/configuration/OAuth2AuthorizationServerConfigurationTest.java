@@ -14,4 +14,9 @@ public class OAuth2AuthorizationServerConfigurationTest {
     assertThat(OAuth2AuthorizationServerConfiguration.class).hasAnnotation(Configuration.class)
         .hasAnnotation(EnableAuthorizationServer.class);
   }
+
+  @Test
+  public void oAuth2AuthorizationServerConfigurationShouldHavePublicConstructor() {
+    assertThat(new OAuth2AuthorizationServerConfiguration()).isNotNull();
+  }
 }

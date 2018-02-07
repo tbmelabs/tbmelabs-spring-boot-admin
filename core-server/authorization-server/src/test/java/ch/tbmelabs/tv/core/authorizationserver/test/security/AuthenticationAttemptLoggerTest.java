@@ -1,9 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class AuthenticationAttemptLoggerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    when(userRepositoryFixture.findByUsername(Mockito.anyString())).thenReturn(new User());
+    doReturn(new User()).when(userRepositoryFixture).findByUsername(Mockito.anyString());
   }
 
   @Test

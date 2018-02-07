@@ -22,6 +22,11 @@ public class TokenStoreConfigurationTest {
   }
 
   @Test
+  public void tokenStoreConfigurationShouldHavePublicConstructor() {
+    assertThat(new TokenStoreConfiguration()).isNotNull();
+  }
+
+  @Test
   public void redisTokenStoreShouldOccurInProductiveEnvironmentOnly() throws NoSuchMethodException, SecurityException {
     Method redisTokenStoreConfiguration = TokenStoreConfiguration.class.getDeclaredMethod("tokenStore",
         new Class[] { RedisConnectionFactory.class });

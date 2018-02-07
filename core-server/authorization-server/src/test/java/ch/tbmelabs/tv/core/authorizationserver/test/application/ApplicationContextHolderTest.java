@@ -17,7 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
 
 public class ApplicationContextHolderTest {
   @Mock
-  private ApplicationContext applicationContext;
+  private ApplicationContext applicationContextFixture;
 
   @Spy
   @InjectMocks
@@ -27,12 +27,17 @@ public class ApplicationContextHolderTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doCallRealMethod().when(fixture).setApplicationContext(applicationContext);
+    doCallRealMethod().when(fixture).setApplicationContext(applicationContextFixture);
   }
 
   @Test
   public void applicationContextHolderShouldBeAnnotated() {
     assertThat(ApplicationContextHolder.class).hasAnnotation(Component.class);
+  }
+
+  @Test
+  public void applicationContextHolderShouldHavePublicConstructor() {
+    assertThat(new ApplicationContextHolder()).isNotNull();
   }
 
   @Test
@@ -42,10 +47,10 @@ public class ApplicationContextHolderTest {
 
   @Test
   public void applicationContextGetterAndSetterWorkAsExpected() {
-    fixture.setApplicationContext(applicationContext);
+    fixture.setApplicationContext(applicationContextFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("applicationContext", applicationContext);
+    assertThat(fixture).hasFieldOrPropertyWithValue("applicationContext", applicationContextFixture);
 
-    assertThat(ApplicationContextHolder.getApplicationContext()).isEqualTo(applicationContext);
+    assertThat(ApplicationContextHolder.getApplicationContext()).isEqualTo(applicationContextFixture);
   }
 }

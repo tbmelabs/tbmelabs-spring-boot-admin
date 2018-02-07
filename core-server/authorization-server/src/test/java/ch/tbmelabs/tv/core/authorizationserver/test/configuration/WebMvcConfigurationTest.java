@@ -15,7 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration
 
 public class WebMvcConfigurationTest {
   @Mock
-  private ResourceHandlerRegistry resourceHandlerRegistry;
+  private ResourceHandlerRegistry resourceHandlerRegistryFixture;
 
   @Mock
   private WebMvcConfiguration fixture;
@@ -25,12 +25,17 @@ public class WebMvcConfigurationTest {
     initMocks(this);
 
     doCallRealMethod().when(fixture).viewResolver();
-    doCallRealMethod().when(fixture).addResourceHandlers(resourceHandlerRegistry);
+    doCallRealMethod().when(fixture).addResourceHandlers(resourceHandlerRegistryFixture);
   }
 
   @Test
   public void webMVCConfigurationShouldBeAnnotated() {
     assertThat(WebMvcConfiguration.class).hasAnnotation(Configuration.class);
+  }
+
+  @Test
+  public void webMVCConfigurationShouldHavePublicConstructor() {
+    assertThat(new WebMvcConfiguration()).isNotNull();
   }
 
   @Test

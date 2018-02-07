@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Random;
@@ -28,19 +28,24 @@ public class UserRoleAssociationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    when(userFixture.getId()).thenReturn(new Random().nextLong());
-    when(roleFixture.getId()).thenReturn(new Random().nextLong());
+    doReturn(new Random().nextLong()).when(userFixture).getId();
+    doReturn(new Random().nextLong()).when(roleFixture).getId();
   }
 
   @Test
-  public void classShouldBeAnnotatedWithComposedIdClass() {
+  public void userRoleAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(UserRoleAssociation.class).hasAnnotation(IdClass.class);
     assertThat(UserRoleAssociation.class.getDeclaredAnnotation(IdClass.class).value()).isNotNull()
         .isEqualTo(UserRoleAssociationId.class);
   }
 
   @Test
-  public void constructorShouldSaveIdsAndEntities() {
+  public void userRoleAssociationShouldHaveNoArgsConstructor() {
+    assertThat(new UserRoleAssociation()).isNotNull();
+  }
+
+  @Test
+  public void userRoleAssociationShouldHaveAllArgsConstructor() {
     assertThat(new UserRoleAssociation(userFixture, roleFixture))
         .hasFieldOrPropertyWithValue("userId", userFixture.getId())
         .hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId()).hasFieldOrPropertyWithValue("user", userFixture)
@@ -48,28 +53,22 @@ public class UserRoleAssociationTest {
   }
 
   @Test
-  public void userSetterShouldSaveId() {
+  public void userRoleAssociationShouldHaveUserGetterAndSetter() {
     UserRoleAssociation fixture = new UserRoleAssociation();
     fixture.setUser(userFixture);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("userId", userFixture.getId()).hasFieldOrPropertyWithValue("user",
         userFixture);
+    assertThat(fixture.getUser()).isEqualTo(userFixture);
   }
 
   @Test
-  public void userRoleSetterShouldSaveId() {
+  public void userRoleAssociationShouldHaveRoleGetterAndSetter() {
     UserRoleAssociation fixture = new UserRoleAssociation();
     fixture.setUserRole(roleFixture);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId())
         .hasFieldOrPropertyWithValue("userRole", roleFixture);
-  }
-
-  @Test
-  public void gettersShouldReturnCorrectEntities() {
-    UserRoleAssociation fixture = new UserRoleAssociation(userFixture, roleFixture);
-
-    assertThat(fixture.getUser()).isEqualTo(userFixture);
     assertThat(fixture.getUserRole()).isEqualTo(roleFixture);
   }
 }

@@ -15,6 +15,11 @@ public class CorsFilterConfigurationTest {
   }
 
   @Test
+  public void logoutCorsFilterConfigurationShouldHavePublicConstructor() {
+    assertThat(new CorsFilterConfiguration()).isNotNull();
+  }
+
+  @Test
   public void logoutCorsFilterBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(CorsFilterConfiguration.class.getDeclaredMethod("logoutCorsFilter", new Class<?>[] {})
         .getDeclaredAnnotation(Bean.class)).isNotNull();
