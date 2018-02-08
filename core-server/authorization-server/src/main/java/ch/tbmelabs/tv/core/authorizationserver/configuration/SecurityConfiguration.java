@@ -67,11 +67,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     http
       
       .csrf().disable()
-      
+            
       .authorizeRequests()
         .antMatchers("/me","/user").permitAll()
         .antMatchers(loginEndpoint, "/signup/**").permitAll()
-        .antMatchers("/public/**", "/vendor/**").permitAll()
+        .antMatchers("/public/**").permitAll()
       .anyRequest().authenticated()
       
       .and().formLogin()
@@ -85,8 +85,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .and().logout()
         .permitAll()
       
-      .and().addFilter(logoutCorsFilter)
-      .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
+      .and()
+        .addFilter(logoutCorsFilter)
+        .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
     // @formatter:on
   }
 }

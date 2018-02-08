@@ -31,22 +31,22 @@ class SignupForm extends Component {
       isLoading: false
     }
 
-    this.isFormValid = this.isFormValid.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.validateForm = this.validateForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  isFormValid(errors) {
-    return isEmpty(errors) && !!this.state.username && !!this.state.email
-      && !!this.state.password && !!this.state.confirmation;
-  }
-
-  onChange(event) {
+    onChange(event) {
     this.setState({[event.target.name]: event.target.value, target: event.target}, () => {
       this.props.validateForm(this.state.target.name, this.state, errors => {
-        this.setState({errors: errors, isValid: this.isFormValid(errors)});
+        this.setState({errors: errors, isValid: this.validateForm(errors)});
       });
     });
+  }
+
+  validateForm(errors) {
+    return isEmpty(errors) && !!this.state.username && !!this.state.email
+      && !!this.state.password && !!this.state.confirmation;
   }
 
   onSubmit(event) {
@@ -55,7 +55,7 @@ class SignupForm extends Component {
     const {texts} = this.props;
 
     this.props.validateForm(event.target.name, this.state, errors => {
-      if (this.isFormValid(errors)) {
+      if (this.validateForm(errors)) {
         this.props.signupUser(this.state).then(
           response => {
             this.props.addFlashMessage({

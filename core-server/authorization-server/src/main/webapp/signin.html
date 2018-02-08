@@ -7,69 +7,21 @@
   <meta name="description" content="Free to use streaming application.">
 
   <title>TBME Labs | Sign In</title>
-
-  <link rel="stylesheet" href="vendor/css/signin.css"/>
 </head>
 <body>
-<div class="container">
-  <noscript>
-    <style>
-      #script-container {
-        display: none;
-      }
-    </style>
+<noscript>
+  Please enable JavaScript to use this application.
+</noscript>
 
-    <div class="alert alert-danger">
-      <strong>JavaScript disabled!</strong> Please enable JavaScript to use this application.
-    </div>
-  </noscript>
+<div id="app"/>
 
-  <div id="script-container">
-    <div class="jumbotron">
-      <h1 id="jumbotron_title"></h1>
-      <p id="jumbotron_text"></p>
-    </div>
-
-    <div id="signin-failed-alert" class="alert alert-danger">
-      <button id="signin-failed-alert-dismiss" type="button" class="close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong id="signin_failed_alert_title"></strong> <span id="signin_failed_alert_text"></span>
-    </div>
-
-    <div id="logout-succeed-alert" class="alert alert-success">
-      <button id="logout-succeed-alert-dismiss" type="button" class="close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <strong id="logout_succeed_alert_title"></strong> <span id="logout_succeed_alert_text"></span>
-    </div>
-
-    <div class="form-container">
-      <form id="signin-form" action="signin" method="post">
-        <div class="form-group row">
-          <label id="username_form_control" for="username" class="col-sm-4 col-form-label"></label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label id="password_form_control" for="password" class="col-sm-4 col-form-label"></label>
-          <div class="col-sm-8">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-sm-offset-4 col-sm-4">
-            <a href="signup" id="signup_link_text" class="pull-left"></a>
-          </div>
-          <div class="col-sm-4">
-            <button id="signin_button_text" type="submit" class="btn btn-primary pull-right"></button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+<!--<div class="container">-->
+  <!--<form action="signin" method="post">-->
+    <!--<input type="text" name="username"/>-->
+    <!--<input type="password" name="password"/>-->
+    <!--<input type="submit" value="Sign In"/>-->
+  <!--</form>-->
+<!--</div>-->
 
 <script src="public/signin.js"></script>
 </body>

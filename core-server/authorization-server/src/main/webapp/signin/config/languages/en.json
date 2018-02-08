@@ -1,6 +1,7 @@
 {
   "language": "English",
   "signin": {
+    "tab_header": "TBME Labs | Sign In",
     "jumbotron_title": "TBME Labs - Sign In",
     "jumbotron_text": "Sign in to your TBME Labs account using your username and password.",
     "signin_failed_alert_title": "Sign in failed:",
