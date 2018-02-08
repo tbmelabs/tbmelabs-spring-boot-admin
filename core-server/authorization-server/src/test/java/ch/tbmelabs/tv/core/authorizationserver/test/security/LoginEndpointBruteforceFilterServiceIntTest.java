@@ -38,7 +38,6 @@ public class LoginEndpointBruteforceFilterServiceIntTest extends AbstractOAuth2A
   @Before
   public void beforeTestSetUp() {
     ipBlacklistRepository.deleteAll();
-
     BruteforceFilterService.resetFilter();
   }
 

@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class ClientDetailsImplTest {
   @Mock
   private Client clientFixture;
 
-  private ClientDetailsImpl clientDetailsImpl;
+  private static ClientDetailsImpl clientDetailsImpl;
 
   @Before
   public void beforeTestSetUp() {
@@ -37,11 +37,11 @@ public class ClientDetailsImplTest {
     doCallRealMethod().when(clientFixture).authoritiesToAssociations(Mockito.anyList());
     doCallRealMethod().when(clientFixture).scopesToAssociations(Mockito.anyList());
 
-    when(clientFixture.getClientId()).thenReturn(UUID.randomUUID().toString());
-    when(clientFixture.getSecret()).thenReturn(UUID.randomUUID().toString());
-    when(clientFixture.getAccessTokenValiditySeconds()).thenReturn(3600);
-    when(clientFixture.getRefreshTokenValiditySeconds()).thenReturn(7200);
-    when(clientFixture.getRedirectUri()).thenReturn(CLIENT_REDIRECT_URIS);
+    doReturn(UUID.randomUUID().toString()).when(clientFixture).getClientId();
+    doReturn(UUID.randomUUID().toString()).when(clientFixture).getSecret();
+    doReturn(3600).when(clientFixture).getAccessTokenValiditySeconds();
+    doReturn(7200).when(clientFixture).getRefreshTokenValiditySeconds();
+    doReturn(CLIENT_REDIRECT_URIS).when(clientFixture).getRedirectUri();
 
     clientDetailsImpl = new ClientDetailsImpl(clientFixture);
   }

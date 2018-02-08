@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.domain;
+package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;

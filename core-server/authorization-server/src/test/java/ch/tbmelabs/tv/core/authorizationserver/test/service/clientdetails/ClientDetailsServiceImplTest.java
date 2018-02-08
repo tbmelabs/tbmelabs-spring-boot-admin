@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class ClientDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    when(clientRepositoryFixture.findByClientId(Mockito.anyString())).thenReturn(new Client());
+    doReturn(new Client()).when(clientRepositoryFixture).findByClientId(Mockito.anyString());
   }
 
   @Test

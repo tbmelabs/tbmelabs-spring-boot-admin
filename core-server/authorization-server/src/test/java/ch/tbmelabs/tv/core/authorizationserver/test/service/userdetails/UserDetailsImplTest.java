@@ -18,7 +18,7 @@ public class UserDetailsImplTest {
   @Mock
   private User userFixture;
 
-  private UserDetailsImpl userDetailsImpl;
+  private static UserDetailsImpl userDetailsImpl;
 
   @Before
   public void beforeTestSetUp() {
