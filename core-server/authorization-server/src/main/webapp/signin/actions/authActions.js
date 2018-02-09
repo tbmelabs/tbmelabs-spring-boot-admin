@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-export function signinUser(data) {
+export function signin(data) {
   return dispatch => {
     var formData = new FormData();
     formData.append('username', data.username);

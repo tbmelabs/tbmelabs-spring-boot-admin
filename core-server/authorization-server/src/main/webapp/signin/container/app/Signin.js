@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import {addFlashMessage} from '../../actions/flashMessageActions';
-import {signinUser} from '../../actions/signinActions';
+import {signin} from '../../actions/authActions';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
@@ -53,7 +53,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      signinUser: bindActionCreators(signinUser, dispatch),
+      signinUser: bindActionCreators(signin, dispatch),
       addFlashMessage: bindActionCreators(addFlashMessage, dispatch)
     }
   }

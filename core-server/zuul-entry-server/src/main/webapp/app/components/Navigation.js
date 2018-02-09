@@ -25,7 +25,9 @@ class Navigation extends Component {
       case this.LOGOUT_EVENT:
         this.props.logout().then(
           response => {
-            window.location.replace(response.request.responseURL);
+            window.location.replace(response.headers['no-redirect']);
+
+            // console.log(response.headers['no-redirect']);
           }, error => {
             // TODO: Visualize error to user
             console.log(error);
