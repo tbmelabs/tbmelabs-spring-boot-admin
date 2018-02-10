@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component} from 'react';
+import React from 'react';
 import {render} from 'react-dom';
 
 import {Provider} from 'react-redux';
@@ -14,16 +14,10 @@ require('./styles/tbme-tv.css');
 
 const store = configureStore();
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <CookiesProvider>
-          <Router/>
-        </CookiesProvider>
-      </Provider>
-    );
-  }
-}
-
-render(<App/>, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <CookiesProvider>
+      <Router/>
+    </CookiesProvider>
+  </Provider>
+  , document.getElementById('app'));
