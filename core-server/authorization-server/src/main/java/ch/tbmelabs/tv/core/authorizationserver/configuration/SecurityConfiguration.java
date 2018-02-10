@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
@@ -38,9 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-  @Autowired
-  private CorsFilter logoutCorsFilter;
 
   @Autowired
   private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
@@ -83,10 +79,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .and().httpBasic()
       
       .and().logout()
+        // TODO
+        .logoutSuccessUrl(loginEndpoint + "?goodbye")
         .permitAll()
       
       .and()
-        .addFilter(logoutCorsFilter)
         .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
     // @formatter:on
   }
