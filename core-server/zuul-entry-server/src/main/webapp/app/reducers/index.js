@@ -2,9 +2,10 @@
 
 import {combineReducers} from 'redux';
 
+import auth from './auth';
 import flashMessages from './flashMessages';
 import language from './language';
 
 export default combineReducers({
-  flashMessages, language
+  auth, flashMessages, language
 });

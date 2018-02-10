@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import ch.tbmelabs.tv.core.entryserver.security.logout.OAuth2LogoutHandler;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -25,8 +25,8 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   @Autowired
   private Environment environment;
 
-  @Autowired
-  private OAuth2LogoutHandler oauth2LogoutHandler;
+  @Value("${OAUTH2_SERVER_BASE_URI}")
+  private String oauth2ServerUri;
 
   @Override
   public void configure(WebSecurity web) throws Exception {
@@ -45,10 +45,13 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
       .csrf().disable()
       
       .authorizeRequests()
+        .antMatchers("/").permitAll()
+        .antMatchers("/authenticated").permitAll()
+        .antMatchers("/public/**").permitAll()
         .anyRequest().authenticated()
       
       .and().logout()
-        .logoutSuccessHandler(oauth2LogoutHandler)
+        .logoutSuccessUrl(oauth2ServerUri + "/logout")
         .permitAll();
     // @formatter:on
   }

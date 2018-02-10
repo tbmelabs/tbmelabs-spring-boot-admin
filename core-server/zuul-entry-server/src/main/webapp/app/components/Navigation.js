@@ -15,28 +15,27 @@ class Navigation extends Component {
   constructor(props) {
     super(props);
 
+    this.LOGIN_EVENT = 'LOGIN';
     this.LOGOUT_EVENT = 'LOGOUT';
 
     this.onClick = this.onClick.bind(this);
   }
 
   onClick(event) {
+    const {login, logout} = this.props;
+
     switch (event.target.name) {
+      case this.LOGIN_EVENT:
+        login();
+        break;
       case this.LOGOUT_EVENT:
-        this.props.logout().then(
-          response => {
-            window.location.replace(response.headers['no-redirect']);
-          }, error => {
-            // TODO: Visualize error to user
-            console.log(error);
-          }
-        );
+        logout();
         break;
     }
   }
 
   render() {
-    const {texts} = this.props;
+    const {isAuthenticated, texts} = this.props;
 
     return (
       <Navbar collapseOnSelect>
@@ -59,7 +58,12 @@ class Navigation extends Component {
             {/*</NavDropdown>*/}
           </Nav>
           <Nav pullRight>
-            <NavItem name={this.LOGOUT_EVENT} onClick={this.onClick}>{texts.logout}</NavItem>
+            {
+              !isAuthenticated ?
+                <NavItem name={this.LOGIN_EVENT} onClick={this.onClick}>{texts.login}</NavItem>
+                :
+                <NavItem name={this.LOGOUT_EVENT} onClick={this.onClick}>{texts.logout}</NavItem>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -68,7 +72,9 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
+  login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   texts: PropTypes.object.isRequired
 }
 
