@@ -31,6 +31,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
     registry.addViewController("/").setViewName("index");
     registry.addViewController("/signin").setViewName("signin");
     registry.addViewController("/signup").setViewName("signup");
+    registry.addViewController("/oauth/confirm_access").setViewName("authorize");
 
     registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
   }

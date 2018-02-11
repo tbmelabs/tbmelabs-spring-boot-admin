@@ -16,10 +16,6 @@ import SignupForm from '../../components/signup/SignupForm';
 require('../../styles/signup.css');
 
 class Signup extends Component {
-  componentDidMount() {
-    document.title = this.props.texts.tab_header;
-  }
-
   render() {
     const {texts} = this.props;
     const {addFlashMessage} = this.props.actions;

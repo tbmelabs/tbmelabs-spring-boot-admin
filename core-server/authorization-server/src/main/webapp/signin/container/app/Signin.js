@@ -16,10 +16,6 @@ import UsernamePasswordSigninForm from '../../components/signin/UsernamePassword
 require('../../styles/signin.css');
 
 class Signup extends Component {
-  componentDidMount() {
-    document.title = this.props.texts.tab_header;
-  }
-
   render() {
     const {texts} = this.props;
     const {signinUser, addFlashMessage} = this.props.actions;

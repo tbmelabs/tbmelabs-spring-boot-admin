@@ -1,0 +1,37 @@
+package ch.tbmelabs.tv.core.authorizationserver.web.oauth2;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections.IteratorUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
+
+@RestController
+// @SessionAttributes("authorizationRequest")
+public class OAuth2ApprovalClientScopesController {
+  // private static final Logger LOGGER =
+  // LogManager.getLogger(CustomApprovalEndpoint.class);
+
+  @Autowired
+  private ClientCRUDRepository clientRepository;
+
+  @Autowired
+  private ClientScopeAssociationCRUDRepository clientScopeAssociationRepository;
+
+  @SuppressWarnings("unchecked")
+  @RequestMapping("/oauth/confirm_access_scopes")
+  public List<String> getAccessConfirmation(@RequestParam(name = "client_id", required = true) String clientId)
+      throws Exception {
+    return (List<String>) IteratorUtils
+        .toList(clientScopeAssociationRepository.findByClient(clientRepository.findByClientId(clientId)).iterator())
+        .stream().map(association -> ((ClientScopeAssociation) association).getClientScope().getName())
+        .collect(Collectors.toList());
+  }
+}

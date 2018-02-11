@@ -36,7 +36,7 @@ class SignupForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-    onChange(event) {
+  onChange(event) {
     this.setState({[event.target.name]: event.target.value, target: event.target}, () => {
       this.props.validateForm(this.state.target.name, this.state, errors => {
         this.setState({errors: errors, isValid: this.validateForm(errors)});
@@ -73,9 +73,7 @@ class SignupForm extends Component {
               isValid: false,
               isLoading: false
             });
-          }, error => {
-            this.setState({errors: {form: error.response.data.message}});
-          }
+          }, error => this.setState({errors: {form: error.response.data.message}})
         );
       } else {
         this.setState({errors: errors, isValid: false});

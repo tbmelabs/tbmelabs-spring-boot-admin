@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole;
+package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

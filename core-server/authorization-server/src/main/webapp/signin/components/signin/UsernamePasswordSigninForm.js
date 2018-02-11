@@ -45,11 +45,8 @@ class UsernamePasswordSigninForm extends Component {
     event.preventDefault();
 
     this.props.signinUser(this.state).then(
-      response => {
-        window.location.replace(response.headers['no-redirect']);
-      }, error => {
-        this.setState({errors: {form: error.response.data.message}});
-      }
+      response => window.location.replace(response.headers['no-redirect'])
+      , error => this.setState({errors: {form: error.response.data.message}})
     );
   }
 

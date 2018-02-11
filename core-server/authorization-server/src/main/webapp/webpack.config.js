@@ -4,13 +4,13 @@ var path = require('path');
 var NODE_DIR = path.resolve(__dirname, 'node_modules');
 var BUILD_DIR = path.resolve(__dirname, 'public');
 
-// var AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
+var AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
 var SIGNIN_APP = path.resolve(__dirname, 'signin');
 var SIGNUP_APP = path.resolve(__dirname, 'signup');
 
 var config = {
   entry: {
-    // authorize: AUTHORIZE_APP,
+    authorize: AUTHORIZE_APP,
     signin: SIGNIN_APP,
     signup: SIGNUP_APP
   },
@@ -23,7 +23,7 @@ var config = {
       test: /\.js$/,
       exclude: [NODE_DIR],
       include: [
-        // AUTHORIZE_APP,
+        AUTHORIZE_APP,
         SIGNIN_APP, SIGNUP_APP],
       loader: 'babel-loader',
       query: {

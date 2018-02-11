@@ -79,7 +79,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .and().httpBasic()
       
       .and().logout()
-        // TODO
         .logoutSuccessUrl(loginEndpoint + "?goodbye")
         .permitAll()
       

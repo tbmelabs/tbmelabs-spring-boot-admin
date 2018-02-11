@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
 
 public class ClientDetailsImplTest {

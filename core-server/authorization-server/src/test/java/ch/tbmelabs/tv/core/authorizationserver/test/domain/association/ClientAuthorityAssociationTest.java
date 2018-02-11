@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientrole.ClientAuthorityAssociationId;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 
 public class ClientAuthorityAssociationTest {
   @Mock

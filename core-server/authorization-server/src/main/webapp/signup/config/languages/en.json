@@ -1,7 +1,6 @@
 {
   "language": "English",
   "signup": {
-    "tab_header": "TBME Labs | Sign Up",
     "jumbotron_title": "TBME Labs - Sign Up",
     "jumbotron_text": "Sign up once and use your account for all our applications.",
     "signup_failed_error_title": "Registration failed: ",
