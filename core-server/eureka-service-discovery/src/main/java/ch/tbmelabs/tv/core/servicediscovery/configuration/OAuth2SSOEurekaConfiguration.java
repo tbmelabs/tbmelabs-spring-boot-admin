@@ -43,7 +43,11 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
       
       .authorizeRequests()
         .antMatchers("/eureka/**").permitAll()
-        .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT);
+        .antMatchers("/public/**", "/vendor/**").permitAll()
+        .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT)
+      
+      .and().exceptionHandling()
+        .accessDeniedPage("/403.html");
     // @formatter:on
   }
 }

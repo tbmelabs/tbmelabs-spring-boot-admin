@@ -26,7 +26,7 @@
 and (max-device-width: 1024px) {
   .signup-form {
     margin: auto;
-    max-width: 75%;
+    max-width: 75vw;
   }
 }
 
@@ -36,6 +36,6 @@ and (max-device-width: 1024px) {
 @media screen and (min-width: 1024px) {
   .signup-form {
     margin: auto;
-    max-width: 50%;
+    max-width: 50vw;
   }
 }

@@ -40,6 +40,18 @@
 
   <build>
     <defaultGoal>spring-boot:run</defaultGoal>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/webapp</directory>
+        <targetPath>static</targetPath>
+      </resource>
+    </resources>
   </build>
 
   <profiles>
