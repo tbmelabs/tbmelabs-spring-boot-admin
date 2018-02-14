@@ -91,5 +91,9 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>prod</id>
+    </profile>
   </profiles>
 </project>
