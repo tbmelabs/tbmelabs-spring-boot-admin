@@ -14,7 +14,7 @@ import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
 
 public class LogoutEndpointIntTest extends AbstractZuulApplicationContextAware {
   private static final String LOGOUT_ENDPOINT_URI = "/logout";
-  private static final String AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL = "http://localhost/logout";
+  private static final String LOGOUT_FORWARD_URI = "/";
 
   @Autowired
   private MockMvc mockMvc;
@@ -24,6 +24,6 @@ public class LogoutEndpointIntTest extends AbstractZuulApplicationContextAware {
     String redirectUrl = mockMvc.perform(post(LOGOUT_ENDPOINT_URI)).andDo(print())
         .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
-    assertThat(redirectUrl).isEqualTo(AUTHORIZATION_SERVER_LOGOUT_ENDPOINT_URL);
+    assertThat(redirectUrl).isEqualTo(LOGOUT_FORWARD_URI);
   }
 }

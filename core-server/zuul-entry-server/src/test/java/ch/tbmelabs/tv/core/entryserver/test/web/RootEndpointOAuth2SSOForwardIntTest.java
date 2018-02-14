@@ -26,10 +26,7 @@ public class RootEndpointOAuth2SSOForwardIntTest extends AbstractZuulApplication
 
   @Test
   public void requestToLoginEndpointShouldForwardToOAuth2AuthorizationEndpoint() throws Exception {
-    String loginForward = mockMvc.perform(get("/")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()))
-        .andReturn().getResponse().getHeader(FORWARD_HEADER_NAME);
-
-    assertThat(loginForward).isEqualTo(ZUUL_AUTHENTICATION_ENTRY_POINT_URI);
+    mockMvc.perform(get("/")).andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
     String ssoForward = mockMvc.perform(get("/login")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()))
         .andReturn().getResponse().getHeader(FORWARD_HEADER_NAME);

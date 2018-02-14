@@ -144,9 +144,7 @@
       <id>dev</id>
 
       <activation>
-        <property>
-          <name>!prod</name>
-        </property>
+        <activeByDefault>true</activeByDefault>
       </activation>
 
       <properties>
