@@ -45,7 +45,7 @@ public class LoginEndpointBruteforceFilterServiceIntTest extends AbstractOAuth2A
   public void authenticationFailureListenerShouldRegisterFailingAuthentication() throws Exception {
     mockMvc.perform(
         post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     assertThat(BruteforceFilterService.getState()).hasSize(1);
   }
@@ -55,7 +55,8 @@ public class LoginEndpointBruteforceFilterServiceIntTest extends AbstractOAuth2A
     IntStream.range(0, maxLoginAttempts).forEach(iterator -> {
       try {
         mockMvc.perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid")
-            .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()));
+            .param(PASSWORD_PARAMETER_NAME, "invalid")).andDo(print())
+            .andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
       } catch (Exception e) {
         throw new IllegalArgumentException(e);
       }

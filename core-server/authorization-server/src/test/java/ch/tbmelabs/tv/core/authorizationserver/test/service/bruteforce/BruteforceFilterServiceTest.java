@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.bruteforce;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -38,9 +38,8 @@ public class BruteforceFilterServiceTest {
 
   @Test
   public void bruteforceFilterShouldRememberIpsExceedingMaxLoginAttempts() {
-    IntStream.range(0, MAX_LOGIN_ATTEMPTS)
-        .forEach(iterator -> fixture.authenticationFromIpFailed(IP_ADDRESS));
+    IntStream.range(0, MAX_LOGIN_ATTEMPTS).forEach(iterator -> fixture.authenticationFromIpFailed(IP_ADDRESS));
 
-    verify(ipBlacklistRepositoryFixture, times(1)).save(Mockito.any(BlacklistedIp.class));
+    verify(ipBlacklistRepositoryFixture, atLeastOnce()).save(Mockito.any(BlacklistedIp.class));
   }
 }

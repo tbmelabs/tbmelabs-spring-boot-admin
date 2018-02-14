@@ -20,6 +20,7 @@ public class TokenStoreConfigurationIntTest extends AbstractOAuth2AuthorizationA
   private TokenStoreConfiguration configuration;
 
   @Autowired
+  @Qualifier("tokenStore")
   private TokenStore bean;
 
   @Autowired

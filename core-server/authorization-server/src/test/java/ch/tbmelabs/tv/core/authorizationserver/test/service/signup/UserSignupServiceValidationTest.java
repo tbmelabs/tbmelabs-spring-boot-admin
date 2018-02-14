@@ -22,8 +22,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 
 public class UserSignupServiceValidationTest {
-  private static User existingUser = new User();
-
   @Mock
   private UserCRUDRepository userRepository;
 
@@ -34,10 +32,12 @@ public class UserSignupServiceValidationTest {
   @InjectMocks
   private UserSignupService fixture;
 
+  private static User existingUser = new User();
+
   @BeforeClass
   public static void beforeClassSetUp() {
-    UserSignupServiceValidationTest.existingUser.setUsername(RandomStringUtils.random(11));
-    UserSignupServiceValidationTest.existingUser.setEmail(RandomStringUtils.random(11));
+    existingUser.setUsername(RandomStringUtils.random(11));
+    existingUser.setEmail(RandomStringUtils.random(11));
   }
 
   @Before
@@ -89,7 +89,7 @@ public class UserSignupServiceValidationTest {
     invalidUser.setUsername(RandomStringUtils.randomAscii(10) + "$");
 
     User validUser = new User();
-    validUser.setUsername(RandomStringUtils.random(11));
+    validUser.setUsername(RandomStringUtils.randomAlphabetic(11));
 
     assertThat(fixture.doesUsernameMatchFormat(invalidUser)).isFalse();
     assertThat(fixture.doesUsernameMatchFormat(validUser)).isTrue();
