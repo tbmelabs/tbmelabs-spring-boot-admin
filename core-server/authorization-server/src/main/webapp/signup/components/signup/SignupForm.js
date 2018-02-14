@@ -13,7 +13,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
-import CollapsableAlert from '../common/CollapsableAlert';
+import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 

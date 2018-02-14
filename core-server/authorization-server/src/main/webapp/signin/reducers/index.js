@@ -2,7 +2,7 @@
 
 import {combineReducers} from 'redux';
 
-import flashMessages from './flashMessages';
+import flashMessages from '../../common/reducers/flashMessages';
 import language from './language';
 
 export default combineReducers({

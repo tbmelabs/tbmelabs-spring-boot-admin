@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {addFlashMessage} from '../../actions/flashMessageActions';
-import {signin} from '../../actions/authActions';
+import {addFlashMessage} from '../../../common/actions/flashMessageActions';
+import signin from '../../utils/signin';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
@@ -18,7 +18,7 @@ require('../../styles/signin.css');
 class Signup extends Component {
   render() {
     const {texts} = this.props;
-    const {signinUser, addFlashMessage} = this.props.actions;
+    const {addFlashMessage} = this.props.actions;
 
     return (
       <div>
@@ -28,7 +28,7 @@ class Signup extends Component {
         </Jumbotron>
 
         <div className='signin-form'>
-          <UsernamePasswordSigninForm signinUser={signinUser} addFlashMessage={addFlashMessage} texts={texts}/>
+          <UsernamePasswordSigninForm signinUser={signin} addFlashMessage={addFlashMessage} texts={texts}/>
         </div>
       </div>
     );
@@ -49,7 +49,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      signinUser: bindActionCreators(signin, dispatch),
       addFlashMessage: bindActionCreators(addFlashMessage, dispatch)
     }
   }

@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {deleteFlashMessage} from '../../actions/flashMessageActions';
+import {deleteFlashMessage} from '../../../common/actions/flashMessageActions';
 
-import FlashMessage from '../../components/common/FlashMessage';
+import FlashMessage from '../../../common/components/FlashMessage';
 
 class FlashMessagesList extends Component {
   render() {

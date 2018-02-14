@@ -13,7 +13,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Radio from 'react-bootstrap/lib/Radio';
 import Button from 'react-bootstrap/lib/Button';
 
-import CollapsableAlert from '../common/CollapsableAlert';
+import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 

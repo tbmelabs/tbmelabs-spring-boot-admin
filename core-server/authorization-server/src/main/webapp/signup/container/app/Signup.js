@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {addFlashMessage} from '../../actions/flashMessageActions';
-import {validateSignupForm, signupUser} from '../../actions/signupActions';
+import {addFlashMessage} from '../../../common/actions/flashMessageActions';
+import validateSignupForm from '../../utils/validateSignupForm';
+import signupUser from '../../utils/signupUser';
 
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 

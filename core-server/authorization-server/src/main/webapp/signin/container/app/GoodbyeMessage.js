@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 
 import {parse} from 'query-string';
 
-import {addFlashMessage} from '../../actions/flashMessageActions';
+import {addFlashMessage} from '../../../common/actions/flashMessageActions';
 
 class ShouldAddGoodbyeMessage extends Component {
   componentDidMount() {

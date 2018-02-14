@@ -3,10 +3,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {loadScopesForClientId} from '../../actions/authorizeActions';
+import loadScopesForClientId from '../../utils/loadScopesForClientId';
 
 import ClientApprovalForm from '../../components/authorize/ClientApprovalForm';
 

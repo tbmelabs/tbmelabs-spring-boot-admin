@@ -1,15 +1,11 @@
 'use strict';
 
-import axios from 'axios';
+import validateUsername from './validators/validateUsername';
+import validateEmail from './validators/validateEmail';
+import validatePassword from './validators/validatePassword';
+import validatePasswordConfirmation from './validators/validatePasswordConfirmation';
 
-import {
-  validateUsername,
-  validateEmail,
-  validatePassword,
-  validatePasswordConfirmation
-} from '../utils/validators/signup';
-
-export function validateSignupForm(control, data, callback) {
+export default function validateSignupForm(control, data, callback) {
   const {username, email, password, confirmation, errors} = data;
 
   delete errors.form;
@@ -39,13 +35,3 @@ export function validateSignupForm(control, data, callback) {
   }
 }
 
-export function signupUser(data) {
-  const {username, email, password, confirmation} = data;
-
-  return axios.post('signup/do-signup', {
-    username: username,
-    email: email,
-    password: password,
-    confirmation: confirmation
-  });
-}

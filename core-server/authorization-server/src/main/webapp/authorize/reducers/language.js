@@ -1,6 +1,6 @@
 'use strict';
 
-import {SET_LANGUAGE} from '../actions/types';
+import {SET_LANGUAGE} from '../../common/actions/types';
 
 const en = require('../config/languages/en.json');
 

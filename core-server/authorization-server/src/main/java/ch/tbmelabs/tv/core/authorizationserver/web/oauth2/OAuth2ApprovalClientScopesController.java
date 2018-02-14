@@ -14,11 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepos
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
 
 @RestController
-// @SessionAttributes("authorizationRequest")
 public class OAuth2ApprovalClientScopesController {
-  // private static final Logger LOGGER =
-  // LogManager.getLogger(CustomApprovalEndpoint.class);
-
   @Autowired
   private ClientCRUDRepository clientRepository;
 

@@ -50,6 +50,11 @@ public class SignupControllerTest {
   }
 
   @Test
+  public void signupControllerShouldHavePublicConstructor() {
+    assertThat(new SignupController()).isNotNull();
+  }
+
+  @Test
   public void signupShouldCallServiceMethod() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("signup", new Class<?>[] { User.class });
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty().containsExactly("/do-signup");
