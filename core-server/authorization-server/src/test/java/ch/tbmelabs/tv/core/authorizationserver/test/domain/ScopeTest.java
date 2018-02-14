@@ -59,7 +59,7 @@ public class ScopeTest {
   @Test
   public void scopeShouldHaveNameGetterAndSetter() {
     Scope fixture = new Scope();
-    String name = RandomStringUtils.randomAlphabetic(11);
+    String name = RandomStringUtils.random(11);
 
     fixture.setName(name);
 

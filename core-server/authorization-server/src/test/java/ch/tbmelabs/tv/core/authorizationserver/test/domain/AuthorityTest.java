@@ -60,7 +60,7 @@ public class AuthorityTest {
   @Test
   public void authorityShouldHaveNameGetterAndSetter() {
     Authority fixture = new Authority();
-    String name = RandomStringUtils.randomAlphabetic(11);
+    String name = RandomStringUtils.random(11);
 
     fixture.setName(name);
 

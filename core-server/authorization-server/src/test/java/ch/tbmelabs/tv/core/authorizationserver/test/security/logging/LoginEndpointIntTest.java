@@ -44,8 +44,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getUsername();
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getConfirmation();
+    doReturn(RandomStringUtils.random(11)).when(userFixture).getUsername();
+    doReturn(RandomStringUtils.random(11)).when(userFixture).getConfirmation();
 
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();

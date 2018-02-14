@@ -149,7 +149,7 @@ public class ClientTest {
   @Test
   public void clientShouldHaveRedirectUriGetterAndSetter() {
     Client fixture = new Client();
-    String redirectUri = RandomStringUtils.randomAlphabetic(11);
+    String redirectUri = RandomStringUtils.random(11);
 
     fixture.setRedirectUri(redirectUri);
 

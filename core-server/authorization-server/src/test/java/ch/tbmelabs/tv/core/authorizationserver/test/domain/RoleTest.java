@@ -59,7 +59,7 @@ public class RoleTest {
   @Test
   public void roleShouldHaveNameGetterAndSetter() {
     Role fixture = new Role();
-    String name = RandomStringUtils.randomAlphabetic(11);
+    String name = RandomStringUtils.random(11);
 
     fixture.setName(name);
 

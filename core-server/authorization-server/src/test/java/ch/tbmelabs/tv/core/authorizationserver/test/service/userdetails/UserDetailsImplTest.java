@@ -26,9 +26,9 @@ public class UserDetailsImplTest {
 
     doCallRealMethod().when(userFixture).rolesToAssociations(Mockito.anyList());
 
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getUsername();
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getEmail();
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getPassword();
+    doReturn(RandomStringUtils.random(11)).when(userFixture).getUsername();
+    doReturn(RandomStringUtils.random(11)).when(userFixture).getEmail();
+    doReturn(RandomStringUtils.random(11)).when(userFixture).getPassword();
     doReturn(true).when(userFixture).getIsEnabled();
     doReturn(false).when(userFixture).getIsBlocked();
 

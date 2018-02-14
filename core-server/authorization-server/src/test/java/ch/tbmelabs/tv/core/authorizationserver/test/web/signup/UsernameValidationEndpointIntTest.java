@@ -32,7 +32,7 @@ public class UsernameValidationEndpointIntTest extends AbstractOAuth2Authorizati
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(4)).toString()))
+              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
@@ -47,7 +47,7 @@ public class UsernameValidationEndpointIntTest extends AbstractOAuth2Authorizati
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
-              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(65)).toString()))
+              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
@@ -62,7 +62,7 @@ public class UsernameValidationEndpointIntTest extends AbstractOAuth2Authorizati
     try {
       mockMvc
           .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
-              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.randomAlphabetic(5) + "$").toString()))
+              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     } catch (NestedServletException e) {
       assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)

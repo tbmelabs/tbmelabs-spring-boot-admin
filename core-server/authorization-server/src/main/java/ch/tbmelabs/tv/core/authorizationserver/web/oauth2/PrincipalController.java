@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +23,16 @@ public class PrincipalController {
 
   @RequestMapping({ "/me", "/user" })
   public Map<String, String> getPrincipal(Principal principal) {
+    if (principal == null) {
+      return new HashMap<>();
+    }
+
     LOGGER.debug("Getting user information for \"" + principal.getName() + "\"");
 
-    User user = userRepository.findByUsername(principal.getName());
+    User user;
+    if ((user = userRepository.findByUsername(principal.getName())) == null) {
+      throw new UsernameNotFoundException("Unable to find user for username \"" + principal.getName() + "\"");
+    }
 
     Map<String, String> userInformation = new HashMap<>();
 

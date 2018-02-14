@@ -102,7 +102,7 @@ public class AuthenticationLogTest {
   @Test
   public void authenticationLogShouldHaveMessageGetterAndSetter() {
     AuthenticationLog fixture = new AuthenticationLog();
-    String message = RandomStringUtils.randomAlphabetic(11);
+    String message = RandomStringUtils.random(11);
 
     fixture.setMessage(message);
 

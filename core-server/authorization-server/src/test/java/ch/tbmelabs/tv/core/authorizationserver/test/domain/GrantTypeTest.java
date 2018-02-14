@@ -60,7 +60,7 @@ public class GrantTypeTest {
   @Test
   public void grantTypeShouldHaveNameGetterAndSetter() {
     GrantType fixture = new GrantType();
-    String name = RandomStringUtils.randomAlphabetic(11);
+    String name = RandomStringUtils.random(11);
 
     fixture.setName(name);
 

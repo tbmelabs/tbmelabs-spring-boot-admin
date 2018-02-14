@@ -1,15 +1,12 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -17,7 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +22,9 @@ import org.springframework.web.util.NestedServletException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
@@ -39,16 +37,17 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   private static final String USER_VALIDATION_ERROR_MESSAGE = "Registration failed. Please check your details!";
 
-  private static User unexistingUser;
-
   @Autowired
   private MockMvc mockMvc;
 
   @Autowired
+  private RoleCRUDRepository roleRepository;
+
+  @Autowired
   private UserCRUDRepository userRepository;
 
-  @Mock
-  private User userFixture;
+  private static User existingUser = new User();
+  private static User unexistingUser = new User();
 
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
@@ -58,22 +57,28 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   @BeforeClass
   public static void beforeClassSetUp() {
-    unexistingUser = new User();
-    unexistingUser.setUsername("SignupUser");
-    unexistingUser.setEmail("signup.user@tbme.tv");
-    unexistingUser.setPassword("Password99$");
+    existingUser.setUsername("Existing");
+    existingUser.setEmail("existing.user@tbme.tv");
+    existingUser.setPassword("Password$2018");
+    existingUser.setConfirmation(existingUser.getPassword());
+
+    unexistingUser.setUsername("Unexisting");
+    unexistingUser.setEmail("unexisting.user@tbme.tv");
+    unexistingUser.setPassword("Password$2018");
     unexistingUser.setConfirmation(unexistingUser.getPassword());
   }
 
   @Before
   public void beforeTestSetUp() {
-    initMocks(this);
+    if (roleRepository.findByName("USER") == null) {
+      roleRepository.save(new Role("USER"));
+    }
 
-    doReturn(RandomStringUtils.randomAlphabetic(11)).when(userFixture).getEmail();
+    existingUser = userRepository.save(existingUser);
 
-    User existingUser;
-    if ((existingUser = userRepository.findByUsername(unexistingUser.getUsername())) != null) {
-      userRepository.delete(existingUser);
+    User checkUnexistingUser;
+    if ((checkUnexistingUser = userRepository.findByUsername(unexistingUser.getUsername())) != null) {
+      userRepository.delete(checkUnexistingUser);
     }
   }
 
@@ -82,7 +87,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
     try {
       mockMvc
           .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new ObjectMapper().writeValueAsString(userFixture)))
+              .content(new ObjectMapper().writeValueAsString(existingUser)))
           .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())).andReturn().getResponse()
           .getContentAsString();
     } catch (NestedServletException e) {

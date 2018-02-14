@@ -36,8 +36,8 @@ public class UserSignupServiceValidationTest {
 
   @BeforeClass
   public static void beforeClassSetUp() {
-    UserSignupServiceValidationTest.existingUser.setUsername(RandomStringUtils.randomAlphabetic(11));
-    UserSignupServiceValidationTest.existingUser.setEmail(RandomStringUtils.randomAlphabetic(11));
+    UserSignupServiceValidationTest.existingUser.setUsername(RandomStringUtils.random(11));
+    UserSignupServiceValidationTest.existingUser.setEmail(RandomStringUtils.random(11));
   }
 
   @Before
@@ -77,7 +77,7 @@ public class UserSignupServiceValidationTest {
   @Test
   public void userSignupServiceShouldInvalidateExistingUsername() {
     User unexistingUser = new User();
-    unexistingUser.setUsername(RandomStringUtils.randomAlphabetic(11));
+    unexistingUser.setUsername(RandomStringUtils.random(11));
 
     assertThat(fixture.isUsernameUnique(existingUser)).isFalse();
     assertThat(fixture.isUsernameUnique(unexistingUser)).isTrue();
@@ -89,7 +89,7 @@ public class UserSignupServiceValidationTest {
     invalidUser.setUsername(RandomStringUtils.randomAscii(10) + "$");
 
     User validUser = new User();
-    validUser.setUsername(RandomStringUtils.randomAlphabetic(11));
+    validUser.setUsername(RandomStringUtils.random(11));
 
     assertThat(fixture.doesUsernameMatchFormat(invalidUser)).isFalse();
     assertThat(fixture.doesUsernameMatchFormat(validUser)).isTrue();
@@ -98,7 +98,7 @@ public class UserSignupServiceValidationTest {
   @Test
   public void userSignupServiceShouldInvalidateExistingEmail() {
     User unexistingUser = new User();
-    unexistingUser.setEmail(RandomStringUtils.randomAlphabetic(11));
+    unexistingUser.setEmail(RandomStringUtils.random(11));
 
     assertThat(fixture.isEmailAddressUnique(existingUser)).isFalse();
     assertThat(fixture.isEmailAddressUnique(unexistingUser)).isTrue();
@@ -107,7 +107,7 @@ public class UserSignupServiceValidationTest {
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingEmail() {
     User invalidUser = new User();
-    invalidUser.setEmail(RandomStringUtils.randomAlphabetic(11));
+    invalidUser.setEmail(RandomStringUtils.random(11));
 
     User validUser = new User();
     validUser.setEmail("valid.email@tbme.tv");
@@ -119,7 +119,7 @@ public class UserSignupServiceValidationTest {
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingPassword() {
     User invalidUser = new User();
-    invalidUser.setPassword(RandomStringUtils.randomAlphabetic(11));
+    invalidUser.setPassword(RandomStringUtils.random(11));
 
     User validUser = new User();
     validUser.setPassword("V@l1dP@$$w0rd");

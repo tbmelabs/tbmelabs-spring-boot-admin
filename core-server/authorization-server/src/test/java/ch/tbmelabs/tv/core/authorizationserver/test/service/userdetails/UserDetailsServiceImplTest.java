@@ -36,9 +36,9 @@ public class UserDetailsServiceImplTest {
   @Test
   public void userDetailsServiceShouldLoadCorrectUserDetailsForUsername()
       throws IllegalAccessException, NoSuchFieldException, SecurityException {
-    UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.randomAlphabetic(11));
+    UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.random(11));
 
     assertThat(ReflectionTestUtils.getField(userDetails, "user"))
-        .isEqualTo(userRepositoryFixture.findByUsername(RandomStringUtils.randomAlphabetic(11)));
+        .isEqualTo(userRepositoryFixture.findByUsername(RandomStringUtils.random(11)));
   }
 }

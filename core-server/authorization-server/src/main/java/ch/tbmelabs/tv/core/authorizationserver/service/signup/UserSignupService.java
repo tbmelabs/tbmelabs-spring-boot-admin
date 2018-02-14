@@ -63,11 +63,11 @@ public class UserSignupService {
   }
 
   public User signUpNewUser(User newUser) {
-    LOGGER.info("New user signed up! username: " + newUser.getUsername() + " and email: " + newUser.getEmail());
-
     if (!isUserValid(newUser)) {
       throw new IllegalArgumentException("Registration failed. Please check your details!");
     }
+
+    LOGGER.info("New user signed up! username: " + newUser.getUsername() + " and email: " + newUser.getEmail());
 
     if (newUser.getGrantedAuthorities() == null || newUser.getGrantedAuthorities().isEmpty()) {
       try {

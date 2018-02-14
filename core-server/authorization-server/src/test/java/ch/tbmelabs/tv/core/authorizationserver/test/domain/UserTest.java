@@ -88,7 +88,7 @@ public class UserTest {
   @Test
   public void userShouldHaveUsernameGetterAndSetter() {
     User fixture = new User();
-    String username = RandomStringUtils.randomAlphabetic(11);
+    String username = RandomStringUtils.random(11);
 
     fixture.setUsername(username);
 
@@ -99,7 +99,7 @@ public class UserTest {
   @Test
   public void userShouldHaveEmailGetterAndSetter() {
     User fixture = new User();
-    String email = RandomStringUtils.randomAlphabetic(11);
+    String email = RandomStringUtils.random(11);
 
     fixture.setEmail(email);
 
@@ -110,7 +110,7 @@ public class UserTest {
   @Test
   public void userShouldHavePasswordGetterAndSetter() {
     User fixture = new User();
-    String password = RandomStringUtils.randomAlphabetic(11);
+    String password = RandomStringUtils.random(11);
 
     fixture.setPassword(password);
 
@@ -121,7 +121,7 @@ public class UserTest {
   @Test
   public void userShouldHaveConfirmationGetterAndSetter() {
     User fixture = new User();
-    String confirmation = RandomStringUtils.randomAlphabetic(11);
+    String confirmation = RandomStringUtils.random(11);
 
     fixture.setConfirmation(confirmation);
 
@@ -143,7 +143,7 @@ public class UserTest {
 
   @Test
   public void onCreateShouldHashPasswordWithBCrypt() {
-    String password = RandomStringUtils.randomAlphabetic(11);
+    String password = RandomStringUtils.random(11);
     ReflectionTestUtils.setField(fixture, "password", password);
     doReturn(password).when(fixture).getPassword();
     doCallRealMethod().when(fixture).setPassword(Mockito.anyString());
