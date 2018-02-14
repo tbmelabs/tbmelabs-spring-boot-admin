@@ -15,7 +15,7 @@ public class SignupController {
   @Autowired
   private UserSignupService signupService;
 
-  @PostMapping({ "do-signup" })
+  @PostMapping({ "/do-signup" })
   public User signup(@RequestBody(required = true) User newUser) {
     return signupService.signUpNewUser(newUser);
   }

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.test.security;
+package ch.tbmelabs.tv.core.authorizationserver.test.security.logging;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
