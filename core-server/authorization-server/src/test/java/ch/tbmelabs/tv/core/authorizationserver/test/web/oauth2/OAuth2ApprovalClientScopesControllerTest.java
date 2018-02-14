@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -46,7 +47,8 @@ public class OAuth2ApprovalClientScopesControllerTest {
     doReturn(new Scope(CLIENT_SCOPE_NAME)).when(mockAssociation).getClientScope();
 
     doReturn(new Client()).when(clientRepositoryFixture).findByClientId(Mockito.anyString());
-    doReturn(mockAssociation).when(clientScopeAssociationRepository).findByClient(Mockito.any(Client.class));
+    doReturn(Arrays.asList(mockAssociation)).when(clientScopeAssociationRepository)
+        .findByClient(Mockito.any(Client.class));
   }
 
   @Test
@@ -63,8 +65,6 @@ public class OAuth2ApprovalClientScopesControllerTest {
   public void getAccessConfirmationShouldReturnScopeNamesOnly() throws Exception {
     Method getAccessConfirmation = OAuth2ApprovalClientScopesController.class.getDeclaredMethod("getAccessConfirmation",
         new Class<?>[] { String.class });
-    assertThat(getAccessConfirmation.getDeclaredAnnotation(SuppressWarnings.class).value()).isNotEmpty()
-        .containsExactly("unchecked");
     assertThat(getAccessConfirmation.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty()
         .containsExactly("/oauth/confirm_access_scopes");
 
