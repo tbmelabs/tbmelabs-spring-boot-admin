@@ -37,6 +37,11 @@ public class AuthenticationControllerTest {
   }
 
   @Test
+  public void authenticationControllerShouldHavePublicConstructor() {
+    assertThat(new AuthenticationController()).isNotNull();
+  }
+
+  @Test
   public void isAuthenticatedShouldReturnFalseIfPrincipalIsNull() {
     assertThat(fixture.isAuthenticated(null)).isFalse();
   }
