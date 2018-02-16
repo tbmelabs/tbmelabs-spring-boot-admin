@@ -1,7 +1,6 @@
 package ch.tbmelabs.core.servicediscovery.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
@@ -23,10 +23,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class OAuth2SSOEurekaConfigurationTest {
   @Mock
-  private WebSecurity webSecurityFixture;
-
-  @Mock
-  private Environment environmentFixture;
+  private Environment mockEnvironment;
 
   @Spy
   @InjectMocks
@@ -36,9 +33,7 @@ public class OAuth2SSOEurekaConfigurationTest {
   public void beforeTestSetUp() throws Exception {
     initMocks(this);
 
-    doReturn(new String[] { SpringApplicationProfile.DEV }).when(environmentFixture).getActiveProfiles();
-
-    doCallRealMethod().when(fixture).init(webSecurityFixture);
+    doReturn(new String[] { SpringApplicationProfile.DEV }).when(mockEnvironment).getActiveProfiles();
   }
 
   @Test
@@ -54,8 +49,10 @@ public class OAuth2SSOEurekaConfigurationTest {
 
   @Test
   public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
-    fixture.configure(webSecurityFixture);
+    WebSecurity security = Mockito.mock(WebSecurity.class);
 
-    verify(webSecurityFixture, times(1)).debug(true);
+    fixture.configure(security);
+
+    verify(security, times(1)).debug(true);
   }
 }
