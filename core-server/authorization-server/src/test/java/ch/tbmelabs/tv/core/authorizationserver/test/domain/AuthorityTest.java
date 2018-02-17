@@ -1,24 +1,38 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 
 public class AuthorityTest {
   private static final String TEST_AUTHORITY_NAME = "TEST";
+
+  @Spy
+  private Authority fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+  }
 
   @Test
   public void roleShouldBeAnnotated() {
@@ -29,11 +43,6 @@ public class AuthorityTest {
     assertThat(Authority.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
     assertThat(Authority.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
-  }
-
-  @Test
-  public void roleShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(NicelyDocumentedJDBCResource.class).isAssignableFrom(Authority.class);
   }
 
   @Test
@@ -48,7 +57,6 @@ public class AuthorityTest {
 
   @Test
   public void authorityShouldHaveIdGetterAndSetter() {
-    Authority fixture = new Authority();
     Long id = new Random().nextLong();
 
     fixture.setId(id);
@@ -59,12 +67,21 @@ public class AuthorityTest {
 
   @Test
   public void authorityShouldHaveNameGetterAndSetter() {
-    Authority fixture = new Authority();
     String name = RandomStringUtils.random(11);
 
     fixture.setName(name);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("name", name);
     assertThat(fixture.getName()).isEqualTo(name);
+  }
+
+  @Test
+  public void authorityShouldHaveClientsGetterAndSetter() {
+    List<ClientAuthorityAssociation> associations = Arrays.asList(Mockito.mock(ClientAuthorityAssociation.class));
+
+    fixture.setClientsWithAuthorities(associations);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithAuthorities", associations);
+    assertThat(fixture.getClientsWithAuthorities()).isEqualTo(associations);
   }
 }

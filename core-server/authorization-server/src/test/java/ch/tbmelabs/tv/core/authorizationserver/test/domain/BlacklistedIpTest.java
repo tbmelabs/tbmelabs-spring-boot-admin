@@ -1,13 +1,16 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Spy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,6 +21,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 
 public class BlacklistedIpTest {
   private static final String TEST_IP = "127.0.0.1";
+
+  @Spy
+  private BlacklistedIp fixture;
+
+  @Before
+  public void beforeTestSetUp() {
+    initMocks(this);
+  }
 
   @Test
   public void blacklistedIpShouldBeAnnotated() {
@@ -48,7 +59,6 @@ public class BlacklistedIpTest {
 
   @Test
   public void blacklistedIpShouldHaveIdGetterAndSetter() {
-    BlacklistedIp fixture = new BlacklistedIp();
     Long id = new Random().nextLong();
 
     fixture.setId(id);
@@ -59,7 +69,6 @@ public class BlacklistedIpTest {
 
   @Test
   public void blacklistedIpShouldHaveIpGetterAndSetter() {
-    BlacklistedIp fixture = new BlacklistedIp();
     String ip = "127.0.0.1";
 
     fixture.setIp(ip);

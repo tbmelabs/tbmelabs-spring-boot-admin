@@ -16,8 +16,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -33,7 +33,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 public class UserTest {
   private static final String TEST_USER_ROLE = "TEST";
 
-  @Mock
+  @Spy
   private User fixture;
 
   @Before
@@ -41,9 +41,6 @@ public class UserTest {
     initMocks(this);
 
     doReturn(new Random().nextLong()).when(fixture).getId();
-
-    doCallRealMethod().when(fixture).onCreate();
-    doCallRealMethod().when(fixture).rolesToAssociations(Mockito.anyList());
   }
 
   @Test
@@ -68,26 +65,23 @@ public class UserTest {
 
   @Test
   public void newUserShouldHaveDefaultValues() {
-    User fixture = new User();
-
     assertThat(fixture.getIsEnabled()).isTrue();
     assertThat(fixture.getIsBlocked()).isFalse();
   }
 
   @Test
   public void userShouldHaveIdGetterAndSetter() {
-    User fixture = new User();
+    User user = Mockito.mock(User.class, Mockito.CALLS_REAL_METHODS);
     Long id = new Random().nextLong();
 
-    fixture.setId(id);
+    user.setId(id);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("id", id);
-    assertThat(fixture.getId()).isEqualTo(id);
+    assertThat(user).hasFieldOrPropertyWithValue("id", id);
+    assertThat(user.getId()).isEqualTo(id);
   }
 
   @Test
   public void userShouldHaveUsernameGetterAndSetter() {
-    User fixture = new User();
     String username = RandomStringUtils.random(11);
 
     fixture.setUsername(username);
@@ -98,7 +92,6 @@ public class UserTest {
 
   @Test
   public void userShouldHaveEmailGetterAndSetter() {
-    User fixture = new User();
     String email = RandomStringUtils.random(11);
 
     fixture.setEmail(email);
@@ -109,7 +102,6 @@ public class UserTest {
 
   @Test
   public void userShouldHavePasswordGetterAndSetter() {
-    User fixture = new User();
     String password = RandomStringUtils.random(11);
 
     fixture.setPassword(password);
@@ -120,7 +112,6 @@ public class UserTest {
 
   @Test
   public void userShouldHaveConfirmationGetterAndSetter() {
-    User fixture = new User();
     String confirmation = RandomStringUtils.random(11);
 
     fixture.setConfirmation(confirmation);
@@ -131,7 +122,6 @@ public class UserTest {
 
   @Test
   public void userShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    User fixture = new User();
     Collection<UserRoleAssociation> grantedAuthorities = Arrays
         .asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
 

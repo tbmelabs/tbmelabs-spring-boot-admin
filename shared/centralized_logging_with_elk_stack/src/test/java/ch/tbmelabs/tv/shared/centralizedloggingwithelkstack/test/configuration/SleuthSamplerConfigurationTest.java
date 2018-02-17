@@ -30,6 +30,11 @@ public class SleuthSamplerConfigurationTest {
   }
 
   @Test
+  public void sleuthSamplerConfigurationShouldHavePublicConstructor() {
+    assertThat(new SleuthSamplerConfiguration()).isNotNull();
+  }
+
+  @Test
   public void defaultSamplerShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(SleuthSamplerConfiguration.class.getDeclaredMethod("defaultSampler", new Class<?>[] {})
         .getDeclaredAnnotation(Bean.class)).isNotNull();

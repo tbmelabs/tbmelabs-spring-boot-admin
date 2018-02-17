@@ -18,16 +18,13 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -39,12 +36,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "client_authorities")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Authority extends NicelyDocumentedJDBCResource implements GrantedAuthority {
+public class Authority extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
-
-  @Transient
-  public static final String ROLE_PREFIX = "ROLE_";
 
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
@@ -65,10 +59,5 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
 
   public Authority(String name) {
     this.name = name;
-  }
-
-  @Override
-  public String getAuthority() {
-    return ROLE_PREFIX + getName();
   }
 }

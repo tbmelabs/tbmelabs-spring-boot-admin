@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -17,8 +16,8 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,7 +37,7 @@ public class ClientTest {
   private static final String TEST_CLIENT_AUTHORITY = "TEST";
   private static final String TEST_CLIENT_SCOPE = "TEST";
 
-  @Mock
+  @Spy
   private Client fixture;
 
   @Before
@@ -46,10 +45,6 @@ public class ClientTest {
     initMocks(this);
 
     doReturn(new Random().nextLong()).when(fixture).getId();
-
-    doCallRealMethod().when(fixture).grantTypesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(fixture).authoritiesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(fixture).scopesToAssociations(Mockito.anyList());
   }
 
   @Test
@@ -74,26 +69,23 @@ public class ClientTest {
 
   @Test
   public void newClientShouldHaveDefaultValues() {
-    Client fixture = new Client();
-
     assertThat(fixture.getIsSecretRequired()).isTrue();
     assertThat(fixture.getIsAutoApprove()).isFalse();
   }
 
   @Test
   public void clientShouldHaveIdGetterAndSetter() {
-    Client fixture = new Client();
+    Client client = Mockito.mock(Client.class, Mockito.CALLS_REAL_METHODS);
     Long id = new Random().nextLong();
 
-    fixture.setId(id);
+    client.setId(id);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("id", id);
-    assertThat(fixture.getId()).isEqualTo(id);
+    assertThat(client).hasFieldOrPropertyWithValue("id", id);
+    assertThat(client.getId()).isEqualTo(id);
   }
 
   @Test
   public void clientShouldHaveClientIdGetterAndSetter() {
-    Client fixture = new Client();
     String clientId = UUID.randomUUID().toString();
 
     fixture.setClientId(clientId);
@@ -104,7 +96,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveSecretGetterAndSetter() {
-    Client fixture = new Client();
     String secret = UUID.randomUUID().toString();
 
     fixture.setSecret(secret);
@@ -115,7 +106,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveIsSecretRequiredGetterAndSetter() {
-    Client fixture = new Client();
     boolean isSecretRequired = false;
 
     fixture.setIsSecretRequired(isSecretRequired);
@@ -126,7 +116,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveIsAutoApproveGetterAndSetter() {
-    Client fixture = new Client();
     boolean isAutoApprove = true;
 
     fixture.setIsAutoApprove(isAutoApprove);
@@ -137,7 +126,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveAccessTokenValiditySecondsGetterAndSetter() {
-    Client fixture = new Client();
     Integer accessTokenValiditySeconds = new Random().nextInt();
 
     fixture.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
@@ -147,8 +135,17 @@ public class ClientTest {
   }
 
   @Test
+  public void clientShouldHaveRefreshTokenValiditySecondsGetterAndSetter() {
+    Integer refreshTokenValiditySeconds = new Random().nextInt();
+
+    fixture.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", refreshTokenValiditySeconds);
+    assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(refreshTokenValiditySeconds);
+  }
+
+  @Test
   public void clientShouldHaveRedirectUriGetterAndSetter() {
-    Client fixture = new Client();
     String redirectUri = RandomStringUtils.random(11);
 
     fixture.setRedirectUri(redirectUri);
@@ -159,7 +156,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantTypesGetterAndSetter() {
-    Client fixture = new Client();
     fixture.setId(new Random().nextLong());
     Collection<ClientGrantTypeAssociation> grantTypes = Arrays
         .asList(new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE)));
@@ -172,7 +168,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    Client fixture = new Client();
     fixture.setId(new Random().nextLong());
     Collection<ClientAuthorityAssociation> grantedAuthorities = Arrays
         .asList(new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY)));
@@ -185,7 +180,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
-    Client fixture = new Client();
     fixture.setId(new Random().nextLong());
     Collection<ClientScopeAssociation> scopes = Arrays
         .asList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));

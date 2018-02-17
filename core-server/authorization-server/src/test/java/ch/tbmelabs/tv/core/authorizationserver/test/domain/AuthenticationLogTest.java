@@ -12,6 +12,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Spy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -28,7 +29,10 @@ public class AuthenticationLogTest {
   private static final String TEST_MESSAGE = "This is some message.";
 
   @Mock
-  private User userFixture;
+  private User mockUser;
+
+  @Spy
+  private AuthenticationLog fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -60,15 +64,14 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShouldHaveAllArgsConstructor() {
-    assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, userFixture))
+    assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, mockUser))
         .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE.name())
         .hasFieldOrPropertyWithValue("ip", TEST_IP).hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
-        .hasFieldOrPropertyWithValue("user", userFixture);
+        .hasFieldOrPropertyWithValue("user", mockUser);
   }
 
   @Test
   public void authenticationLogShouldHaveIdGetterAndSetter() {
-    AuthenticationLog fixture = new AuthenticationLog();
     Long id = new Random().nextLong();
 
     fixture.setId(id);
@@ -79,7 +82,6 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShouldHaveStateGetterAndSetter() {
-    AuthenticationLog fixture = new AuthenticationLog();
     AUTHENTICATION_STATE state = AUTHENTICATION_STATE.OK;
 
     fixture.setState(state);
@@ -90,7 +92,6 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShouldHaveIpGetterAndSetter() {
-    AuthenticationLog fixture = new AuthenticationLog();
     String ip = "127.0.0.1";
 
     fixture.setIp(ip);
@@ -101,7 +102,6 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShouldHaveMessageGetterAndSetter() {
-    AuthenticationLog fixture = new AuthenticationLog();
     String message = RandomStringUtils.random(11);
 
     fixture.setMessage(message);
@@ -112,7 +112,6 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShoudlHaveUserGetterAndSetter() {
-    AuthenticationLog fixture = new AuthenticationLog();
     User user = new User();
 
     fixture.setUser(user);
