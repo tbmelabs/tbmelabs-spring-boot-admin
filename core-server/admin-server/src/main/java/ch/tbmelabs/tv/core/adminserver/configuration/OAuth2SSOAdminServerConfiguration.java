@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,9 +17,10 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import de.codecentric.boot.admin.config.EnableAdminServer;
 
 @Configuration
-@EnableAdminServer
-public class OAuth2SSOSprintBootAdminServerConfiguration extends WebSecurityConfigurerAdapter {
-  private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOSprintBootAdminServerConfiguration.class);
+@EnableOAuth2Sso
+//@EnableAdminServer
+public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdapter {
+  private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOAdminServerConfiguration.class);
 
   @Autowired
   private Environment environment;

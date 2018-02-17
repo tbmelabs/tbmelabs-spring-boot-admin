@@ -7,6 +7,5 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 public class ApplicationIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   @Test
   public void applicationContextLoads() {
-
   }
 }

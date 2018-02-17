@@ -7,6 +7,5 @@ import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAw
 public class ApplicationIntTest extends AbstractEurekaApplicationContextAware {
   @Test
   public void applicationContextLoads() {
-
   }
 }
