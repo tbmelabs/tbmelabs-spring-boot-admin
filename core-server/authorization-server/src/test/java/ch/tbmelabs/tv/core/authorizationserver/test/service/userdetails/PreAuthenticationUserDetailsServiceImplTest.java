@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -31,10 +32,10 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   private OAuth2Authentication mockAuthentication;
 
   @Mock
-  private TokenStore tokenStoreFixture;
+  private TokenStore mockTokenStore;
 
   @Mock
-  private UserCRUDRepository userRepositoryFixture;
+  private UserCRUDRepository mockUserRepository;
 
   @Spy
   @InjectMocks
@@ -47,8 +48,7 @@ public class PreAuthenticationUserDetailsServiceImplTest {
     doReturn(RandomStringUtils.random(11)).when(mockToken).getPrincipal();
     doReturn(RandomStringUtils.random(11)).when(mockAuthentication).getName();
 
-    doReturn(mockAuthentication).when(tokenStoreFixture).readAuthentication(Mockito.anyString());
-    doReturn(new User()).when(userRepositoryFixture).findByUsername(Mockito.anyString());
+    doReturn(mockAuthentication).when(mockTokenStore).readAuthentication(Mockito.anyString());
 
     doCallRealMethod().when(fixture).loadUserDetails(Mockito.any(PreAuthenticatedAuthenticationToken.class));
   }
@@ -65,7 +65,22 @@ public class PreAuthenticationUserDetailsServiceImplTest {
 
   @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
+    doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
+
     assertThat(fixture.loadUserDetails(mockToken)).isOfAnyClassIn(UserDetailsImpl.class)
-        .hasFieldOrPropertyWithValue("user", userRepositoryFixture.findByUsername(""));
+        .hasFieldOrPropertyWithValue("user", mockUserRepository.findByUsername(""));
+  }
+
+  @Test(expected = UsernameNotFoundException.class)
+  public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
+    doReturn(null).when(mockUserRepository).findByUsername(Mockito.anyString());
+
+    try {
+      fixture.loadUserDetails(mockToken);
+    } catch (Exception e) {
+      assertThat(e).isOfAnyClassIn(UsernameNotFoundException.class)
+          .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");
+      throw e;
+    }
   }
 }

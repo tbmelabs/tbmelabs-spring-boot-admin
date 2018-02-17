@@ -25,7 +25,7 @@ public class PreAuthenticationUserDetailsServiceImpl
   private UserCRUDRepository userRepository;
 
   @Override
-  public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
+  public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) {
     String username = tokenStore.readAuthentication((String) token.getPrincipal()).getName();
 
     LOGGER.debug("Loading userdetails for username \"" + username + "\"");

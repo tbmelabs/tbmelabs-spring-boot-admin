@@ -6,7 +6,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Random;
 
 import javax.persistence.MappedSuperclass;
 
@@ -50,12 +49,6 @@ public class NicelyDocumentedJDBCResourceTest {
   public void onUpdateShouldSetLastUpdatedToCurrentTime() {
     Date created = new Date();
     fixture.created = created;
-
-    try {
-      Thread.sleep(new Random().longs(1, 1000).limit(1).count());
-    } catch (InterruptedException e) {
-      assertThat(e).isNull();
-    }
 
     fixture.onUpdate();
 

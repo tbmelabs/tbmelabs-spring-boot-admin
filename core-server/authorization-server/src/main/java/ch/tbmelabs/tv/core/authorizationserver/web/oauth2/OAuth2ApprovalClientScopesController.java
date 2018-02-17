@@ -23,8 +23,7 @@ public class OAuth2ApprovalClientScopesController {
 
   @SuppressWarnings("unchecked")
   @RequestMapping("/oauth/confirm_access_scopes")
-  public List<String> getAccessConfirmation(@RequestParam(name = "client_id", required = true) String clientId)
-      throws Exception {
+  public List<String> getAccessConfirmation(@RequestParam(name = "client_id", required = true) String clientId) {
     return (List<String>) IteratorUtils
         .toList(clientScopeAssociationRepository.findByClient(clientRepository.findByClientId(clientId)).iterator())
         .stream().map(association -> ((ClientScopeAssociation) association).getClientScope().getName())

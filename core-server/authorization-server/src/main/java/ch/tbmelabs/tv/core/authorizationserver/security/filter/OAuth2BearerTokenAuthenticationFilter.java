@@ -9,8 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,8 +19,6 @@ import org.springframework.web.filter.GenericFilterBean;
 
 @Component
 public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
-  private static final Logger LOGGER = LogManager.getLogger(OAuth2BearerTokenAuthenticationFilter.class);
-
   private BearerTokenExtractor bearerTokenExtractor;
 
   @Autowired
@@ -30,7 +26,7 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
 
   @PostConstruct
   public void initBean() {
-    LOGGER.info("Initializing..");
+    logger.info("Initializing..");
 
     bearerTokenExtractor = new BearerTokenExtractor();
   }
@@ -41,12 +37,12 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
     Authentication authentication;
 
     if ((authentication = bearerTokenExtractor.extract((HttpServletRequest) request)) != null) {
-      LOGGER.debug("Bearer token found, authenticating");
+      logger.debug("Bearer token found, authenticating");
 
       SecurityContextHolder.getContext()
           .setAuthentication(tokenStore.readAuthentication((String) authentication.getPrincipal()));
 
-      LOGGER.debug("Authentication successful, continuing filter chain");
+      logger.debug("Authentication successful, continuing filter chain");
     }
 
     chain.doFilter(request, response);

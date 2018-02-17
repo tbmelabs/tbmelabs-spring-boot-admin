@@ -27,7 +27,7 @@ public class ProductiveEnvironmentWithoutCentralizedLoggingCheck {
   public void initBean() {
     LOGGER.info("Initializing..");
 
-    if (!Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> env.equals(SpringApplicationProfile.ELK))) {
+    if (Arrays.stream(environment.getActiveProfiles()).noneMatch(env -> env.equals(SpringApplicationProfile.ELK))) {
       // @formatter:off
       LOGGER.warn(
             "\n\n"
