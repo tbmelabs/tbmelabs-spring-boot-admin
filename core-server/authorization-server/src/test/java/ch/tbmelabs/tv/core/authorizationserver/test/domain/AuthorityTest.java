@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -83,5 +84,12 @@ public class AuthorityTest {
 
     assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithAuthorities", associations);
     assertThat(fixture.getClientsWithAuthorities()).isEqualTo(associations);
+  }
+
+  @Test
+  public void getAuthorityShouldReturnSecurityRole() {
+    ReflectionTestUtils.setField(fixture, "name", TEST_AUTHORITY_NAME);
+
+    assertThat(fixture.getAuthority()).isEqualTo("ROLE_" + TEST_AUTHORITY_NAME);
   }
 }

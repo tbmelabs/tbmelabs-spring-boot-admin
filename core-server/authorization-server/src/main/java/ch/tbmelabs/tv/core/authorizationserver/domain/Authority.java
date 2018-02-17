@@ -18,6 +18,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -36,9 +37,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "client_authorities")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Authority extends NicelyDocumentedJDBCResource {
+public class Authority extends NicelyDocumentedJDBCResource implements GrantedAuthority {
   @Transient
   private static final long serialVersionUID = 1L;
+
+  @Transient
+  public static final String ROLE_PREFIX = "ROLE_";
 
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
@@ -59,5 +63,10 @@ public class Authority extends NicelyDocumentedJDBCResource {
 
   public Authority(String name) {
     this.name = name;
+  }
+
+  @Override
+  public String getAuthority() {
+    return ROLE_PREFIX + getName();
   }
 }
