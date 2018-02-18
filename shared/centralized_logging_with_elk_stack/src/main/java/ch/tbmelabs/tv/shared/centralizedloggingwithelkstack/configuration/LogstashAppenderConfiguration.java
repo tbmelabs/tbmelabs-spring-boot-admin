@@ -11,7 +11,6 @@ import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 @Configuration
 public class LogstashAppenderConfiguration {

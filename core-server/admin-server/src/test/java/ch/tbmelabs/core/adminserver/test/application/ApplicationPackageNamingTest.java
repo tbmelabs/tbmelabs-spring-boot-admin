@@ -7,7 +7,7 @@ import org.junit.Test;
 import ch.tbmelabs.tv.core.adminserver.Application;
 
 public class ApplicationPackageNamingTest {
-  private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.tv.core.servicediscovery";
+  private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.tv.core.adminserver";
 
   @Test
   public void applicationPackageShouldMatchNamingConvention() {
