@@ -8,12 +8,12 @@
   <description>OAuth2 authorization server built on Spring.</description>
 
   <properties>
-    <start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
-    <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
     <com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
     <com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
+    <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
+    <start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
   </properties>
 
   <parent>
@@ -87,8 +87,11 @@
         <directory>src/main/webapp</directory>
         <excludes>
           <exclude>__tests__/**</exclude>
-          <exclude>app/**</exclude>
+          <exclude>authorize/**</exclude>
+          <exclude>common/**</exclude>
           <exclude>node_modules/**</exclude>
+          <exclude>signin/**</exclude>
+          <exclude>signup/**</exclude>
           <exclude>*.json</exclude>
           <exclude>*.js</exclude>
         </excludes>

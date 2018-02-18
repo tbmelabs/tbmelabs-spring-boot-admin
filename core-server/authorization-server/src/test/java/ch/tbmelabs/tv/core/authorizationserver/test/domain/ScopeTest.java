@@ -86,7 +86,7 @@ public class ScopeTest {
 
     fixture.setClientsWithScopes(associations);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithAuthorities", associations);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithScopes", associations);
     assertThat(fixture.getClientsWithScopes()).isEqualTo(associations);
   }
 }

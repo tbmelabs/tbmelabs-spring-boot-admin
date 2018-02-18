@@ -11,7 +11,6 @@ import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 public class LogstashAppenderConfiguration {
   private static final Logger LOGGER = LogManager.getLogger(LogstashAppenderConfiguration.class);
@@ -63,8 +62,8 @@ public class LogstashAppenderConfiguration {
                 true,
                 true,
                 true, 
-                JsonNodeFactory.instance.objectNode().asText(),
-                JsonNodeFactory.instance.objectNode().asText(),
+                "", // Header patterns
+                "", // Footer pattern
                 StandardCharsets.UTF_8,
                 true)
             )

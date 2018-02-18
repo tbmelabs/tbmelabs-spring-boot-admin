@@ -87,7 +87,7 @@ public class GrantTypeTest {
 
     fixture.setClientsWithGrantTypes(associations);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithAuthorities", associations);
+    assertThat(fixture).hasFieldOrPropertyWithValue("clientsWithGrantTypes", associations);
     assertThat(fixture.getClientsWithGrantTypes()).isEqualTo(associations);
   }
 }

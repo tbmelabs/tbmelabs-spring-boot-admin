@@ -11,14 +11,15 @@
   <description>Free to use streaming application.</description>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <buildNumber>${maven.build.timestamp}</buildNumber>
+    <com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
     <java.version>1.8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
-    <com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
+    <org.mockito.mockito-core.version>2.9.0</org.mockito.mockito-core.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
@@ -59,6 +60,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
+      <version>${org.mockito.mockito-core.version}</version>
       <scope>test</scope>
     </dependency>
 

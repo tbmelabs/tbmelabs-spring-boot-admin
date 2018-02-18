@@ -8,11 +8,11 @@
   <description>Load-Balancer based on Spring-Cloud integration.</description>
 
   <properties>
-    <start-class>ch.tbmelabs.tv.core.entryserver.Application</start-class>
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
     <com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
     <com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
+    <start-class>ch.tbmelabs.tv.core.entryserver.Application</start-class>
   </properties>
 
   <parent>

@@ -49,6 +49,12 @@
       <artifactId>spring-cloud-sleuth-zipkin</artifactId>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>constants</artifactId>
