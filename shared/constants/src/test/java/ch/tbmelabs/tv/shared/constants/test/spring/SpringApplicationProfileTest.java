@@ -15,16 +15,16 @@ public class SpringApplicationProfileTest {
   public static final String DEV = "dev";
   public static final String TEST = "test";
   public static final String ELK = "elk";
-  public static final String NO_EUREKA = "no-eureka";
   public static final String NO_REDIS = "no-redis";
+  public static final String NO_MAIL = "no-mail";
 
   @Test
   public void springApplicationProfilesShouldBePublicStatic() {
     assertThat(SpringApplicationProfile.PROD).isEqualTo(PROD);
     assertThat(SpringApplicationProfile.DEV).isEqualTo(DEV);
     assertThat(SpringApplicationProfile.TEST).isEqualTo(TEST);
-    assertThat(SpringApplicationProfile.NO_EUREKA).isEqualTo(NO_EUREKA);
     assertThat(SpringApplicationProfile.NO_REDIS).isEqualTo(NO_REDIS);
+    assertThat(SpringApplicationProfile.NO_MAIL).isEqualTo(NO_MAIL);
   }
 
   @Test

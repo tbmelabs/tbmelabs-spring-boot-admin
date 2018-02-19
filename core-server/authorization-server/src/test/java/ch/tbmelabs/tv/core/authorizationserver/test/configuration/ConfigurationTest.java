@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 public class ConfigurationTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 7;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 10;
 
   @Test
   public void packageShouldOnlyContainConfigurations() {
