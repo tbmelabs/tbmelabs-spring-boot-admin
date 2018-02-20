@@ -32,7 +32,7 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Set<String> getResourceIds() {
-    // TODO
+    // TODO: What is this?
     return new HashSet<>();
   }
 
@@ -91,7 +91,7 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Map<String, Object> getAdditionalInformation() {
-    // TODO
+    // TODO: Is additional information required?
     return new HashMap<>();
   }
 }

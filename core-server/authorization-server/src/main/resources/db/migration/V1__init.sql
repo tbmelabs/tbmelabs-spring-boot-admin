@@ -1,10 +1,3 @@
--- user configuration
-CREATE USER auth_database_user WITH PASSWORD 'auth_database_user_password';
-GRANT CREATE, CONNECT ON DATABASE auth_server_database TO auth_database_user;
-
--- connect to created database
-\connect auth_server_database
-
 -----------------------------------
 ---			ACCOUNTS			---
 -----------------------------------
@@ -201,9 +194,6 @@ CREATE TABLE client_scopes (
 
 ALTER TABLE ONLY client_scopes
     ADD CONSTRAINT client_scopes_pkey PRIMARY KEY (id);
-
-ALTER TABLE ONLY clients
-	ADD CONSTRAINT client_has_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
 
 GRANT SELECT, INSERT
 	ON client_scopes TO auth_database_user;

@@ -1,6 +1,6 @@
 -- user configuration
 CREATE USER auth_token_user WITH PASSWORD 'auth_token_user_password';
-GRANT CREATE, CONNECT ON DATABASE auth_token_database TO auth_token_user;
+GRANT CONNECT ON DATABASE auth_token_database TO auth_token_user;
 
 -- connect to created database
 \connect auth_token_database

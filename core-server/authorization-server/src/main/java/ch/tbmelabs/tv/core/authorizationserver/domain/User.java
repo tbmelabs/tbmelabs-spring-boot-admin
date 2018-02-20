@@ -79,9 +79,8 @@ public class User extends NicelyDocumentedJDBCResource {
   @JsonProperty(access = Access.WRITE_ONLY)
   private String confirmation;
 
-  // TODO: Remove enable by default as soon as email confirmation works
   @NotNull
-  private Boolean isEnabled = true;
+  private Boolean isEnabled = false;
 
   @NotNull
   private Boolean isBlocked = false;

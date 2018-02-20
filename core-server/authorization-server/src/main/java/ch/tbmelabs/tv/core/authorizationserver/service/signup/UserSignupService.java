@@ -6,12 +6,15 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
 public class UserSignupService {
@@ -19,6 +22,9 @@ public class UserSignupService {
 
   private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,64}";
   private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+
+  @Autowired
+  private ApplicationContext applicationContext;
 
   @Autowired
   private UserCRUDRepository userRepository;
@@ -76,6 +82,14 @@ public class UserSignupService {
       } catch (NullPointerException e) {
         throw new IllegalArgumentException("Unable to find default security role \"" + SecurityRole.USER + "\"!");
       }
+    }
+
+    if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
+        .noneMatch(profile -> profile.equals(SpringApplicationProfile.NO_MAIL))) {
+      applicationContext.getBean(UserMailService.class).sendSignupConfirmation(newUser);
+    } else if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
+        .noneMatch(profile -> profile.equals(SpringApplicationProfile.DEV))) {
+      throw new IllegalArgumentException("You cannot run a productive environment without any mail configuration!");
     }
 
     return userRepository.save(newUser);
