@@ -30,10 +30,10 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 
 public class AuthenticationSuccessHandlerTest {
   @Mock
-  private AuthenticationAttemptLogger authenticationAttemptLoggerFixture;
+  private AuthenticationAttemptLogger mockAuthenticationAttemptLogger;
 
   @Mock
-  private BruteforceFilterService bruteforceFilterServiceFixture;
+  private BruteforceFilterService mockBruteforceFilterService;
 
   @Spy
   @InjectMocks
@@ -45,18 +45,23 @@ public class AuthenticationSuccessHandlerTest {
   }
 
   @Test
-  public void authenticationFailureHandlerShouldBeAnnotated() {
+  public void authenticationSuccessHandlerShouldBeAnnotated() {
     assertThat(AuthenticationSuccessHandler.class).hasAnnotation(Component.class);
   }
 
   @Test
-  public void authenticationFailureHandlerShouldExtendsSimpleUrlAuthenticationFailureHandler() {
+  public void authenticationSuccessHandlerShouldExtendsSimpleUrlAuthenticationFailureHandler() {
     assertThat(SavedRequestAwareAuthenticationSuccessHandler.class)
         .isAssignableFrom(AuthenticationSuccessHandler.class);
   }
 
   @Test
-  public void authenticationFailureHandlerShouldTriggerLoggerAndBruteforceFilter()
+  public void authenticationSuccessHandlerShouldHavePublicConstructor() {
+    assertThat(new AuthenticationSuccessHandler()).isNotNull();
+  }
+
+  @Test
+  public void authenticationSuccessHandlerShouldTriggerLoggerAndBruteforceFilter()
       throws IOException, ServletException {
     MockHttpServletRequest mockRequest = new MockHttpServletRequest();
     mockRequest.setRemoteAddr("127.0.0.1");
@@ -65,8 +70,8 @@ public class AuthenticationSuccessHandlerTest {
     fixture.onAuthenticationSuccess(mockRequest, new MockHttpServletResponse(), new UsernamePasswordAuthenticationToken(
         new User(), new UsernamePasswordCredentials("Testuser", "Testpassword")));
 
-    verify(authenticationAttemptLoggerFixture, times(1)).logAuthenticationAttempt(Mockito.eq(AUTHENTICATION_STATE.OK),
+    verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(Mockito.eq(AUTHENTICATION_STATE.OK),
         Mockito.eq("127.0.0.1"), Mockito.isNull(), Mockito.anyString());
-    verify(bruteforceFilterServiceFixture, times(1)).authenticationFromIpSucceed("127.0.0.1");
+    verify(mockBruteforceFilterService, times(1)).authenticationFromIpSucceed("127.0.0.1");
   }
 }

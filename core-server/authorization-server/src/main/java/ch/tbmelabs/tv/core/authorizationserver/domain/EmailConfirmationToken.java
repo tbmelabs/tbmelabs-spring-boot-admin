@@ -53,7 +53,7 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(min = 60, max = 60)
-  @Column(columnDefinition = "bpchar(60)")
+  @Column(columnDefinition = "bpchar(60)", unique = true)
   private String tokenString;
 
   @NotNull

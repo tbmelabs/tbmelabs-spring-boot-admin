@@ -30,10 +30,10 @@ public class AuthenticationFailureHandlerTest {
   private static final String AUTHENTICATION_FAILED_ERROR_MESSAGE = "Test-Authentication failed!";
 
   @Mock
-  private AuthenticationAttemptLogger authenticationAttemptLoggerFixture;
+  private AuthenticationAttemptLogger mockAuthenticationAttemptLogger;
 
   @Mock
-  private BruteforceFilterService bruteforceFilterServiceFixture;
+  private BruteforceFilterService mockBruteforceFilterService;
 
   @Spy
   @InjectMocks
@@ -55,6 +55,11 @@ public class AuthenticationFailureHandlerTest {
   }
 
   @Test
+  public void authenticationFailureHandlerShouldHavePublicConstructor() {
+    assertThat(new AuthenticationFailureHandler()).isNotNull();
+  }
+
+  @Test
   public void authenticationFailureHandlerShouldTriggerLoggerAndBruteforceFilter()
       throws IOException, ServletException {
     MockHttpServletRequest mockRequest = new MockHttpServletRequest();
@@ -64,8 +69,8 @@ public class AuthenticationFailureHandlerTest {
     fixture.onAuthenticationFailure(mockRequest, new MockHttpServletResponse(),
         new UsernameNotFoundException(AUTHENTICATION_FAILED_ERROR_MESSAGE));
 
-    verify(authenticationAttemptLoggerFixture, times(1)).logAuthenticationAttempt(Mockito.eq(AUTHENTICATION_STATE.NOK),
+    verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(Mockito.eq(AUTHENTICATION_STATE.NOK),
         Mockito.eq("127.0.0.1"), Mockito.eq(AUTHENTICATION_FAILED_ERROR_MESSAGE), Mockito.anyString());
-    verify(bruteforceFilterServiceFixture, times(1)).authenticationFromIpFailed("127.0.0.1");
+    verify(mockBruteforceFilterService, times(1)).authenticationFromIpFailed("127.0.0.1");
   }
 }

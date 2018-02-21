@@ -37,6 +37,11 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
   }
 
   @Test
+  public void oAuth2BearerTokenAuthenticationFilterShouldHavePublicConstructor() {
+    assertThat(new OAuth2BearerTokenAuthenticationFilter()).isNotNull();
+  }
+
+  @Test
   public void initBeanShouldInitializeBearerTokenExtractor() {
     assertThat(ReflectionTestUtils.getField(fixture, "bearerTokenExtractor")).isNull();
 

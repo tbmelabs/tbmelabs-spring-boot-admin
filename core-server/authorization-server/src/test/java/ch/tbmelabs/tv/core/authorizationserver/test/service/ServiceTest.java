@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 public class ServiceTest {
-  private static final Integer EXPECTED_SERVICE_COUNT = 7;
+  private static final Integer EXPECTED_SERVICE_COUNT = 8;
 
   @Test
   public void packageShouldOnlyContainServices() {

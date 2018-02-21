@@ -64,6 +64,11 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   }
 
   @Test
+  public void preAuthenticationUserDetailsServiceImplShouldHavePublicConstructor() {
+    assertThat(new PreAuthenticationUserDetailsServiceImpl()).isNotNull();
+  }
+
+  @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
     doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
 

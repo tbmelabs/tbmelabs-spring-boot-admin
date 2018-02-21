@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.security.oauth2.provider.ClientDetails;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
@@ -25,43 +26,52 @@ public class ClientDetailsImplTest {
       + "uritwo";
 
   @Mock
-  private Client clientFixture;
-
-  private static ClientDetailsImpl clientDetailsImpl;
+  private Client mockClient;
 
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doCallRealMethod().when(clientFixture).grantTypesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(clientFixture).authoritiesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(clientFixture).scopesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(mockClient).grantTypesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(mockClient).authoritiesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(mockClient).scopesToAssociations(Mockito.anyList());
 
-    doReturn(UUID.randomUUID().toString()).when(clientFixture).getClientId();
-    doReturn(UUID.randomUUID().toString()).when(clientFixture).getSecret();
-    doReturn(3600).when(clientFixture).getAccessTokenValiditySeconds();
-    doReturn(7200).when(clientFixture).getRefreshTokenValiditySeconds();
-    doReturn(CLIENT_REDIRECT_URIS).when(clientFixture).getRedirectUri();
+    doReturn(UUID.randomUUID().toString()).when(mockClient).getClientId();
+    doReturn(UUID.randomUUID().toString()).when(mockClient).getSecret();
+    doReturn(3600).when(mockClient).getAccessTokenValiditySeconds();
+    doReturn(7200).when(mockClient).getRefreshTokenValiditySeconds();
+    doReturn(CLIENT_REDIRECT_URIS).when(mockClient).getRedirectUri();
+  }
 
-    clientDetailsImpl = new ClientDetailsImpl(clientFixture);
+  @Test
+  public void clientDetailsImplShouldImplementClientDetails() {
+    assertThat(ClientDetails.class).isAssignableFrom(ClientDetailsImpl.class);
+  }
+
+  @Test
+  public void clientDetailsImplShouldHaveAllArgsConstructor() {
+    Client client = new Client();
+
+    assertThat(new ClientDetailsImpl(client)).hasFieldOrPropertyWithValue("client", client);
   }
 
   @Test
   public void clientDetailsImplShouldReturnInformationEquelToUser() {
-    assertThat(clientDetailsImpl.getClientId()).isNotNull().isEqualTo(clientFixture.getClientId());
-    assertThat(clientDetailsImpl.getResourceIds()).isNotNull().isEqualTo(new HashSet<>());
-    assertThat(clientDetailsImpl.isSecretRequired()).isNotNull().isEqualTo(clientFixture.getIsSecretRequired());
-    assertThat(clientDetailsImpl.isAutoApprove(new String())).isNotNull().isEqualTo(clientFixture.getIsAutoApprove());
-    assertThat(clientDetailsImpl.getClientSecret()).isNotNull().isEqualTo(clientFixture.getSecret());
-    assertThat(clientDetailsImpl.getAccessTokenValiditySeconds()).isNotNull()
-        .isEqualTo(clientDetailsImpl.getAccessTokenValiditySeconds());
-    assertThat(clientDetailsImpl.getRefreshTokenValiditySeconds()).isNotNull()
-        .isEqualTo(clientDetailsImpl.getRefreshTokenValiditySeconds());
-    assertThat(clientDetailsImpl.isScoped()).isNotNull().isEqualTo(!clientFixture.getScopes().isEmpty());
-    assertThat(clientDetailsImpl.getRegisteredRedirectUri()).isNotNull().isEqualTo(
+    ClientDetailsImpl fixture = new ClientDetailsImpl(mockClient);
+
+    assertThat(fixture.getClientId()).isNotNull().isEqualTo(mockClient.getClientId());
+    assertThat(fixture.getResourceIds()).isNotNull().isEqualTo(new HashSet<>());
+    assertThat(fixture.isSecretRequired()).isNotNull().isEqualTo(mockClient.getIsSecretRequired());
+    assertThat(fixture.isAutoApprove(new String())).isNotNull().isEqualTo(mockClient.getIsAutoApprove());
+    assertThat(fixture.getClientSecret()).isNotNull().isEqualTo(mockClient.getSecret());
+    assertThat(fixture.getAccessTokenValiditySeconds()).isNotNull().isEqualTo(fixture.getAccessTokenValiditySeconds());
+    assertThat(fixture.getRefreshTokenValiditySeconds()).isNotNull()
+        .isEqualTo(fixture.getRefreshTokenValiditySeconds());
+    assertThat(fixture.isScoped()).isNotNull().isEqualTo(!mockClient.getScopes().isEmpty());
+    assertThat(fixture.getRegisteredRedirectUri()).isNotNull().isEqualTo(
         new HashSet<>(Arrays.asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
-    assertThat(clientDetailsImpl.getAuthorities()).isNotNull().isEqualTo(clientFixture.getGrantedAuthorities().stream()
+    assertThat(fixture.getAuthorities()).isNotNull().isEqualTo(mockClient.getGrantedAuthorities().stream()
         .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList()));
-    assertThat(clientDetailsImpl.getAdditionalInformation()).isNotNull().isEqualTo(new HashMap<>());
+    assertThat(fixture.getAdditionalInformation()).isNotNull().isEqualTo(new HashMap<>());
   }
 }

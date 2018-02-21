@@ -23,10 +23,10 @@ import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAt
 
 public class AuthenticationAttemptLoggerTest {
   @Mock
-  private AuthenticationLogCRUDRepository authenticationLogRepositoryFixture;
+  private AuthenticationLogCRUDRepository mockAuthenticationLogRepository;
 
   @Mock
-  private UserCRUDRepository userRepositoryFixture;
+  private UserCRUDRepository mockUserRepository;
 
   @Spy
   @InjectMocks
@@ -36,7 +36,7 @@ public class AuthenticationAttemptLoggerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new User()).when(userRepositoryFixture).findByUsername(Mockito.anyString());
+    doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
   }
 
   @Test
@@ -45,10 +45,15 @@ public class AuthenticationAttemptLoggerTest {
   }
 
   @Test
+  public void authenticationAttemptLoggerShouldHavePublicConstructor() {
+    assertThat(new AuthenticationAttemptLogger()).isNotNull();
+  }
+
+  @Test
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
     fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.", "Testuser");
 
-    verify(userRepositoryFixture, times(1)).findByUsername(Mockito.anyString());
-    verify(authenticationLogRepositoryFixture, times(1)).save(Mockito.any(AuthenticationLog.class));
+    verify(mockUserRepository, times(1)).findByUsername(Mockito.anyString());
+    verify(mockAuthenticationLogRepository, times(1)).save(Mockito.any(AuthenticationLog.class));
   }
 }

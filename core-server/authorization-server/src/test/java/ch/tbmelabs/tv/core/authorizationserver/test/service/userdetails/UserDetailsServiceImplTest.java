@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -34,7 +36,22 @@ public class UserDetailsServiceImplTest {
   }
 
   @Test
-  public void userDetailsServiceShouldLoadCorrectUserDetailsForUsername()
+  public void userDetailsServiceImplShouldBeAnnotated() {
+    assertThat(UserDetailsServiceImpl.class).hasAnnotation(Service.class);
+  }
+
+  @Test
+  public void userDetailsServiceImplShouldImplementUserDetailsService() {
+    assertThat(UserDetailsService.class).isAssignableFrom(UserDetailsServiceImpl.class);
+  }
+
+  @Test
+  public void userDetailsServiceImplShouldHavePublicConstructor() {
+    assertThat(new UserDetailsServiceImpl()).isNotNull();
+  }
+
+  @Test
+  public void loadUserByUsernameShouldLoadCorrectUser()
       throws IllegalAccessException, NoSuchFieldException, SecurityException {
     UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.random(11));
 

@@ -12,6 +12,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
@@ -21,7 +23,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetai
 
 public class ClientDetailsServiceImplTest {
   @Mock
-  private ClientCRUDRepository clientRepositoryFixture;
+  private ClientCRUDRepository mockClientRepository;
 
   @Spy
   @InjectMocks
@@ -31,15 +33,30 @@ public class ClientDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new Client()).when(clientRepositoryFixture).findByClientId(Mockito.anyString());
+    doReturn(new Client()).when(mockClientRepository).findByClientId(Mockito.anyString());
   }
 
   @Test
-  public void clientDetailsServiceShouldReturnCorrectClientDetailsForId()
+  public void clientDetailsServiceImplShouldBeAnnotated() {
+    assertThat(ClientDetailsServiceImpl.class).hasAnnotation(Service.class);
+  }
+
+  @Test
+  public void clientDetailsServiceImplShouldImplementClientDetailsService() {
+    assertThat(ClientDetailsService.class).isAssignableFrom(ClientDetailsServiceImpl.class);
+  }
+
+  @Test
+  public void clientDetailsServiceImplShouldHavePublicConstructor() {
+    assertThat(new ClientDetailsServiceImpl()).isNotNull();
+  }
+
+  @Test
+  public void loadClientByClientIdShouldLoadCorrectClient()
       throws IllegalAccessException, NoSuchFieldException, SecurityException {
     ClientDetailsImpl clientDetails = fixture.loadClientByClientId(UUID.randomUUID().toString());
 
     assertThat(ReflectionTestUtils.getField(clientDetails, "client"))
-        .isEqualTo(clientRepositoryFixture.findByClientId(UUID.randomUUID().toString()));
+        .isEqualTo(mockClientRepository.findByClientId(UUID.randomUUID().toString()));
   }
 }

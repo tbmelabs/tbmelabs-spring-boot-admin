@@ -10,39 +10,50 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 
 public class UserDetailsImplTest {
   @Mock
-  private User userFixture;
-
-  private static UserDetailsImpl userDetailsImpl;
+  private User mockUser;
 
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doCallRealMethod().when(userFixture).rolesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(mockUser).rolesToAssociations(Mockito.anyList());
 
-    doReturn(RandomStringUtils.random(11)).when(userFixture).getUsername();
-    doReturn(RandomStringUtils.random(11)).when(userFixture).getEmail();
-    doReturn(RandomStringUtils.random(11)).when(userFixture).getPassword();
-    doReturn(true).when(userFixture).getIsEnabled();
-    doReturn(false).when(userFixture).getIsBlocked();
+    doReturn(RandomStringUtils.random(11)).when(mockUser).getUsername();
+    doReturn(RandomStringUtils.random(11)).when(mockUser).getEmail();
+    doReturn(RandomStringUtils.random(11)).when(mockUser).getPassword();
+    doReturn(true).when(mockUser).getIsEnabled();
+    doReturn(false).when(mockUser).getIsBlocked();
+  }
 
-    userDetailsImpl = new UserDetailsImpl(userFixture);
+  @Test
+  public void userDetailsImplShouldImplementUserDetails() {
+    assertThat(UserDetails.class).isAssignableFrom(UserDetailsImpl.class);
+  }
+
+  @Test
+  public void userDetailsServiceImplShouldHaveAllArgsConstructor() {
+    User user = new User();
+
+    assertThat(new UserDetailsImpl(user)).hasFieldOrPropertyWithValue("user", user);
   }
 
   @Test
   public void userDetailsImplShouldReturnInformationEqualToUser() {
-    assertThat(userDetailsImpl.getUsername()).isNotNull().isEqualTo(userFixture.getUsername());
-    assertThat(userDetailsImpl.getPassword()).isNotNull().isEqualTo(userFixture.getPassword());
-    assertThat(userDetailsImpl.isEnabled()).isNotNull().isEqualTo(userFixture.getIsEnabled());
-    assertThat(userDetailsImpl.isAccountNonLocked()).isNotNull().isEqualTo(!userFixture.getIsBlocked());
-    assertThat(userDetailsImpl.isAccountNonExpired()).isNotNull().isTrue();
-    assertThat(userDetailsImpl.isCredentialsNonExpired()).isNotNull().isTrue();
-    assertThat(userDetailsImpl.getAuthorities()).isNotNull().isEqualTo(userFixture.getRoles());
+    UserDetailsImpl fixture = new UserDetailsImpl(mockUser);
+
+    assertThat(fixture.getUsername()).isNotNull().isEqualTo(mockUser.getUsername());
+    assertThat(fixture.getPassword()).isNotNull().isEqualTo(mockUser.getPassword());
+    assertThat(fixture.isEnabled()).isNotNull().isEqualTo(mockUser.getIsEnabled());
+    assertThat(fixture.isAccountNonLocked()).isNotNull().isEqualTo(!mockUser.getIsBlocked());
+    assertThat(fixture.isAccountNonExpired()).isNotNull().isTrue();
+    assertThat(fixture.isCredentialsNonExpired()).isNotNull().isTrue();
+    assertThat(fixture.getAuthorities()).isNotNull().isEqualTo(mockUser.getRoles());
   }
 }

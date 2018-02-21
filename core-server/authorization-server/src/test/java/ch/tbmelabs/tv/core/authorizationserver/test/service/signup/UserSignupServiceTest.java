@@ -17,6 +17,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -69,6 +70,16 @@ public class UserSignupServiceTest {
     doReturn(true).when(fixture).isEmailAddress(Mockito.any(User.class));
     doReturn(true).when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
     doReturn(true).when(fixture).doPasswordsMatch(Mockito.any(User.class));
+  }
+
+  @Test
+  public void userSignupServiceShouldBeAnnotated() {
+    assertThat(UserSignupService.class).hasAnnotation(Service.class);
+  }
+
+  @Test
+  public void userSignupServiceShouldHavePublicConstructor() {
+    assertThat(new UserSignupService()).isNotNull();
   }
 
   @Test(expected = IllegalArgumentException.class)

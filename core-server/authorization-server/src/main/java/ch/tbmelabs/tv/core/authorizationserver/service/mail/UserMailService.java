@@ -6,13 +6,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
@@ -34,6 +35,9 @@ public class UserMailService extends MailService {
   @Value("${server.context-path:}")
   private String contextPath;
 
+  @Autowired
+  private EmailConfirmationTokenService emailConfirmationTokenService;
+
   public void sendSignupConfirmation(User user) {
     LOGGER.info("Sending sign up confirmation to " + user.getEmail());
 
@@ -41,10 +45,10 @@ public class UserMailService extends MailService {
       String emailBody = loadFileContent(
           new File(UserMailService.class.getClassLoader().getResource(SIGNUP_MAIL_TEMPLATE_LOCATION).toURI()));
 
-      final String confirmationToken = createUniqueConfirmationToken();
+      final String token = emailConfirmationTokenService.createUniqueEmailConfirmationToken();
 
       emailBody = emailBody.replaceAll(USERNAME_REPLACEMENT, user.getUsername());
-      emailBody = emailBody.replaceAll(CONFIRMATION_URL_REPLACEMENT, getConfirmationUrl(confirmationToken));
+      emailBody = emailBody.replaceAll(CONFIRMATION_URL_REPLACEMENT, getConfirmationUrl(token));
 
       sendMail(user, "Confirm registration to TBME Labs", emailBody);
     } catch (URISyntaxException e) {
@@ -66,11 +70,6 @@ public class UserMailService extends MailService {
     } catch (IOException e) {
       throw new IllegalArgumentException(e);
     }
-  }
-
-  private String createUniqueConfirmationToken() {
-    // TODO: Check uniqueness in repository
-    return UUID.randomUUID().toString();
   }
 
   private String getConfirmationUrl(String token) {

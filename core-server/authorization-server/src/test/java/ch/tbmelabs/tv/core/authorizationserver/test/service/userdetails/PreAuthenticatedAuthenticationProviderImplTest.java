@@ -18,7 +18,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthentica
 
 public class PreAuthenticatedAuthenticationProviderImplTest {
   @Mock
-  private PreAuthenticationUserDetailsServiceImpl preAuthenticationUserDetailsServiceImplFixture;
+  private PreAuthenticationUserDetailsServiceImpl mockPreAuthenticationUserDetailsServiceImpl;
 
   @Spy
   @InjectMocks
@@ -43,10 +43,15 @@ public class PreAuthenticatedAuthenticationProviderImplTest {
   }
 
   @Test
+  public void preAuthenticatedAuthenticationProviderImplShouldHavePublicConstructor() {
+    assertThat(new PreAuthenticatedAuthenticationProviderImpl()).isNotNull();
+  }
+
+  @Test
   public void initBeanShouldAssignUserDetailsService() {
     fixture.initBean();
 
     assertThat(ReflectionTestUtils.getField(fixture, "preAuthenticatedUserDetailsService"))
-        .isEqualTo(preAuthenticationUserDetailsServiceImplFixture);
+        .isEqualTo(mockPreAuthenticationUserDetailsServiceImpl);
   }
 }
