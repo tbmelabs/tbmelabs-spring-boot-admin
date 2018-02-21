@@ -210,7 +210,7 @@ ALTER TABLE ONLY authentication_log
 	ADD CONSTRAINT authentication_for_user FOREIGN KEY (user_id) REFERENCES users(id);
 
 -----------------------------------
----	  AUTHENTICATION LOGGING  	---
+---			IP BLACKLIST		---
 -----------------------------------
 CREATE TABLE blacklisted_ips (
 	id bigserial NOT NULL,

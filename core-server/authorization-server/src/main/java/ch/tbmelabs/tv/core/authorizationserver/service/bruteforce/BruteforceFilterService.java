@@ -53,7 +53,7 @@ public class BruteforceFilterService {
   private void suspectBruteforceAttempt(String ip) {
     LOGGER.warn("Maximum login attempts from " + ip + " exceed! Suspecting bruteforcing attempt");
 
-    ipBlacklistRepository.save(new BlacklistedIp(ip));
+    ipBlacklistRepository.save(new BlacklistedIp(ip, ip));
   }
 
   public void authenticationFromIpSucceed(String ip) {

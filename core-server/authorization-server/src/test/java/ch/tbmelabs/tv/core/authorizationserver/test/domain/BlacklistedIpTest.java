@@ -20,7 +20,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class BlacklistedIpTest {
-  private static final String TEST_IP = "127.0.0.1";
+  private static final String START_IP = "127.0.0.1";
+  private static final String END_IP = "127.0.0.255";
 
   @Spy
   private BlacklistedIp fixture;
@@ -54,7 +55,8 @@ public class BlacklistedIpTest {
 
   @Test
   public void blacklistedIpShouldHaveAllArgsConstructor() {
-    assertThat(new BlacklistedIp(TEST_IP)).hasFieldOrPropertyWithValue("ip", TEST_IP);
+    assertThat(new BlacklistedIp(START_IP, END_IP)).hasFieldOrPropertyWithValue("startIp", START_IP)
+        .hasFieldOrPropertyWithValue("endIp", END_IP);
   }
 
   @Test
@@ -68,12 +70,18 @@ public class BlacklistedIpTest {
   }
 
   @Test
-  public void blacklistedIpShouldHaveIpGetterAndSetter() {
-    String ip = "127.0.0.1";
+  public void blacklistedIpShouldHaveStartIpGetterAndSetter() {
+    fixture.setStartIp(START_IP);
 
-    fixture.setIp(ip);
+    assertThat(fixture).hasFieldOrPropertyWithValue("startIp", START_IP);
+    assertThat(fixture.getStartIp()).isEqualTo(START_IP);
+  }
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("ip", ip);
-    assertThat(fixture.getIp()).isEqualTo(ip);
+  @Test
+  public void blacklistedIpShouldHaveEndtIpGetterAndSetter() {
+    fixture.setStartIp(END_IP);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("endIp", END_IP);
+    assertThat(fixture.getStartIp()).isEqualTo(END_IP);
   }
 }

@@ -42,9 +42,14 @@ public class BlacklistedIp extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(max = 45)
-  private String ip;
+  private String startIp;
 
-  public BlacklistedIp(String ip) {
-    this.ip = ip;
+  @NotEmpty
+  @Length(max = 45)
+  private String endIp;
+
+  public BlacklistedIp(String startIp, String endIp) {
+    this.startIp = startIp;
+    this.endIp = endIp;
   }
 }
