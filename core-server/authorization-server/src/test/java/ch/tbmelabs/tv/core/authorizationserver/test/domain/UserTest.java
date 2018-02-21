@@ -65,7 +65,7 @@ public class UserTest {
 
   @Test
   public void newUserShouldHaveDefaultValues() {
-    assertThat(fixture.getIsEnabled()).isTrue();
+    assertThat(fixture.getIsEnabled()).isFalse();
     assertThat(fixture.getIsBlocked()).isFalse();
   }
 

@@ -15,11 +15,6 @@ CREATE TABLE users (
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
-GRANT SELECT, INSERT, UPDATE
-	ON users TO auth_database_user;
-
-GRANT USAGE, SELECT
-	ON SEQUENCE users_id_seq TO auth_database_user;
 -----------------------------------
 ---			PRIVILEGES			---
 -----------------------------------
@@ -32,9 +27,6 @@ CREATE TABLE user_roles (
 
 ALTER TABLE ONLY user_roles
     ADD CONSTRAINT user_roles_pkey PRIMARY KEY (id);
-
-GRANT SELECT, INSERT
-	ON user_roles TO auth_database_user;
 	
 -- add default roles
 INSERT INTO user_roles(created, last_updated, name)
@@ -46,9 +38,6 @@ INSERT INTO user_roles(created, last_updated, name)
 			(now(), now(), 'PREMIUM_USER'),
 			(now(), now(), 'USER'),
 			(now(), now(), 'GUEST');
-	
-REVOKE INSERT
-	ON user_roles FROM auth_database_user;
 
 -----------------------------------
 ---		  USER HAS ROLES		---
@@ -68,9 +57,6 @@ ALTER TABLE ONLY user_has_roles
 
 ALTER TABLE ONLY user_has_roles
     ADD CONSTRAINT user_has_roles_role FOREIGN KEY (user_role_id) REFERENCES user_roles(id);
-
-GRANT SELECT
-	ON user_has_roles TO auth_database_user;
 	
 -----------------------------------
 ---			  CLIENTS			---
@@ -93,9 +79,6 @@ CREATE TABLE clients (
 ALTER TABLE ONLY clients
     ADD CONSTRAINT clients_pkey PRIMARY KEY (id);
 
-GRANT SELECT
-	ON clients TO auth_database_user;
-
 -----------------------------------
 ---			AUTHORITIES			---
 -----------------------------------
@@ -108,9 +91,6 @@ CREATE TABLE client_authorities (
 
 ALTER TABLE ONLY client_authorities
     ADD CONSTRAINT client_authorities_pkey PRIMARY KEY (id);
-
-GRANT SELECT
-	ON client_authorities TO auth_database_user;
 		
 -----------------------------------
 ---	  CLIENT HAS AUTHORITIES  	---
@@ -130,9 +110,6 @@ ALTER TABLE ONLY client_has_authorities
 
 ALTER TABLE ONLY client_has_authorities
     ADD CONSTRAINT client_has_authorities_authority FOREIGN KEY (client_authority_id) REFERENCES client_authorities(id);
-
-GRANT SELECT
-	ON client_has_authorities TO auth_database_user;
 	
 -----------------------------------
 ---			GRANT TYPES			---
@@ -147,18 +124,12 @@ CREATE TABLE client_grant_types (
 ALTER TABLE ONLY client_grant_types
     ADD CONSTRAINT client_grant_types_pkey PRIMARY KEY (id);
 
-GRANT SELECT, INSERT
-	ON client_grant_types TO auth_database_user;
-
 -- Add default values
 INSERT INTO client_grant_types (created, last_updated, name)
 	VALUES (now(), now(), 'authorization_code'),
 	(now(), now(), 'refresh_token'),
 	(now(), now(), 'implicit'),
 	(now(), now(), 'password');
-
-REVOKE INSERT
-	ON client_grant_types FROM auth_database_user;
 
 -----------------------------------
 ---	  CLIENT HAS GRANT TYPES	---
@@ -179,9 +150,6 @@ ALTER TABLE ONLY client_has_grant_types
 ALTER TABLE ONLY client_has_grant_types
     ADD CONSTRAINT client_has_grant_types_grant_type FOREIGN KEY (client_grant_type_id) REFERENCES client_grant_types(id);
 
-GRANT SELECT
-	ON client_has_grant_types TO auth_database_user;
-
 -----------------------------------
 ---			  SCOPES			---
 -----------------------------------
@@ -195,17 +163,11 @@ CREATE TABLE client_scopes (
 ALTER TABLE ONLY client_scopes
     ADD CONSTRAINT client_scopes_pkey PRIMARY KEY (id);
 
-GRANT SELECT, INSERT
-	ON client_scopes TO auth_database_user;
-
 -- Add default values
 INSERT INTO client_scopes (created, last_updated, name)
 	VALUES (now(), now(), 'read'),
 		(now(), now(), 'write'),
 		(now(), now(), 'trust');
-
-REVOKE INSERT
-	ON client_scopes FROM auth_database_user;
 
 -----------------------------------
 ---			  SCOPES			---
@@ -227,9 +189,6 @@ ALTER TABLE ONLY client_has_scopes
 ALTER TABLE ONLY client_has_scopes
     ADD CONSTRAINT cclient_has_scopes_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
 
-GRANT SELECT
-	ON client_has_scopes TO auth_database_user;
-
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---
 -----------------------------------
@@ -250,9 +209,6 @@ ALTER TABLE ONLY authentication_log
 ALTER TABLE ONLY authentication_log
 	ADD CONSTRAINT authentication_for_user FOREIGN KEY (user_id) REFERENCES users(id);
 
-GRANT INSERT
-	ON authentication_log TO auth_database_user;
-
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---
 -----------------------------------
@@ -265,6 +221,3 @@ CREATE TABLE blacklisted_ips (
 
 ALTER TABLE ONLY blacklisted_ips
     ADD CONSTRAINT blacklisted_ips_pkey PRIMARY KEY (id);
-
-GRANT INSERT, SELECT
-	ON blacklisted_ips TO auth_database_user;

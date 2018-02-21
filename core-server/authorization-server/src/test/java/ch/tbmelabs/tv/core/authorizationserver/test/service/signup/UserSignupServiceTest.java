@@ -15,21 +15,30 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 
 public class UserSignupServiceTest {
   private static final String SIGNUP_FAILED_ERROR_MESSAGE = "Registration failed. Please check your details!";
 
   @Mock
-  private UserCRUDRepository userRepositoryFixture;
+  private Environment mockEnvironment;
 
   @Mock
-  private RoleCRUDRepository roleRepositoryFixture;
+  private ApplicationContext mockApplicationContext;
+
+  @Mock
+  private UserCRUDRepository mockUserRepository;
+
+  @Mock
+  private RoleCRUDRepository mockRoleRepository;
 
   @Spy
   @InjectMocks
@@ -39,6 +48,10 @@ public class UserSignupServiceTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
+    doReturn(new String[] {}).when(mockEnvironment).getActiveProfiles();
+    doReturn(mockEnvironment).when(mockApplicationContext).getEnvironment();
+    doReturn(Mockito.mock(UserMailService.class)).when(mockApplicationContext).getBean(UserMailService.class);
+
     doAnswer(new Answer<User>() {
       @Override
       public User answer(InvocationOnMock invocation) throws Throwable {
@@ -46,9 +59,9 @@ public class UserSignupServiceTest {
         newUser.setId(new Random().nextLong());
         return newUser;
       }
-    }).when(userRepositoryFixture).save(Mockito.any(User.class));
+    }).when(mockUserRepository).save(Mockito.any(User.class));
 
-    doReturn(new Role("USER")).when(roleRepositoryFixture).findByName("USER");
+    doReturn(new Role("USER")).when(mockRoleRepository).findByName("USER");
 
     doReturn(true).when(fixture).isUsernameUnique(Mockito.any(User.class));
     doReturn(true).when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
