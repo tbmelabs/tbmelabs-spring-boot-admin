@@ -83,19 +83,19 @@ public class Client extends NicelyDocumentedJDBCResource {
   @Length(max = 256)
   private String redirectUri;
 
-  @JsonManagedReference("client")
+  @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientGrantTypeAssociation> grantTypes;
 
-  @JsonManagedReference("client")
+  @JsonManagedReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientAuthorityAssociation> grantedAuthorities;
 
-  @JsonManagedReference("client")
+  @JsonManagedReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientId")
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientScopeAssociation> scopes;
 
   public Collection<ClientGrantTypeAssociation> grantTypesToAssociations(List<GrantType> grantTypeList) {

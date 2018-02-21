@@ -187,7 +187,7 @@ ALTER TABLE ONLY client_has_scopes
     ADD CONSTRAINT client_has_scopes_client FOREIGN KEY (client_id) REFERENCES clients(id);
 
 ALTER TABLE ONLY client_has_scopes
-    ADD CONSTRAINT cclient_has_scopes_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
+    ADD CONSTRAINT client_has_scopes_scope FOREIGN KEY (client_scope_id) REFERENCES client_scopes(id);
 
 -----------------------------------
 ---	  AUTHENTICATION LOGGING  	---
@@ -207,7 +207,7 @@ ALTER TABLE ONLY authentication_log
     ADD CONSTRAINT authentication_log_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY authentication_log
-	ADD CONSTRAINT authentication_for_user FOREIGN KEY (user_id) REFERENCES users(id);
+	ADD CONSTRAINT authentication_log_user FOREIGN KEY (user_id) REFERENCES users(id);
 
 -----------------------------------
 ---			IP BLACKLIST		---

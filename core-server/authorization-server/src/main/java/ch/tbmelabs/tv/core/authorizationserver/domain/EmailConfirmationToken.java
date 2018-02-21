@@ -1,15 +1,20 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
@@ -18,6 +23,7 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -30,50 +36,47 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-@Table(name = "authentication_log")
+@Table(name = "email_confirmation_tokens")
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthenticationLog extends NicelyDocumentedJDBCResource {
+public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
-  public enum AUTHENTICATION_STATE {
-    OK, NOK
-  }
-
   @Id
   @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
-      @Parameter(name = "sequence_name", value = "authentication_log_id_seq"),
+      @Parameter(name = "sequence_name", value = "email_confirmation_tokens_id_seq"),
       @Parameter(name = "increment_size", value = "1") })
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
 
   @NotEmpty
-  @Length(max = 3)
-  private String state;
+  @Length(min = 60, max = 60)
+  @Column(columnDefinition = "bpchar(60)")
+  private String tokenString;
 
-  @NotEmpty
-  @Length(max = 45)
-  @Column(columnDefinition = "bpchar(45)")
-  private String ip;
+  @NotNull
+  private Date expirationDate;
 
-  @Length(max = 256)
-  private String message;
-
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @JsonBackReference("user_has_email_confirmation_token")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToOne(cascade = CascadeType.MERGE)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  public AuthenticationLog(AUTHENTICATION_STATE authenticationState, String ip, String message, User user) {
-    this.state = authenticationState.name();
-    this.ip = ip;
-    this.message = message;
+  public EmailConfirmationToken(String tokenString, User user) {
+    this.tokenString = tokenString;
     this.user = user;
   }
 
-  public void setState(AUTHENTICATION_STATE authenticationState) {
-    this.state = authenticationState.name();
+  @Override
+  @PrePersist
+  public void onCreate() {
+    super.onCreate();
+
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.DATE, 1);
+    this.expirationDate = calendar.getTime();
   }
 }

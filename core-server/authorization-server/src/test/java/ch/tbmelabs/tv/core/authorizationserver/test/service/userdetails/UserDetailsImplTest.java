@@ -43,6 +43,6 @@ public class UserDetailsImplTest {
     assertThat(userDetailsImpl.isAccountNonLocked()).isNotNull().isEqualTo(!userFixture.getIsBlocked());
     assertThat(userDetailsImpl.isAccountNonExpired()).isNotNull().isTrue();
     assertThat(userDetailsImpl.isCredentialsNonExpired()).isNotNull().isTrue();
-    assertThat(userDetailsImpl.getAuthorities()).isNotNull().isEqualTo(userFixture.getGrantedAuthorities());
+    assertThat(userDetailsImpl.getAuthorities()).isNotNull().isEqualTo(userFixture.getRoles());
   }
 }

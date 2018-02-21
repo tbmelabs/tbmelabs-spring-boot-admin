@@ -56,9 +56,9 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   @Length(max = 16)
   private String name;
 
-  @JsonManagedReference("clientAuthority")
+  @JsonManagedReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientAuthorityId")
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientAuthority")
   private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
 
   public Authority(String name) {

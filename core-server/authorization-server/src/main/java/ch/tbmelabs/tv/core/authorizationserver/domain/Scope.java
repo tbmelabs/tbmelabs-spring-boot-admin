@@ -52,7 +52,7 @@ public class Scope extends NicelyDocumentedJDBCResource {
   @Length(max = 8)
   private String name;
 
-  @JsonManagedReference("clientScope")
+  @JsonManagedReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientScopeId")
   private Collection<ClientScopeAssociation> clientsWithScopes;

@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -121,14 +122,23 @@ public class UserTest {
   }
 
   @Test
-  public void userShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    Collection<UserRoleAssociation> grantedAuthorities = Arrays
-        .asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
+  public void userShouldHaveEmailConfirmationTokenGetterAndSetter() {
+    EmailConfirmationToken emailConfirmationToken = new EmailConfirmationToken();
 
-    fixture.setGrantedAuthorities(grantedAuthorities);
+    fixture.setEmailConfirmationToken(emailConfirmationToken);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("grantedAuthorities", grantedAuthorities);
-    assertThat(fixture.getGrantedAuthorities()).isEqualTo(grantedAuthorities);
+    assertThat(fixture).hasFieldOrPropertyWithValue("emailConfirmationToken", emailConfirmationToken);
+    assertThat(fixture.getEmailConfirmationToken()).isEqualTo(emailConfirmationToken);
+  }
+
+  @Test
+  public void userShouldHaveRoleGetterAndSetter() {
+    Collection<UserRoleAssociation> roles = Arrays.asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
+
+    fixture.setRoles(roles);
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("roles", roles);
+    assertThat(fixture.getRoles()).isEqualTo(roles);
   }
 
   @Test

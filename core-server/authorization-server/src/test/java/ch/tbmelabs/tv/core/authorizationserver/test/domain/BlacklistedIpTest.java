@@ -78,10 +78,10 @@ public class BlacklistedIpTest {
   }
 
   @Test
-  public void blacklistedIpShouldHaveEndtIpGetterAndSetter() {
-    fixture.setStartIp(END_IP);
+  public void blacklistedIpShouldHaveEndIpGetterAndSetter() {
+    fixture.setEndIp(END_IP);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("endIp", END_IP);
-    assertThat(fixture.getStartIp()).isEqualTo(END_IP);
+    assertThat(fixture.getEndIp()).isEqualTo(END_IP);
   }
 }

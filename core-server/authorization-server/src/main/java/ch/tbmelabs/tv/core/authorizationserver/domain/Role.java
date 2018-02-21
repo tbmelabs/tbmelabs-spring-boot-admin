@@ -55,7 +55,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @Length(max = 16)
   private String name;
 
-  @JsonManagedReference("userRole")
+  @JsonManagedReference("role_has_users")
   @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;
 

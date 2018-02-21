@@ -7,17 +7,19 @@ import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -85,9 +87,15 @@ public class User extends NicelyDocumentedJDBCResource {
   @NotNull
   private Boolean isBlocked = false;
 
-  @JsonManagedReference("user")
-  @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE }, mappedBy = "userId")
-  private Collection<UserRoleAssociation> grantedAuthorities;
+  @JsonManagedReference("user_has_email_confirmation_token")
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToOne(cascade = { CascadeType.MERGE }, mappedBy = "user")
+  private EmailConfirmationToken emailConfirmationToken;
+
+  @JsonManagedReference("user_has_roles")
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "user")
+  private Collection<UserRoleAssociation> roles;
 
   @Override
   @PrePersist

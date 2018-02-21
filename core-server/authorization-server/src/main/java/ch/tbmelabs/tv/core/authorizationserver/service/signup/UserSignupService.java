@@ -75,10 +75,9 @@ public class UserSignupService {
 
     LOGGER.info("New user signed up! username: " + newUser.getUsername() + " and email: " + newUser.getEmail());
 
-    if (newUser.getGrantedAuthorities() == null || newUser.getGrantedAuthorities().isEmpty()) {
+    if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
       try {
-        newUser.setGrantedAuthorities(
-            newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
+        newUser.setRoles(newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
       } catch (NullPointerException e) {
         throw new IllegalArgumentException("Unable to find default security role \"" + SecurityRole.USER + "\"!");
       }
