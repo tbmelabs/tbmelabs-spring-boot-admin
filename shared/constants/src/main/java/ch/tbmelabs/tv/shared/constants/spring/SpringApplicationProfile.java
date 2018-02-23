@@ -27,7 +27,7 @@ public class SpringApplicationProfile {
   public static final String NO_REDIS = "no-redis";
 
   /**
-   * Disables Spring Mail configuration.
+   * Disables Spring Mail configuration. For development use only.
    */
   public static final String NO_MAIL = "no-mail";
 
