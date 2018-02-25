@@ -20,7 +20,7 @@ public class SignupConfirmationController {
   public static final String CONFIRMATION_ENDPOINT = "/signup/confirm-signup/";
 
   private static final String CONFIRMATION_ERROR_REDIRECT = "/signin?confirmation_failed";
-  private static final String CONFIRMATION_SUCCESS_REDIRECT = "/signin?confirmation_success";
+  private static final String CONFIRMATION_SUCCESS_REDIRECT = "/signin?confirmation_succeed";
 
   @Value("${server.context-path:}")
   private String contextPath;

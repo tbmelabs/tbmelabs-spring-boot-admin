@@ -3,13 +3,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {addFlashMessage} from '../../../common/actions/flashMessageActions';
 import signin from '../../utils/signin';
-
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 import UsernamePasswordSigninForm from '../../components/signin/UsernamePasswordSigninForm';
 
@@ -22,11 +20,6 @@ class Signup extends Component {
 
     return (
       <div>
-        <Jumbotron>
-          <h1>{texts.jumbotron_title}</h1>
-          <p>{texts.jumbotron_text}</p>
-        </Jumbotron>
-
         <div className='signin-form'>
           <UsernamePasswordSigninForm signinUser={signin} addFlashMessage={addFlashMessage} texts={texts}/>
         </div>

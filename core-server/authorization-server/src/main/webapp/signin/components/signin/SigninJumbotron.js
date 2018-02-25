@@ -7,7 +7,7 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class SignupJumbotron extends Component {
+class SigninJumbotron extends Component {
   render() {
     const {texts} = this.props;
 
@@ -20,8 +20,8 @@ class SignupJumbotron extends Component {
   }
 }
 
-SignupJumbotron.propTypes = {
+SigninJumbotron.propTypes = {
   texts: PropTypes.object.isRequired
 }
 
-export default SignupJumbotron;
+export default SigninJumbotron;

@@ -3,8 +3,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {addFlashMessage} from '../../../common/actions/flashMessageActions';
 import validateSignupForm from '../../utils/validateSignupForm';
