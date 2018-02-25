@@ -19,9 +19,6 @@ public class EmailConfirmationTokenService {
   @Autowired
   private EmailConfirmationTokenCRUDRepository emailConfirmationTokenRepository;
 
-  // @Autowired
-  // private UserCRUDRepository userRepository;
-
   public String createUniqueEmailConfirmationToken(User user) {
     LOGGER.info("Creating unique confirmation token");
 
@@ -48,9 +45,6 @@ public class EmailConfirmationTokenService {
 
     User user = emailConfirmationToken.getUser();
     user.setIsEnabled(true);
-
-    // TODO: Is this required?
-    // userRepository.save(user);
 
     emailConfirmationTokenRepository.delete(emailConfirmationToken);
 

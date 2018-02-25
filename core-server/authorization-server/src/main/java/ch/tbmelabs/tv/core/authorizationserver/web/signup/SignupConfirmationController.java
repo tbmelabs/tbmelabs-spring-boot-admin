@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,11 @@ import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationT
 public class SignupConfirmationController {
   public static final String CONFIRMATION_ENDPOINT = "/signup/confirm-signup/";
 
-  private static final String CONFIRMATION_ERROR_REDIRECT = "/signup?confirmation_failed";
-  private static final String CONFIRMATION_SUCCESS_REDIRECT = "/signup?confirmation_success";
+  private static final String CONFIRMATION_ERROR_REDIRECT = "/signin?confirmation_failed";
+  private static final String CONFIRMATION_SUCCESS_REDIRECT = "/signin?confirmation_success";
+
+  @Value("${server.context-path:}")
+  private String contextPath;
 
   @Autowired
   private EmailConfirmationTokenService emailConfirmationTokenService;
@@ -30,10 +34,10 @@ public class SignupConfirmationController {
     try {
       emailConfirmationTokenService.confirmRegistration(token);
     } catch (EmailConfirmationTokenNotFoundException e) {
-      response.sendRedirect(CONFIRMATION_ERROR_REDIRECT);
+      response.sendRedirect(contextPath + CONFIRMATION_ERROR_REDIRECT);
       return;
     }
 
-    response.sendRedirect(CONFIRMATION_SUCCESS_REDIRECT);
+    response.sendRedirect(contextPath + CONFIRMATION_SUCCESS_REDIRECT);
   }
 }

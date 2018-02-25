@@ -88,7 +88,6 @@ public class User extends NicelyDocumentedJDBCResource {
   private Boolean isBlocked = false;
 
   @JsonManagedReference("user_has_email_confirmation_token")
-  @LazyCollection(LazyCollectionOption.FALSE)
   @OneToOne(cascade = { CascadeType.MERGE }, mappedBy = "user")
   private EmailConfirmationToken emailConfirmationToken;
 

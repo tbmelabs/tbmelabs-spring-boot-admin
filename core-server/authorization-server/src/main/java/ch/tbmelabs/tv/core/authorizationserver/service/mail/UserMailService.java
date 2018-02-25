@@ -26,6 +26,9 @@ public class UserMailService extends MailService {
   private static final String USERNAME_REPLACEMENT = "%USERNAME%";
   private static final String CONFIRMATION_URL_REPLACEMENT = "%CONFIRMATION_URL%";
 
+  @Value("${server.ssl.enabled:false}")
+  private boolean httpsEnabled;
+
   @Value("${server.address}")
   private String serverAddress;
 
@@ -73,8 +76,13 @@ public class UserMailService extends MailService {
   }
 
   private String getConfirmationUrl(String token) {
-    String confirmationUrl = "https://" + serverAddress + ":" + serverPort + contextPath
-        + SignupConfirmationController.CONFIRMATION_ENDPOINT + "/" + token;
+    String confirmationUrl = "https://";
+    if (!httpsEnabled) {
+      confirmationUrl = "http://";
+    }
+
+    confirmationUrl += serverAddress + ":" + serverPort + contextPath
+        + SignupConfirmationController.CONFIRMATION_ENDPOINT + token;
 
     LOGGER.debug("Created confirmation url " + confirmationUrl);
 

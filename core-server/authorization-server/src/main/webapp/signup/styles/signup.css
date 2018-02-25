@@ -10,6 +10,10 @@
   display: flex;
 }
 
+.signup-form .help-block {
+  text-align: left;
+}
+
 /*
  * Mobile devices
  */

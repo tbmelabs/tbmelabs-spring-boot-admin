@@ -6,19 +6,18 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -52,17 +51,16 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
   private Long id;
 
   @NotEmpty
-  @Length(min = 60, max = 60)
-  @Column(columnDefinition = "bpchar(60)", unique = true)
+  @Length(min = 36, max = 36)
+  @Column(columnDefinition = "bpchar(36)", unique = true)
   private String tokenString;
 
   @NotNull
   private Date expirationDate;
 
   @JsonBackReference("user_has_email_confirmation_token")
-  @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToOne(cascade = CascadeType.MERGE)
-  @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+  @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
+  @JoinColumn(name = "user_id")
   private User user;
 
   public EmailConfirmationToken(String tokenString, User user) {

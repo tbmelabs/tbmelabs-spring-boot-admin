@@ -3,8 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.signup;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Random;
@@ -33,6 +31,8 @@ public class EmailConfirmationTokenServiceTest {
   @InjectMocks
   private EmailConfirmationTokenService fixture;
 
+  private static EmailConfirmationToken savedToken;
+
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
@@ -43,6 +43,9 @@ public class EmailConfirmationTokenServiceTest {
       public EmailConfirmationToken answer(InvocationOnMock invocation) throws Throwable {
         EmailConfirmationToken newEmailConfirmationToken = invocation.getArgument(0);
         newEmailConfirmationToken.setId(new Random().nextLong());
+
+        EmailConfirmationTokenServiceTest.savedToken = newEmailConfirmationToken;
+
         return newEmailConfirmationToken;
       }
     }).when(mockEmailConfirmationTokenRepository).save(Mockito.any(EmailConfirmationToken.class));
@@ -62,10 +65,10 @@ public class EmailConfirmationTokenServiceTest {
   public void createUniqueEmailConfirmationTokenShouldReturnNewUUID() {
     User user = Mockito.mock(User.class);
 
-    EmailConfirmationToken token = fixture.createUniqueEmailConfirmationToken(user);
+    String token = fixture.createUniqueEmailConfirmationToken(user);
 
-    assertThat(UUID.fromString(token.getTokenString())).isNotNull();
-    assertThat(token.getUser()).isEqualTo(user);
-    verify(mockEmailConfirmationTokenRepository, times(1)).save(token);
+    assertThat(UUID.fromString(token)).isNotNull();
+    assertThat(EmailConfirmationTokenServiceTest.savedToken.getUser()).isEqualTo(user);
+    assertThat(EmailConfirmationTokenServiceTest.savedToken.getTokenString()).isEqualTo(token);
   }
 }

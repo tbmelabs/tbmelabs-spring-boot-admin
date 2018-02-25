@@ -70,10 +70,28 @@ public class UserSignupService {
 
   public User signUpNewUser(User newUser) {
     if (!isUserValid(newUser)) {
-      throw new IllegalArgumentException("Registration failed. Please check your details!");
+      throw new IllegalArgumentException("An error occured. Please check your details!");
     }
 
-    LOGGER.info("New user signed up! username: " + newUser.getUsername() + " and email: " + newUser.getEmail());
+    LOGGER.info("New user signed up! username: " + newUser.getUsername() + "; email: " + newUser.getEmail());
+
+    setDefaultRolesIfNonePresent(newUser);
+
+    User persistedUser = userRepository.save(newUser);
+    sendConfirmationEmailIfEmailIsEnabled(persistedUser);
+
+    return persistedUser;
+  }
+
+  private boolean isUserValid(User testUser) {
+    LOGGER.debug("Checking if user \"" + testUser + "\" is valid");
+
+    return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser) && isEmailAddressUnique(testUser)
+        && isEmailAddress(testUser) && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
+  }
+
+  private User setDefaultRolesIfNonePresent(User newUser) {
+    LOGGER.debug("Setting default roles to " + newUser.getUsername());
 
     if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
       try {
@@ -83,21 +101,20 @@ public class UserSignupService {
       }
     }
 
+    return newUser;
+  }
+
+  private User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {
     if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
         .noneMatch(profile -> profile.equals(SpringApplicationProfile.NO_MAIL))) {
-      applicationContext.getBean(UserMailService.class).sendSignupConfirmation(newUser);
+      applicationContext.getBean(UserMailService.class).sendSignupConfirmation(persistedUser);
     } else if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
         .noneMatch(profile -> profile.equals(SpringApplicationProfile.DEV))) {
       throw new IllegalArgumentException("You cannot run a productive environment without any mail configuration!");
+    } else {
+      persistedUser.setIsEnabled(true);
     }
 
-    return userRepository.save(newUser);
-  }
-
-  private boolean isUserValid(User testUser) {
-    LOGGER.debug("Checking if user \"" + testUser + "\" is valid");
-
-    return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser) && isEmailAddressUnique(testUser)
-        && isEmailAddress(testUser) && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
+    return persistedUser;
   }
 }

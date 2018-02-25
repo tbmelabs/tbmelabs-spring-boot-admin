@@ -10,8 +10,6 @@ import {addFlashMessage} from '../../../common/actions/flashMessageActions';
 import validateSignupForm from '../../utils/validateSignupForm';
 import signupUser from '../../utils/signupUser';
 
-import Jumbotron from 'react-bootstrap/lib/Jumbotron';
-
 import SignupForm from '../../components/signup/SignupForm';
 
 require('../../styles/signup.css');
@@ -23,11 +21,6 @@ class Signup extends Component {
 
     return (
       <div>
-        <Jumbotron>
-          <h1>{texts.jumbotron_title}</h1>
-          <p>{texts.jumbotron_text}</p>
-        </Jumbotron>
-
         <div className='signup-form'>
           <SignupForm validateForm={validateSignupForm} signupUser={signupUser} addFlashMessage={addFlashMessage}
                       texts={texts}/>

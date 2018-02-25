@@ -91,7 +91,7 @@ class SignupForm extends Component {
                           collapse={!!errors.form}/>
 
         <FormGroup controlId='username' validationState={!!errors.username ? 'error' : null}>
-          <HelpBlock>{errors.username}</HelpBlock>
+          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.username}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.username_form_control}
           </Col>
@@ -103,7 +103,7 @@ class SignupForm extends Component {
         </FormGroup>
 
         <FormGroup controlId='email' validationState={!!errors.email ? 'error' : null}>
-          <HelpBlock>{errors.email}</HelpBlock>
+          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.email}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.email_form_control}
           </Col>
@@ -115,7 +115,7 @@ class SignupForm extends Component {
         </FormGroup>
 
         <FormGroup controlId='password' validationState={!!errors.password ? 'error' : null}>
-          <HelpBlock>{errors.password}</HelpBlock>
+          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.password}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.password_form_control}
           </Col>
@@ -127,7 +127,7 @@ class SignupForm extends Component {
         </FormGroup>
 
         <FormGroup controlId='confirmation' validationState={!!errors.confirmation ? 'error' : null}>
-          <HelpBlock>{this.state.errors.confirmation}</HelpBlock>
+          <HelpBlock className='col-sm-8 col-sm-offset-4'>{this.state.errors.confirmation}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.password_confirmation_form_control}
           </Col>
