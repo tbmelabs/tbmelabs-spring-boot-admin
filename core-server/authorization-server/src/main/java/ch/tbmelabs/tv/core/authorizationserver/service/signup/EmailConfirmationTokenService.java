@@ -22,18 +22,18 @@ public class EmailConfirmationTokenService {
   // @Autowired
   // private UserCRUDRepository userRepository;
 
-  public String createUniqueEmailConfirmationToken() {
+  public String createUniqueEmailConfirmationToken(User user) {
     LOGGER.info("Creating unique confirmation token");
 
     String token = UUID.randomUUID().toString();
 
     if (emailConfirmationTokenRepository.findByTokenString(token) != null) {
-      return createUniqueEmailConfirmationToken();
+      return createUniqueEmailConfirmationToken(user);
     }
 
     LOGGER.debug("Created token " + token);
 
-    return token;
+    return emailConfirmationTokenRepository.save(new EmailConfirmationToken(token, user)).getTokenString();
   }
 
   public void confirmRegistration(String token) throws EmailConfirmationTokenNotFoundException {

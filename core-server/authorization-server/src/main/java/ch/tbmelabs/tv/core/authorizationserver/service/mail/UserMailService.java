@@ -45,7 +45,7 @@ public class UserMailService extends MailService {
       String emailBody = loadFileContent(
           new File(UserMailService.class.getClassLoader().getResource(SIGNUP_MAIL_TEMPLATE_LOCATION).toURI()));
 
-      final String token = emailConfirmationTokenService.createUniqueEmailConfirmationToken(user).getTokenString();
+      final String token = emailConfirmationTokenService.createUniqueEmailConfirmationToken(user);
 
       emailBody = emailBody.replaceAll(USERNAME_REPLACEMENT, user.getUsername());
       emailBody = emailBody.replaceAll(CONFIRMATION_URL_REPLACEMENT, getConfirmationUrl(token));
