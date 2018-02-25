@@ -74,8 +74,7 @@ public class UserMailService extends MailService {
 
   private String getConfirmationUrl(String token) {
     String confirmationUrl = "https://" + serverAddress + ":" + serverPort + contextPath
-        + SignupConfirmationController.CONFIRMATION_ENDPOINT + "?" + SignupConfirmationController.TOKEN_ARGUMENT_NAME
-        + "=" + token;
+        + SignupConfirmationController.CONFIRMATION_ENDPOINT + "/" + token;
 
     LOGGER.debug("Created confirmation url " + confirmationUrl);
 
