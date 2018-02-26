@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import isEmpty from 'lodash/isEmpty';
+import debounce from 'lodash/debounce';
 
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
@@ -14,6 +15,8 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import CollapsableAlert from '../../../common/components/CollapsableAlert';
+
+import {DEBOUNCE_DELAY} from '../../config';
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -32,19 +35,21 @@ class SignupForm extends Component {
     }
 
     this.onChange = this.onChange.bind(this);
-    this.validateForm = this.validateForm.bind(this);
+    this.isFormValid = this.isFormValid.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+    this.validateForm = debounce(this.props.validateForm, DEBOUNCE_DELAY);
   }
 
   onChange(event) {
     this.setState({[event.target.name]: event.target.value, target: event.target}, () => {
-      this.props.validateForm(this.state.target.name, this.state, errors => {
-        this.setState({errors: errors, isValid: this.validateForm(errors)});
+      this.validateForm(this.state.target.name, this.state, errors => {
+        this.setState({errors: errors, isValid: this.isFormValid(errors)});
       });
     });
   }
 
-  validateForm(errors) {
+  isFormValid(errors) {
     return isEmpty(errors) && !!this.state.username && !!this.state.email
       && !!this.state.password && !!this.state.confirmation;
   }
@@ -55,7 +60,7 @@ class SignupForm extends Component {
     const {texts} = this.props;
 
     this.props.validateForm(event.target.name, this.state, errors => {
-      if (this.validateForm(errors)) {
+      if (this.isFormValid(errors)) {
         this.props.signupUser(this.state).then(
           response => {
             this.props.addFlashMessage({

@@ -22,7 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     LOGGER.debug("Loading userdetails for username \"" + username + "\"");
 
     User user;
-
     if ((user = userRepository.findByUsername(username)) == null) {
       throw new UsernameNotFoundException("Username " + username + " does not exist!");
     }

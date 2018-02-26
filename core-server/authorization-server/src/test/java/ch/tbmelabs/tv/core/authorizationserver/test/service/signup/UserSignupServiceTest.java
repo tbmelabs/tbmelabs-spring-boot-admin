@@ -27,7 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 
 public class UserSignupServiceTest {
-  private static final String SIGNUP_FAILED_ERROR_MESSAGE = "Registration failed. Please check your details!";
+  private static final String SIGNUP_FAILED_ERROR_MESSAGE = "An error occured. Please check your details!";
 
   @Mock
   private Environment mockEnvironment;

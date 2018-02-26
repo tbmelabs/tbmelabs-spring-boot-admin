@@ -11,7 +11,7 @@ import {CookiesProvider} from 'react-cookie';
 import App from './container/app';
 import Signup from './container/app/Signup';
 
-require('./styles/tbme-tv.css');
+require('../common/styles/tbme-tv.css');
 
 const store = configureStore();
 

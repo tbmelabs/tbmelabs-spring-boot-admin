@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import translateAuthenticationError from '../../utils/translateAuthenticationError';
+
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
@@ -46,7 +48,7 @@ class UsernamePasswordSigninForm extends Component {
 
     this.props.signinUser(this.state).then(
       response => window.location.replace(response.headers['no-redirect'])
-      , error => this.setState({errors: {form: error.response.data.message}})
+      , error => this.setState({errors: {form: translateAuthenticationError(error.response.data.message)}})
     );
   }
 
@@ -56,9 +58,7 @@ class UsernamePasswordSigninForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmit} horizontal>
-        <CollapsableAlert style='danger' title={texts.signin_failed_alert_title}
-                          message={texts.signin_failed_alert_text}
-                          collapse={!!errors.form}/>
+        <CollapsableAlert style='danger' title={texts.errors.title} message={errors.form} collapse={!!errors.form}/>
 
         <FormGroup controlId='username' validationState={!!errors.username ? 'error' : null}>
           <HelpBlock>{errors.username}</HelpBlock>

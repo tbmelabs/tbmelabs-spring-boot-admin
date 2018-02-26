@@ -35,7 +35,6 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     Authentication authentication;
-
     if ((authentication = bearerTokenExtractor.extract((HttpServletRequest) request)) != null) {
       logger.debug("Bearer token found, authenticating");
 

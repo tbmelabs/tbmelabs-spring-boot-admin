@@ -9,8 +9,8 @@ import {bindActionCreators} from 'redux';
 import {addFlashMessage} from "../../../common/actions/flashMessageActions";
 
 import SigninJumbotron from "../../components/signin/SigninJumbotron";
-import GoodbyeMessage from './GoodbyeMessage';
-import ConfirmationMessage from './ConfirmationMessage';
+import GoodbyeMessage from '../../components/messages/GoodbyeMessage';
+import ConfirmationMessage from '../../components/messages/ConfirmationMessage';
 import FlashMessageList from '../common/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
