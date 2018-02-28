@@ -26,7 +26,7 @@ public class MailService {
   @Autowired
   private JavaMailSender mailSender;
 
-  protected void sendMail(User receiver, String subject, String htmlMessage) {
+  public void sendMail(User receiver, String subject, String htmlMessage) {
     LOGGER.info("Sending email from " + senderAddress + " to " + receiver.getEmail());
 
     try {

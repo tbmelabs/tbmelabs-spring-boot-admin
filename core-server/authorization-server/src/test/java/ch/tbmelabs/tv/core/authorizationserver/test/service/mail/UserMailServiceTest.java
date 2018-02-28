@@ -1,18 +1,27 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.mail;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.UUID;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
@@ -25,10 +34,10 @@ public class UserMailServiceTest {
   private static final String TEST_CONTEXT_PATH = "";
 
   @Mock
-  private JavaMailSender mockMailSender;
+  private EmailConfirmationTokenService mockEmailConfirmationTokenService;
 
   @Mock
-  private EmailConfirmationTokenService mockEmailConfirmationTokenService;
+  private JavaMailSender mockMailSender;
 
   @Spy
   @InjectMocks
@@ -39,10 +48,14 @@ public class UserMailServiceTest {
     initMocks(this);
 
     ReflectionTestUtils.setField(fixture, "senderAddress", TEST_SENDER_ADDRESS);
-
     ReflectionTestUtils.setField(fixture, "serverAddress", TEST_SERVER_ADDRESS);
     ReflectionTestUtils.setField(fixture, "serverPort", TEST_SERVER_PORT);
     ReflectionTestUtils.setField(fixture, "contextPath", TEST_CONTEXT_PATH);
+
+    doReturn(UUID.randomUUID().toString()).when(mockEmailConfirmationTokenService)
+        .createUniqueEmailConfirmationToken(Mockito.any(User.class));
+
+    doNothing().when(fixture).sendMail(Mockito.any(User.class), Mockito.anyString(), Mockito.anyString());
   }
 
   @Test
@@ -63,15 +76,14 @@ public class UserMailServiceTest {
     assertThat(new UserMailService()).isNotNull();
   }
 
-  // TODO
-  // @Test
-  // public void sendSignupConfirmationShouldSendMimeMessage() {
-  // User user = Mockito.mock(User.class);
-  // doReturn(RandomStringUtils.random(11)).when(user).getUsername();
-  // doReturn(RandomStringUtils.random(11)).when(user).getEmail();
-  //
-  // fixture.sendSignupConfirmation(user);
-  //
-  // verify(mockMailSender, times(1)).send(Mockito.any(MimeMessage.class));
-  // }
+  @Test
+  public void sendSignupConfirmationShouldCallMailService() {
+    User user = new User();
+    user.setUsername(RandomStringUtils.random(11));
+
+    fixture.sendSignupConfirmation(user);
+
+    verify(fixture, times(1)).sendMail(Mockito.eq(user), Mockito.eq("Confirm registration to TBME Labs"),
+        Mockito.anyString());
+  }
 }

@@ -12,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -66,15 +65,13 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
   public EmailConfirmationToken(String tokenString, User user) {
     this.tokenString = tokenString;
     this.user = user;
+
+    this.expirationDate = calculateExpirationDate();
   }
 
-  @Override
-  @PrePersist
-  public void onCreate() {
-    super.onCreate();
-
+  private Date calculateExpirationDate() {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, 1);
-    this.expirationDate = calendar.getTime();
+    return calendar.getTime();
   }
 }
