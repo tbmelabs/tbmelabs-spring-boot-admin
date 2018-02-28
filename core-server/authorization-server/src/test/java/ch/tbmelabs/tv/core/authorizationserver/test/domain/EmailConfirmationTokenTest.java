@@ -61,9 +61,17 @@ public class EmailConfirmationTokenTest {
   public void emailConfirmationTokenShouldHaveAllArgsConstructor() {
     String tokenString = RandomStringUtils.random(60);
     User user = new User();
+    Calendar expected = Calendar.getInstance();
+    expected.add(Calendar.DATE, 1);
 
-    assertThat(new EmailConfirmationToken(tokenString, user)).hasFieldOrPropertyWithValue("tokenString", tokenString)
-        .hasFieldOrPropertyWithValue("user", user);
+    fixture = new EmailConfirmationToken(tokenString, user);
+
+    Calendar given = Calendar.getInstance();
+    given.setTime(fixture.getExpirationDate());
+
+    assertThat(fixture).hasFieldOrPropertyWithValue("tokenString", tokenString).hasFieldOrPropertyWithValue("user",
+        user);
+    assertThat(given.get(Calendar.DATE)).isEqualTo(expected.get(Calendar.DATE));
   }
 
   @Test
@@ -106,18 +114,5 @@ public class EmailConfirmationTokenTest {
 
     assertThat(fixture).hasFieldOrPropertyWithValue("user", user);
     assertThat(fixture.getUser()).isEqualTo(user);
-  }
-
-  @Test
-  public void onCreateShouldSetExpirationDate() {
-    Calendar expected = Calendar.getInstance();
-    expected.add(Calendar.DATE, 1);
-
-    Calendar given = Calendar.getInstance();
-
-    fixture.onCreate();
-
-    given.setTime(fixture.getExpirationDate());
-    assertThat(given.get(Calendar.DATE)).isEqualTo(expected.get(Calendar.DATE));
   }
 }
