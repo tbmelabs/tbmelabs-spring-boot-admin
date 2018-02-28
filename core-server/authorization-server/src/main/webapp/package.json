@@ -1,6 +1,6 @@
 {
-  "name": "tbme-labs-login",
-  "description": "OAuth2 SSO webapplication.",
+  "name": "tbme-labs-authorization-server",
+  "description": "OAuth2 SSO Webapplication.",
   "version": "1.0.0",
   "author": "TBME Labs",
   "license": {
@@ -9,9 +9,10 @@
   },
   "main": "index.html",
   "scripts": {
-    "test": "karma start",
+    "build": "webpack -p",
     "dev": "webpack -d --watch",
-    "build": "webpack -p"
+    "test": "karma start",
+    "test:watch": "karma start -- --watch"
   },
   "repository": {
     "type": "git",
@@ -53,16 +54,20 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "file-loader": "^1.1.5",
+    "istanbul-instrumenter-loader": "^3.0.0",
     "karma": "^2.0.0",
     "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.2.0",
     "karma-cli": "^1.0.1",
     "karma-coverage": "^1.1.1",
+    "karma-coverage-istanbul-reporter": "^1.4.1",
     "karma-mocha": "^1.3.0",
     "karma-mocha-reporter": "^2.2.5",
-    "karma-phantomjs2-launcher": "^0.5.0",
+    "karma-remap-istanbul": "^0.6.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
     "mocha": "^4.1.0",
+    "puppeteer": "^1.1.1",
     "style-loader": "^0.19.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1"
