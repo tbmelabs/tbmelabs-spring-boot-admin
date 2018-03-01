@@ -24,12 +24,29 @@
 
     <!-- Plugin configuration -->
     <com.spotify.docker-maven-plugin.version>1.0.0</com.spotify.docker-maven-plugin.version>
+    <org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
 
     <!-- Test coverage configuration -->
     <project.build.test-result-directory>${project.build.directory}/test-results</project.build.test-result-directory>
 
+    <org.jacoco.jacoco-maven-plugin.dest-file-path>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</org.jacoco.jacoco-maven-plugin.dest-file-path>
     <org.jacoco.jacoco-maven-plugin.output-path>${project.build.test-result-directory}/coverage/jacoco</org.jacoco.jacoco-maven-plugin.output-path>
-    <org.jacoco.jacoco-maven-plugin.version>0.8.0</org.jacoco.jacoco-maven-plugin.version>
+
+    <!-- Sonar configuration -->
+    <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
+    <sonar.issue.ignore.multicriteria>S2068a,S2068b</sonar.issue.ignore.multicriteria>
+    <sonar.issue.ignore.multicriteria.S2068a.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068a.ruleKey>
+    <sonar.issue.ignore.multicriteria.S2068a.resourceKey>**/UserSignupService.java</sonar.issue.ignore.multicriteria.S2068a.resourceKey>
+    <sonar.issue.ignore.multicriteria.S2068b.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068b.ruleKey>
+    <sonar.issue.ignore.multicriteria.S2068b.resourceKey>**/ClientGrantType.java</sonar.issue.ignore.multicriteria.S2068b.resourceKey>
+
+    <!-- Sonar report paths for sonar-server >= 6.2 -->
+    <sonar.jacoco.reportPaths>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</sonar.jacoco.reportPaths>
+    <sonar.javascript.lcov.reportPaths>${project.build.test-result-directory}/coverage/report-lcov/lcov.info</sonar.javascript.lcov.reportPaths>
+
+    <!-- Sonar report paths for sonar-server < 6.2 -->
+    <sonar.jacoco.reportPath>${sonar.jacoco.reportPaths}</sonar.jacoco.reportPath>
+    <sonar.javascript.lcov.reportPath>${sonar.javascript.lcov.reportPaths}</sonar.javascript.lcov.reportPath>
   </properties>
 
   <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
@@ -148,7 +165,7 @@
 
         <configuration>
           <systemPropertyVariables>
-            <jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+            <jacoco-agent.destfile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</jacoco-agent.destfile>
           </systemPropertyVariables>
         </configuration>
 
@@ -162,17 +179,7 @@
             </goals>
           </execution>
 
-          <!-- report code coverage -->
-          <execution>
-            <id>report</id>
-            <phase>prepare-package</phase>
-
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-
-          <!-- execute post unit test report -->
+          <!-- report test coverage -->
           <execution>
             <id>post-unit-test</id>
             <phase>test</phase>
@@ -182,7 +189,7 @@
             </goals>
 
             <configuration>
-              <dataFile>target/jacoco.exec</dataFile>
+              <dataFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</dataFile>
               <outputDirectory>${org.jacoco.jacoco-maven-plugin.output-path}</outputDirectory>
             </configuration>
           </execution>
