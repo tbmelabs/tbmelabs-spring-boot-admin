@@ -64,11 +64,6 @@ public class ApplicationTest {
   }
 
   @Test
-  public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] {});
-  }
-
-  @Test
   public void configureShouldAddApplicationSourceToApplicationBuilder() {
     SpringApplicationBuilder builder = Mockito.mock(SpringApplicationBuilder.class);
 

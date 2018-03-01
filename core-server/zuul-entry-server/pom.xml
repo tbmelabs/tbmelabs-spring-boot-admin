@@ -8,11 +8,18 @@
   <description>Load-Balancer based on Spring-Cloud integration.</description>
 
   <properties>
+    <!-- General configuration -->
+    <start-class>ch.tbmelabs.tv.core.entryserver.Application</start-class>
+
+    <!-- Dependency configuration -->
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
+
+    <!-- Plugin configuration -->
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
     <com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
     <com.github.eirslett.frontend-maven-plugin.npm.version>5.5.1</com.github.eirslett.frontend-maven-plugin.npm.version>
-    <start-class>ch.tbmelabs.tv.core.entryserver.Application</start-class>
+    <com.github.eirslett.frontend-maven-plugin.installDirectory>target/node</com.github.eirslett.frontend-maven-plugin.installDirectory>
+    <com.github.eirslett.frontend-maven-plugin.workingDirectory>src/main/webapp</com.github.eirslett.frontend-maven-plugin.workingDirectory>
   </properties>
 
   <parent>
@@ -95,7 +102,7 @@
                 </goals>
 
                 <configuration>
-                  <installDirectory>target/node</installDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
                   <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
                   <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
                 </configuration>
@@ -112,8 +119,8 @@
 
                 <configuration>
                   <arguments>install --no-save</arguments>
-                  <installDirectory>target/node</installDirectory>
-                  <workingDirectory>src/main/webapp</workingDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
                 </configuration>
               </execution>
 
@@ -128,8 +135,8 @@
 
                 <configuration>
                   <arguments>run build</arguments>
-                  <installDirectory>target/node</installDirectory>
-                  <workingDirectory>src/main/webapp</workingDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
                 </configuration>
               </execution>
             </executions>
@@ -157,22 +164,6 @@
           <optional>true</optional>
         </dependency>
       </dependencies>
-
-      <build>
-        <plugins>
-          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-
-            <configuration>
-              <excludes>
-                <exclude>**/*IntTest.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
 
     <profile>
@@ -197,7 +188,7 @@
                 </goals>
 
                 <configuration>
-                  <installDirectory>target/node</installDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
                   <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
                   <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
                 </configuration>
@@ -213,9 +204,9 @@
                 </goals>
 
                 <configuration>
-                  <arguments>install --no-save</arguments>
-                  <installDirectory>target/node</installDirectory>
-                  <workingDirectory>src/main/webapp</workingDirectory>
+                  <arguments>install</arguments>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
                 </configuration>
               </execution>
 
@@ -230,8 +221,8 @@
 
                 <configuration>
                   <arguments>run test</arguments>
-                  <installDirectory>target/node</installDirectory>
-                  <workingDirectory>src/main/webapp</workingDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
                 </configuration>
               </execution>
 
@@ -246,8 +237,8 @@
 
                 <configuration>
                   <arguments>run build</arguments>
-                  <installDirectory>target/node</installDirectory>
-                  <workingDirectory>src/main/webapp</workingDirectory>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
                 </configuration>
               </execution>
             </executions>
