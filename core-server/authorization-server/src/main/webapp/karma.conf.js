@@ -50,7 +50,7 @@ module.exports = function (config) {
         html: '../../../target/test-results/coverage'
       }
     },
-    reporters: ['mocha', 'coverage-istanbul', 'karma-remap-istanbul'],
+    reporters: ['progress', 'mocha', 'coverage-istanbul', 'karma-remap-istanbul'],
     singleRun: !WATCH,
     webpack: {
       devtool: 'inline-source-map',

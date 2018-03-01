@@ -24,7 +24,7 @@ before_script:
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE auth_test_database TO auth_test_user;" -U postgres
 
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -P prod
 
 cache:
   directories:
