@@ -41,7 +41,8 @@ module.exports = {
           ],
           presets: [
             'env',
-            'react'
+            'react',
+            'flow'
           ]
         }
       }, {

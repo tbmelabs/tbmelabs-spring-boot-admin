@@ -71,7 +71,8 @@ module.exports = function (config) {
               ],
               presets: [
                 'env',
-                'react'
+                'react',
+                'flow'
               ]
             }
           }, {
