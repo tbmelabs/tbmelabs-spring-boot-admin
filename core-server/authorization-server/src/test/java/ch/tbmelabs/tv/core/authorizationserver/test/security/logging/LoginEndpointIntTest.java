@@ -27,6 +27,9 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
+  private static final String USER_DISABLED_ERROR_MESSAGE = "Authentication Failed: User is disabled";
+  private static final String USER_BLOCKED_ERROR_MESSAGE = "Authentication Failed: User account is locked";
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -51,6 +54,9 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
 
   @Before
   public void beforeTestSetUp() {
+    testUser.setIsEnabled(true);
+    testUser.setIsBlocked(false);
+
     testUser = userRepository.save(testUser);
 
     authenticationLogRepository.deleteAll();
@@ -80,5 +86,33 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
 
     assertThat(redirectUrl).isNotNull().isEqualTo("/");
+  }
+
+  @Test
+  public void loginProcessingShouldFailIfUserIsDisabled() throws Exception {
+    testUser.setIsEnabled(false);
+    userRepository.save(testUser);
+
+    String errorMessage = mockMvc
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+            .param(PASSWORD_PARAMETER_NAME, password))
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
+        .getErrorMessage();
+
+    assertThat(errorMessage).isEqualTo(USER_DISABLED_ERROR_MESSAGE);
+  }
+
+  @Test
+  public void loginProcessingShouldFailIfUserIsBlocked() throws Exception {
+    testUser.setIsBlocked(true);
+    userRepository.save(testUser);
+
+    String errorMessage = mockMvc
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+            .param(PASSWORD_PARAMETER_NAME, password))
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
+        .getErrorMessage();
+
+    assertThat(errorMessage).isEqualTo(USER_BLOCKED_ERROR_MESSAGE);
   }
 }

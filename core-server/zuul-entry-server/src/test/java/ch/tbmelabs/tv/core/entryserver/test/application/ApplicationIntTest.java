@@ -12,6 +12,6 @@ public class ApplicationIntTest extends AbstractZuulApplicationContextAware {
 
   @Test
   public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] {});
+    Application.main(new String[] { "--spring.profiles.active=test" });
   }
 }

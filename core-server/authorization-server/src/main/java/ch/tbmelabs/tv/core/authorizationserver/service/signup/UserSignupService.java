@@ -108,8 +108,8 @@ public class UserSignupService {
     if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
         .noneMatch(profile -> profile.equals(SpringApplicationProfile.NO_MAIL))) {
       applicationContext.getBean(UserMailService.class).sendSignupConfirmation(persistedUser);
-    } else if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
-        .noneMatch(profile -> profile.equals(SpringApplicationProfile.DEV))) {
+    } else if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles()).noneMatch(
+        profile -> profile.equals(SpringApplicationProfile.DEV) || profile.equals(SpringApplicationProfile.TEST))) {
       throw new IllegalArgumentException("You cannot run a productive environment without any mail configuration!");
     } else {
       persistedUser.setIsEnabled(true);

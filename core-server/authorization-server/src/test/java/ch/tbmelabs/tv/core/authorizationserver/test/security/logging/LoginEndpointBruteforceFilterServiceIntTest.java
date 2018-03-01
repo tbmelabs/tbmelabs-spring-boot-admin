@@ -62,6 +62,8 @@ public class LoginEndpointBruteforceFilterServiceIntTest extends AbstractOAuth2A
       }
     });
 
-    assertThat(ipBlacklistRepository.findAll()).hasSize(1).extracting("ip").containsExactly("127.0.0.1");
+    assertThat(ipBlacklistRepository.findAll()).hasSize(1);
+    assertThat(ipBlacklistRepository.findAll().iterator().next()).hasFieldOrPropertyWithValue("startIp", "127.0.0.1")
+        .hasFieldOrPropertyWithValue("endIp", "127.0.0.1");
   }
 }

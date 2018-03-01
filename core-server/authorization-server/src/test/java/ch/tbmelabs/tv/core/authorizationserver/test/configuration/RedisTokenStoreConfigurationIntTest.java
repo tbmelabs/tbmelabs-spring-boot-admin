@@ -24,7 +24,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles({ SpringApplicationProfile.TEST })
+@ActiveProfiles({ SpringApplicationProfile.TEST, SpringApplicationProfile.NO_MAIL })
 @SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
     DirtiesContextBeforeModesTestExecutionListener.class, DependencyInjectionTestExecutionListener.class,

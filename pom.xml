@@ -163,12 +163,6 @@
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>${org.jacoco.jacoco-maven-plugin.version}</version>
 
-        <configuration>
-          <systemPropertyVariables>
-            <jacoco-agent.destfile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</jacoco-agent.destfile>
-          </systemPropertyVariables>
-        </configuration>
-
         <executions>
           <!-- download and install JaCoCo agent -->
           <execution>
@@ -177,6 +171,10 @@
             <goals>
               <goal>prepare-agent</goal>
             </goals>
+
+            <configuration>
+              <destFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</destFile>
+            </configuration>
           </execution>
 
           <!-- report test coverage -->

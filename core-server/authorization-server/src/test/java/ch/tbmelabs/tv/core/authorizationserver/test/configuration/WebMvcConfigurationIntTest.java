@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.Ordered;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistration;
@@ -53,17 +52,16 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationAppli
     assertThat(registrations).isNotNull().hasSize(1);
     assertThat((String[]) ReflectionTestUtils.getField(registrations.get(0), "pathPatterns")).isNotNull().hasSize(1)
         .containsExactly("/**");
-    assertThat((ArrayList<ServletContextResource>) ReflectionTestUtils.getField(registrations.get(0), "locations"))
-        .isNotNull().hasSize(1);
-    assertThat(
-        ((ArrayList<ServletContextResource>) ReflectionTestUtils.getField(registrations.get(0), "locations")).get(0))
-            .hasFieldOrPropertyWithValue("path", "/");
+    assertThat((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues")).isNotNull()
+        .hasSize(1);
+    assertThat(((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues")).get(0))
+        .isEqualTo("/");
   }
 
   @Test
   @SuppressWarnings("unchecked")
   public void viewControllerRegistryShouldBeConfiguredCorrectly() {
-    ViewControllerRegistry registry = new ViewControllerRegistry();
+    ViewControllerRegistry registry = new ViewControllerRegistry(applicationContext);
     ReflectionTestUtils.setField(registry, "applicationContext", applicationContext);
 
     configuration.addViewControllers(registry);

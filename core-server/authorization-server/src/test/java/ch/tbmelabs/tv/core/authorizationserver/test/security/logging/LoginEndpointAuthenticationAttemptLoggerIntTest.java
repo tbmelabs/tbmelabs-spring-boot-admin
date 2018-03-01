@@ -48,7 +48,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
   @BeforeClass
   public static void beforeClassSetUp() {
     testUser.setUsername(RandomStringUtils.random(11));
-    testUser.setEmail("loginendpointauthenticationattemptloggerinttest.user@tbme.tv");
+    testUser.setEmail("loginendpointinttest.user@tbme.tv");
     testUser.setPassword(RandomStringUtils.random(11));
     testUser.setConfirmation(testUser.getPassword());
 
@@ -57,6 +57,9 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
 
   @Before
   public void beforeTestSetUp() {
+    testUser.setIsEnabled(true);
+    testUser.setIsBlocked(false);
+
     testUser = userRepository.save(testUser);
 
     authenticationLogRepository.deleteAll();

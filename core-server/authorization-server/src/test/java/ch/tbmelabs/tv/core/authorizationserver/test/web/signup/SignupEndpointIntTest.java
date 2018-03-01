@@ -35,7 +35,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
 
-  private static final String USER_VALIDATION_ERROR_MESSAGE = "Registration failed. Please check your details!";
+  private static final String USER_VALIDATION_ERROR_MESSAGE = "An error occured. Please check your details!";
 
   @Autowired
   private MockMvc mockMvc;

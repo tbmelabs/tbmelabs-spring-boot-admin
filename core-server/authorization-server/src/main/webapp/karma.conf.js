@@ -5,6 +5,11 @@ var BUILD_DIR = path.resolve(__dirname, 'public');
 var NODE_DIR = path.resolve(__dirname, 'node_modules');
 var TEST_DIR = path.resolve(__dirname, '__tests__');
 
+var COMMON_UTILS = path.resolve(__dirname, 'common');
+var AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
+var SIGNIN_APP = path.resolve(__dirname, 'signin');
+var SIGNUP_APP = path.resolve(__dirname, 'signup');
+
 process.env.CHROMIUM_BIN = require('puppeteer').executablePath()
 
 const WATCH = process.argv.indexOf('--watch') > -1;
@@ -19,7 +24,8 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true,
       reports: [
         'lcovonly',
-        'html'
+        'html',
+        'text-summary'
       ]
     },
     customLaunchers: {
