@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -10,7 +11,7 @@ import FlashMessageList from '../common/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class App extends Component {
+class App extends Component<App.propTypes> {
   render() {
     const {texts} = this.props;
 

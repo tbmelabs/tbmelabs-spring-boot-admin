@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -17,8 +18,12 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class UsernamePasswordSigninForm extends Component {
-  constructor(props) {
+class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.propTypes, { username: string, password: string, errors: any, isValid: boolean, isLoading: boolean }> {
+  onChange: () => void;
+  validateForm: () => void;
+  onSubmit: () => void;
+
+  constructor(props: UsernamePasswordSigninForm.propTypes) {
     super(props);
 
     this.state = {
@@ -35,7 +40,7 @@ class UsernamePasswordSigninForm extends Component {
 
   }
 
-  onChange(event) {
+  onChange(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState({[event.target.name]: event.target.value}, this.validateForm);
   }
 
@@ -43,7 +48,7 @@ class UsernamePasswordSigninForm extends Component {
     this.setState({isValid: this.state.username && this.state.password});
   }
 
-  onSubmit(event) {
+  onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
     this.props.signinUser(this.state).then(
@@ -90,7 +95,7 @@ class UsernamePasswordSigninForm extends Component {
           </Col>
           <Col sm={4}>
             <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
-                    onClick={isValid && !isLoading ? this.handleClick : null}>
+                    onClick={isValid && !isLoading ? this.onSubmit : null}>
               {isLoading ? texts.signin_button_loading_text : texts.signin_button_text}
             </Button>
           </Col>

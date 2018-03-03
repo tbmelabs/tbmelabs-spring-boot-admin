@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -13,7 +14,7 @@ import UsernamePasswordSigninForm from '../../components/signin/UsernamePassword
 
 require('../../styles/signin.css');
 
-class Signup extends Component {
+class Signup extends Component<Signup.propTypes> {
   render() {
     const {texts} = this.props;
     const {addFlashMessage} = this.props.actions;

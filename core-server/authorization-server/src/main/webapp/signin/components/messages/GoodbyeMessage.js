@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -5,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import {parse} from 'query-string';
 
-class ShouldAddGoodbyeMessage extends Component {
+class ShouldAddGoodbyeMessage extends Component<ShouldAddGoodbyeMessage.propTypes> {
   componentDidMount() {
     const {addFlashMessage, texts} = this.props;
 

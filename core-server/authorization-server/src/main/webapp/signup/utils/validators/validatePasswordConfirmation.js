@@ -1,10 +1,11 @@
+// @flow
 'use strict';
 
 import axios, {CancelToken} from 'axios';
 
 var cancelConfirmation;
 
-export default function validatePasswordConfirmation(password, confirmation, errors, callback) {
+export default function validatePasswordConfirmation(password: string, confirmation: string, errors: any, callback: function) {
   if (password == undefined || password == '' || confirmation == undefined || confirmation == '') {
     delete errors.confirmation;
     return;

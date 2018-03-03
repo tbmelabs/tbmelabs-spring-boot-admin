@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -17,11 +18,11 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class ClientApprovalForm extends Component {
-  constructor(props) {
-    super(props);
+const CLIENT_PLACEHOLDER = '[CLIENT_ID]';
 
-    this.CLIENT_PLACEHOLDER = '[CLIENT_ID]';
+class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, { clientId: string, scopes: string[], errors: any }> {
+  constructor(props: ClientApprovalForm.propTypes) {
+    super(props);
 
     this.state = {
       clientId: '',
@@ -46,7 +47,7 @@ class ClientApprovalForm extends Component {
     return (
       <Form id='confirmationForm' name='confirmationForm' action='authorize' method='post' horizontal>
         {/*TODO: ClientId is not the most beautiful thing here.. maybe add client name?*/}
-        <h1>{texts.approve_title_question.replace(this.CLIENT_PLACEHOLDER, '\'' + this.state.clientId + '\'')}</h1>
+        <h1>{texts.approve_title_question.replace(CLIENT_PLACEHOLDER, '\'' + this.state.clientId + '\'')}</h1>
 
         <CollapsableAlert style='danger' title={texts.scope_fetch_failed_alert_title}
                           message={texts.scope_fetch_failed_alert_text}

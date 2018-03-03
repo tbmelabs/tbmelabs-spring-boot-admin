@@ -1,10 +1,11 @@
+// @flow
 'use strict';
 
 import axios, {CancelToken} from 'axios';
 
 var cancelPassword;
 
-export default function validatePassword(password, errors, callback) {
+export default function validatePassword(password: string, errors: any, callback: function) {
   if (password == undefined || password == '') {
     delete errors.password;
     return;

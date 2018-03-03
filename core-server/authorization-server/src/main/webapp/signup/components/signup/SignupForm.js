@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -20,8 +21,13 @@ import {DEBOUNCE_DELAY} from '../../config';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class SignupForm extends Component {
-  constructor(props) {
+class SignupForm extends Component<SignupForm.propTypes, { username: string, email: string, password: string, confirmation: string, target: HTMLInputElement, errors: any, isValid: boolean, isLoading: boolean }> {
+  onChange: () => void;
+  isFormValid: (errors: any) => boolean;
+  onSubmit: () => void;
+  validateForm: (name: string, state: { username: string, email: string, password: string, confirmation: string, target: HTMLInputElement, errors: any, isValid: boolean, isLoading: boolean }, errors: function) => void;
+
+  constructor(props: SignupForm.propTypes) {
     super(props);
 
     this.state = {
@@ -29,6 +35,7 @@ class SignupForm extends Component {
       email: '',
       password: '',
       confirmation: '',
+      target: new HTMLInputElement(),
       errors: {},
       isValid: false,
       isLoading: false
@@ -37,11 +44,10 @@ class SignupForm extends Component {
     this.onChange = this.onChange.bind(this);
     this.isFormValid = this.isFormValid.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-
     this.validateForm = debounce(this.props.validateForm, DEBOUNCE_DELAY);
   }
 
-  onChange(event) {
+  onChange(event: SyntheticInputEvent<HTMLInputElement>) {
     this.setState({[event.target.name]: event.target.value, target: event.target}, () => {
       this.validateForm(this.state.target.name, this.state, errors => {
         this.setState({errors: errors, isValid: this.isFormValid(errors)});
@@ -49,12 +55,12 @@ class SignupForm extends Component {
     });
   }
 
-  isFormValid(errors) {
+  isFormValid(errors: any) {
     return isEmpty(errors) && !!this.state.username && !!this.state.email
       && !!this.state.password && !!this.state.confirmation;
   }
 
-  onSubmit(event) {
+  onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
     const {texts} = this.props;
@@ -149,7 +155,7 @@ class SignupForm extends Component {
           </Col>
           <Col sm={4}>
             <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
-                    onClick={isValid && !isLoading ? this.handleClick : null}>
+                    onClick={isValid && !isLoading ? this.onSubmit : null}>
               {isLoading ? texts.signup_button_loading_text : texts.signup_button_text}
             </Button>
           </Col>

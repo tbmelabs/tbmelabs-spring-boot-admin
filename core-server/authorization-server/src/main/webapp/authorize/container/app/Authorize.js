@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -11,7 +12,7 @@ import ClientApprovalForm from '../../components/authorize/ClientApprovalForm';
 
 require('../../styles/authorize.css');
 
-class Authorize extends Component {
+class Authorize extends Component<Authorize.propTypes> {
   render() {
     const {texts} = this.props;
 

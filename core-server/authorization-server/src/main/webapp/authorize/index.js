@@ -23,4 +23,4 @@ render(
       </App>
     </CookiesProvider>
   </Provider>
-  , document.getElementById('app'));
+  , (document.getElementById('app'): any));

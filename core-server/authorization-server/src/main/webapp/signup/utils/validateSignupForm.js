@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import validateUsername from './validators/validateUsername';
@@ -5,7 +6,7 @@ import validateEmail from './validators/validateEmail';
 import validatePassword from './validators/validatePassword';
 import validatePasswordConfirmation from './validators/validatePasswordConfirmation';
 
-export default function validateSignupForm(control, data, callback) {
+export default function validateSignupForm(control: string, data: { username: string, email: string, password: string, confirmation: string, errors: any }, callback: function) {
   const {username, email, password, confirmation, errors} = data;
 
   delete errors.form;

@@ -1,10 +1,11 @@
+// @flow
 'use strict';
 
 import axios, {CancelToken} from 'axios';
 
 var cancelUsername;
 
-export default function validateUsername(username, errors, callback) {
+export default function validateUsername(username: string, errors: any, callback: function) {
   if (username == undefined || username == '') {
     delete errors.username;
     return;

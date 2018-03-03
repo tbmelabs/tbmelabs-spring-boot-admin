@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -7,7 +8,7 @@ import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class SignupJumbotron extends Component {
+class SignupJumbotron extends Component<SignupJumbotron.propTypes> {
   render() {
     const {texts} = this.props;
 

@@ -12,8 +12,10 @@ import CollapsableAlert from './CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class FlashMessage extends Component {
-  constructor(props) {
+class FlashMessage extends Component<FlashMessage.propTypes, { collapse: boolean }> {
+  onClick: () => void;
+
+  constructor(props: FlashMessage.propTypes) {
     super(props);
 
     this.state = {
@@ -28,7 +30,7 @@ class FlashMessage extends Component {
   }
 
   // TODO: Replace low level js transition with high level css
-  componentWillLeave(callback) {
+  componentWillLeave(callback: function) {
     this.setState({collaps: false}, () => {
       setTimeout(callback, 300);
     });

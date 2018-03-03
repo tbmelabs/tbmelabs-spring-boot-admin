@@ -9,7 +9,7 @@ import Alert from 'react-bootstrap/lib/Alert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class CollapsableAlert extends Component {
+class CollapsableAlert extends Component<CollapsableAlert.propTypes> {
   render() {
     return (
       <Collapse in={this.props.collapse}>

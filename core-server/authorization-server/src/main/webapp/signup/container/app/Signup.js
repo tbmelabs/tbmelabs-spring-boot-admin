@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -14,7 +15,7 @@ import SignupForm from '../../components/signup/SignupForm';
 
 require('../../styles/signup.css');
 
-class Signup extends Component {
+class Signup extends Component<Signup.propTypes> {
   render() {
     const {texts} = this.props;
     const {addFlashMessage} = this.props.actions;
