@@ -1,11 +1,18 @@
 [ignore]
+.*/coverage/.*
+.*/public/.*
 
 [include]
+.*/authorize/.*
+.*/common/.*
+.*/signin/.*
+.*/signup/.*
 
 [libs]
 
 [lints]
 
 [options]
+module.use_strict=true
 
 [strict]

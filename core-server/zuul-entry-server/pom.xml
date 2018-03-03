@@ -210,6 +210,22 @@
                 </configuration>
               </execution>
 
+              <!-- flow type check -->
+              <execution>
+                <id>npm run flow</id>
+                <phase>generate-resources</phase>
+
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+
+                <configuration>
+                  <arguments>run flow</arguments>
+                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                </configuration>
+              </execution>
+
               <!-- test application -->
               <execution>
                 <id>npm run test</id>
