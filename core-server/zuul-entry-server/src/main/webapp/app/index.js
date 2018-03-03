@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React from 'react';
@@ -20,4 +21,4 @@ render(
       <Router/>
     </CookiesProvider>
   </Provider>
-  , document.getElementById('app'));
+  , (document.getElementById('app'): any));

@@ -37,6 +37,7 @@ module.exports = {
         test: /\.js$/,
         options: {
           plugins: [
+            'transform-flow-strip-types',
             'transform-object-rest-spread'
           ],
           presets: [

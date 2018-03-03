@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -10,7 +11,7 @@ import {deleteFlashMessage} from '../../actions/flashMessageActions';
 
 import FlashMessage from '../../components/common/FlashMessage';
 
-class FlashMessagesList extends Component {
+class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
   render() {
     const {messages} = this.props;
     const {deleteFlashMessage} = this.props.actions;

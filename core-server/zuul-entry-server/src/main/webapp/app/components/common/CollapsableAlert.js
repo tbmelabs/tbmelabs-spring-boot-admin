@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React from 'react';
@@ -8,7 +9,7 @@ import Alert from 'react-bootstrap/lib/Alert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class CollapsableAlert extends React.Component {
+class CollapsableAlert extends React.Component<CollapsableAlert.propTypes> {
   render() {
     return (
       <Collapse in={this.props.collapse}>

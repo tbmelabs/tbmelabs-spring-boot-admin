@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -11,24 +12,26 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class Navigation extends Component {
-  constructor(props) {
-    super(props);
+const LOGIN_EVENT = 'LOGIN';
+const LOGOUT_EVENT = 'LOGOUT';
 
-    this.LOGIN_EVENT = 'LOGIN';
-    this.LOGOUT_EVENT = 'LOGOUT';
+class Navigation extends Component<Navigation.propTypes> {
+  onClick: () => void;
+
+  constructor(props: Navigation.propTypes) {
+    super(props);
 
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick(event) {
+  onClick(event: SyntheticInputEvent<HTMLInputElement>) {
     const {login, logout} = this.props;
 
     switch (event.target.name) {
-      case this.LOGIN_EVENT:
+      case LOGIN_EVENT:
         login();
         break;
-      case this.LOGOUT_EVENT:
+      case LOGOUT_EVENT:
         logout();
         break;
     }
@@ -60,9 +63,9 @@ class Navigation extends Component {
           <Nav pullRight>
             {
               !isAuthenticated ?
-                <NavItem name={this.LOGIN_EVENT} onClick={this.onClick}>{texts.login}</NavItem>
+                <NavItem name={LOGIN_EVENT} onClick={this.onClick}>{texts.login}</NavItem>
                 :
-                <NavItem name={this.LOGOUT_EVENT} onClick={this.onClick}>{texts.logout}</NavItem>
+                <NavItem name={LOGOUT_EVENT} onClick={this.onClick}>{texts.logout}</NavItem>
             }
           </Nav>
         </Navbar.Collapse>

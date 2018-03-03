@@ -14,7 +14,7 @@ export default (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_LANGUAGE:
       try {
-        const language = require('../config/languages/' + action.language + '.json');
+        const language = require(`../config/languages/${action.language}.json`);
 
         return {
           name: language.name,

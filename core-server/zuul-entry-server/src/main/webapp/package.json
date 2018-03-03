@@ -11,8 +11,10 @@
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack -d --watch",
+    "flow": "flow check",
     "flow:start": "flow",
-    "flow:stop": "flow stop",
+    "flow:status": "flow status",
+    "flow stop": "flow stop",
     "test": "karma start",
     "test:watch": "karma start -- --watch"
   },
@@ -46,6 +48,7 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",

@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -9,7 +10,7 @@ import {login, logout} from '../../actions/authActions';
 
 import Navigation from '../../components/Navigation';
 
-class Navbar extends Component {
+class Navbar extends Component<Navbar.propTypes> {
   render() {
     const {auth, texts} = this.props;
 
