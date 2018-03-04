@@ -1,14 +1,14 @@
 // @flow
 'use strict';
 
+import type userType from '../../common/types/userType';
+
 import validateUsername from './validators/validateUsername';
 import validateEmail from './validators/validateEmail';
 import validatePassword from './validators/validatePassword';
 import validatePasswordConfirmation from './validators/validatePasswordConfirmation';
 
-import userType from '../../common/types/userType';
-
-export default function validateSignupForm(control: string, data: userType & { errors: userType }, callback: (errors: userType) => void) {
+export default function validateSignupForm(control: string, data: userType & { errors: userType & { form: string } }, callback: (errors: userType) => void) {
   const {username, email, password, confirmation, errors} = data;
 
   delete errors.form;

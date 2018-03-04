@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import userType from '../../../common/types/userType';
+import type userType from '../../../common/types/userType';
 
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
@@ -24,17 +24,17 @@ import {DEBOUNCE_DELAY} from '../../config';
 require('bootstrap/dist/css/bootstrap.css');
 
 type SignupFormState = userType & {
-  target: HTMLInputElement,
-  errors: userType & { form: string },
-  isValid: boolean,
-  isLoading: boolean
+  target: HTMLInputElement;
+  errors: userType & { form: string; };
+  isValid: boolean;
+  isLoading: boolean;
 }
 
 class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
   onChange: () => void;
-  isFormValid: (errors: userType) => boolean;
+  isFormValid: (errors: userType & { form: string }) => boolean;
   onSubmit: () => void;
-  validateForm: (name: string, state: SignupFormState, callback: () => void) => void;
+  validateForm: (name: string, state: SignupFormState, callback: (errors: userType & { form: string }) => void) => void;
 
   constructor(props: SignupForm.propTypes) {
     super(props);
@@ -44,7 +44,7 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
       email: '',
       password: '',
       confirmation: '',
-      target: new HTMLInputElement(),
+      target: HTMLInputElement.prototype,
       errors: {form: ''},
       isValid: false,
       isLoading: false

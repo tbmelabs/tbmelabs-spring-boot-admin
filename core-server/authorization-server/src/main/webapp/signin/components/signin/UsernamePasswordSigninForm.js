@@ -4,8 +4,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import userType from '../../../common/types/userType';
-
 import translateAuthenticationError from '../../utils/translateAuthenticationError';
 
 import Form from 'react-bootstrap/lib/Form';
@@ -23,7 +21,11 @@ require('bootstrap/dist/css/bootstrap.css');
 type UsernamePasswordSigninFormState = {
   username: string,
   password: string,
-  errors: userType & { form: string },
+  errors: {
+    username: string;
+    password: string;
+    form: string
+  },
   isValid: boolean,
   isLoading: boolean
 }
@@ -39,7 +41,11 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
     this.state = {
       username: '',
       password: '',
-      errors: {form: ''},
+      errors: {
+        username: '',
+        password: '',
+        form: ''
+      },
       isValid: false,
       isLoading: false
     }

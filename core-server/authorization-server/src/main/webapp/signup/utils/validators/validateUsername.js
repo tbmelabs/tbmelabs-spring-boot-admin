@@ -3,7 +3,7 @@
 
 import axios, {CancelToken} from 'axios';
 
-import userType from '../../../common/types/userType';
+import type userType from '../../../common/types/userType';
 
 var cancelUsername;
 
