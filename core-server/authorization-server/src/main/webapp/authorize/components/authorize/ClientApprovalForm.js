@@ -20,14 +20,20 @@ require('bootstrap/dist/css/bootstrap.css');
 
 const CLIENT_PLACEHOLDER = '[CLIENT_ID]';
 
-class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, { clientId: string, scopes: string[], errors: any }> {
+type ClientApprovalFormState = {
+  clientId: string,
+  scopes: string[],
+  errors: { form: string }
+};
+
+class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, ClientApprovalFormState> {
   constructor(props: ClientApprovalForm.propTypes) {
     super(props);
 
     this.state = {
       clientId: '',
       scopes: [],
-      errors: {}
+      errors: {form: ''}
     }
   }
 

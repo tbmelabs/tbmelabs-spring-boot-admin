@@ -3,9 +3,11 @@
 
 import axios, {CancelToken} from 'axios';
 
+import userType from '../../../common/types/userType';
+
 var cancelUsername;
 
-export default function validateUsername(username: string, errors: any, callback: function) {
+export default function validateUsername(username: string, errors: userType, callback: (errors: userType) => void) {
   if (username == undefined || username == '') {
     delete errors.username;
     return;

@@ -3,9 +3,11 @@
 
 import axios, {CancelToken} from 'axios';
 
+import userType from '../../../common/types/userType';
+
 var cancelConfirmation;
 
-export default function validatePasswordConfirmation(password: string, confirmation: string, errors: any, callback: function) {
+export default function validatePasswordConfirmation(password: string, confirmation: string, errors: userType, callback: (errors: userType) => void) {
   if (password == undefined || password == '' || confirmation == undefined || confirmation == '') {
     delete errors.confirmation;
     return;

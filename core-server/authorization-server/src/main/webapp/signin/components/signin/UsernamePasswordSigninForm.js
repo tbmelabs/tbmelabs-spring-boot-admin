@@ -4,6 +4,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import userType from '../../../common/types/userType';
+
 import translateAuthenticationError from '../../utils/translateAuthenticationError';
 
 import Form from 'react-bootstrap/lib/Form';
@@ -18,7 +20,15 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.propTypes, { username: string, password: string, errors: any, isValid: boolean, isLoading: boolean }> {
+type UsernamePasswordSigninFormState = {
+  username: string,
+  password: string,
+  errors: userType & { form: string },
+  isValid: boolean,
+  isLoading: boolean
+}
+
+class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.propTypes, UsernamePasswordSigninFormState> {
   onChange: () => void;
   validateForm: () => void;
   onSubmit: () => void;
@@ -29,7 +39,7 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
     this.state = {
       username: '',
       password: '',
-      errors: {},
+      errors: {form: ''},
       isValid: false,
       isLoading: false
     }
