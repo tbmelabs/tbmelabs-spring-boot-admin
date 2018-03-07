@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .csrf().disable()
             
       .authorizeRequests()
+        .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/me","/user").permitAll()
         .antMatchers(loginEndpoint, "/signup/**").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()

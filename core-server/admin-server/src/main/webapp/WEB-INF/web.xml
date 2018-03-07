@@ -3,5 +3,5 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-	<display-name>TBME Labs TV - Eureka Server</display-name>
+	<display-name>TBME Labs TV - Admin Server</display-name>
 </web-app>

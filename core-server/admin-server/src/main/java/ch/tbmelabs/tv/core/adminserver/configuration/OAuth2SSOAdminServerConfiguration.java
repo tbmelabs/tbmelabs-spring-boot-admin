@@ -42,6 +42,7 @@ public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdap
       .csrf().disable()
       
       .authorizeRequests()
+        .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
         .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT)
       

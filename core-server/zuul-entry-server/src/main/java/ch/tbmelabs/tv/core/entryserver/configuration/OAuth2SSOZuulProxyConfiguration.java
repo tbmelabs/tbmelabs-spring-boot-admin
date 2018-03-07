@@ -41,7 +41,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
       .csrf().disable()
       
       .authorizeRequests()
-        .antMatchers("/").permitAll()
+        .antMatchers("/", "/favicon.ico").permitAll()
         .antMatchers("/authenticated").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
         .anyRequest().authenticated()
