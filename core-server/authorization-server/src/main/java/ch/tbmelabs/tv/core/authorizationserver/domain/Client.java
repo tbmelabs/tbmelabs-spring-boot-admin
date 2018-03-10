@@ -22,10 +22,10 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -83,17 +83,17 @@ public class Client extends NicelyDocumentedJDBCResource {
   @Length(max = 256)
   private String redirectUri;
 
-  @JsonManagedReference("grant_type_has_clients")
+  @JsonBackReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientGrantTypeAssociation> grantTypes;
 
-  @JsonManagedReference("authority_has_clients")
+  @JsonBackReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientAuthorityAssociation> grantedAuthorities;
 
-  @JsonManagedReference("scope_has_clients")
+  @JsonBackReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientScopeAssociation> scopes;

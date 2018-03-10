@@ -15,10 +15,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,14 +49,14 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
   @Column(name = "client_authority_id")
   private Long clientAuthorityId;
 
-  @JsonBackReference("authority_has_clients")
+  @JsonManagedReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
-  @JsonBackReference("client_has_authorities")
+  @JsonManagedReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(insertable = false, updatable = false)

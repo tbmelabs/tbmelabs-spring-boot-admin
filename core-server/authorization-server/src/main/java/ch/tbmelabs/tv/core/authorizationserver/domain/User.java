@@ -26,15 +26,17 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.serializer.UserSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonSerialize(using = UserSerializer.class)
 public class User extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
@@ -87,11 +90,11 @@ public class User extends NicelyDocumentedJDBCResource {
   @NotNull
   private Boolean isBlocked = false;
 
-  @JsonManagedReference("user_has_email_confirmation_token")
+  @JsonBackReference
   @OneToOne(cascade = { CascadeType.MERGE }, mappedBy = "user")
   private EmailConfirmationToken emailConfirmationToken;
 
-  @JsonManagedReference("user_has_roles")
+  @JsonBackReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "user")
   private Collection<UserRoleAssociation> roles;

@@ -15,10 +15,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,14 +49,14 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
   @Column(name = "user_role_id")
   private Long userRoleId;
 
-  @JsonBackReference("user_has_roles")
+  @JsonManagedReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  @JsonBackReference("role_has_users")
+  @JsonManagedReference
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(insertable = false, updatable = false)

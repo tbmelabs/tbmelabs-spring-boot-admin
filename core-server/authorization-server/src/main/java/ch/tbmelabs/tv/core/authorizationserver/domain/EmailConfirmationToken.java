@@ -21,10 +21,10 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -57,7 +57,7 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
   @NotNull
   private Date expirationDate;
 
-  @JsonBackReference("user_has_email_confirmation_token")
+  @JsonManagedReference
   @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
   @JoinColumn(name = "user_id")
   private User user;
