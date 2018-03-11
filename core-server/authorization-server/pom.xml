@@ -106,8 +106,10 @@
         <directory>src/main/webapp</directory>
         <excludes>
           <exclude>__tests__/**</exclude>
+          <exclude>app/**</exclude>
           <exclude>authorize/**</exclude>
           <exclude>common/**</exclude>
+          <exclude>coverage/**</exclude>
           <exclude>node_modules/**</exclude>
           <exclude>signin/**</exclude>
           <exclude>signup/**</exclude>

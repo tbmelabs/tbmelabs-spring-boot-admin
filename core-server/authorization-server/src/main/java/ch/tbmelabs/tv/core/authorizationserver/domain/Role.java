@@ -20,10 +20,10 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import lombok.Data;
@@ -56,7 +56,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @Length(max = 16)
   private String name;
 
-  @JsonBackReference
+  @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;

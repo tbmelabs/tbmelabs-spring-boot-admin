@@ -31,6 +31,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -94,7 +95,7 @@ public class User extends NicelyDocumentedJDBCResource {
   @OneToOne(cascade = { CascadeType.MERGE }, mappedBy = "user")
   private EmailConfirmationToken emailConfirmationToken;
 
-  @JsonBackReference
+  @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "user")
   private Collection<UserRoleAssociation> roles;

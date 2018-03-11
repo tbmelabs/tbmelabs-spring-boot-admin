@@ -26,21 +26,27 @@ public class UserSerializer extends StdSerializer<User> {
 
     jsonGenerator.writeNumberField("created", user.getCreated().getTime());
     jsonGenerator.writeNumberField("lastUpdated", user.getLastUpdated().getTime());
-    jsonGenerator.writeNumberField("id", user.getId());
+
+    if (user.getId() != null) {
+      jsonGenerator.writeNumberField("id", user.getId());
+    }
+
     jsonGenerator.writeStringField("username", user.getUsername());
     jsonGenerator.writeStringField("email", user.getEmail());
     jsonGenerator.writeBooleanField("isEnabled", user.getIsEnabled());
     jsonGenerator.writeBooleanField("isBlocked", user.getIsBlocked());
 
-    jsonGenerator.writeArrayFieldStart("roles");
-    user.getRoles().forEach(roleAssociation -> {
-      try {
-        jsonGenerator.writeString(roleAssociation.getUserRole().getName());
-      } catch (IOException e) {
-        throw new IllegalArgumentException(e);
-      }
-    });
-    jsonGenerator.writeEndArray();
+    if (user.getRoles() != null) {
+      jsonGenerator.writeArrayFieldStart("roles");
+      user.getRoles().forEach(roleAssociation -> {
+        try {
+          jsonGenerator.writeString(roleAssociation.getUserRole().getName());
+        } catch (IOException e) {
+          throw new IllegalArgumentException(e);
+        }
+      });
+      jsonGenerator.writeEndArray();
+    }
 
     jsonGenerator.writeEndObject();
   }

@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.oauth2;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Method;
-import java.security.Principal;
 
 import org.junit.Test;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +23,14 @@ public class PrincipalControllerTest {
 
   @Test
   public void getPrincipalShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method fixture = PrincipalController.class.getDeclaredMethod("getPrincipal", new Class<?>[] { Principal.class });
+    Method fixture = PrincipalController.class.getDeclaredMethod("getPrincipal", new Class<?>[] {});
     assertThat(fixture.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty().containsExactly("/me",
         "/user");
+  }
+
+  @Test
+  public void getProfileShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
+    Method fixture = PrincipalController.class.getDeclaredMethod("getProfile", new Class<?>[] {});
+    assertThat(fixture.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty().containsExactly("/profile");
   }
 }

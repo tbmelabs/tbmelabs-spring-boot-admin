@@ -42,7 +42,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
 
   @Before
   public void beforeTestSetUp() {
-    userRepository.save(testUser);
+    PrincipalEndpointIntTest.testUser = userRepository.save(testUser);
   }
 
   @Test
