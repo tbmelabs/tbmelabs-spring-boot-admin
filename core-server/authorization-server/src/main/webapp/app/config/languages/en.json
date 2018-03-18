@@ -1,1 +1,7 @@
-{}
+{
+  "profile": {
+    "errors": {
+      "load": "Unable to load profile: Please try again later!"
+    }
+  }
+}

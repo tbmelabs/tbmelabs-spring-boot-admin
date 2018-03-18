@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.factory.ProfileFactory;
 import ch.tbmelabs.tv.core.authorizationserver.service.oauth2.PrincipalService;
 
 @RestController
@@ -19,6 +21,9 @@ public class PrincipalController {
 
   @Autowired
   private PrincipalService principalService;
+
+  @Autowired
+  private ProfileFactory profileFactory;
 
   @RequestMapping({ "/me", "/user" })
   public Map<String, String> getPrincipal() {
@@ -37,7 +42,7 @@ public class PrincipalController {
   }
 
   @RequestMapping({ "/profile" })
-  public User getProfile(Principal principal) {
+  public UserProfile getProfile(Principal principal) {
     LOGGER.debug("Requesting current user profile.");
 
     User user;
@@ -45,6 +50,6 @@ public class PrincipalController {
       throw new IllegalArgumentException("Please sign in in order to receive your account details!");
     }
 
-    return user;
+    return profileFactory.getUserProfile(user);
   }
 }

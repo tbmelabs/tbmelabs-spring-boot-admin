@@ -18,27 +18,31 @@ class Profile extends Component<Profile.propTypes> {
 
     loadProfile().then(
       response => this.props.actions.setProfile(response.data),
-      error => this.setState({errors: {form: texts /*TODO: Set error */}})
+      error => this.setState({errors: {form: texts.errors.load}})
     );
   }
 
   render() {
-    const {texts} = this.props;
+    const {profile, texts} = this.props;
+
+    console.log(profile);
 
     return (
-      <h1>Hello World</h1>
+      <h1>Welcome strainger</h1>
     );
   }
 }
 
 Profile.propTypes = {
+  profile: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    texts: state.language.texts.authorize
+    profile: state.profile,
+    texts: state.language.texts.profile
   }
 }
 
@@ -50,4 +54,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

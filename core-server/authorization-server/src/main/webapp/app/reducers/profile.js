@@ -7,9 +7,7 @@ const initialState = {}
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case SET_PROFILE:
-      return {
-        state
-      }
+      return action.profile;
     default:
       return state;
   }

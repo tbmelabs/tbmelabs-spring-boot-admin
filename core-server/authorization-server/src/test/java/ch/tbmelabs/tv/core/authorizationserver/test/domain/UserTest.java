@@ -24,14 +24,12 @@ import org.springframework.test.util.ReflectionTestUtils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.serializer.UserSerializer;
 
 public class UserTest {
   private static final String TEST_USER_ROLE = "TEST";
@@ -54,8 +52,6 @@ public class UserTest {
     assertThat(User.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("users");
     assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull().isEqualTo(Include.NON_NULL);
     assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
-    assertThat(User.class.getDeclaredAnnotation(JsonSerialize.class).using()).isNotNull()
-        .isEqualTo(UserSerializer.class);
   }
 
   @Test

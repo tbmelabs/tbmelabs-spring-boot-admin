@@ -8,8 +8,7 @@ import configureStore from './configureStore';
 
 import {CookiesProvider} from 'react-cookie';
 
-import App from './container/app';
-import Profile from './container/app/Profile';
+import Router from './Router';
 
 require('../common/styles/tbme-tv.css');
 
@@ -18,9 +17,7 @@ const store = configureStore();
 render(
   <Provider store={store}>
     <CookiesProvider>
-      <App>
-        <Profile/>
-      </App>
+      <Router/>
     </CookiesProvider>
   </Provider>
   , (document.getElementById('app'): any));
