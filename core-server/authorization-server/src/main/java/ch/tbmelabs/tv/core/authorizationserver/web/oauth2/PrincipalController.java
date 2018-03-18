@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.oauth2;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class PrincipalController {
   }
 
   @RequestMapping({ "/profile" })
-  public User getProfile() {
+  public User getProfile(Principal principal) {
     LOGGER.debug("Requesting current user profile.");
 
     User user;

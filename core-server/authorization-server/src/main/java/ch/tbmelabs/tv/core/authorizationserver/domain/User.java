@@ -34,10 +34,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.serializer.UserSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -49,7 +47,6 @@ import lombok.NoArgsConstructor;
 @JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonSerialize(using = UserSerializer.class)
 public class User extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
