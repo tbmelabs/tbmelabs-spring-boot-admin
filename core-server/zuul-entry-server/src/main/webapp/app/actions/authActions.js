@@ -12,11 +12,11 @@ export function setAuthenticationState(state) {
 }
 
 export function login() {
-  window.location.replace('/login');
+  window.location.replace('login');
 }
 
 export function logout() {
-  window.location.replace('/logout');
+  window.location.replace('logout');
 }
 
 export function isAuthenticated() {

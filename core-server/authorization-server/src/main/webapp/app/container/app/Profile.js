@@ -10,6 +10,8 @@ import {bindActionCreators} from 'redux';
 import loadProfile from '../../utils/loadProfile';
 import {setProfile} from '../../actions/profileActions';
 
+import AccountInformation from '../../components/profile/AccountInformation';
+
 require('../../styles/profile.css');
 
 class Profile extends Component<Profile.propTypes> {
@@ -25,10 +27,10 @@ class Profile extends Component<Profile.propTypes> {
   render() {
     const {profile, texts} = this.props;
 
-    console.log(profile);
-
     return (
-      <h1>Welcome strainger</h1>
+      <div>
+        <AccountInformation account={profile} texts={texts}/>
+      </div>
     );
   }
 }

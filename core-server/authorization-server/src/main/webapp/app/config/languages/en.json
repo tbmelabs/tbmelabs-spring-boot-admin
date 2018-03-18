@@ -1,5 +1,14 @@
 {
+  "language": "English",
+  "navbar": {
+    "logout": "Logout"
+  },
   "profile": {
+    "information": {
+      "created": "Created at",
+      "username": "Username",
+      "email": "E-Mail"
+    },
     "errors": {
       "load": "Unable to load profile: Please try again later!"
     }
