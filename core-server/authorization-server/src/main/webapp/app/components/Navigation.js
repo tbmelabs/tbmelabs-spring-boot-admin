@@ -4,6 +4,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {LinkContainer} from 'react-router-bootstrap';
+
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -57,7 +59,12 @@ class Navigation extends Component<Navigation.propTypes> {
             {/*</NavDropdown>*/}
           </Nav>
           <Nav pullRight>
-            <NavItem name={LOGOUT_EVENT} onClick={this.onClick}>{texts.logout}</NavItem>
+            <NavDropdown title={texts.account} id="account-dropdown">
+              <LinkContainer to='profile'>
+                <MenuItem>{texts.account}</MenuItem>
+              </LinkContainer>
+              <MenuItem onClick={this.props.logout}>{texts.logout}</MenuItem>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

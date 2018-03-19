@@ -14,7 +14,7 @@ class Router extends Component<Router.propTypes> {
       <HashRouter>
         <Switch>
           <App>
-            <Route path='/' component={Profile}/>
+            <Route path='/profile' component={Profile}/>
           </App>
         </Switch>
       </HashRouter>

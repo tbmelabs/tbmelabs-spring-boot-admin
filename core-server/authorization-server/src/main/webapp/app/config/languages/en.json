@@ -1,9 +1,11 @@
 {
   "language": "English",
   "navbar": {
+    "account": "Account",
     "logout": "Logout"
   },
   "profile": {
+    "title": "Account Information",
     "information": {
       "created": "Created at",
       "username": "Username",

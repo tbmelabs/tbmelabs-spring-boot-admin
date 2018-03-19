@@ -88,7 +88,7 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
           <Col componentClass={ControlLabel} sm={4}>
             {texts.username_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='username' type='text' value={this.state.username}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -100,7 +100,7 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
           <Col componentClass={ControlLabel} sm={4}>
             {texts.password_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='password' type='password' value={this.state.password}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -108,10 +108,10 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
         </FormGroup>
 
         <FormGroup className='link-group'>
-          <Col smOffset={4} sm={4}>
+          <Col smOffset={4} sm={3}>
             <a href='signup' className='pull-left'>{texts.signup_link_text}</a>
           </Col>
-          <Col sm={4}>
+          <Col sm={3}>
             <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
                     onClick={isValid && !isLoading ? this.onSubmit : null}>
               {isLoading ? texts.signin_button_loading_text : texts.signin_button_text}

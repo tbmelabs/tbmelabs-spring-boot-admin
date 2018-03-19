@@ -111,11 +111,11 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
                           collapse={!!errors.form}/>
 
         <FormGroup controlId='username' validationState={!!errors.username ? 'error' : null}>
-          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.username}</HelpBlock>
+          <HelpBlock className='col-sm-6 col-sm-offset-4'>{errors.username}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.username_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='username' type='text' value={this.state.username}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -123,11 +123,11 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
         </FormGroup>
 
         <FormGroup controlId='email' validationState={!!errors.email ? 'error' : null}>
-          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.email}</HelpBlock>
+          <HelpBlock className='col-sm-6 col-sm-offset-4'>{errors.email}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.email_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='email' type='email' value={this.state.email}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -135,11 +135,11 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
         </FormGroup>
 
         <FormGroup controlId='password' validationState={!!errors.password ? 'error' : null}>
-          <HelpBlock className='col-sm-8 col-sm-offset-4'>{errors.password}</HelpBlock>
+          <HelpBlock className='col-sm-6 col-sm-offset-4'>{errors.password}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.password_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='password' type='password' value={this.state.password}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -147,11 +147,11 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
         </FormGroup>
 
         <FormGroup controlId='confirmation' validationState={!!errors.confirmation ? 'error' : null}>
-          <HelpBlock className='col-sm-8 col-sm-offset-4'>{this.state.errors.confirmation}</HelpBlock>
+          <HelpBlock className='col-sm-6 col-sm-offset-4'>{this.state.errors.confirmation}</HelpBlock>
           <Col componentClass={ControlLabel} sm={4}>
             {texts.password_confirmation_form_control}
           </Col>
-          <Col sm={8}>
+          <Col sm={6}>
             <FormControl name='confirmation' type='password' value={this.state.confirmation}
                          onChange={this.onChange} required/>
             <FormControl.Feedback/>
@@ -159,10 +159,10 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
         </FormGroup>
 
         <FormGroup className='link-group'>
-          <Col smOffset={4} sm={4}>
+          <Col smOffset={4} sm={3}>
             <a href='signin' className='pull-left'>{texts.signin_link_text}</a>
           </Col>
-          <Col sm={4}>
+          <Col sm={3}>
             <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
                     onClick={isValid && !isLoading ? this.onSubmit : null}>
               {isLoading ? texts.signup_button_loading_text : texts.signup_button_text}
