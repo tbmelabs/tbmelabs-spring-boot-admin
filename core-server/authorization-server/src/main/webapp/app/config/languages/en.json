@@ -1,6 +1,11 @@
 {
   "language": "English",
+  "app": {
+    "profile_fetch_failed_alert_title": "Error during loading profile:",
+    "profile_fetch_failed_alert_text": " Please try again later!"
+  },
   "navbar": {
+    "clients": "Clients",
     "account": "Account",
     "logout": "Logout"
   },
@@ -10,9 +15,6 @@
       "created": "Created at",
       "username": "Username",
       "email": "E-Mail"
-    },
-    "errors": {
-      "load": "Unable to load profile: Please try again later!"
     }
   }
 }

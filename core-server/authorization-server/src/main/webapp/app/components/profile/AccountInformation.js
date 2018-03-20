@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 import React, {Component} from 'react';
@@ -11,7 +12,7 @@ import Col from 'react-bootstrap/lib/Col';
 require('../../styles/account-information.css');
 require('bootstrap/dist/css/bootstrap.css');
 
-class AccountInformation extends Component {
+class AccountInformation extends Component<AccountInformation.propTypes> {
   render() {
     const {account, texts} = this.props;
     const createdDate = new Date(account.created).toDateString();

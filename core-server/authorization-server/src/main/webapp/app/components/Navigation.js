@@ -6,6 +6,9 @@ import PropTypes from 'prop-types';
 
 import {LinkContainer} from 'react-router-bootstrap';
 
+import logout from '../utils/logout';
+import hasAuthority from '../../common/utils/hasAuthority';
+
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -26,8 +29,6 @@ class Navigation extends Component<Navigation.propTypes> {
   }
 
   onClick(event: SyntheticInputEvent<HTMLInputElement>) {
-    const {logout} = this.props;
-
     switch (event.target.name) {
       case LOGOUT_EVENT:
         logout();
@@ -36,7 +37,7 @@ class Navigation extends Component<Navigation.propTypes> {
   }
 
   render() {
-    const {texts} = this.props;
+    const {account, texts} = this.props;
 
     return (
       <Navbar collapseOnSelect>
@@ -48,6 +49,10 @@ class Navigation extends Component<Navigation.propTypes> {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
+            {hasAuthority('SERVER_ADMIN', account) ?
+              <LinkContainer to='clients'>
+                <NavItem>{texts.clients}</NavItem>
+              </LinkContainer> : null}
             {/*<NavItem eventKey={1} href="#">Link</NavItem>*/}
             {/*<NavItem eventKey={2} href="#">Link</NavItem>*/}
             {/*<NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">*/}
@@ -73,7 +78,7 @@ class Navigation extends Component<Navigation.propTypes> {
 }
 
 Navigation.propTypes = {
-  logout: PropTypes.func.isRequired,
+  account: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
 }
 

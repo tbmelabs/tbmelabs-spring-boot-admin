@@ -1,5 +1,5 @@
 'use strict';
 
-export function logout() {
+export default function logout() {
   window.location.replace('logout');
 }

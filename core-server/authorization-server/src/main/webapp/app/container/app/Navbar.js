@@ -6,28 +6,28 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
-import {logout} from '../../actions/authActions';
-
 import Navigation from '../../components/Navigation';
 
 class Navbar extends Component<Navbar.propTypes> {
   render() {
-    const {auth, texts} = this.props;
+    const {profile, logout, texts} = this.props;
 
     return (
       <div>
-        <Navigation logout={logout} texts={texts}/>
+        <Navigation account={profile} texts={texts}/>
       </div>
     );
   }
 }
 
 Navbar.propTypes = {
+  profile: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
   return {
+    profile: state.profile,
     texts: state.language.texts.navbar
   }
 }

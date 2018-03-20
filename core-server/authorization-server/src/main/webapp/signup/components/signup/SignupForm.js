@@ -23,9 +23,19 @@ import {DEBOUNCE_DELAY} from '../../config';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-type SignupFormState = userType & {
+type SignupFormState = {
+  username: string,
+  email: string,
+  password: string,
+  confirmation: string,
   target: HTMLInputElement;
-  errors: userType & { form: string; };
+  errors: {
+    username: string,
+    email: string,
+    password: string,
+    confirmation: string,
+    form: string;
+  };
   isValid: boolean;
   isLoading: boolean;
 }
@@ -45,7 +55,13 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
       password: '',
       confirmation: '',
       target: HTMLInputElement.prototype,
-      errors: {form: ''},
+      errors: {
+        username: '',
+        email: '',
+        password: '',
+        confirmation: '',
+        form: ''
+      },
       isValid: false,
       isLoading: false
     }
@@ -70,8 +86,6 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
-    event.preventDefault();
-
     const {texts} = this.props;
 
     this.props.validateForm(event.target.name, this.state, errors => {

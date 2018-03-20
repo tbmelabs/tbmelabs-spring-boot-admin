@@ -65,8 +65,6 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
-    event.preventDefault();
-
     this.setState({errors: {form: ''}}, () => {
       this.props.signinUser(this.state).then(
         response => window.location.replace(response.headers['no-redirect'])

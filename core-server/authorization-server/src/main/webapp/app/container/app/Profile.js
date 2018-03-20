@@ -15,15 +15,6 @@ import AccountInformation from '../../components/profile/AccountInformation';
 require('../../styles/profile.css');
 
 class Profile extends Component<Profile.propTypes> {
-  componentWillMount() {
-    const {texts} = this.props;
-
-    loadProfile().then(
-      response => this.props.actions.setProfile(response.data),
-      error => this.setState({errors: {form: texts.errors.load}})
-    );
-  }
-
   render() {
     const {profile, texts} = this.props;
 
@@ -37,8 +28,7 @@ class Profile extends Component<Profile.propTypes> {
 
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
-  texts: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  texts: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
@@ -48,12 +38,4 @@ function mapStateToProps(state) {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      setProfile: bindActionCreators(setProfile, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps)(Profile);
