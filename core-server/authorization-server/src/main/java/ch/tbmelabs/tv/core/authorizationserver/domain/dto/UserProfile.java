@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -29,7 +28,7 @@ public class UserProfile {
   @JsonIgnoreProperties({ "usersWithRoles" })
   private Collection<Role> roles;
 
-  public UserProfile(User user, List<Role> roles) {
+  public UserProfile(User user, Collection<Role> roles) {
     this.created = user.getCreated();
     this.lastUpdated = user.getLastUpdated();
     this.id = user.getId();

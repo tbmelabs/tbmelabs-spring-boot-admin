@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -98,17 +97,27 @@ public class Client extends NicelyDocumentedJDBCResource {
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "client")
   private Collection<ClientScopeAssociation> scopes;
 
-  public Collection<ClientGrantTypeAssociation> grantTypesToAssociations(List<GrantType> grantTypeList) {
-    return grantTypeList.stream().map(grantType -> new ClientGrantTypeAssociation(this, grantType))
-        .collect(Collectors.toList());
+  public ClientGrantTypeAssociation grantTypeToAssociation(GrantType grantType) {
+    return new ClientGrantTypeAssociation(this, grantType);
   }
 
-  public Collection<ClientAuthorityAssociation> authoritiesToAssociations(List<Authority> authorityList) {
-    return authorityList.stream().map(authority -> new ClientAuthorityAssociation(this, authority))
-        .collect(Collectors.toList());
+  public Collection<ClientGrantTypeAssociation> grantTypesToAssociations(Collection<GrantType> grantTypes) {
+    return grantTypes.stream().map(this::grantTypeToAssociation).collect(Collectors.toList());
   }
 
-  public Collection<ClientScopeAssociation> scopesToAssociations(List<Scope> scopeList) {
-    return scopeList.stream().map(scope -> new ClientScopeAssociation(this, scope)).collect(Collectors.toList());
+  public ClientAuthorityAssociation authorityToAssociation(Authority authority) {
+    return new ClientAuthorityAssociation(this, authority);
+  }
+
+  public Collection<ClientAuthorityAssociation> authoritiesToAssociations(Collection<Authority> authorities) {
+    return authorities.stream().map(this::authorityToAssociation).collect(Collectors.toList());
+  }
+
+  public ClientScopeAssociation scopeToAssociation(Scope scope) {
+    return new ClientScopeAssociation(this, scope);
+  }
+
+  public Collection<ClientScopeAssociation> scopesToAssociations(Collection<Scope> scopeList) {
+    return scopeList.stream().map(this::scopeToAssociation).collect(Collectors.toList());
   }
 }

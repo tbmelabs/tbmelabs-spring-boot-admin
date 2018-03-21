@@ -10,7 +10,7 @@ export const USER = 'USER';
 export const GUEST = 'GUEST';
 export const ANONYMOUS = 'ANONYMOUS';
 
-export default [
+const AUTHORITIES = [
   GANDALF,
   SERVER_ADMIN,
   SERVER_SUPPORT,
@@ -21,3 +21,5 @@ export default [
   GUEST,
   ANONYMOUS
 ];
+
+export default AUTHORITIES.slice(0);

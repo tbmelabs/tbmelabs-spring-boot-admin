@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -105,7 +104,11 @@ public class User extends NicelyDocumentedJDBCResource {
     this.setPassword(PASSWORD_ENCODER.encode(this.getPassword()));
   }
 
-  public Collection<UserRoleAssociation> rolesToAssociations(List<Role> roleList) {
-    return roleList.stream().map(role -> new UserRoleAssociation(this, role)).collect(Collectors.toList());
+  public UserRoleAssociation roleToAssociation(Role role) {
+    return new UserRoleAssociation(this, role);
+  }
+
+  public Collection<UserRoleAssociation> rolesToAssociations(Collection<Role> roles) {
+    return roles.stream().map(this::roleToAssociation).collect(Collectors.toList());
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.factory.ProfileFactory;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.oauth2.PrincipalService;
 
 @RestController
@@ -23,7 +23,7 @@ public class PrincipalController {
   private PrincipalService principalService;
 
   @Autowired
-  private ProfileFactory profileFactory;
+  private UserProfileMapper profileMapper;
 
   @RequestMapping({ "/me", "/user" })
   public Map<String, String> getPrincipal() {
@@ -50,6 +50,6 @@ public class PrincipalController {
       throw new IllegalArgumentException("Please sign in in order to receive your account details!");
     }
 
-    return profileFactory.getUserProfile(user);
+    return profileMapper.toUserProfile(user);
   }
 }

@@ -48,7 +48,7 @@ public class OAuth2ApprovalClientScopesControllerTest {
 
     doReturn(new Client()).when(clientRepositoryFixture).findByClientId(Mockito.anyString());
     doReturn(Arrays.asList(mockAssociation)).when(clientScopeAssociationRepository)
-        .findByClient(Mockito.any(Client.class));
+        .findAllByClient(Mockito.any(Client.class));
   }
 
   @Test

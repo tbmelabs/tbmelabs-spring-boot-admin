@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.repository;
 
+import java.util.Collection;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +10,5 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 
 @Repository
 public interface UserRoleAssociationCRUDRepository extends CrudRepository<UserRoleAssociation, Long> {
-
-  Iterable<UserRoleAssociation> findAllByUser(User user);
+  Collection<UserRoleAssociation> findAllByUser(User user);
 }
