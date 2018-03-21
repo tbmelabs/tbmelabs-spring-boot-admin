@@ -9,7 +9,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 import logout from '../utils/logout';
 import hasAuthority from '../utils/hasAuthority';
 
-import {SERVER_ADMIN} from '../../common/contants/AuthorityConstants';
+import {SERVER_ADMIN, SERVER_SUPPORT} from '../../common/contants/AuthorityConstants';
 
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -54,6 +54,10 @@ class Navigation extends Component<Navigation.propTypes> {
             {hasAuthority(SERVER_ADMIN, account) ?
               <LinkContainer to='clients'>
                 <NavItem>{texts.clients}</NavItem>
+              </LinkContainer> : null}
+            {hasAuthority(SERVER_SUPPORT, account) ?
+              <LinkContainer to='users'>
+                <NavItem>{texts.users}</NavItem>
               </LinkContainer> : null}
             {/*<NavItem eventKey={1} href="#">Link</NavItem>*/}
             {/*<NavItem eventKey={2} href="#">Link</NavItem>*/}

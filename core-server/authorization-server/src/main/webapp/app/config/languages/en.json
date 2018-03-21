@@ -6,8 +6,13 @@
     "profile_fetch_failed_alert_title": "Error during loading profile:",
     "profile_fetch_failed_alert_text": " Please try again later!"
   },
+  "clients": {
+    "clients_fetch_failed_alert_title": "Error during loading clients:",
+    "clients_fetch_failed_alert_text": " Please try again later!"
+  },
   "navbar": {
-    "clients": "Clients",
+    "clients": "Client Management",
+    "users": "User Management",
     "account": "Account",
     "logout": "Logout"
   },

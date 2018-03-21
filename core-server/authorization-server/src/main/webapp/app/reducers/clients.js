@@ -1,13 +1,13 @@
 'use strict';
 
-import {SET_PROFILE} from '../actions/types';
+import {SET_CLIENTS} from '../actions/types';
 
 const initialState = {};
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case SET_PROFILE:
-      return action.profile;
+    case SET_CLIENTS:
+      return action.clients;
     default:
       return state;
   }
