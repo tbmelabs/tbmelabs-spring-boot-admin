@@ -8,9 +8,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
 import {addFlashMessage} from '../../../common/actions/flashMessageActions';
-import {setProfile} from '../../actions/profileActions';
-
-import loadProfile from '../../utils/loadProfile';
+import {loadProfile} from '../../actions/profileActions';
 
 import Navbar from './Navbar';
 import FlashMessageList from '../common/FlashMessageList';
@@ -20,10 +18,11 @@ require('bootstrap/dist/css/bootstrap.css');
 class App extends Component<App.propTypes> {
   componentWillMount() {
     const {texts} = this.props;
-    const {addFlashMessage, setProfile} = this.props.actions;
+    const {addFlashMessage, loadProfile} = this.props.actions;
 
     loadProfile().then(
-      response => setProfile(response.data),
+      response => {
+      },
       error => addFlashMessage({
         type: 'danger',
         title: texts.profile_fetch_failed_alert_title,
@@ -62,7 +61,7 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       addFlashMessage: bindActionCreators(addFlashMessage, dispatch),
-      setProfile: bindActionCreators(setProfile, dispatch)
+      loadProfile: bindActionCreators(loadProfile, dispatch)
     }
   }
 }

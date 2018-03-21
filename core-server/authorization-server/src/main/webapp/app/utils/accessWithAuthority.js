@@ -13,6 +13,8 @@ import hasAuthority from './hasAuthority';
 
 export default function (ComposedComponent: Component, authority: string) {
   class AccessWithAuthority extends Component<AccessWithAuthority.propTypes> {
+    displayWarningMessage: (props: AccessWithAuthority.propTypes) => void;
+
     constructor(props) {
       super(props);
 

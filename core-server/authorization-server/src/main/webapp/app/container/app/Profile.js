@@ -7,9 +7,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import loadProfile from '../../utils/loadProfile';
-import {setProfile} from '../../actions/profileActions';
-
 import AccountInformation from '../../components/profile/AccountInformation';
 
 require('../../styles/profile.css');
