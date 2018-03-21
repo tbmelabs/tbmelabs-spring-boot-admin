@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-export default function configureStore() {
+export default function () {
   return createStore(
     reducers,
     compose(

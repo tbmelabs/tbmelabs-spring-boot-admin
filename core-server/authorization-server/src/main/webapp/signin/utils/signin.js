@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-export default function signin(data) {
+export default function (data) {
   var formData = new FormData();
   formData.append('username', data.username);
   formData.append('password', data.password);

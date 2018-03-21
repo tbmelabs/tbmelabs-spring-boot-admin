@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import {LinkContainer} from 'react-router-bootstrap';
 
 import logout from '../utils/logout';
-import hasAuthority from '../../common/utils/hasAuthority';
+import hasAuthority from '../utils/hasAuthority';
+
+import {SERVER_ADMIN} from '../../common/contants/AuthorityConstants';
 
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -49,7 +51,7 @@ class Navigation extends Component<Navigation.propTypes> {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            {hasAuthority('SERVER_ADMIN', account) ?
+            {hasAuthority(SERVER_ADMIN, account) ?
               <LinkContainer to='clients'>
                 <NavItem>{texts.clients}</NavItem>
               </LinkContainer> : null}

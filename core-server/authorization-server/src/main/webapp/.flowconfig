@@ -3,6 +3,7 @@
 .*/public/.*
 
 [include]
+.*/app/.*
 .*/authorize/.*
 .*/common/.*
 .*/signin/.*

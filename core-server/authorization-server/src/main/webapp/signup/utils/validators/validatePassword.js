@@ -7,7 +7,7 @@ import type userType from '../../../common/types/userType';
 
 var cancelPassword;
 
-export default function validatePassword(password: string, errors: userType, callback: (errors: userType) => void) {
+export default function (password: string, errors: userType, callback: (errors: userType) => void) {
   if (password == undefined || password == '') {
     delete errors.password;
     return;

@@ -1,12 +1,12 @@
 // @flow
 'use strict';
 
-import profileType from '../types/profileType';
+import profileType from '../../common/types/profileType';
 
-import AuthorityConstants from '../contants/AuthorityConstants';
-import roleType from '../types/roleType';
+import AuthorityConstants from '../../common/contants/AuthorityConstants';
+import roleType from '../../common/types/roleType';
 
-export default function hasAuthority(authority: string, profile: profileType) {
+export default function (authority: string, profile: profileType) {
   if (profile == null || profile.roles == null || AuthorityConstants.indexOf(authority) === -1) {
     return false;
   }

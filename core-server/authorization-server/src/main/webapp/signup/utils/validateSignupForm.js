@@ -8,7 +8,7 @@ import validateEmail from './validators/validateEmail';
 import validatePassword from './validators/validatePassword';
 import validatePasswordConfirmation from './validators/validatePasswordConfirmation';
 
-export default function validateSignupForm(control: string, data: userType & { errors: userType & { form: string } }, callback: (errors: userType) => void) {
+export default function (control: string, data: userType & { errors: userType & { form: string } }, callback: (errors: userType) => void) {
   const {username, email, password, confirmation, errors} = data;
 
   delete errors.form;

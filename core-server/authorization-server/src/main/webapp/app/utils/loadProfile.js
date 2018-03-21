@@ -3,6 +3,6 @@
 
 import axios from 'axios';
 
-export default function loadProfile() {
+export default function () {
   return axios.get('profile');
 }

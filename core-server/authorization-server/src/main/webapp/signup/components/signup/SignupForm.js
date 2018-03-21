@@ -86,6 +86,8 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
+    event.preventDefault();
+
     const {texts} = this.props;
 
     this.props.validateForm(event.target.name, this.state, errors => {
