@@ -20,3 +20,7 @@ export function loadClients() {
     );
   }
 }
+
+export function saveClient(client) {
+  return {};
+}

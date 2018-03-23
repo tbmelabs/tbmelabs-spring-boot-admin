@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
+import isEmpty from 'lodash/isEmpty';
+
 import {addFlashMessage} from '../../common/actions/flashMessageActions';
 
 import hasAuthority from './hasAuthority';
@@ -24,7 +26,7 @@ export default function (ComposedComponent: Component, authority: string) {
     componentWillMount() {
       const {profile} = this.props;
 
-      if (!hasAuthority(authority, profile)) {
+      if (!isEmpty(profile) && !hasAuthority(authority, profile)) {
         this.displayWarningMessage(this.props);
         this.context.router.history.push('/');
       }
@@ -52,6 +54,12 @@ export default function (ComposedComponent: Component, authority: string) {
     }
 
     render() {
+      const {profile} = this.props;
+
+      if (isEmpty(profile)) {
+        return null;
+      }
+
       return (
         <ComposedComponent {...this.props} />
       );

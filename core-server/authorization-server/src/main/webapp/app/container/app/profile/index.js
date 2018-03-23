@@ -7,9 +7,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import AccountInformation from '../../components/profile/AccountInformation';
+import AccountInformation from '../../../components/profile/AccountInformation';
 
-require('../../styles/profile.css');
+require('../../../styles/profile.css');
 
 class Profile extends Component<Profile.propTypes> {
   render() {

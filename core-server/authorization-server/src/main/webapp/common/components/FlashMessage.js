@@ -35,7 +35,7 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
 
   // TODO: Replace low level js transition with high level css
   componentWillLeave(callback: () => void) {
-    this.setState({collaps: false}, () => {
+    this.setState({collapse: false}, () => {
       setTimeout(callback, 300);
     });
   }

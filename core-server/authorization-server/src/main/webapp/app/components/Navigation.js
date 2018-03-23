@@ -22,22 +22,6 @@ require('bootstrap/dist/css/bootstrap.css');
 const LOGOUT_EVENT = 'LOGOUT';
 
 class Navigation extends Component<Navigation.propTypes> {
-  onClick: () => void;
-
-  constructor(props: Navigation.propTypes) {
-    super(props);
-
-    this.onClick = this.onClick.bind(this);
-  }
-
-  onClick(event: SyntheticInputEvent<HTMLInputElement>) {
-    switch (event.target.name) {
-      case LOGOUT_EVENT:
-        logout();
-        break;
-    }
-  }
-
   render() {
     const {account, texts} = this.props;
 
@@ -74,7 +58,7 @@ class Navigation extends Component<Navigation.propTypes> {
               <LinkContainer to='profile'>
                 <MenuItem>{texts.account}</MenuItem>
               </LinkContainer>
-              <MenuItem onClick={this.props.logout}>{texts.logout}</MenuItem>
+              <MenuItem onClick={logout}>{texts.logout}</MenuItem>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

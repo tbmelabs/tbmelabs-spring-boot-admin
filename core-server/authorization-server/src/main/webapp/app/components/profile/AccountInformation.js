@@ -9,7 +9,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-require('../../styles/account-information.css');
 require('bootstrap/dist/css/bootstrap.css');
 
 class AccountInformation extends Component<AccountInformation.propTypes> {

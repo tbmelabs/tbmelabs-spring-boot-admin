@@ -10,8 +10,9 @@ import accessWithAuthority from './utils/accessWithAuthority';
 import {SERVER_ADMIN, SERVER_SUPPORT} from '../common/contants/AuthorityConstants';
 
 import App from './container/app';
-import Clients from './container/app/Clients';
-import Profile from './container/app/Profile';
+import Clients from './container/app/clients';
+import ClientDialog from './container/app/clients/ClientDialog';
+import Profile from './container/app/profile';
 import Users from './container/app/Users';
 
 class Router extends Component<Router.propTypes> {
@@ -21,6 +22,7 @@ class Router extends Component<Router.propTypes> {
         <Switch>
           <App>
             <Route path='/clients' component={accessWithAuthority(Clients, SERVER_ADMIN)}/>
+            <Route path='/clients/new' component={accessWithAuthority(ClientDialog, SERVER_ADMIN)}/>
             <Route path='/profile' component={Profile}/>
             <Route path='/users' component={accessWithAuthority(Users, SERVER_SUPPORT)}/>
           </App>
