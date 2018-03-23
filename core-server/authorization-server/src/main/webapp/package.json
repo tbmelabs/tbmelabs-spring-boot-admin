@@ -14,7 +14,7 @@
     "flow": "flow check",
     "flow:start": "flow",
     "flow:status": "flow status",
-    "flow stop": "flow stop",
+    "flow:stop": "flow stop",
     "test": "karma start",
     "test:watch": "karma start -- --watch"
   },

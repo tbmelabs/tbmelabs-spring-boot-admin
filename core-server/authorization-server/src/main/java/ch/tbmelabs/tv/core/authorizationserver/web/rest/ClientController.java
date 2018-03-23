@@ -1,10 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
@@ -40,10 +37,8 @@ public class ClientController {
   }
 
   @GetMapping
-  @SuppressWarnings("unchecked")
-  public List<ClientDTO> getAllClients() {
-    return ((List<Client>) IteratorUtils.toList(clientRepository.findAll().iterator())).stream()
-        .map(clientMapper::toClientDTO).collect(Collectors.toList());
+  public Page<ClientDTO> getAllClients(Pageable pageable) {
+    return clientRepository.findAll(pageable).map(clientMapper::toClientDTO);
   }
 
   @PutMapping

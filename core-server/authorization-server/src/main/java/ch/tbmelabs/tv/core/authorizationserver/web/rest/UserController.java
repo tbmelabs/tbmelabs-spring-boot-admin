@@ -1,10 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.collections.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -40,10 +37,8 @@ public class UserController {
   }
 
   @GetMapping
-  @SuppressWarnings("unchecked")
-  public List<UserProfile> getAllClients() {
-    return ((List<User>) IteratorUtils.toList(userRepository.findAll().iterator())).stream()
-        .map(userMapper::toUserProfile).collect(Collectors.toList());
+  public Page<UserProfile> getAllClients(Pageable pageable) {
+    return userRepository.findAll(pageable).map(userMapper::toUserProfile);
   }
 
   @PutMapping
