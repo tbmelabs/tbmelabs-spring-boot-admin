@@ -51,7 +51,7 @@ class Clients extends Component <Clients.propTypes> {
         </Row>
 
         <Row>
-          <ClientList clients={clients} texts={texts}/>
+          <ClientList clientPage={clients} texts={texts}/>
         </Row>
       </div>
     );
@@ -60,7 +60,7 @@ class Clients extends Component <Clients.propTypes> {
 
 Clients.propTypes = {
   actions: PropTypes.object.isRequired,
-  clients: PropTypes.array.isRequired,
+  clients: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
 }
 

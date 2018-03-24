@@ -4,6 +4,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import join from 'lodash/join';
+
 import Modal from 'react-bootstrap/lib/Modal';
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
@@ -14,13 +16,13 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import CollapsableAlert from '../../../common/components/CollapsableAlert';
+import InfiniteTextInputWrapper from '../common/InfiniteTextInputWrapper';
 
 require('bootstrap/dist/css/bootstrap.css');
 
 class EditClientModal extends Component<EditClientModal.propTypes> {
   onChange: () => void;
   validateForm: () => void;
-  addRedirectUri: () => void;
   onSubmit: () => void;
 
   constructor(props) {
@@ -32,7 +34,7 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
       secret: '',
       accessTokenValidity: '',
       refreshTokenValidity: '',
-      redirectUris: [''],
+      redirectUri: '',
       grantTypes: [],
       authorities: [],
       scopes: [],
@@ -41,7 +43,7 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
         secret: '',
         accessTokenValidity: '',
         refreshTokenValidity: '',
-        redirectUris: ''
+        redirectUri: ''
       },
       isValid: false,
       isLoading: false
@@ -49,7 +51,6 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
 
     this.onChange = this.onChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
-    this.addRedirectUri = this.addRedirectUri.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
@@ -59,15 +60,6 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
 
   validateForm() {
     this.setState({isValid: this.state.username && this.state.password});
-  }
-
-  addRedirectUri() {
-    const {redirectUris} = this.state;
-    redirectUris.push('');
-
-    this.setState({redirectUris: redirectUris}, () => {
-      console.log(this.state);
-    });
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -140,43 +132,16 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
               </Col>
             </FormGroup>
 
-            <FormGroup controlId='redirectUris' validationState={!!errors.redirectUris ? 'error' : null}>
-              <HelpBlock>{errors.redirectUris}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.redirect_uris}
-              </Col>
-
-              {this.state.redirectUris.map((redirectUri, index) => {
-                const id = 'redirectUri-' + index;
-
-                if (index === 0) {
-                  return (
-                    <Col key={id} sm={4}>
-                      <FormControl name={id} type='text' value={redirectUri}
-                                   onChange={this.onChange} required/>
-                      <FormControl.Feedback/>
-                    </Col>
-                  );
-                }
-
-                return (
-                  <Col key={id} smOffset={4} sm={4} className='continuous-input-offset-top'>
-                    <FormControl name={id} type='text' value={redirectUri}
-                                 onChange={this.onChange} required/>
-                    <FormControl.Feedback/>
-                  </Col>
-                );
-              })}
-
-              <Col sm={2}>
-                <Button bsStyle='primary' className='pull-right' onClick={this.addRedirectUri}>+</Button>
-              </Col>
-            </FormGroup>
+            <InfiniteTextInputWrapper controlId='redirectUris' validationState={this.state.errors.redirectUri}
+                                      inputName={texts.redirect_uris}
+                                      concatenateTextValues={(valueArray) => join(valueArray, ';')}
+                                      setConcatenatedValue={(value) => this.setState({redirectUri: value})}/>
 
             <FormGroup className='link-group'>
               <Col smOffset={7} sm={3}>
-                <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
-                        onClick={isValid && !isLoading ? this.onSubmit : null}>
+                <Button type='submit' bsStyle='primary' className='pull-right'
+                  // disabled={!isValid || isLoading} onClick={isValid && !isLoading ? this.onSubmit : null}
+                >
                   {this.state.id && !isLoading ? texts.update_button_text :
                     !this.state.id && !isLoading ? texts.create_button_text : texts.button_loading_text}
                 </Button>
