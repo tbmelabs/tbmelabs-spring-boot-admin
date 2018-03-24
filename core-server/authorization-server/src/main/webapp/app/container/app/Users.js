@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class Users extends Component {
+class Users extends Component<Users.propTypes> {
   render() {
     return (<h1>This is gonna be a user management..</h1>);
   }

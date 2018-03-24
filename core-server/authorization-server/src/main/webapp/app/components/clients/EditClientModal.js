@@ -20,12 +20,34 @@ import InfiniteTextInputWrapper from '../common/InfiniteTextInputWrapper';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-class EditClientModal extends Component<EditClientModal.propTypes> {
+type EditClientModalState = {
+  id: ?number,
+  clientId: string,
+  secret: string,
+  accessTokenValidity: string,
+  refreshTokenValidity: string,
+  redirectUri: string,
+  grantTypes: any[],
+  authorities: any[],
+  scopes: any[],
+  errors: {
+    clientId: string,
+    secret: string,
+    accessTokenValidity: string,
+    refreshTokenValidity: string,
+    redirectUri: string,
+    form: string
+  },
+  isValid: boolean,
+  isLoading: boolean
+}
+
+class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
   onChange: () => void;
   validateForm: () => void;
   onSubmit: () => void;
 
-  constructor(props) {
+  constructor(props: EditClientModal.propTypes) {
     super(props);
 
     this.state = {
@@ -43,7 +65,8 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
         secret: '',
         accessTokenValidity: '',
         refreshTokenValidity: '',
-        redirectUri: ''
+        redirectUri: '',
+        form: ''
       },
       isValid: false,
       isLoading: false
@@ -59,7 +82,7 @@ class EditClientModal extends Component<EditClientModal.propTypes> {
   }
 
   validateForm() {
-    this.setState({isValid: this.state.username && this.state.password});
+    // TODO
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {

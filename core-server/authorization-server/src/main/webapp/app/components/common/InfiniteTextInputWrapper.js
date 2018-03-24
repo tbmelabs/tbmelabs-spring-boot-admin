@@ -20,12 +20,16 @@ const SPLITTERATOR = '-';
 let lastFocused = 0;
 let nextFocus = '';
 
-class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
+type InfiniteInputWrapperState = {
+  values: string[]
+}
+
+class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes, InfiniteInputWrapperState> {
   onFocus: () => void;
   onChange: () => void;
   addNewEmptyValue: () => void;
 
-  constructor(props) {
+  constructor(props: InfiniteInputWrapper.propTypes) {
     super(props);
 
     this.state = {
@@ -41,21 +45,21 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
     const index = this.extractIndex(event.target.name);
     lastFocused = index;
 
-    let temp_value = event.target.value
-    event.target.value = ''
-    event.target.value = temp_value
+    let tmpValue = event.target.value;
+    event.target.value = '';
+    event.target.value = tmpValue;
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
-    const index = this.extractIndex(event.target.name);
-
     const {values} = this.state;
-    values[index] = event.target.value;
+
+    // $FlowFixMe: Dirty string array index as number
+    values[this.extractIndex(event.target.name)] = event.target.value;
 
     this.setState({values: values}, () => this.props.setConcatenatedValue(this.props.concatenateTextValues(this.state.values)));
   }
 
-  extractIndex(concatenatedKey) {
+  extractIndex(concatenatedKey: string) {
     return concatenatedKey.split(SPLITTERATOR)[1];
   }
 
@@ -71,8 +75,6 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
     let possibleFocusElement;
     if ((possibleFocusElement = document.getElementsByName(nextFocus)[0]) != null) {
       possibleFocusElement.focus();
-    } else {
-      console.log('SCREAM: NULL');
     }
   }
 

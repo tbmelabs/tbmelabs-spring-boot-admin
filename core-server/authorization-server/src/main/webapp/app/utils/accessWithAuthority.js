@@ -13,7 +13,8 @@ import {addFlashMessage} from '../../common/actions/flashMessageActions';
 
 import hasAuthority from './hasAuthority';
 
-export default function (ComposedComponent: Component, authority: string) {
+// TODO: ComposedComponent cannot be "Component" because of missing 1-2 type arguments
+export default function (ComposedComponent: any, authority: string) {
   class AccessWithAuthority extends Component<AccessWithAuthority.propTypes> {
     displayWarningMessage: (props: AccessWithAuthority.propTypes) => void;
 
