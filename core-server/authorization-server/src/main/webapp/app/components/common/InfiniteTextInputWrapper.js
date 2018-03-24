@@ -17,9 +17,13 @@ require('bootstrap/dist/css/bootstrap.css');
 
 const SPLITTERATOR = '-';
 
+let lastFocused = 0;
+let nextFocus = '';
+
 class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
+  onFocus: () => void;
   onChange: () => void;
-  addRedirectUri: () => void;
+  addNewEmptyValue: () => void;
 
   constructor(props) {
     super(props);
@@ -28,17 +32,31 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
       values: ['']
     }
 
+    this.onFocus = this.onFocus.bind(this);
     this.onChange = this.onChange.bind(this);
     this.addNewEmptyValue = this.addNewEmptyValue.bind(this);
   }
 
-  onChange(event: SyntheticInputEvent<HTMLInputElement>) {
-    const {values} = this.state;
-    const index = event.target.name.split(SPLITTERATOR)[1];
+  onFocus(event: SyntheticInputEvent<HTMLInputElement>) {
+    const index = this.extractIndex(event.target.name);
+    lastFocused = index;
 
+    let temp_value = event.target.value
+    event.target.value = ''
+    event.target.value = temp_value
+  }
+
+  onChange(event: SyntheticInputEvent<HTMLInputElement>) {
+    const index = this.extractIndex(event.target.name);
+
+    const {values} = this.state;
     values[index] = event.target.value;
 
     this.setState({values: values}, () => this.props.setConcatenatedValue(this.props.concatenateTextValues(this.state.values)));
+  }
+
+  extractIndex(concatenatedKey) {
+    return concatenatedKey.split(SPLITTERATOR)[1];
   }
 
   addNewEmptyValue() {
@@ -48,10 +66,22 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
     this.setState({values: values});
   }
 
+  componentDidUpdate() {
+    // TODO: Whoo.. this is dirty!
+    let possibleFocusElement;
+    if ((possibleFocusElement = document.getElementsByName(nextFocus)[0]) != null) {
+      possibleFocusElement.focus();
+    } else {
+      console.log('SCREAM: NULL');
+    }
+  }
+
   render() {
     const {controlId, validationState, inputName} = this.props;
-    const shortId = shortid.generate();
     const continuousButtonRowOffset = this.state.values.length > 1 ? 'continuous-input-offset-top' : '';
+
+    const shortId = shortid.generate();
+    nextFocus = shortId + SPLITTERATOR + lastFocused;
 
     return (
       <FormGroup controlId={controlId} validationState={!!validationState ? 'error' : null}>
@@ -64,8 +94,8 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
           if (index === 0) {
             return (
               <Col key={id} sm={4}>
-                <FormControl name={id} type='text' value={value}
-                             onChange={this.onChange} required/>
+                <FormControl name={id} type='text' value={value} onFocus={this.onFocus} onChange={this.onChange}
+                             required/>
                 <FormControl.Feedback/>
               </Col>
             );
@@ -73,8 +103,8 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes> {
 
           return (
             <Col key={id} smOffset={4} sm={4} className='continuous-input-offset-top'>
-              <FormControl name={id} type='text' value={value}
-                           onChange={this.onChange} required/>
+              <FormControl name={id} type='text' value={value} onFocus={this.onFocus} onChange={this.onChange}
+                           required/>
               <FormControl.Feedback/>
             </Col>
           );
