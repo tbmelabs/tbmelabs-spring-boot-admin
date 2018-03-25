@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
-public class ControllerTest {
-  private static final Integer EXPECTED_CONTROLLER_COUNT = 4;
+public class ControllerAnnotationTest {
+  private static final Integer EXPECTED_CONTROLLER_COUNT = 9;
 
   private static Set<Class<?>> allControllers = new HashSet<>();
   private static Set<Class<?>> annotatedControllers = new HashSet<>();
@@ -39,7 +39,7 @@ public class ControllerTest {
 
   @Test
   public void allControllersShouldBeAnnotated() {
-    assertThat(ControllerTest.annotatedControllers).hasSize(EXPECTED_CONTROLLER_COUNT);
+    assertThat(ControllerAnnotationTest.annotatedControllers).hasSize(EXPECTED_CONTROLLER_COUNT);
   }
 
   @Test

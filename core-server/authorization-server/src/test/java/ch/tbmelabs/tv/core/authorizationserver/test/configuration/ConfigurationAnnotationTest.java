@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
-public class ConfigurationTest {
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 11;
+public class ConfigurationAnnotationTest {
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 12;
 
   @Test
   public void packageShouldOnlyContainConfigurations() {

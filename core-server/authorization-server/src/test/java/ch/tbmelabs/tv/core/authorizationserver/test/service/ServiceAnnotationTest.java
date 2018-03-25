@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
-public class ServiceTest {
+public class ServiceAnnotationTest {
   private static final Integer EXPECTED_SERVICE_COUNT = 9;
 
   @Test

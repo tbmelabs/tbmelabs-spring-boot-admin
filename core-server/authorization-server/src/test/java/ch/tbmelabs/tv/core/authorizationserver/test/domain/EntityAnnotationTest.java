@@ -10,7 +10,7 @@ import org.reflections.Reflections;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
-public class EntityTest {
+public class EntityAnnotationTest {
   private static final Integer EXPECTED_ENTITIES_COUNT = 13;
 
   @Test

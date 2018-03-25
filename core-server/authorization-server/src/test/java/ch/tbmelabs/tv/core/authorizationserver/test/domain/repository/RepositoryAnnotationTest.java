@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
-public class RepositoryTest {
-  private static final Integer EXPECTED_REPOSITORY_COUNT = 14;
+public class RepositoryAnnotationTest {
+  private static final Integer EXPECTED_REPOSITORY_COUNT = 15;
 
   @Test
   public void packageShouldOnlyContainRepositories() {
