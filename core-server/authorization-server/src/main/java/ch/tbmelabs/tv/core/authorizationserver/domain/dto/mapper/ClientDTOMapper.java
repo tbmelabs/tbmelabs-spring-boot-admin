@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,29 +49,36 @@ public class ClientDTOMapper {
     client.setIsAutoApprove(clientDTO.getIsAutoApprove());
     client.setAccessTokenValiditySeconds(clientDTO.getAccessTokenValiditySeconds());
     client.setRefreshTokenValiditySeconds(clientDTO.getRefreshTokenValiditySeconds());
+    client.setRedirectUri(clientDTO.getRedirectUri());
 
-    List<ClientGrantTypeAssociation> clientGrantTypeAssociations = (List<ClientGrantTypeAssociation>) clientGrantTypeRepository
-        .findAllByClient(client);
+    final List<ClientGrantTypeAssociation> clientGrantTypeAssociations = new ArrayList<>();
+    if (client.getId() != null) {
+      clientGrantTypeAssociations.addAll(clientGrantTypeRepository.findAllByClient(client));
+    }
     clientDTO.getGrantTypes().stream()
         .filter(userGrantType -> clientGrantTypeAssociations.stream().noneMatch(
             existingGrantType -> existingGrantType.getClientGrantType().getName().equals(userGrantType.getName())))
-        .map(client::grantTypeToAssociation).collect(Collectors.toList());
+        .map(client::grantTypeToAssociation).forEach(clientGrantTypeAssociations::add);
     client.setGrantTypes(clientGrantTypeAssociations);
 
-    List<ClientAuthorityAssociation> clientAuthorityAssociations = (List<ClientAuthorityAssociation>) clientAuthorityRepository
-        .findAllByClient(client);
+    final List<ClientAuthorityAssociation> clientAuthorityAssociations = new ArrayList<>();
+    if (client.getId() != null) {
+      clientAuthorityAssociations.addAll(clientAuthorityRepository.findAllByClient(client));
+    }
     clientDTO.getGrantedAuthorities().stream()
         .filter(clientAuthority -> clientAuthorityAssociations.stream().noneMatch(
             existingAuthority -> existingAuthority.getClientAuthority().getName().equals(clientAuthority.getName())))
-        .map(client::authorityToAssociation).collect(Collectors.toList());
+        .map(client::authorityToAssociation).forEach(clientAuthorityAssociations::add);
     client.setGrantedAuthorities(clientAuthorityAssociations);
 
-    List<ClientScopeAssociation> clientScopeAssociations = (List<ClientScopeAssociation>) clientScopeRepository
-        .findAllByClient(client);
+    final List<ClientScopeAssociation> clientScopeAssociations = new ArrayList<>();
+    if (client.getId() != null) {
+      clientScopeAssociations.addAll(clientScopeRepository.findAllByClient(client));
+    }
     clientDTO.getScopes().stream()
         .filter(clientScope -> clientScopeAssociations.stream()
             .noneMatch(existingScope -> existingScope.getClientScope().getName().equals(clientScope.getName())))
-        .map(client::scopeToAssociation).collect(Collectors.toList());
+        .map(client::scopeToAssociation).forEach(clientScopeAssociations::add);
     client.setScopes(clientScopeAssociations);
 
     return client;

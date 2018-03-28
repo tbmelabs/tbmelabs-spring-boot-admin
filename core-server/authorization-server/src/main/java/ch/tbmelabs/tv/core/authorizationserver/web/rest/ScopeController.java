@@ -13,14 +13,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDReposi
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 @RequestMapping({ "${spring.data.rest.base-path}/scopes" })
+@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class ScopeController {
   @Autowired
   private ScopeCRUDRepository scopeRepository;
 
   @GetMapping
-  public Page<Scope> getAllAuthorities(Pageable pageable) {
+  public Page<Scope> getAllScopes(Pageable pageable) {
     return scopeRepository.findAll(pageable);
   }
 }

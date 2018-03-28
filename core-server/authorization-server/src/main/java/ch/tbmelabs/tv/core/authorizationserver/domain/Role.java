@@ -58,7 +58,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
 
   @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
+  @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;
 
   public Role(String authority) {

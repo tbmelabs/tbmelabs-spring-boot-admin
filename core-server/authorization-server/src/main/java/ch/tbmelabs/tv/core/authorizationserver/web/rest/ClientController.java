@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
@@ -29,11 +30,13 @@ public class ClientController {
 
   @PostMapping
   public ClientDTO createClient(@RequestBody(required = true) ClientDTO clientDTO) {
-    if (clientDTO.getId() != 0) {
+    if (clientDTO.getId() != null) {
       throw new IllegalArgumentException("You can only create a new client without an id!");
     }
 
-    return clientMapper.toClientDTO(clientRepository.save(clientMapper.toClient(clientDTO)));
+    Client client = clientMapper.toClient(clientDTO);
+
+    return clientMapper.toClientDTO(clientRepository.save(client));
   }
 
   @GetMapping
@@ -43,7 +46,7 @@ public class ClientController {
 
   @PutMapping
   public ClientDTO updateClient(@RequestBody(required = true) ClientDTO clientDTO) {
-    if (clientDTO.getId() == 0) {
+    if (clientDTO.getId() == null || clientRepository.findOne(clientDTO.getId()) == null) {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 
@@ -52,7 +55,7 @@ public class ClientController {
 
   @DeleteMapping
   public void deleteClient(@RequestBody(required = true) ClientDTO clientDTO) {
-    if (clientDTO.getId() == 0) {
+    if (clientDTO.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing client!");
     }
 

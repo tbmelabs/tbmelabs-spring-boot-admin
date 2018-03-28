@@ -54,7 +54,7 @@ public class GrantType extends NicelyDocumentedJDBCResource {
 
   @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientGrantType")
+  @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "clientGrantType")
   private Collection<ClientGrantTypeAssociation> clientsWithGrantTypes;
 
   public GrantType(String name) {

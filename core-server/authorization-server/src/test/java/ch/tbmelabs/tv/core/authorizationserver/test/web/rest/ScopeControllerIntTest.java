@@ -14,22 +14,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-public class AuthorityControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
-  @Value("${spring.data.rest.base-path}/authorities")
-  private String authorityEndpoint;
+public class ScopeControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+  @Value("${spring.data.rest.base-path}/scopes")
+  private String scopesEndpoint;
 
   @Autowired
   private MockMvc mockMvc;
 
   @Test
-  @WithMockUser(username = "AuthorityControllerIntTestUser", authorities = { UserAuthority.SERVER_ADMIN })
-  public void getAuthoritiesEndpointIsAccessibleToServerAdmins() throws Exception {
-    mockMvc.perform(get(authorityEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+  @WithMockUser(username = "ScopeControllerIntTestUser", authorities = { UserAuthority.SERVER_ADMIN })
+  public void getGrantTypesEndpointIsAccessibleToServerAdmins() throws Exception {
+    mockMvc.perform(get(scopesEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
-  @WithMockUser(username = "AuthorityControllerIntTestUser", authorities = { UserAuthority.SERVER_SUPPORT })
-  public void getAuthoritiesEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
-    mockMvc.perform(get(authorityEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+  @WithMockUser(username = "ScopeControllerIntTestUser", authorities = { UserAuthority.SERVER_SUPPORT })
+  public void getGrantTypeEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
+    mockMvc.perform(get(scopesEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }

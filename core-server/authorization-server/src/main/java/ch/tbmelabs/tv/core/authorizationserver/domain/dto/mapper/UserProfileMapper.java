@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,11 +30,15 @@ public class UserProfileMapper {
     user.setId(userProfile.getId());
     user.setUsername(userProfile.getUsername());
     user.setEmail(userProfile.getEmail());
+    user.setPassword(userProfile.getPassword());
+    user.setConfirmation(userProfile.getConfirmation());
     user.setIsEnabled(userProfile.getIsEnabled());
     user.setIsBlocked(userProfile.getIsBlocked());
 
-    List<UserRoleAssociation> userRoleAssociations = (List<UserRoleAssociation>) userRoleAssociationRepository
-        .findAllByUser(user);
+    final List<UserRoleAssociation> userRoleAssociations = new ArrayList<>();
+    if (user.getId() != null) {
+      userRoleAssociations.addAll(userRoleAssociationRepository.findAllByUser(user));
+    }
     userProfile.getRoles().stream()
         .filter(userProfileRole -> userRoleAssociations.stream()
             .noneMatch(existingRole -> existingRole.getUserRole().getName().equals(userProfileRole.getName())))

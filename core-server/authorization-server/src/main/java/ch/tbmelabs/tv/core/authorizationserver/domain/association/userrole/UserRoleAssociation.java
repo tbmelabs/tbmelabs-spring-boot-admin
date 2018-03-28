@@ -51,14 +51,14 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
   @JsonBackReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
   @JsonBackReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.MERGE })
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "user_role_id", referencedColumnName = "id")
   private Role userRole;

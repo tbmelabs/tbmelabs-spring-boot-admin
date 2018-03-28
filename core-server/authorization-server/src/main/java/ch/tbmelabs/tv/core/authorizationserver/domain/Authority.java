@@ -58,7 +58,7 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
 
   @JsonManagedReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientAuthority")
+  @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "clientAuthority")
   private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
 
   public Authority(String name) {

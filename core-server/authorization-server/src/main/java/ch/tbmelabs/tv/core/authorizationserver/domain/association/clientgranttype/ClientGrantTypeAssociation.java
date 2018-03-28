@@ -51,14 +51,14 @@ public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
 
   @JsonBackReference("client_has_grant_types")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
   @JsonBackReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.MERGE })
   @JoinColumn(name = "client_grant_type_id", insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_grant_type_id", referencedColumnName = "id")
   private GrantType clientGrantType;

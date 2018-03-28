@@ -8,8 +8,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class UserProfile {
   private Date created;
 
@@ -21,6 +23,10 @@ public class UserProfile {
 
   private String email;
 
+  private String password;
+  
+  private String confirmation;
+  
   private Boolean isEnabled;
 
   private Boolean isBlocked;

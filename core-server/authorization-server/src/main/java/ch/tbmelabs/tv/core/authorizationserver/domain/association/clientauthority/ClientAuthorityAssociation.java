@@ -51,14 +51,14 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
   @JsonBackReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
   @JsonBackReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = { CascadeType.MERGE })
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_authority_id", referencedColumnName = "id")
   private Authority clientAuthority;

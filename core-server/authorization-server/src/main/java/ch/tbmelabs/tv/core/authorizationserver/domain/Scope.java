@@ -54,7 +54,7 @@ public class Scope extends NicelyDocumentedJDBCResource {
 
   @JsonManagedReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "clientScopeId")
+  @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "clientScopeId")
   private Collection<ClientScopeAssociation> clientsWithScopes;
 
   public Scope(String name) {

@@ -56,6 +56,7 @@ public class ClientControllerTest {
     testClient = new Client();
     testClientDTO = new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
+    doReturn(testClient).when(mockClientRepository).findOne(Mockito.anyLong());
     doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository).findAll(Mockito.any(Pageable.class));
 
     doReturn(testClientDTO).when(mockClientMapper).toClientDTO(Mockito.any(Client.class));
@@ -85,15 +86,13 @@ public class ClientControllerTest {
 
   @Test
   public void createClientShouldPersistMappedDTO() {
-    testClientDTO.setId(0L);
-
     fixture.createClient(testClientDTO);
 
     verify(mockClientRepository, times(1)).save(testClient);
   }
 
   @Test
-  public void createClientShouldThrowErrorIfClientHasAlreadyAnId() {
+  public void createClientsShouldThrowErrorIfClientHasAlreadyAnId() {
     testClientDTO.setId(new Random().nextLong());
 
     assertThatThrownBy(() -> fixture.createClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
@@ -130,8 +129,6 @@ public class ClientControllerTest {
 
   @Test
   public void updateClientShouldThrowErrorIfClientHasNoId() {
-    testClientDTO.setId(0L);
-
     assertThatThrownBy(() -> fixture.updateClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only update an existing client!");
   }
@@ -153,8 +150,6 @@ public class ClientControllerTest {
 
   @Test
   public void deleteClientShouldThrowErrorIfClientHasNoId() {
-    testClientDTO.setId(0L);
-
     assertThatThrownBy(() -> fixture.deleteClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only delete an existing client!");
   }

@@ -18,8 +18,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
 @RequestMapping({ "${spring.data.rest.base-path}/users" })
+@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
 public class UserController {
   @Autowired
   private UserCRUDRepository userRepository;
@@ -28,8 +28,8 @@ public class UserController {
   private UserProfileMapper userMapper;
 
   @PostMapping
-  public UserProfile createClient(@RequestBody(required = true) UserProfile userProfile) {
-    if (userProfile.getId() != 0) {
+  public UserProfile createUser(@RequestBody(required = true) UserProfile userProfile) {
+    if (userProfile.getId() != null) {
       throw new IllegalArgumentException("You can only create a new user without an id!");
     }
 
@@ -37,13 +37,13 @@ public class UserController {
   }
 
   @GetMapping
-  public Page<UserProfile> getAllClients(Pageable pageable) {
+  public Page<UserProfile> getAllUsers(Pageable pageable) {
     return userRepository.findAll(pageable).map(userMapper::toUserProfile);
   }
 
   @PutMapping
-  public UserProfile updateClient(@RequestBody(required = true) UserProfile userProfile) {
-    if (userProfile.getId() == 0) {
+  public UserProfile updateUser(@RequestBody(required = true) UserProfile userProfile) {
+    if (userProfile.getId() == null) {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
 
@@ -51,8 +51,8 @@ public class UserController {
   }
 
   @DeleteMapping
-  public void deleteClient(@RequestBody(required = true) UserProfile userProfile) {
-    if (userProfile.getId() == 0) {
+  public void deleteUser(@RequestBody(required = true) UserProfile userProfile) {
+    if (userProfile.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing user!");
     }
 
