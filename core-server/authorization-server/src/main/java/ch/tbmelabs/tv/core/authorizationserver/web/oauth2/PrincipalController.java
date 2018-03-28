@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -24,7 +24,7 @@ public class PrincipalController {
   @Autowired
   private UserProfileMapper profileMapper;
 
-  @RequestMapping({ "/me", "/user" })
+  @GetMapping({ "/me", "/user" })
   public Map<String, String> getPrincipal() {
     LOGGER.debug("Requesting current user information.");
 
@@ -40,7 +40,7 @@ public class PrincipalController {
     return userInformation;
   }
 
-  @RequestMapping({ "/profile" })
+  @GetMapping({ "/profile" })
   public UserProfile getProfile() {
     LOGGER.debug("Requesting current user profile.");
 

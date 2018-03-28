@@ -18,8 +18,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepos
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 @RequestMapping({ "${spring.data.rest.base-path}/clients" })
+@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class ClientController {
   @Autowired
   private ClientCRUDRepository clientRepository;

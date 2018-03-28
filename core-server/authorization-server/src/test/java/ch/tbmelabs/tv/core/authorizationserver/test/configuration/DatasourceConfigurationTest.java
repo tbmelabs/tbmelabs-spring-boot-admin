@@ -39,7 +39,7 @@ public class DatasourceConfigurationTest {
   }
 
   @Test
-  public void jdbcTokenStoreShouldNotOccurInProductiveEnvironment() throws NoSuchMethodException, SecurityException {
+  public void jdbcTokenStoreShouldBeAnnotatedNotToOccurInProductiveEnvironment() throws NoSuchMethodException, SecurityException {
     Method jdbcTokenStoreDatasourceConfiguration = DatasourceConfiguration.class
         .getDeclaredMethod("jdbcTokenStoreDatasource", new Class[] {});
 

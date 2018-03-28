@@ -62,12 +62,15 @@ public class OAuth2ApprovalClientScopesControllerTest {
   }
 
   @Test
-  public void getAccessConfirmationShouldReturnScopeNamesOnly() throws Exception {
+  public void getAccessConfirmationShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method getAccessConfirmation = OAuth2ApprovalClientScopesController.class.getDeclaredMethod("getAccessConfirmation",
         new Class<?>[] { String.class });
     assertThat(getAccessConfirmation.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty()
         .containsExactly("/oauth/confirm_access_scopes");
+  }
 
+  @Test
+  public void getAccessConfirmationShouldReturnScopeNamesOnly() {
     assertThat(fixture.getAccessConfirmation(RandomStringUtils.random(11))).containsExactly(CLIENT_SCOPE_NAME);
   }
 }
