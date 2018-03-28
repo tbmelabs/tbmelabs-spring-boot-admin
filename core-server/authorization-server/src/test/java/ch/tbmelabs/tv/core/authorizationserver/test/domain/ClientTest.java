@@ -156,7 +156,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantTypesGetterAndSetter() {
-    fixture.setId(new Random().nextLong());
     Collection<ClientGrantTypeAssociation> grantTypes = Arrays
         .asList(new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE)));
 
@@ -168,7 +167,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    fixture.setId(new Random().nextLong());
     Collection<ClientAuthorityAssociation> grantedAuthorities = Arrays
         .asList(new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY)));
 
@@ -180,7 +178,6 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
-    fixture.setId(new Random().nextLong());
     Collection<ClientScopeAssociation> scopes = Arrays
         .asList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
 

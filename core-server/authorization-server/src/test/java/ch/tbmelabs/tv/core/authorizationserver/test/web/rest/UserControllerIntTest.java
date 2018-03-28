@@ -46,7 +46,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   private static UserProfile createTestUserProfile() {
     User user = new User();
     user.setUsername(RandomStringUtils.random(11));
-    user.setEmail("random.user@tbme.tv");
+    user.setEmail(user.getUsername() + "@tbme.tv");
 
     UserProfile profile = new UserProfile(user, new ArrayList<>());
     profile.setPassword(RandomStringUtils.random(60));

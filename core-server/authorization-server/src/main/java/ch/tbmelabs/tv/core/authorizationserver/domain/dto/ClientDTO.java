@@ -50,7 +50,6 @@ public class ClientDTO {
     this.lastUpdated = client.getLastUpdated();
     this.id = client.getId();
     this.clientId = client.getClientId();
-    this.secret = client.getSecret();
     this.isSecretRequired = client.getIsSecretRequired();
     this.isAutoApprove = client.getIsAutoApprove();
     this.accessTokenValiditySeconds = client.getAccessTokenValiditySeconds();
