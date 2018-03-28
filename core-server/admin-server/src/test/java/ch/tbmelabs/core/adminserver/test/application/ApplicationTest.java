@@ -1,12 +1,11 @@
 package ch.tbmelabs.core.adminserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,17 +49,10 @@ public class ApplicationTest {
     assertThat(new Application()).isNotNull();
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive()
-      throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
-
-    try {
-      fixture.initBean();
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getLocalizedMessage()).isEqualTo(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
-      throw e;
-    }
+  @Test
+  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
+    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
   }
 
   @Test

@@ -13,7 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
@@ -95,9 +95,9 @@ public class UserSignupService {
 
     if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
       try {
-        newUser.setRoles(newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(SecurityRole.USER))));
+        newUser.setRoles(newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(UserAuthority.USER))));
       } catch (NullPointerException e) {
-        throw new IllegalArgumentException("Unable to find default security role \"" + SecurityRole.USER + "\"!");
+        throw new IllegalArgumentException("Unable to find default authority \"" + UserAuthority.USER + "\"!");
       }
     }
 

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Service
 public class PrincipalService {
@@ -31,6 +31,6 @@ public class PrincipalService {
 
   public static boolean isAuthenticated() {
     return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-        .noneMatch(role -> role.getAuthority().equals(new Role(SecurityRole.ANONYMOUS).getAuthority()));
+        .noneMatch(role -> role.getAuthority().equals(new Role(UserAuthority.ANONYMOUS).getAuthority()));
   }
 }

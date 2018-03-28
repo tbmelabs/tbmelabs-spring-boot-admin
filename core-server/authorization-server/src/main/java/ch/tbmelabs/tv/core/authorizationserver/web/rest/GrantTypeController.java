@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@PreAuthorize("hasRole('" + SecurityRole.SERVER_ADMIN + "')")
+@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 @RequestMapping({ "${spring.data.rest.base-path}/grant-types" })
 public class GrantTypeController {
   @Autowired

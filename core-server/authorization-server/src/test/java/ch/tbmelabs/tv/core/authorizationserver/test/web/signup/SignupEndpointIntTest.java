@@ -27,7 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Transactional
 public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -146,6 +146,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
     assertThat(isBlocked).isNotNull().isFalse();
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
-    assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0)).isEqualTo(SecurityRole.USER);
+    assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0)).isEqualTo(UserAuthority.USER);
   }
 }

@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -45,7 +45,7 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/eureka/**").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
-        .anyRequest().hasAnyRole(SecurityRole.GANDALF, SecurityRole.SERVER_ADMIN, SecurityRole.SERVER_SUPPORT)
+        .anyRequest().hasAnyAuthority(UserAuthority.GANDALF, UserAuthority.SERVER_ADMIN, UserAuthority.SERVER_SUPPORT)
       
       .and().exceptionHandling()
         .accessDeniedPage("/403.html");

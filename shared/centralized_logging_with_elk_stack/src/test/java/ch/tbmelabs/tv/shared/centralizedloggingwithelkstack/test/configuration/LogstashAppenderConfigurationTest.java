@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -34,15 +35,10 @@ public class LogstashAppenderConfigurationTest {
     assertThat(LogstashAppenderConfiguration.class).hasAnnotation(Configuration.class);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void initBeanShouldThrowExceptionIfApplicationNameIsNull() {
-    try {
-      fixture.initBean();
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getLocalizedMessage()).isEqualTo(NO_APPLICATION_NAME_ERROR_MESSAGE);
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(NO_APPLICATION_NAME_ERROR_MESSAGE);
   }
 
   @Test

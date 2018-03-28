@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.oauth2;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -21,7 +22,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.oauth2.PrincipalService;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class PrincipalServiceTest {
   private static final String UNKNOWN_USERNAME_ERROR = "Cannot identify authenticated user: Please try again!";
@@ -42,7 +43,7 @@ public class PrincipalServiceTest {
 
     doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
 
-    doReturn(Arrays.asList(new Role(SecurityRole.ANONYMOUS))).when(mockedAnonymousAuthentication).getAuthorities();
+    doReturn(Arrays.asList(new Role(UserAuthority.ANONYMOUS))).when(mockedAnonymousAuthentication).getAuthorities();
     SecurityContextHolder.getContext().setAuthentication(mockedAnonymousAuthentication);
   }
 
@@ -64,26 +65,20 @@ public class PrincipalServiceTest {
   @Test
   public void getCurrentUserShouldReturnCorrectAuthenticatedUser() {
     doReturn(RandomStringUtils.random(11)).when(mockedAnonymousAuthentication).getName();
-    doReturn(Arrays.asList(new Role(SecurityRole.USER))).when(mockedAnonymousAuthentication).getAuthorities();
+    doReturn(Arrays.asList(new Role(UserAuthority.USER))).when(mockedAnonymousAuthentication).getAuthorities();
 
     assertThat(fixture.getCurrentUser()).isNotNull();
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void getCurrentUserShouldThrowExceptionIfUserCannotBeIdentified() {
     doReturn(null).when(mockUserRepository).findByUsername(Mockito.anyString());
 
     doReturn(RandomStringUtils.random(11)).when(mockedAnonymousAuthentication).getName();
-    doReturn(Arrays.asList(new Role(SecurityRole.USER))).when(mockedAnonymousAuthentication).getAuthorities();
+    doReturn(Arrays.asList(new Role(UserAuthority.USER))).when(mockedAnonymousAuthentication).getAuthorities();
 
-    try {
-      fixture.getCurrentUser();
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e).hasMessage(UNKNOWN_USERNAME_ERROR);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.getCurrentUser()).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(UNKNOWN_USERNAME_ERROR);
   }
 
   @Test
@@ -93,7 +88,7 @@ public class PrincipalServiceTest {
 
   @Test
   public void isAuthenticatedShouldReturnTrueIfUserHasNoAnonymousRole() {
-    doReturn(Arrays.asList(new Role(SecurityRole.USER))).when(mockedAnonymousAuthentication).getAuthorities();
+    doReturn(Arrays.asList(new Role(UserAuthority.USER))).when(mockedAnonymousAuthentication).getAuthorities();
 
     assertThat(PrincipalService.isAuthenticated()).isTrue();
   }

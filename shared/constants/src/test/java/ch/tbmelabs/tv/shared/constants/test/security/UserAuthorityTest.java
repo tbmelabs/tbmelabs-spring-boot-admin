@@ -8,9 +8,9 @@ import java.lang.reflect.Modifier;
 
 import org.junit.Test;
 
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-public class SecurityRoleTest {
+public class UserAuthorityTest {
   private static final String GANDALF = "GANDALF";
   private static final String SERVER_ADMIN = "SERVER_ADMIN";
   private static final String SERVER_SUPPORT = "SERVER_SUPPORT";
@@ -23,21 +23,21 @@ public class SecurityRoleTest {
 
   @Test
   public void securityRolesShouldBePublicStatic() {
-    assertThat(SecurityRole.GANDALF).isEqualTo(GANDALF);
-    assertThat(SecurityRole.SERVER_ADMIN).isEqualTo(SERVER_ADMIN);
-    assertThat(SecurityRole.SERVER_SUPPORT).isEqualTo(SERVER_SUPPORT);
-    assertThat(SecurityRole.CONTENT_ADMIN).isEqualTo(CONTENT_ADMIN);
-    assertThat(SecurityRole.CONTENT_SUPPORT).isEqualTo(CONTENT_SUPPORT);
-    assertThat(SecurityRole.PREMIUM_USER).isEqualTo(PREMIUM_USER);
-    assertThat(SecurityRole.USER).isEqualTo(USER);
-    assertThat(SecurityRole.GUEST).isEqualTo(GUEST);
-    assertThat(SecurityRole.ANONYMOUS).isEqualTo(ANONYMOUS);
+    assertThat(UserAuthority.GANDALF).isEqualTo(GANDALF);
+    assertThat(UserAuthority.SERVER_ADMIN).isEqualTo(SERVER_ADMIN);
+    assertThat(UserAuthority.SERVER_SUPPORT).isEqualTo(SERVER_SUPPORT);
+    assertThat(UserAuthority.CONTENT_ADMIN).isEqualTo(CONTENT_ADMIN);
+    assertThat(UserAuthority.CONTENT_SUPPORT).isEqualTo(CONTENT_SUPPORT);
+    assertThat(UserAuthority.PREMIUM_USER).isEqualTo(PREMIUM_USER);
+    assertThat(UserAuthority.USER).isEqualTo(USER);
+    assertThat(UserAuthority.GUEST).isEqualTo(GUEST);
+    assertThat(UserAuthority.ANONYMOUS).isEqualTo(ANONYMOUS);
   }
 
   @Test
   public void staticHolderClassShouldNotHaveAnyAccessableConstructor() throws NoSuchMethodException, SecurityException,
       InstantiationException, IllegalAccessException, InvocationTargetException {
-    Constructor<SecurityRole> fixture = SecurityRole.class.getDeclaredConstructor(new Class<?>[] {});
+    Constructor<UserAuthority> fixture = UserAuthority.class.getDeclaredConstructor(new Class<?>[] {});
     fixture.setAccessible(true);
 
     assertThat(Modifier.isPrivate(fixture.getModifiers())).isTrue();

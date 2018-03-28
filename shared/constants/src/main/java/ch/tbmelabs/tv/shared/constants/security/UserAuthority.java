@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.shared.constants.security;
 
-public class SecurityRole {
+public class UserAuthority {
   public static final String GANDALF = "GANDALF";
   public static final String SERVER_ADMIN = "SERVER_ADMIN";
   public static final String SERVER_SUPPORT = "SERVER_SUPPORT";
@@ -11,7 +11,7 @@ public class SecurityRole {
   public static final String GUEST = "GUEST";
   public static final String ANONYMOUS = "ANONYMOUS";
 
-  private SecurityRole() {
+  private UserAuthority() {
     // Hidden constructor
   }
 }

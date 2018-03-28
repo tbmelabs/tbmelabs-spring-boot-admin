@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -76,16 +77,11 @@ public class PreAuthenticationUserDetailsServiceImplTest {
         .hasFieldOrPropertyWithValue("user", mockUserRepository.findByUsername(""));
   }
 
-  @Test(expected = UsernameNotFoundException.class)
+  @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
     doReturn(null).when(mockUserRepository).findByUsername(Mockito.anyString());
 
-    try {
-      fixture.loadUserDetails(mockToken);
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(UsernameNotFoundException.class)
-          .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.loadUserDetails(mockToken)).isInstanceOf(UsernameNotFoundException.class)
+        .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");
   }
 }

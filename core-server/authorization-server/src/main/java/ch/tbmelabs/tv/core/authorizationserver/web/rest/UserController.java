@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.SecurityRole;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@PreAuthorize("hasRole('" + SecurityRole.SERVER_SUPPORT + "')")
+@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
 @RequestMapping({ "${spring.data.rest.base-path}/users" })
 public class UserController {
   @Autowired

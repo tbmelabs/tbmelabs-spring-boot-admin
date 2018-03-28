@@ -61,12 +61,12 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @OneToMany(cascade = { CascadeType.MERGE }, mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;
 
-  public Role(String name) {
-    this.name = name;
+  public Role(String authority) {
+    this.name = authority;
   }
 
   @Override
   public String getAuthority() {
-    return ROLE_PREFIX + getName();
+    return getName();
   }
 }
