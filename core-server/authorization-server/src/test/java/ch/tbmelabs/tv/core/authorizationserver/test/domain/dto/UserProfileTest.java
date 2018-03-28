@@ -28,7 +28,7 @@ public class UserProfileTest {
 
   private final User testUser = createTestUser();
 
-  private static User createTestUser() {
+  public static User createTestUser() {
     User user = new User();
     user.setCreated(new Date());
     user.setLastUpdated(new Date());

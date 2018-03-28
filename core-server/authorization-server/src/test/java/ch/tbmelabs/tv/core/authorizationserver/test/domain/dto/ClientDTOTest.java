@@ -32,7 +32,7 @@ public class ClientDTOTest {
 
   private final Client testClient = createTestClient();
 
-  private static Client createTestClient() {
+  public static Client createTestClient() {
     Client client = new Client();
     client.setCreated(new Date());
     client.setLastUpdated(new Date());
