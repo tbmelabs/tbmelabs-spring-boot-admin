@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,79 +32,54 @@ public class PasswordValidationEndpointIntTest extends AbstractOAuth2Authorizati
   @Autowired
   private MockMvc mockMvc;
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void tooShortPasswordShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void passwordWithoutNumbersFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void passwordWithoutLowercaseLettersShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void passwordWithoutUppercaseLettersShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void passwordWithoutSpecialCharShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(PASSWORD_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

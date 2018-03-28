@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,19 +59,14 @@ public class EmailUniqueCheckEndpointIntTest extends AbstractOAuth2Authorization
     userRepository.save(testUser);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void registrationWithExistingEmailShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUser.getEmail()).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(EMAIL_NOT_UNIQUE_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUser.getEmail()).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(EMAIL_NOT_UNIQUE_ERROR_MESSAGE);
   }
 
   @Test

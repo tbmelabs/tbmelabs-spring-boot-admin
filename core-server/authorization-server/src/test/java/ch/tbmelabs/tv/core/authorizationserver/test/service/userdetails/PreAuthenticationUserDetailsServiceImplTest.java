@@ -73,7 +73,7 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
     doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
 
-    assertThat(fixture.loadUserDetails(mockToken)).isOfAnyClassIn(UserDetailsImpl.class)
+    assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
         .hasFieldOrPropertyWithValue("user", mockUserRepository.findByUsername(""));
   }
 

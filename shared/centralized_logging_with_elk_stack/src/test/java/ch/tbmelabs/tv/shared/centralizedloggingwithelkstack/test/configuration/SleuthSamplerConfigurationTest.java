@@ -42,6 +42,6 @@ public class SleuthSamplerConfigurationTest {
 
   @Test
   public void samplerBeanShouldReturnAnAlwaysSampler() {
-    assertThat(fixture.defaultSampler()).isOfAnyClassIn(AlwaysSampler.class);
+    assertThat(fixture.defaultSampler()).isInstanceOf(AlwaysSampler.class);
   }
 }

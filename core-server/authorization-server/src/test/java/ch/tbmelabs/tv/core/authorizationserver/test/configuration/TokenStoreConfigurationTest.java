@@ -75,7 +75,7 @@ public class TokenStoreConfigurationTest {
 
   @Test
   public void redisTokenStoreShouldReturnRedisTokenStore() {
-    assertThat(redisFixture.tokenStore()).isNotNull().isOfAnyClassIn(RedisTokenStore.class);
+    assertThat(redisFixture.tokenStore()).isNotNull().isInstanceOf(RedisTokenStore.class);
   }
 
   @Test
@@ -88,6 +88,6 @@ public class TokenStoreConfigurationTest {
 
   @Test
   public void jdbcTokenStoreShouldReturnJdbcTokenStore() {
-    assertThat(jdbcFixture.tokenStore()).isNotNull().isOfAnyClassIn(JdbcTokenStore.class);
+    assertThat(jdbcFixture.tokenStore()).isNotNull().isInstanceOf(JdbcTokenStore.class);
   }
 }

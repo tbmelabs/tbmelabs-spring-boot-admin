@@ -48,6 +48,6 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
     fixture.initBean();
 
     assertThat(ReflectionTestUtils.getField(fixture, "bearerTokenExtractor")).isNotNull()
-        .isOfAnyClassIn(BearerTokenExtractor.class);
+        .isInstanceOf(BearerTokenExtractor.class);
   }
 }

@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,19 +59,14 @@ public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2Authorizat
     userRepository.save(testUser);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(USERNAME_NOT_UNIQUE_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(USERNAME_NOT_UNIQUE_ERROR_MESSAGE);
   }
 
   @Test

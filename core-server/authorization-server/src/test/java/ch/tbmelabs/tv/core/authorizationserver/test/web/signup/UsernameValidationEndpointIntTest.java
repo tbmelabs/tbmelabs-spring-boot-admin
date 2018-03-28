@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,49 +27,34 @@ public class UsernameValidationEndpointIntTest extends AbstractOAuth2Authorizati
   @Autowired
   private MockMvc mockMvc;
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void tooShortUsernameShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-              .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void tooLongUsernameShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
-              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 
-  @Test(expected = NestedServletException.class)
+  @Test
   public void usernameWithSpecialCharsShouldFailValidation() throws Exception {
-    try {
-      mockMvc
-          .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON).content(
-              new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
-          .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
-    } catch (NestedServletException e) {
-      assertThat(e.getCause()).isNotNull().isOfAnyClassIn(IllegalArgumentException.class)
-          .hasMessage(USERNAME_VALIDATION_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> mockMvc
+        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
+        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

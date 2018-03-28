@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -82,92 +83,56 @@ public class UserSignupServiceTest {
     assertThat(new UserSignupService()).isNotNull();
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnUsernameNotUnique() {
     doReturn(false).when(fixture).isUsernameUnique(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnUsernameWrongFormat() {
     doReturn(false).when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnEmailNotUnique() {
     doReturn(false).when(fixture).isEmailAddressUnique(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnEmailWrongFormat() {
     doReturn(false).when(fixture).isEmailAddress(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnPasswordWrongFormat() {
     doReturn(false).when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void userSignupServiceShouldNotSaveUserOnPasswordsDoNotMatch() {
     doReturn(false).when(fixture).doPasswordsMatch(Mockito.any(User.class));
 
-    try {
-      fixture.signUpNewUser(new User());
-    } catch (Exception e) {
-      assertThat(e).isOfAnyClassIn(IllegalArgumentException.class);
-      assertThat(e.getMessage()).isEqualTo(SIGNUP_FAILED_ERROR_MESSAGE);
-
-      throw e;
-    }
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User())).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
   public void userSignupServiceShouldSaveValidUser() {
-    assertThat(fixture.signUpNewUser(new User()).getId()).isNotNull().isOfAnyClassIn(Long.class);
+    assertThat(fixture.signUpNewUser(new User()).getId()).isNotNull().isInstanceOf(Long.class);
   }
 }
