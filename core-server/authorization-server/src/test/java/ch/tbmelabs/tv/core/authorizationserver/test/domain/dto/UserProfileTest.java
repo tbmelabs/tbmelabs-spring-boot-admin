@@ -37,8 +37,6 @@ public class UserProfileTest {
     user.setEmail(user.getUsername() + "@tbme.tv");
     user.setPassword(RandomStringUtils.random(60));
     user.setConfirmation(user.getPassword());
-    user.setIsEnabled(true);
-    user.setIsBlocked(false);
     user.setEmailConfirmationToken(new EmailConfirmationToken(RandomStringUtils.random(36), user));
 
     Role testRole = new Role("TEST_ROLE");

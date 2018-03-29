@@ -39,8 +39,6 @@ public class ClientDTOTest {
     client.setId(new Random().nextLong());
     client.setClientId(RandomStringUtils.randomAlphabetic(36));
     client.setSecret(RandomStringUtils.randomAlphabetic(36));
-    client.setIsSecretRequired(true);
-    client.setIsAutoApprove(false);
     client.setAccessTokenValiditySeconds(new Random().nextInt());
     client.setRefreshTokenValiditySeconds(new Random().nextInt());
     client.setRedirectUri("https://tbme.tv");
@@ -94,6 +92,8 @@ public class ClientDTOTest {
         .hasFieldOrPropertyWithValue("grantTypes", grantTypes)
         .hasFieldOrPropertyWithValue("grantedAuthorities", grantedAuthorities)
         .hasFieldOrPropertyWithValue("scopes", scopes);
+
+    assertThat(new ClientDTO(testClient, grantTypes, grantedAuthorities, scopes).getSecret()).isNull();
   }
 
   @Test

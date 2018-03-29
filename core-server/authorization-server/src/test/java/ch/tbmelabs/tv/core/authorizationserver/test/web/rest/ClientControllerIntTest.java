@@ -43,7 +43,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationApplicat
 
   private final ClientDTO testClientDTO = createTestClientDTO();
 
-  private static ClientDTO createTestClientDTO() {
+  public static ClientDTO createTestClientDTO() {
     Client client = new Client();
     client.setClientId(RandomStringUtils.randomAlphabetic(36));
     client.setSecret(RandomStringUtils.randomAlphabetic(36));
