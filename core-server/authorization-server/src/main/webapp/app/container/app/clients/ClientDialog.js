@@ -11,6 +11,9 @@ import {saveClient} from '../../../actions/clientActions';
 import {addFlashMessage} from '../../../../common/actions/flashMessageActions';
 
 import EditClientModal from '../../../components/clients/EditClientModal';
+import {loadGrantTypes} from '../../../actions/grantTypeActions';
+import {loadAuthorities} from '../../../actions/authorityActions';
+import {loadScopes} from '../../../actions/scopeActions';
 
 class ClientDialog extends Component<ClientDialog.propTypes> {
   render() {
@@ -18,7 +21,8 @@ class ClientDialog extends Component<ClientDialog.propTypes> {
     const {addFlashMessage, saveClient} = this.props.actions;
 
     return (
-      <EditClientModal addFlashMessage={addFlashMessage} saveClient={saveClient} texts={texts.modal}/>
+      <EditClientModal loadGrantTypes={loadGrantTypes} loadAuthorities={loadAuthorities} loadScopes={loadScopes}
+                       addFlashMessage={addFlashMessage} saveClient={saveClient} texts={texts.modal}/>
     );
   }
 }

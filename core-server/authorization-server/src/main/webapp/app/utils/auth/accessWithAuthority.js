@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 
 import isEmpty from 'lodash/isEmpty';
 
-import {addFlashMessage} from '../../common/actions/flashMessageActions';
+import {addFlashMessage} from '../../../common/actions/flashMessageActions';
 
 import hasAuthority from './hasAuthority';
 

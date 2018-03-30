@@ -4,7 +4,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import type grantTypeType from '../../../common/types/grantTypeType';
+import type authorityType from '../../../common/types/authorityType';
+import type scopeType from '../../../common/types/scopeType';
+
 import join from 'lodash/join';
+
+import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
 
 import Modal from 'react-bootstrap/lib/Modal';
 import Form from 'react-bootstrap/lib/Form';
@@ -16,7 +22,7 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import CollapsableAlert from '../../../common/components/CollapsableAlert';
-import InfiniteTextInputWrapper from '../common/InfiniteTextInputWrapper';
+import InfiniteTextInputsWrapper from '../common/InfiniteTextInputsWrapper';
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -27,9 +33,9 @@ type EditClientModalState = {
   accessTokenValidity: string,
   refreshTokenValidity: string,
   redirectUri: string,
-  grantTypes: any[],
-  authorities: any[],
-  scopes: any[],
+  grantTypes: grantTypeType[],
+  authorities: authorityType[],
+  scopes: scopeType[],
   errors: {
     clientId: string,
     secret: string,
@@ -44,6 +50,7 @@ type EditClientModalState = {
 
 class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
   onChange: () => void;
+  handleMultipleSelected: () => void;
   validateForm: () => void;
   onSubmit: () => void;
 
@@ -58,8 +65,11 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       refreshTokenValidity: '',
       redirectUri: '',
       grantTypes: [],
+      allGrantTypes: [],
       authorities: [],
+      allAuthorities: [],
       scopes: [],
+      allScopes: [],
       errors: {
         clientId: '',
         secret: '',
@@ -73,16 +83,62 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     }
 
     this.onChange = this.onChange.bind(this);
+    this.handleMultipleSelected = this.handleMultipleSelected.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillMount() {
+    // TODO: Join streams
+    this.props.loadGrantTypes().then(
+      response => this.setState({allGrantTypes: response.data.content}),
+      error => this.setState({errors: {form: error.response.message}})
+    );
+
+    this.props.loadAuthorities().then(
+      response => this.setState({allAuthorities: response.data.content}),
+      error => this.setState({errors: {form: error.response.message}})
+    );
+
+    this.props.loadScopes().then(
+      response => this.setState({allScopes: response.data.content}),
+      error => this.setState({errors: {form: error.response.message}})
+    );
+  }
+
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
-    this.setState({[event.target.name]: event.target.value}, this.validateForm);
+    if (event.target.type === 'select-multiple') {
+      this.handleMultipleSelected(event.target);
+    } else {
+      this.setState({[event.target.name]: event.target.value}, this.validateForm);
+    }
+  }
+
+  handleMultipleSelected(eventTarget: HTMLSelectElement) {
+    const {allGrantTypes, allAuthorities, allScopes} = this.state;
+
+    switch (eventTarget.name) {
+      case 'grantTypes':
+        extractMultiSelectedOptions(eventTarget, allGrantTypes, (selectedGrantTypes) => {
+          this.setState({grantTypes: selectedGrantTypes}, this.validateForm);
+        });
+        break;
+      case 'authorities':
+        extractMultiSelectedOptions(eventTarget, allAuthorities, (selectedAuthorities) => {
+          this.setState({authorities: selectedAuthorities}, this.validateForm);
+        });
+        break;
+      case 'scopes':
+        extractMultiSelectedOptions(eventTarget, allScopes, (selectedScopes) => {
+          this.setState({scopes: selectedScopes}, this.validateForm);
+        });
+        break;
+    }
   }
 
   validateForm() {
     // TODO
+    console.log(this.state);
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -92,7 +148,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   render() {
-    const {isValid, isLoading, errors} = this.state;
+    const {allGrantTypes, allAuthorities, allScopes, isValid, isLoading, errors} = this.state;
     const {texts} = this.props;
 
     return (
@@ -104,7 +160,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
           <Form onSubmit={this.onSubmit} horizontal>
             <CollapsableAlert style='danger'
                               title={this.state.id ? texts.errors.update_title : texts.errors.create_title}
-                              message={errors.form} collapse={!!errors.form}/>
+                              message={texts.errors.error_text} collapse={!!errors.form}/>
 
             <FormGroup controlId='clientId' validationState={!!errors.clientId ? 'error' : null}>
               <HelpBlock>{errors.clientId}</HelpBlock>
@@ -155,16 +211,66 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
               </Col>
             </FormGroup>
 
-            <InfiniteTextInputWrapper controlId='redirectUris' validationState={this.state.errors.redirectUri}
-                                      inputName={texts.redirect_uris}
-                                      concatenateTextValues={(valueArray) => join(valueArray, ';')}
-                                      setConcatenatedValue={(value) => this.setState({redirectUri: value})}/>
+            <InfiniteTextInputsWrapper controlId='redirectUris' validationState={this.state.errors.redirectUri}
+                                       inputName={texts.redirect_uris}
+                                       concatenateTextValues={(valueArray) => join(valueArray, ';')}
+                                       setConcatenatedValue={(value) => this.setState({redirectUri: value})}/>
+
+            <FormGroup controlId='grantTypes' validationState={!!errors.grantTypes ? 'error' : null}>
+              <HelpBlock>{errors.grantTypes}</HelpBlock>
+              <Col componentClass={ControlLabel} sm={4}>
+                {texts.grant_types}
+              </Col>
+              <Col sm={6}>
+                <FormControl name='grantTypes' onChange={this.onChange} componentClass='select' multiple required>
+                  {allGrantTypes.map((grantType) => {
+                    return (
+                      <option key={grantType.id} value={grantType.id}>{grantType.name}</option>
+                    );
+                  })}
+                </FormControl>
+                <FormControl.Feedback/>
+              </Col>
+            </FormGroup>
+
+            <FormGroup controlId='authorities' validationState={!!errors.authorities ? 'error' : null}>
+              <HelpBlock>{errors.authorities}</HelpBlock>
+              <Col componentClass={ControlLabel} sm={4}>
+                {texts.authorities}
+              </Col>
+              <Col sm={6}>
+                <FormControl name='authorities' onChange={this.onChange} componentClass='select' multiple required>
+                  {allAuthorities.map((authority) => {
+                    return (
+                      <option key={authority.id} value={authority.id}>{authority.name}</option>
+                    );
+                  })}
+                </FormControl>
+                <FormControl.Feedback/>
+              </Col>
+            </FormGroup>
+
+            <FormGroup controlId='scopes' validationState={!!errors.scopes ? 'error' : null}>
+              <HelpBlock>{errors.scopes}</HelpBlock>
+              <Col componentClass={ControlLabel} sm={4}>
+                {texts.scopes}
+              </Col>
+              <Col sm={6}>
+                <FormControl name='scopes' onChange={this.onChange} componentClass='select' multiple required>
+                  {allScopes.map((scope) => {
+                    return (
+                      <option key={scope.id} value={scope.id}>{scope.name}</option>
+                    );
+                  })}
+                </FormControl>
+                <FormControl.Feedback/>
+              </Col>
+            </FormGroup>
 
             <FormGroup className='link-group'>
               <Col smOffset={7} sm={3}>
-                <Button type='submit' bsStyle='primary' className='pull-right'
-                  // disabled={!isValid || isLoading} onClick={isValid && !isLoading ? this.onSubmit : null}
-                >
+                <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
+                        onClick={isValid && !isLoading ? this.onSubmit : null}>
                   {this.state.id && !isLoading ? texts.update_button_text :
                     !this.state.id && !isLoading ? texts.create_button_text : texts.button_loading_text}
                 </Button>
@@ -179,6 +285,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 }
 
 EditClientModal.propTypes = {
+  loadGrantTypes: PropTypes.func.isRequired,
+  loadAuthorities: PropTypes.func.isRequired,
+  loadScopes: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   saveClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired

@@ -20,7 +20,7 @@
       "access_token_validity": "Access Token Validity",
       "refresh_token_validity": "Refresh Token Validity",
       "redirect_uris": "Redirect URIs",
-      "grant_type": "Grant Types",
+      "grant_types": "Grant Types",
       "authorities": "Authorities",
       "scopes": "Scopes",
       "create_button_text": "Save",
@@ -28,7 +28,8 @@
       "button_loading_text": "Loading...",
       "errors": {
         "create_title": "Failed to create new client:",
-        "update_title": "Failed to update client:"
+        "update_title": "Failed to update client:",
+        "error_text": " Please try again later!"
       }
     },
     "errors": {

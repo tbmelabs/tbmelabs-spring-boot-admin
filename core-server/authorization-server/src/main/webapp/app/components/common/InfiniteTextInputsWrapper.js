@@ -20,11 +20,11 @@ const SPLITTERATOR = '-';
 let lastFocused = 0;
 let nextFocus = '';
 
-type InfiniteInputWrapperState = {
+type InfiniteTextInputsWrapperState = {
   values: string[]
 }
 
-class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes, InfiniteInputWrapperState> {
+class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.propTypes, InfiniteTextInputsWrapperState> {
   onFocus: () => void;
   onChange: () => void;
   addNewEmptyValue: () => void;
@@ -120,7 +120,7 @@ class InfiniteInputWrapper extends Component<InfiniteInputWrapper.propTypes, Inf
   }
 }
 
-InfiniteInputWrapper.propTypes = {
+InfiniteTextInputsWrapper.propTypes = {
   controlId: PropTypes.string.isRequired,
   validationState: PropTypes.string.isRequired,
   inputName: PropTypes.string.isRequired,
@@ -128,4 +128,4 @@ InfiniteInputWrapper.propTypes = {
   setConcatenatedValue: PropTypes.func.isRequired
 }
 
-export default InfiniteInputWrapper;
+export default InfiniteTextInputsWrapper;

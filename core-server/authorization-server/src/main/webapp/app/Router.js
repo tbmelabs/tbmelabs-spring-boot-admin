@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 
 import {HashRouter, Route, Switch} from 'react-router-dom';
 
-import accessWithAuthority from './utils/accessWithAuthority';
+import accessWithAuthority from './utils/auth/accessWithAuthority';
 
 import {SERVER_ADMIN, SERVER_SUPPORT} from '../common/contants/AuthorityConstants';
 

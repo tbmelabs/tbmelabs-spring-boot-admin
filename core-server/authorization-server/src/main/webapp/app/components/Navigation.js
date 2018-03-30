@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 import {LinkContainer} from 'react-router-bootstrap';
 
-import logout from '../utils/logout';
-import hasAuthority from '../utils/hasAuthority';
+import logout from '../utils/auth/logout';
+import hasAuthority from '../utils/auth/hasAuthority';
 
 import {SERVER_ADMIN, SERVER_SUPPORT} from '../../common/contants/AuthorityConstants';
 
