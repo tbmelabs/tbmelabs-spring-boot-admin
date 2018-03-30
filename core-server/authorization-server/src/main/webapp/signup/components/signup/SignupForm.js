@@ -81,8 +81,9 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
   }
 
   isFormValid(errors: userType) {
-    return isEmpty(errors) && !!this.state.username && !!this.state.email
-      && !!this.state.password && !!this.state.confirmation;
+    const {username, email, password, confirmation} = this.state;
+
+    return isEmpty(errors) && !!username && !!email && !!password && !!confirmation;
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {

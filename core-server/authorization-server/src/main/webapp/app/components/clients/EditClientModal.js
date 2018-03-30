@@ -8,7 +8,7 @@ import type grantTypeType from '../../../common/types/grantTypeType';
 import type authorityType from '../../../common/types/authorityType';
 import type scopeType from '../../../common/types/scopeType';
 
-import join from 'lodash/join';
+import isEmpty from 'lodash/isEmpty';
 
 import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
 
@@ -22,7 +22,6 @@ import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
 import CollapsableAlert from '../../../common/components/CollapsableAlert';
-import InfiniteTextInputsWrapper from '../common/InfiniteTextInputsWrapper';
 
 require('bootstrap/dist/css/bootstrap.css');
 
@@ -137,8 +136,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   validateForm() {
-    // TODO
-    console.log(this.state);
+    const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
+
+    return isEmpty(errors) && !!clientId && !!secret && !!accessTokenValidity && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes) && !isEmpty(authorities) && !isEmpty(scopes);
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -211,10 +211,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
               </Col>
             </FormGroup>
 
-            <InfiniteTextInputsWrapper controlId='redirectUris' validationState={this.state.errors.redirectUri}
-                                       inputName={texts.redirect_uris}
-                                       concatenateTextValues={(valueArray) => join(valueArray, ';')}
-                                       setConcatenatedValue={(value) => this.setState({redirectUri: value})}/>
+            <FormGroup controlId='redirectUri' validationState={!!errors.redirectUri ? 'error' : null}>
+              <HelpBlock>{errors.redirectUri}</HelpBlock>
+              <Col componentClass={ControlLabel} sm={4}>
+                {texts.redirect_uri}
+              </Col>
+              <Col sm={6}>
+                <FormControl name='redirectUri' type='text' value={this.state.redirectUri}
+                             onChange={this.onChange} required/>
+                <FormControl.Feedback/>
+              </Col>
+            </FormGroup>
 
             <FormGroup controlId='grantTypes' validationState={!!errors.grantTypes ? 'error' : null}>
               <HelpBlock>{errors.grantTypes}</HelpBlock>

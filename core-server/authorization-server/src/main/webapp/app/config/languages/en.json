@@ -19,7 +19,7 @@
       "is_auto_approve": "Auto Approve",
       "access_token_validity": "Access Token Validity",
       "refresh_token_validity": "Refresh Token Validity",
-      "redirect_uris": "Redirect URIs",
+      "redirect_uri": "Redirect URIs",
       "grant_types": "Grant Types",
       "authorities": "Authorities",
       "scopes": "Scopes",
