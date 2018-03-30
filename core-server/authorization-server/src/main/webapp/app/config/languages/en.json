@@ -25,11 +25,14 @@
       "scopes": "Scopes",
       "create_button_text": "Save",
       "update_button_text": "Update",
+      "cancel_button_text": "Cancel",
       "button_loading_text": "Loading...",
+      "client_added_title": "Success:",
+      "client_added_text": " New client added!",
       "errors": {
-        "create_title": "Failed to create new client:",
-        "update_title": "Failed to update client:",
-        "error_text": " Please try again later!"
+        "create_title": "Failed to create new client: ",
+        "update_title": "Failed to update client: ",
+        "form_invalid": "Form is invalid. Please check your inputs!"
       }
     },
     "errors": {

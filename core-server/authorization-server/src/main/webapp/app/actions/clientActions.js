@@ -22,5 +22,7 @@ export function loadClients() {
 }
 
 export function saveClient(client) {
+  console.log(client);
+
   return {};
 }

@@ -42,9 +42,21 @@ type SignupFormState = {
 
 class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
   onChange: () => void;
-  isFormValid: (errors: userType & { form: string }) => boolean;
+  isFormValid: (errors: {
+    username: string,
+    email: string,
+    password: string,
+    confirmation: string,
+    form: string;
+  }) => boolean;
   onSubmit: () => void;
-  validateForm: (name: string, state: SignupFormState, callback: (errors: userType & { form: string }) => void) => void;
+  validateForm: (name: string, state: SignupFormState, callback: (errors: {
+    username: string,
+    email: string,
+    password: string,
+    confirmation: string,
+    form: string;
+  }) => void) => void;
 
   constructor(props: SignupForm.propTypes) {
     super(props);

@@ -8,6 +8,8 @@ import type grantTypeType from '../../../common/types/grantTypeType';
 import type authorityType from '../../../common/types/authorityType';
 import type scopeType from '../../../common/types/scopeType';
 
+import axios from 'axios';
+
 import isEmpty from 'lodash/isEmpty';
 
 import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
@@ -88,21 +90,12 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   componentWillMount() {
-    // TODO: Join streams
-    this.props.loadGrantTypes().then(
-      response => this.setState({allGrantTypes: response.data.content}),
-      error => this.setState({errors: {form: error.response.message}})
-    );
-
-    this.props.loadAuthorities().then(
-      response => this.setState({allAuthorities: response.data.content}),
-      error => this.setState({errors: {form: error.response.message}})
-    );
-
-    this.props.loadScopes().then(
-      response => this.setState({allScopes: response.data.content}),
-      error => this.setState({errors: {form: error.response.message}})
-    );
+    axios.all([this.props.loadGrantTypes(), this.props.loadAuthorities(), this.props.loadScopes()]).then(
+      axios.spread((grantTypes, authorities, scopes) => this.setState({
+        allGrantTypes: grantTypes.data.content,
+        allAuthorities: authorities.data.content,
+        allScopes: scopes.data.content
+      }))).catch(error => this.setState({errors: {form: error.response.data.message}}));
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -138,19 +131,51 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   validateForm() {
     const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
 
-    return isEmpty(errors) && !!clientId && !!secret && !!accessTokenValidity && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes) && !isEmpty(authorities) && !isEmpty(scopes);
+    this.setState({
+      isValid: isEmpty(errors.clientId) && isEmpty(errors.secret) && isEmpty(errors.accessTokenValidity) && isEmpty(errors.refreshTokenValidity) && isEmpty(errors.redirectUri)
+      && !!clientId && !!secret && !!accessTokenValidity && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes) && !isEmpty(authorities) && !isEmpty(scopes)
+    });
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    console.log(this.state);
+    const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
+    const {texts} = this.props;
+
+    if (isValid) {
+      this.props.saveClient({
+        clientId: clientId,
+        secret: secret,
+        accessTokenValidity: accessTokenValidity,
+        refreshTokenValidity: refreshTokenValidity,
+        redirectUri: redirectUri,
+        grantTypes: grantTypes,
+        authorities: authorities,
+        scopes: scopes
+      }).then(
+        response => {
+          this.props.addFlashMessage({
+            type: 'success',
+            title: texts.client_added_title,
+            text: texts.client_added_text
+          });
+
+          this.context.router.history.goBack();
+        }, error => this.setState({errors: {form: error.response.data.message}})
+      )
+    } else {
+      this.setState({errors: {form: texts.errors.form_invalid}, isValid: false});
+    }
   }
 
   render() {
     const {allGrantTypes, allAuthorities, allScopes, isValid, isLoading, errors} = this.state;
     const {texts} = this.props;
 
+    console.log('is-valid state: ', isValid);
+
+    // TODO: How to properly use modal?
     return (
       <Modal.Dialog>
         <Modal.Header>
@@ -160,7 +185,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
           <Form onSubmit={this.onSubmit} horizontal>
             <CollapsableAlert style='danger'
                               title={this.state.id ? texts.errors.update_title : texts.errors.create_title}
-                              message={texts.errors.error_text} collapse={!!errors.form}/>
+                              message={errors.form} collapse={!!errors.form}/>
 
             <FormGroup controlId='clientId' validationState={!!errors.clientId ? 'error' : null}>
               <HelpBlock>{errors.clientId}</HelpBlock>
@@ -275,7 +300,12 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
             </FormGroup>
 
             <FormGroup className='link-group'>
-              <Col smOffset={7} sm={3}>
+              <Col smOffset={6} sm={2}>
+                <Button bsStyle='danger' className='pull-right' onClick={this.context.router.history.goBack}>
+                  {texts.cancel_button_text}
+                </Button>
+              </Col>
+              <Col sm={2}>
                 <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
                         onClick={isValid && !isLoading ? this.onSubmit : null}>
                   {this.state.id && !isLoading ? texts.update_button_text :
@@ -283,7 +313,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 </Button>
               </Col>
             </FormGroup>
-            {/*</Modal.Footer>*/}
           </Form>
         </Modal.Body>
       </Modal.Dialog>
@@ -298,6 +327,10 @@ EditClientModal.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   saveClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
+}
+
+EditClientModal.contextTypes = {
+  router: PropTypes.object.isRequired
 }
 
 export default EditClientModal;
