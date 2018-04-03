@@ -6,6 +6,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -46,7 +47,7 @@ public class OAuth2ApprovalClientScopesControllerTest {
 
     doReturn(new Scope(CLIENT_SCOPE_NAME)).when(mockAssociation).getClientScope();
 
-    doReturn(new Client()).when(clientRepositoryFixture).findByClientId(Mockito.anyString());
+    doReturn(Optional.of(new Client())).when(clientRepositoryFixture).findOneByClientId(Mockito.anyString());
     doReturn(Arrays.asList(mockAssociation)).when(clientScopeAssociationRepository)
         .findAllByClient(Mockito.any(Client.class));
   }

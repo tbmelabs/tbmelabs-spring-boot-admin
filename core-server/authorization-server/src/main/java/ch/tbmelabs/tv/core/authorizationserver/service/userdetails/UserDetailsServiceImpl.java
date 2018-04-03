@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.userdetails;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetailsImpl loadUserByUsername(String username) {
     LOGGER.debug("Loading userdetails for username \"" + username + "\"");
 
-    User user;
-    if ((user = userRepository.findByUsername(username)) == null) {
+    Optional<User> user;
+    if (!(user = userRepository.findOneByUsername(username)).isPresent()) {
       throw new UsernameNotFoundException("Username " + username + " does not exist!");
     }
 
-    return new UserDetailsImpl(user);
+    return new UserDetailsImpl(user.get());
   }
 }

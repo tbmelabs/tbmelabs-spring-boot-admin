@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -36,7 +38,7 @@ public class AuthenticationAttemptLoggerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
   }
 
   @Test
@@ -53,7 +55,7 @@ public class AuthenticationAttemptLoggerTest {
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
     fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.", "Testuser");
 
-    verify(mockUserRepository, times(1)).findByUsername(Mockito.anyString());
+    verify(mockUserRepository, times(1)).findOneByUsername(Mockito.anyString());
     verify(mockAuthenticationLogRepository, times(1)).save(Mockito.any(AuthenticationLog.class));
   }
 }

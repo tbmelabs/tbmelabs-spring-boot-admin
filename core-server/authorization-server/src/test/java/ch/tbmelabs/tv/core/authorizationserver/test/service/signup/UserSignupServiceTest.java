@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
 import java.util.Random;
 
 import org.junit.Before;
@@ -26,6 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserSignupServiceTest {
   private static final String SIGNUP_FAILED_ERROR_MESSAGE = "An error occured. Please check your details!";
@@ -63,7 +65,7 @@ public class UserSignupServiceTest {
       }
     }).when(mockUserRepository).save(Mockito.any(User.class));
 
-    doReturn(new Role("USER")).when(mockRoleRepository).findByName("USER");
+    doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository).findOneByName(UserAuthority.USER);
 
     doReturn(true).when(fixture).isUsernameUnique(Mockito.any(User.class));
     doReturn(true).when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));

@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.json.JSONException;
@@ -71,15 +73,15 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   @Before
   public void beforeTestSetUp() {
-    if (roleRepository.findByName("USER") == null) {
-      roleRepository.save(new Role("USER"));
+    if (!roleRepository.findOneByName(UserAuthority.USER).isPresent()) {
+      roleRepository.save(new Role(UserAuthority.USER));
     }
 
     existingUser = userRepository.save(existingUser);
 
-    User checkUnexistingUser;
-    if ((checkUnexistingUser = userRepository.findByUsername(unexistingUser.getUsername())) != null) {
-      userRepository.delete(checkUnexistingUser);
+    Optional<User> checkUnexistingUser;
+    if (!(checkUnexistingUser = userRepository.findOneByUsername(unexistingUser.getUsername())).isPresent()) {
+      userRepository.delete(checkUnexistingUser.get());
     }
   }
 
@@ -102,7 +104,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findByUsername(unexistingUser.getUsername())).isNotNull();
+    assertThat(userRepository.findOneByUsername(unexistingUser.getUsername())).isNotNull();
   }
 
   @Test

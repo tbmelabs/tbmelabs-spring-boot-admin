@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 
+import java.util.Optional;
+
 @Repository
 public interface RoleCRUDRepository extends CrudRepository<Role, Long> {
-  Role findByName(String name);
+  Optional<Role> findOneByName(String name);
 }

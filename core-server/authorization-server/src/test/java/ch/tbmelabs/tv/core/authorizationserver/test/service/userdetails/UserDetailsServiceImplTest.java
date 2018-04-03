@@ -1,8 +1,11 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -12,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -32,7 +36,7 @@ public class UserDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new User()).when(userRepositoryFixture).findByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(userRepositoryFixture).findOneByUsername(Mockito.anyString());
   }
 
   @Test
@@ -56,6 +60,15 @@ public class UserDetailsServiceImplTest {
     UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.random(11));
 
     assertThat(ReflectionTestUtils.getField(userDetails, "user"))
-        .isEqualTo(userRepositoryFixture.findByUsername(RandomStringUtils.random(11)));
+        .isEqualTo(userRepositoryFixture.findOneByUsername(RandomStringUtils.random(11)).get());
+  }
+
+  @Test
+  public void loadUserShouldThrowExceptionIfUsernameDoesNotExist() {
+    doReturn(Optional.ofNullable(null)).when(userRepositoryFixture).findOneByUsername(Mockito.anyString());
+
+    assertThatThrownBy(() -> fixture.loadUserByUsername(RandomStringUtils.random(11)))
+        .isInstanceOf(UsernameNotFoundException.class).hasMessageContaining("Username")
+        .hasMessageContaining("does not exist!");
   }
 }

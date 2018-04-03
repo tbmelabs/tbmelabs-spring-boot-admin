@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.oauth2;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,12 @@ public class PrincipalService {
 
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-    User currentUser;
-    if ((currentUser = userRepository.findByUsername(username)) == null) {
+    Optional<User> currentUser;
+    if (!(currentUser = userRepository.findOneByUsername(username)).isPresent()) {
       throw new IllegalArgumentException("Cannot identify authenticated user: Please try again!");
     }
 
-    return currentUser;
+    return currentUser.get();
   }
 
   public static boolean isAuthenticated() {

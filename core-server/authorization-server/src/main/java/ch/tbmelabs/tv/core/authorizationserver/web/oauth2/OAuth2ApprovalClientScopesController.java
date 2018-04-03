@@ -21,7 +21,7 @@ public class OAuth2ApprovalClientScopesController {
 
   @RequestMapping("/oauth/confirm_access_scopes")
   public List<String> getAccessConfirmation(@RequestParam(name = "client_id", required = true) String clientId) {
-    return clientScopeAssociationRepository.findAllByClient(clientRepository.findByClientId(clientId)).stream()
+    return clientScopeAssociationRepository.findAllByClient(clientRepository.findOneByClientId(clientId).get()).stream()
         .map(association -> association.getClientScope().getName()).collect(Collectors.toList());
   }
 }

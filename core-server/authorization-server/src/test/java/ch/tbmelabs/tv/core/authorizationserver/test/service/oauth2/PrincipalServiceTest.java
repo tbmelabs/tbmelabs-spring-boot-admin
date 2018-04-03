@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class PrincipalServiceTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
 
     doReturn(Arrays.asList(new Role(UserAuthority.ANONYMOUS))).when(mockedAnonymousAuthentication).getAuthorities();
     SecurityContextHolder.getContext().setAuthentication(mockedAnonymousAuthentication);
@@ -72,7 +73,7 @@ public class PrincipalServiceTest {
 
   @Test
   public void getCurrentUserShouldThrowExceptionIfUserCannotBeIdentified() {
-    doReturn(null).when(mockUserRepository).findByUsername(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(mockUserRepository).findOneByUsername(Mockito.anyString());
 
     doReturn(RandomStringUtils.random(11)).when(mockedAnonymousAuthentication).getName();
     doReturn(Arrays.asList(new Role(UserAuthority.USER))).when(mockedAnonymousAuthentication).getAuthorities();

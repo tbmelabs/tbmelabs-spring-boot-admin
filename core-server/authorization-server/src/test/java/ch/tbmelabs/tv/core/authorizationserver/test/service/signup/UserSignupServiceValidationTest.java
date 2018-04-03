@@ -5,6 +5,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -44,27 +46,27 @@ public class UserSignupServiceValidationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doAnswer(new Answer<User>() {
+    doAnswer(new Answer<Optional<User>>() {
       @Override
-      public User answer(InvocationOnMock invocation) throws Throwable {
+      public Optional<User> answer(InvocationOnMock invocation) throws Throwable {
         if (((String) invocation.getArgument(0)).equals(existingUser.getUsername())) {
-          return existingUser;
+          return Optional.of(existingUser);
         }
 
-        return null;
+        return Optional.ofNullable(null);
       }
-    }).when(userRepository).findByUsername(Mockito.anyString());
+    }).when(userRepository).findOneByUsername(Mockito.anyString());
 
-    doAnswer(new Answer<User>() {
+    doAnswer(new Answer<Optional<User>>() {
       @Override
-      public User answer(InvocationOnMock invocation) throws Throwable {
+      public Optional<User> answer(InvocationOnMock invocation) throws Throwable {
         if (((String) invocation.getArgument(0)).equals(existingUser.getEmail())) {
-          return existingUser;
+          return Optional.of(existingUser);
         }
 
-        return null;
+        return Optional.ofNullable(null);
       }
-    }).when(userRepository).findByEmail(Mockito.anyString());
+    }).when(userRepository).findOneByEmail(Mockito.anyString());
 
     doCallRealMethod().when(fixture).isUsernameUnique(Mockito.any(User.class));
     doCallRealMethod().when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));

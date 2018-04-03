@@ -1,11 +1,14 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -33,7 +36,7 @@ public class ClientDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new Client()).when(mockClientRepository).findByClientId(Mockito.anyString());
+    doReturn(Optional.of(new Client())).when(mockClientRepository).findOneByClientId(Mockito.anyString());
   }
 
   @Test
@@ -57,6 +60,15 @@ public class ClientDetailsServiceImplTest {
     ClientDetailsImpl clientDetails = fixture.loadClientByClientId(UUID.randomUUID().toString());
 
     assertThat(ReflectionTestUtils.getField(clientDetails, "client"))
-        .isEqualTo(mockClientRepository.findByClientId(UUID.randomUUID().toString()));
+        .isEqualTo(mockClientRepository.findOneByClientId(UUID.randomUUID().toString()).get());
+  }
+
+  @Test
+  public void loadClientShouldThrowExceptionIfClientIdDoesNotExist() {
+    doReturn(Optional.ofNullable(null)).when(mockClientRepository).findOneByClientId(Mockito.anyString());
+
+    assertThatThrownBy(() -> fixture.loadClientByClientId(RandomStringUtils.random(11)))
+        .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Client with ID")
+        .hasMessageContaining("does not exist!");
   }
 }

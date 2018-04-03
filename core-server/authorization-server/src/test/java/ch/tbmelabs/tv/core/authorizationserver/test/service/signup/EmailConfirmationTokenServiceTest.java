@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -37,7 +38,8 @@ public class EmailConfirmationTokenServiceTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(null).when(mockEmailConfirmationTokenRepository).findByTokenString(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(mockEmailConfirmationTokenRepository)
+        .findOneByTokenString(Mockito.anyString());
     doAnswer(new Answer<EmailConfirmationToken>() {
       @Override
       public EmailConfirmationToken answer(InvocationOnMock invocation) throws Throwable {

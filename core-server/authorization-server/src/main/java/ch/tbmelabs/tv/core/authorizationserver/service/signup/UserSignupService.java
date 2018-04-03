@@ -35,7 +35,7 @@ public class UserSignupService {
   public boolean isUsernameUnique(User testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");
 
-    return userRepository.findByUsername(testUser.getUsername()) == null;
+    return !userRepository.findOneByUsername(testUser.getUsername()).isPresent();
   }
 
   public boolean doesUsernameMatchFormat(User testUser) {
@@ -47,7 +47,7 @@ public class UserSignupService {
   public boolean isEmailAddressUnique(User testUser) {
     LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" is unique");
 
-    return userRepository.findByEmail(testUser.getEmail()) == null;
+    return !userRepository.findOneByEmail(testUser.getEmail()).isPresent();
   }
 
   public boolean isEmailAddress(User testUser) {
@@ -95,7 +95,8 @@ public class UserSignupService {
 
     if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
       try {
-        newUser.setRoles(newUser.rolesToAssociations(Arrays.asList(roleRepository.findByName(UserAuthority.USER))));
+        newUser.setRoles(
+            newUser.rolesToAssociations(Arrays.asList(roleRepository.findOneByName(UserAuthority.USER).get())));
       } catch (NullPointerException e) {
         throw new IllegalArgumentException("Unable to find default authority \"" + UserAuthority.USER + "\"!");
       }

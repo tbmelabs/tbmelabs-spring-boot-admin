@@ -6,6 +6,8 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,15 +73,15 @@ public class PreAuthenticationUserDetailsServiceImplTest {
 
   @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
-    doReturn(new User()).when(mockUserRepository).findByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
 
     assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
-        .hasFieldOrPropertyWithValue("user", mockUserRepository.findByUsername(""));
+        .hasFieldOrPropertyWithValue("user", mockUserRepository.findOneByUsername(""));
   }
 
   @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
-    doReturn(null).when(mockUserRepository).findByUsername(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(mockUserRepository).findOneByUsername(Mockito.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken)).isInstanceOf(UsernameNotFoundException.class)
         .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");

@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,7 @@ public class EmailConfirmationTokenService {
 
     String token = UUID.randomUUID().toString();
 
-    if (emailConfirmationTokenRepository.findByTokenString(token) != null) {
+    if (emailConfirmationTokenRepository.findOneByTokenString(token).isPresent()) {
       return createUniqueEmailConfirmationToken(user);
     }
 
@@ -36,17 +37,17 @@ public class EmailConfirmationTokenService {
   public void confirmRegistration(String token) throws EmailConfirmationTokenNotFoundException {
     LOGGER.info("User confirmation request with token " + token);
 
-    EmailConfirmationToken emailConfirmationToken;
-    if ((emailConfirmationToken = emailConfirmationTokenRepository.findByTokenString(token)) == null) {
+    Optional<EmailConfirmationToken> emailConfirmationToken;
+    if (!(emailConfirmationToken = emailConfirmationTokenRepository.findOneByTokenString(token)).isPresent()) {
       LOGGER.warn("Unable to find " + EmailConfirmationToken.class + ": " + token);
 
       throw new EmailConfirmationTokenNotFoundException(token);
     }
 
-    User user = emailConfirmationToken.getUser();
+    User user = emailConfirmationToken.get().getUser();
     user.setIsEnabled(true);
 
-    emailConfirmationTokenRepository.delete(emailConfirmationToken);
+    emailConfirmationTokenRepository.delete(emailConfirmationToken.get());
 
     LOGGER.debug("User " + user.getUsername() + " confirmed registration with token " + token);
   }
