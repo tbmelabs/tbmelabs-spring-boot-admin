@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.service.oauth2.PrincipalService;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 
 @RestController
 public class PrincipalController {
   private static final Logger LOGGER = LogManager.getLogger(PrincipalController.class);
 
   @Autowired
-  private PrincipalService principalService;
+  private UserCRUDRepository userRepository;
 
   @Autowired
   private UserProfileMapper profileMapper;
@@ -28,10 +28,7 @@ public class PrincipalController {
   public Map<String, String> getPrincipal() {
     LOGGER.debug("Requesting current user information.");
 
-    User user;
-    if ((user = principalService.getCurrentUser()) == null) {
-      return new HashMap<>();
-    }
+    User user = userRepository.findCurrentUser();
 
     Map<String, String> userInformation = new HashMap<>();
     userInformation.put("login", user.getUsername());
@@ -44,10 +41,7 @@ public class PrincipalController {
   public UserProfile getProfile() {
     LOGGER.debug("Requesting current user profile.");
 
-    User user;
-    if ((user = principalService.getCurrentUser()) == null) {
-      throw new IllegalArgumentException("Please sign in in order to receive your account details!");
-    }
+    User user = userRepository.findCurrentUser();
 
     return profileMapper.toUserProfile(user);
   }

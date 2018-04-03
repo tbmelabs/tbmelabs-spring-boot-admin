@@ -76,7 +76,7 @@ public class PreAuthenticationUserDetailsServiceImplTest {
     doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
 
     assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
-        .hasFieldOrPropertyWithValue("user", mockUserRepository.findOneByUsername(""));
+        .hasFieldOrPropertyWithValue("user", mockUserRepository.findOneByUsername("").get());
   }
 
   @Test
