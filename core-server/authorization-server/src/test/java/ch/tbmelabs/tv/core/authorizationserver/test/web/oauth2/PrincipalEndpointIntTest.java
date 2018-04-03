@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
@@ -44,10 +42,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
   @Autowired
   private RoleCRUDRepository roleRepository;
 
-  @Autowired
-  private UserRoleAssociationCRUDRepository userRoleRepository;
-
-  private User testUser;
+  private static User testUser;
 
   public static User createTestUser(String username) {
     User user = new User();
@@ -63,9 +58,11 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
 
   @Before
   public void beforeTestSetUp() {
-    testUser = userRepository.save(createTestUser("PrincipalEndpointIntTestUser"));
-    testUser.setRoles(testUser.rolesToAssociations(Arrays.asList(roleRepository.save(new Role(UserAuthority.USER)))));
-    testUser = userRepository.save(testUser);
+    if (!userRepository.findOneByUsernameIgnoreCase("PrincipalEndpointIntTestUser").isPresent()) {
+      testUser = userRepository.save(createTestUser("PrincipalEndpointIntTestUser"));
+      testUser.setRoles(testUser.rolesToAssociations(Arrays.asList(roleRepository.save(new Role(UserAuthority.USER)))));
+      testUser = userRepository.save(testUser);
+    }
   }
 
   @Test
@@ -118,12 +115,5 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
     assertThat(actualRole.getLong("id")).isEqualTo(expectedRole.getId());
     assertThat(actualRole.getString("name")).isEqualTo(expectedRole.getName());
     assertThat(actualRole.getString("authority")).isEqualTo(expectedRole.getAuthority());
-  }
-
-  @After
-  public void afterTestTearDown() {
-    userRoleRepository.deleteAll();
-    userRepository.deleteAll();
-    roleRepository.deleteAll();
   }
 }

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -12,6 +14,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class UserProfile {
   private Date created;
 
@@ -24,9 +27,9 @@ public class UserProfile {
   private String email;
 
   private String password;
-  
+
   private String confirmation;
-  
+
   private Boolean isEnabled;
 
   private Boolean isBlocked;

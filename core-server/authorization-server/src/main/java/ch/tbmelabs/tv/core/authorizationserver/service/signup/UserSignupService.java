@@ -35,7 +35,7 @@ public class UserSignupService {
   public boolean isUsernameUnique(User testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");
 
-    return !userRepository.findOneByUsername(testUser.getUsername()).isPresent();
+    return !userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent();
   }
 
   public boolean doesUsernameMatchFormat(User testUser) {
@@ -47,7 +47,7 @@ public class UserSignupService {
   public boolean isEmailAddressUnique(User testUser) {
     LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" is unique");
 
-    return !userRepository.findOneByEmail(testUser.getEmail()).isPresent();
+    return !userRepository.findOneByEmailIgnoreCase(testUser.getEmail()).isPresent();
   }
 
   public boolean isEmailAddress(User testUser) {
@@ -75,9 +75,10 @@ public class UserSignupService {
 
     LOGGER.info("New user signed up! username: " + newUser.getUsername() + "; email: " + newUser.getEmail());
 
-    setDefaultRolesIfNonePresent(newUser);
-
     User persistedUser = userRepository.save(newUser);
+    setDefaultRolesIfNonePresent(newUser);
+    userRepository.save(persistedUser);
+
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
     return persistedUser;

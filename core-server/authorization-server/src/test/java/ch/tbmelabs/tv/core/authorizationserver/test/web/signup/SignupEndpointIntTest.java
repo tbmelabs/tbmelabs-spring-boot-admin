@@ -80,7 +80,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
     existingUser = userRepository.save(existingUser);
 
     Optional<User> checkUnexistingUser;
-    if (!(checkUnexistingUser = userRepository.findOneByUsername(unexistingUser.getUsername())).isPresent()) {
+    if ((checkUnexistingUser = userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
       userRepository.delete(checkUnexistingUser.get());
     }
   }
@@ -104,7 +104,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsername(unexistingUser.getUsername())).isNotNull();
+    assertThat(userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
   }
 
   @Test

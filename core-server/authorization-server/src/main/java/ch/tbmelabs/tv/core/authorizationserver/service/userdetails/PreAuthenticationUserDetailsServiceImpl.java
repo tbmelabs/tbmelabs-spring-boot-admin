@@ -33,7 +33,7 @@ public class PreAuthenticationUserDetailsServiceImpl
     LOGGER.debug("Loading userdetails for username \"" + username + "\"");
 
     Optional<User> user;
-    if (!(user = userRepository.findOneByUsername(username)).isPresent()) {
+    if (!(user = userRepository.findOneByUsernameIgnoreCase(username)).isPresent()) {
       throw new UsernameNotFoundException("Username " + username + " does not exist!");
     }
 

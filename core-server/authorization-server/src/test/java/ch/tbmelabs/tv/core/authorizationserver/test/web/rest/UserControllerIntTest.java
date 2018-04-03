@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +46,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   public static UserProfile createTestUserProfile() {
     User user = new User();
-    user.setUsername(RandomStringUtils.random(11));
+    user.setUsername("UserControllerIntTestPersistedUser");
     user.setEmail(user.getUsername() + "@tbme.tv");
 
     UserProfile profile = new UserProfile(user, new ArrayList<>());
@@ -53,6 +54,14 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
     profile.setConfirmation(user.getPassword());
 
     return profile;
+  }
+
+  @Before
+  public void beforeTestSetUp() {
+    User existingUser;
+    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserProfile.getUsername()).orElse(null)) != null) {
+      userRepository.delete(existingUser);
+    }
   }
 
   @Test

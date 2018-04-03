@@ -54,13 +54,13 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
 
   @Before
   public void beforeTestSetUp() {
+    authenticationLogRepository.deleteAll();
+    BruteforceFilterService.resetFilter();
+
     testUser.setIsEnabled(true);
     testUser.setIsBlocked(false);
 
     testUser = userRepository.save(testUser);
-
-    authenticationLogRepository.deleteAll();
-    BruteforceFilterService.resetFilter();
   }
 
   @Test

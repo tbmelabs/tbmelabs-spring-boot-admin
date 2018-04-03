@@ -55,7 +55,7 @@ public class UserSignupServiceValidationTest {
 
         return Optional.ofNullable(null);
       }
-    }).when(userRepository).findOneByUsername(Mockito.anyString());
+    }).when(userRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
 
     doAnswer(new Answer<Optional<User>>() {
       @Override
@@ -66,7 +66,7 @@ public class UserSignupServiceValidationTest {
 
         return Optional.ofNullable(null);
       }
-    }).when(userRepository).findOneByEmail(Mockito.anyString());
+    }).when(userRepository).findOneByEmailIgnoreCase(Mockito.anyString());
 
     doCallRealMethod().when(fixture).isUsernameUnique(Mockito.any(User.class));
     doCallRealMethod().when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));

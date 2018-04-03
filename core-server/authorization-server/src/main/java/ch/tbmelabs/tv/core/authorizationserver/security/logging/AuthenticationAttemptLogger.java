@@ -27,7 +27,7 @@ public class AuthenticationAttemptLogger {
     LOGGER.debug("Authentication attempt from " + ip + " with state " + state.name());
 
     Optional<User> user;
-    if (!(user = userRepository.findOneByUsername(username)).isPresent()) {
+    if (!(user = userRepository.findOneByUsernameIgnoreCase(username)).isPresent()) {
       LOGGER.warn("Invalid username \"" + username + "\" detected: Probably a bruteforcing attempt?");
 
       return;

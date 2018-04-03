@@ -73,15 +73,15 @@ public class PreAuthenticationUserDetailsServiceImplTest {
 
   @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
-    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
 
     assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
-        .hasFieldOrPropertyWithValue("user", mockUserRepository.findOneByUsername("").get());
+        .hasFieldOrPropertyWithValue("user", mockUserRepository.findOneByUsernameIgnoreCase("").get());
   }
 
   @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(mockUserRepository).findOneByUsername(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(mockUserRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken)).isInstanceOf(UsernameNotFoundException.class)
         .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");

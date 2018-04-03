@@ -38,7 +38,7 @@ public class AuthenticationAttemptLoggerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsername(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
   }
 
   @Test
@@ -55,7 +55,7 @@ public class AuthenticationAttemptLoggerTest {
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
     fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.", "Testuser");
 
-    verify(mockUserRepository, times(1)).findOneByUsername(Mockito.anyString());
+    verify(mockUserRepository, times(1)).findOneByUsernameIgnoreCase(Mockito.anyString());
     verify(mockAuthenticationLogRepository, times(1)).save(Mockito.any(AuthenticationLog.class));
   }
 }

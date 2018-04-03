@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import ReactTransitionGroup from 'react-addons-transition-group';
+import {TransitionGroup} from 'react-transition-group';
 
 import Button from 'react-bootstrap/lib/Button';
 
@@ -49,11 +49,11 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
     const {type, title, text} = this.props.message;
 
     return (
-      <ReactTransitionGroup component='div'>
+      <TransitionGroup component='div'>
         <CollapsableAlert collapse={collapse} style={type} title={title} message={' ' + text}>
           <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
         </CollapsableAlert>
-      </ ReactTransitionGroup>
+      </ TransitionGroup>
     );
   }
 }

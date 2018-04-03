@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(Include.NON_NULL)
 public class ClientDTO {
   private Date created;
 

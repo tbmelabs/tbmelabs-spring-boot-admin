@@ -15,9 +15,9 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 public interface UserCRUDRepository extends CrudRepository<User, Long> {
   Page<User> findAll(Pageable pageable);
 
-  Optional<User> findOneByUsername(String username);
+  Optional<User> findOneByUsernameIgnoreCase(String username);
 
-  Optional<User> findOneByEmail(String email);
+  Optional<User> findOneByEmailIgnoreCase(String email);
   
   @PreAuthorize("isAuthenticated()")
   @Query("SELECT user FROM User user WHERE user.username LIKE ?#{principal.username}")

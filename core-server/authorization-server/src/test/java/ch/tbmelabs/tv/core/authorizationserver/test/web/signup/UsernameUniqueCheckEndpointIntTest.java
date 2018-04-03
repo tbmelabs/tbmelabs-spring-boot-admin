@@ -56,7 +56,7 @@ public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2Authorizat
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
 
-    userRepository.save(testUser);
+    testUser = userRepository.save(testUser);
   }
 
   @Test
