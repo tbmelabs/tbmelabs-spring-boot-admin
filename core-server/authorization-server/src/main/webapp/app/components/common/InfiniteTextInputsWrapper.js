@@ -29,7 +29,7 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
   onChange: () => void;
   addNewEmptyValue: () => void;
 
-  constructor(props: InfiniteInputWrapper.propTypes) {
+  constructor(props: InfiniteTextInputsWrapper.propTypes) {
     super(props);
 
     this.state = {

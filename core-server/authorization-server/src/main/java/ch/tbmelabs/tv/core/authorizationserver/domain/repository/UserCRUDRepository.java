@@ -18,7 +18,7 @@ public interface UserCRUDRepository extends CrudRepository<User, Long> {
   Optional<User> findOneByUsername(String username);
 
   Optional<User> findOneByEmail(String email);
-
+  
   @PreAuthorize("isAuthenticated()")
   @Query("SELECT user FROM User user WHERE user.username LIKE ?#{principal.username}")
   User findCurrentUser();

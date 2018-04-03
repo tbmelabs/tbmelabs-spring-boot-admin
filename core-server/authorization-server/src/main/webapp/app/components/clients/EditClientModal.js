@@ -35,14 +35,20 @@ type EditClientModalState = {
   refreshTokenValidity: string,
   redirectUri: string,
   grantTypes: grantTypeType[],
+  allGrantTypes: grantTypeType[],
   authorities: authorityType[],
+  allAuthorities: authorityType[],
   scopes: scopeType[],
+  allScopes: scopeType[],
   errors: {
     clientId: string,
     secret: string,
     accessTokenValidity: string,
     refreshTokenValidity: string,
     redirectUri: string,
+    grantTypes: string,
+    authorities: string,
+    scopes: string,
     form: string
   },
   isValid: boolean,
@@ -51,7 +57,7 @@ type EditClientModalState = {
 
 class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
   onChange: () => void;
-  handleMultipleSelected: () => void;
+  handleMultipleSelected: (eventTarget: HTMLElement) => void;
   validateForm: () => void;
   onSubmit: () => void;
 
@@ -77,6 +83,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         accessTokenValidity: '',
         refreshTokenValidity: '',
         redirectUri: '',
+        grantTypes: '',
+        authorities: '',
+        scopes: '',
         form: ''
       },
       isValid: false,
@@ -106,7 +115,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     }
   }
 
-  handleMultipleSelected(eventTarget: HTMLSelectElement) {
+  handleMultipleSelected(eventTarget: { name: string, selectedOptions: string[] }) {
     const {allGrantTypes, allAuthorities, allScopes} = this.state;
 
     switch (eventTarget.name) {
