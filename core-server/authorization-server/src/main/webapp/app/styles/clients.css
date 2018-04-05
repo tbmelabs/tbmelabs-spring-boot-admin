@@ -5,3 +5,7 @@
 .continuous-input-offset-top {
   margin-top: 1vh;
 }
+
+.input-group-addon.clickable :hover {
+  cursor: pointer;
+}

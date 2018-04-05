@@ -10,6 +10,7 @@ import type scopeType from '../../../common/types/scopeType';
 
 import axios from 'axios';
 
+import uuidv4 from 'uuid/v4';
 import isEmpty from 'lodash/isEmpty';
 
 import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
@@ -19,7 +20,9 @@ import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import InputGroup from 'react-bootstrap/lib/InputGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
@@ -58,6 +61,7 @@ type EditClientModalState = {
 class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
   onChange: () => void;
   handleMultipleSelected: (eventTarget: HTMLElement) => void;
+  generateUUID: (target: string) => void;
   validateForm: () => void;
   onSubmit: () => void;
 
@@ -94,6 +98,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     this.onChange = this.onChange.bind(this);
     this.handleMultipleSelected = this.handleMultipleSelected.bind(this);
+    this.generateUUID = this.generateUUID.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -135,6 +140,10 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         });
         break;
     }
+  }
+
+  generateUUID(target: string) {
+    this.setState({[target]: uuidv4()});
   }
 
   validateForm() {
@@ -202,9 +211,14 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 {texts.client_id}
               </Col>
               <Col sm={6}>
-                <FormControl name='clientId' type='text' value={this.state.clientId}
-                             onChange={this.onChange} required/>
-                <FormControl.Feedback/>
+                <InputGroup>
+                  <FormControl name='clientId' type='text' value={this.state.clientId}
+                               onChange={this.onChange} required/>
+                  <FormControl.Feedback/>
+                  <InputGroup.Addon className='clickable' onClick={() => this.generateUUID('clientId')}>
+                    <Glyphicon glyph='repeat'/>
+                  </InputGroup.Addon>
+                </InputGroup>
               </Col>
             </FormGroup>
 
@@ -214,13 +228,19 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 {texts.secret}
               </Col>
               <Col sm={6}>
-                <FormControl name='secret' type='password' value={this.state.secret}
-                             onChange={this.onChange} required/>
-                <FormControl.Feedback/>
+                <InputGroup>
+                  <FormControl name='secret' type='password' value={this.state.secret}
+                               onChange={this.onChange} required/>
+                  <FormControl.Feedback/>
+                  <InputGroup.Addon className='clickable' onClick={() => this.generateUUID('secret')}>
+                    <Glyphicon glyph='repeat'/>
+                  </InputGroup.Addon>
+                </InputGroup>
               </Col>
             </FormGroup>
 
-            <FormGroup controlId='accessTokenValidity' validationState={!!errors.accessTokenValidity ? 'error' : null}>
+            <FormGroup controlId='accessTokenValidity'
+                       validationState={!!errors.accessTokenValidity ? 'error' : null}>
               <HelpBlock>{errors.accessTokenValidity}</HelpBlock>
               <Col componentClass={ControlLabel} sm={4}>
                 {texts.access_token_validity}
