@@ -4,6 +4,6 @@
 import filter from 'lodash/filter';
 import map from 'lodash/map';
 
-export default function (select: { selectedOptions: string[] }, allElements: any[], callback: (selectedElements: any[]) => void) {
+export default (select: { selectedOptions: string[] }, allElements: any[], callback: (selectedElements: any[]) => void) => {
   callback(filter(allElements, (element) => map(select.selectedOptions, (option) => Number(option.value)).indexOf(element.id) !== -1));
 }

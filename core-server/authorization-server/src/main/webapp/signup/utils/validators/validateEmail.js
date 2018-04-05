@@ -7,7 +7,7 @@ import type userType from '../../../common/types/userType';
 
 var cancelEmail;
 
-export default function (email: string, errors: userType, callback: (errors: userType) => void) {
+export default (email: string, errors: userType, callback: (errors: userType) => void) => {
   if (email == undefined || email == '') {
     delete errors.email;
     return;

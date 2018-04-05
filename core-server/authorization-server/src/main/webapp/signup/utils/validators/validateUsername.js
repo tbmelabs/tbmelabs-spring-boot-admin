@@ -7,7 +7,7 @@ import type userType from '../../../common/types/userType';
 
 var cancelUsername;
 
-export default function (username: string, errors: userType, callback: (errors: userType) => void) {
+export default (username: string, errors: userType, callback: (errors: userType) => void) => {
   if (username == undefined || username == '') {
     delete errors.username;
     return;

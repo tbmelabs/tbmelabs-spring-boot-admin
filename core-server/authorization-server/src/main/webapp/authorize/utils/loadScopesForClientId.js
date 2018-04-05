@@ -3,6 +3,6 @@
 
 import axios from 'axios';
 
-export default function (clientId: string) {
+export default (clientId: string) => {
   return axios.get('confirm_access_scopes?client_id=' + clientId);
 }

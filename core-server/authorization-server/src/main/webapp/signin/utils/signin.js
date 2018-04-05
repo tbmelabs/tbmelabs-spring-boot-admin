@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-export default function (data) {
+export default (data) => {
   var formData = new FormData();
   formData.append('username', data.username);
   formData.append('password', data.password);

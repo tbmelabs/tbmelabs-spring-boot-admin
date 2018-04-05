@@ -1,4 +1,3 @@
-// @flow
 'use strict';
 
 import {createStore, applyMiddleware, compose} from 'redux';
@@ -6,7 +5,7 @@ import thunk from 'redux-thunk';
 
 import reducers from './reducers';
 
-export default function configureStore() {
+export default () => {
   return createStore(
     reducers,
     compose(

@@ -9,7 +9,7 @@ process.env.CHROMIUM_BIN = require('puppeteer').executablePath()
 
 const WATCH = process.argv.indexOf('--watch') > -1;
 
-module.exports = function (config) {
+module.exports = (config) => {
   config.set({
     autoWatch: WATCH,
     browsers: [
@@ -72,10 +72,10 @@ module.exports = function (config) {
               ]
             }
           }, {
-            loader: "style-loader!css-loader",
+            loader: 'style-loader!css-loader',
             test: /\.css$/
           }, {
-            loader: "file-loader?publicPath=public/",
+            loader: 'file-loader?publicPath=public/',
             test: /\.(jpe?g|png|svg|ai)$/
           }, {
             loader: 'url-loader?limit=100000',
