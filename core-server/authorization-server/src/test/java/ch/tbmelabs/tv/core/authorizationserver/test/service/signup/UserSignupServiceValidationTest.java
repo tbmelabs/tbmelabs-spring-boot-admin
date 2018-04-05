@@ -34,7 +34,7 @@ public class UserSignupServiceValidationTest {
   @InjectMocks
   private UserSignupService fixture;
 
-  private static User existingUser = new User();
+  private static final User existingUser = new User();
 
   @BeforeClass
   public static void beforeClassSetUp() {
@@ -78,7 +78,7 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateExistingUsername() {
-    User unexistingUser = new User();
+    final User unexistingUser = new User();
     unexistingUser.setUsername(RandomStringUtils.random(11));
 
     assertThat(fixture.isUsernameUnique(existingUser)).isFalse();
@@ -87,10 +87,10 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingUsername() {
-    User invalidUser = new User();
+    final User invalidUser = new User();
     invalidUser.setUsername(RandomStringUtils.randomAscii(10) + "$");
 
-    User validUser = new User();
+    final User validUser = new User();
     validUser.setUsername(RandomStringUtils.randomAlphabetic(11));
 
     assertThat(fixture.doesUsernameMatchFormat(invalidUser)).isFalse();

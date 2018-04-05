@@ -26,14 +26,14 @@ public class UserProfileTest {
   @Spy
   private UserProfile fixture;
 
-  private final User testUser = createTestUser();
+  private User testUser;
 
   public static User createTestUser() {
     User user = new User();
     user.setCreated(new Date());
     user.setLastUpdated(new Date());
     user.setId(new Random().nextLong());
-    user.setUsername(RandomStringUtils.random(11));
+    user.setUsername(RandomStringUtils.randomAlphabetic(11));
     user.setEmail(user.getUsername() + "@tbme.tv");
     user.setPassword(RandomStringUtils.random(60));
     user.setConfirmation(user.getPassword());
@@ -49,6 +49,8 @@ public class UserProfileTest {
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
+
+    testUser = createTestUser();
 
     doReturn(new Random().nextLong()).when(fixture).getId();
   }

@@ -8,8 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -32,7 +30,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-@Transactional
 public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
   private static final String PASSWORD_PARAMETER_NAME = "password";
@@ -50,7 +47,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
   private UserCRUDRepository userRepository;
 
   private static User existingUser = new User();
-  private static User unexistingUser = new User();
+  private static final User unexistingUser = new User();
 
   @Rule
   public ExpectedException passwordException = ExpectedException.none();

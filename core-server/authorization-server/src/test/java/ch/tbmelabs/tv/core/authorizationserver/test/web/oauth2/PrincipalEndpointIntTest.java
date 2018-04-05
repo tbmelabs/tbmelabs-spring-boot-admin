@@ -6,11 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -23,9 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -39,28 +36,13 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
   @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
-  private RoleCRUDRepository roleRepository;
-
-  private static User testUser;
-
-  public static User createTestUser(String username) {
-    User user = new User();
-    user.setCreated(new Date());
-    user.setLastUpdated(new Date());
-    user.setUsername(username);
-    user.setEmail(user.getUsername() + "@tbme.tv");
-    user.setPassword(RandomStringUtils.random(11));
-    user.setIsBlocked(false);
-    user.setIsEnabled(true);
-    return user;
-  }
+  private User testUser;
 
   @Before
   public void beforeTestSetUp() {
-    if (!userRepository.findOneByUsernameIgnoreCase("PrincipalEndpointIntTestUser").isPresent()) {
-      testUser = userRepository.save(createTestUser("PrincipalEndpointIntTestUser"));
-      testUser.setRoles(testUser.rolesToAssociations(Arrays.asList(roleRepository.save(new Role(UserAuthority.USER)))));
+    testUser = UserProfileTest.createTestUser();
+
+    if (!userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent()) {
       testUser = userRepository.save(testUser);
     }
   }

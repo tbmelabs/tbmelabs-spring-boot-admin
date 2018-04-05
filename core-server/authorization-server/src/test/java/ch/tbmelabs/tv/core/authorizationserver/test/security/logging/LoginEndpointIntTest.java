@@ -5,11 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.transaction.Transactional;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +17,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
-@Transactional
 public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
@@ -39,28 +36,19 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private static User testUser = new User();
-  private static String password;
-
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    testUser.setUsername(RandomStringUtils.random(11));
-    testUser.setEmail("loginendpointinttest.user@tbme.tv");
-    testUser.setPassword(RandomStringUtils.random(11));
-    testUser.setConfirmation(testUser.getPassword());
-
-    password = testUser.getPassword();
-  }
+  private User testUser;
+  private String password;
 
   @Before
   public void beforeTestSetUp() {
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
 
-    testUser.setIsEnabled(true);
-    testUser.setIsBlocked(false);
+    User newUser = UserProfileTest.createTestUser();
+    password = RandomStringUtils.random(60);
+    newUser.setPassword(password);
 
-    testUser = userRepository.save(testUser);
+    testUser = userRepository.save(UserProfileTest.createTestUser());
   }
 
   @Test

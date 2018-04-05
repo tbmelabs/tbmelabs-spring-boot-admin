@@ -7,8 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Before;
@@ -23,10 +23,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -42,14 +44,13 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private final UserProfile testUserProfile = createTestUserProfile();
+  private UserProfile testUserProfile;
 
   public static UserProfile createTestUserProfile() {
-    User user = new User();
-    user.setUsername("UserControllerIntTestPersistedUser");
-    user.setEmail(user.getUsername() + "@tbme.tv");
+    User user = UserProfileTest.createTestUser();
 
-    UserProfile profile = new UserProfile(user, new ArrayList<>());
+    UserProfile profile = new UserProfile(user,
+        user.getRoles().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList()));
     profile.setPassword(RandomStringUtils.random(60));
     profile.setConfirmation(user.getPassword());
 
@@ -58,8 +59,11 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   @Before
   public void beforeTestSetUp() {
+    testUserProfile = createTestUserProfile();
+
     User existingUser;
-    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserProfile.getUsername()).orElse(null)) != null) {
+    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserProfile.getUsername())
+        .orElse(null)) != null) {
       userRepository.delete(existingUser);
     }
   }

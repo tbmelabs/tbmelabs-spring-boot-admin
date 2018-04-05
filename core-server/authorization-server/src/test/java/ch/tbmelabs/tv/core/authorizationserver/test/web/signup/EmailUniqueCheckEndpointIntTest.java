@@ -5,12 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import javax.transaction.Transactional;
-
-import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +19,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
-@Transactional
 public class EmailUniqueCheckEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
   private static final String EMAIL_UNIQUE_CHECK_ENDPOINT = "/signup/is-email-unique";
   private static final String EMAIL_PARAMETER_NAME = "email";
@@ -42,21 +38,14 @@ public class EmailUniqueCheckEndpointIntTest extends AbstractOAuth2Authorization
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private static User testUser = new User();
-
-  @BeforeClass
-  public static void beforeClassSetUp() {
-    testUser.setUsername(RandomStringUtils.random(11));
-    testUser.setEmail("invalid.email@tbme.tv");
-    testUser.setPassword(RandomStringUtils.random(11));
-  }
+  private User testUser;
 
   @Before
   public void beforeTestSetUp() {
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
 
-    userRepository.save(testUser);
+    userRepository.save(UserProfileTest.createTestUser());
   }
 
   @Test

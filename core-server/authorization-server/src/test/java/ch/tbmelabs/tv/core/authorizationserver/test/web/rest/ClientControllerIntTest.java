@@ -7,10 +7,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,10 +21,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ClientControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
@@ -44,14 +47,14 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationApplicat
   private final ClientDTO testClientDTO = createTestClientDTO();
 
   public static ClientDTO createTestClientDTO() {
-    Client client = new Client();
-    client.setClientId(RandomStringUtils.randomAlphabetic(36));
-    client.setSecret(RandomStringUtils.randomAlphabetic(36));
-    client.setAccessTokenValiditySeconds(new Random().nextInt());
-    client.setRefreshTokenValiditySeconds(new Random().nextInt());
-    client.setRedirectUri("https://tbme.tv");
+    Client client = ClientDTOTest.createTestClient();
 
-    return new ClientDTO(client, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    return new ClientDTO(client,
+        client.getGrantTypes().stream().map(ClientGrantTypeAssociation::getClientGrantType)
+            .collect(Collectors.toList()),
+        client.getGrantedAuthorities().stream().map(ClientAuthorityAssociation::getClientAuthority)
+            .collect(Collectors.toList()),
+        client.getScopes().stream().map(ClientScopeAssociation::getClientScope).collect(Collectors.toList()));
   }
 
   @Test
