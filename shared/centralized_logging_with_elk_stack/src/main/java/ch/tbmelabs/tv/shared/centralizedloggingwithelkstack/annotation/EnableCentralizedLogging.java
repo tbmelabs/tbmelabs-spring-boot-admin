@@ -9,11 +9,9 @@ import org.springframework.context.annotation.Import;
 
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.production.ProductiveEnvironmentWithoutCentralizedLoggingCheck;
 
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-@Import({ LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class,
-    ProductiveEnvironmentWithoutCentralizedLoggingCheck.class })
+@Import({ LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class })
 public @interface EnableCentralizedLogging {
 }

@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Import;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.annotation.EnableCentralizedLogging;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
-import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.production.ProductiveEnvironmentWithoutCentralizedLoggingCheck;
 
 public class EnableCentralizedLoggingTest {
   @Test
@@ -33,8 +32,7 @@ public class EnableCentralizedLoggingTest {
   @Test
   public void annotationShouldImportConfigurationClasses() {
     assertThat(EnableCentralizedLogging.class).hasAnnotation(Import.class);
-    assertThat(EnableCentralizedLogging.class.getDeclaredAnnotation(Import.class).value()).isNotNull().containsExactly(
-        LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class,
-        ProductiveEnvironmentWithoutCentralizedLoggingCheck.class);
+    assertThat(EnableCentralizedLogging.class.getDeclaredAnnotation(Import.class).value())
+        .containsExactly(LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class);
   }
 }
