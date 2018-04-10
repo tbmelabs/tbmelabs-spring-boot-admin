@@ -15,7 +15,6 @@ import org.apache.logging.log4j.core.net.Protocol;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -26,7 +25,6 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
 import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ZuulAccessFilterTest {
   @Mock
@@ -63,8 +61,6 @@ public class ZuulAccessFilterTest {
   @Test
   public void zuulAccessFilterShouldBeAnnotated() {
     assertThat(ZuulAccessFilter.class).hasAnnotation(Component.class);
-    assertThat(ZuulAccessFilter.class.getDeclaredAnnotation(Profile.class).value())
-        .containsExactly(SpringApplicationProfile.DEV);
   }
 
   @Test
