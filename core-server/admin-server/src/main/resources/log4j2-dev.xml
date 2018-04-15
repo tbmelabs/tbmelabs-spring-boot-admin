@@ -3,12 +3,15 @@
   <!-- Create appenders, configure log output -->
   <Appenders>
     <!-- Console output (level = 500) -->
-    <Console name="console" target="SYSTEM_OUT">
+    <Console name="debugConsole" target="SYSTEM_OUT">
       <PatternLayout pattern="%-4d [%t] %-5p %c - %m%n" />
       <Filters>
         <ThresholdFilter level="debug" />
       </Filters>
     </Console>
+    <Async name="console">
+      <AppenderRef ref="debugConsole" />
+    </Async>
   </Appenders>
 
   <!-- Create loggers, no further configuration -->
