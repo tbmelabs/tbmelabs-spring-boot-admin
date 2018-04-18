@@ -3,17 +3,14 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
@@ -56,29 +53,27 @@ public class UserProfileMapperTest {
 
   @Test
   public void toUserProfileShouldMapUserToDTO() {
-    assertThat(fixture.toUserProfile(testUser)).hasFieldOrPropertyWithValue("created", testUser.getCreated())
+    assertThat(fixture.toUserProfile(testUser))
+        .hasFieldOrPropertyWithValue("created", testUser.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testUser.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testUser.getId())
         .hasFieldOrPropertyWithValue("username", testUser.getUsername())
         .hasFieldOrPropertyWithValue("email", testUser.getEmail())
-        .hasFieldOrPropertyWithValue("isEnabled", testUser.getIsEnabled())
-        .hasFieldOrPropertyWithValue("isBlocked", testUser.getIsBlocked())
+        .hasFieldOrPropertyWithValue("isEnabled", new User().getIsEnabled())
+        .hasFieldOrPropertyWithValue("isBlocked", new User().getIsBlocked())
         .hasFieldOrPropertyWithValue("roles", new ArrayList<>());
-
-    assertThat(fixture.toUserProfile(testUser).getPassword()).isNull();
   }
 
   @Test
   public void toUserShouldMapDTOToEntity() {
-    assertThat(fixture.toUser(testUserProfile)).hasFieldOrPropertyWithValue("created", testUserProfile.getCreated())
+    assertThat(fixture.toUser(testUserProfile))
+        .hasFieldOrPropertyWithValue("created", testUserProfile.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testUserProfile.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testUserProfile.getId())
         .hasFieldOrPropertyWithValue("username", testUserProfile.getUsername())
         .hasFieldOrPropertyWithValue("email", testUserProfile.getEmail())
-        .hasFieldOrPropertyWithValue("password", testUserProfile.getPassword())
-        .hasFieldOrPropertyWithValue("confirmation", testUserProfile.getConfirmation())
-        .hasFieldOrPropertyWithValue("isEnabled", testUserProfile.getIsEnabled())
-        .hasFieldOrPropertyWithValue("isBlocked", testUserProfile.getIsBlocked())
+        .hasFieldOrPropertyWithValue("isEnabled", new User().getIsEnabled())
+        .hasFieldOrPropertyWithValue("isBlocked", new User().getIsBlocked())
         // TODO: Add value check
         .hasFieldOrProperty("roles");
   }

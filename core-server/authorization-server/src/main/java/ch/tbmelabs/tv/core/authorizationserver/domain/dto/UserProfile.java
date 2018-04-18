@@ -26,10 +26,6 @@ public class UserProfile {
 
   private String email;
 
-  private String password;
-
-  private String confirmation;
-
   private Boolean isEnabled;
 
   private Boolean isBlocked;

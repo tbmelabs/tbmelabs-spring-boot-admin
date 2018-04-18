@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
@@ -61,23 +58,24 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.SERVER_SUPPORT })
+  @WithMockUser(username = "UserControllerIntTestUser",
+      authorities = {UserAuthority.SERVER_SUPPORT})
   public void getClientsEndpointIsAccessibleToServerSupports() throws Exception {
-    mockMvc.perform(get(usersEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+    mockMvc.perform(get(usersEndpoint)).andDo(print())
+        .andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.CONTENT_ADMIN })
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
   public void getClientsEndpointIsNotAccessibleToNonServerSupports() throws Exception {
-    mockMvc.perform(get(usersEndpoint)).andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+    mockMvc.perform(get(usersEndpoint)).andDo(print())
+        .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.SERVER_SUPPORT })
+  @WithMockUser(username = "UserControllerIntTestUser",
+      authorities = {UserAuthority.SERVER_SUPPORT})
   public void putClientEndpointIsAccessibleToServerSupports() throws Exception {
-    testUserProfile.setPassword("Password$2018");
-    testUserProfile.setConfirmation(testUserProfile.getPassword());
-
     UserProfile persistedUser = userProfileMapper
         .toUserProfile(userRepository.save(userProfileMapper.toUser(testUserProfile)));
     persistedUser.setUsername(RandomStringUtils.randomAlphabetic(11));
@@ -87,11 +85,12 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
             .content(new ObjectMapper().writeValueAsString(persistedUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsernameIgnoreCase(persistedUser.getUsername()).isPresent()).isTrue();
+    assertThat(userRepository.findOneByUsernameIgnoreCase(persistedUser.getUsername()).isPresent())
+        .isTrue();
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.CONTENT_ADMIN })
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
   public void putClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(put(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -100,12 +99,11 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.SERVER_SUPPORT })
+  @WithMockUser(username = "UserControllerIntTestUser",
+      authorities = {UserAuthority.SERVER_SUPPORT})
   public void deleteClientEndpointIsAccessibleToServerSupports() throws Exception {
-    testUserProfile.setPassword("Password$2018");
-    testUserProfile.setConfirmation(testUserProfile.getPassword());
-    testUserProfile
-        .setId(userProfileMapper.toUserProfile(userRepository.save(userProfileMapper.toUser(testUserProfile))).getId());
+    testUserProfile.setId(userProfileMapper
+        .toUserProfile(userRepository.save(userProfileMapper.toUser(testUserProfile))).getId());
 
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -114,7 +112,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = { UserAuthority.CONTENT_ADMIN })
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
   public void deleteClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)

@@ -3,19 +3,16 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -62,15 +59,18 @@ public class UserProfileTest {
 
   @Test
   public void userProfileShouldHaveAllArgsConstructor() {
-    List<Role> roles = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList());
+    List<Role> roles = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole)
+        .collect(Collectors.toList());
 
-    assertThat(new UserProfile(testUser, roles)).hasFieldOrPropertyWithValue("created", testUser.getCreated())
+    assertThat(new UserProfile(testUser, roles))
+        .hasFieldOrPropertyWithValue("created", testUser.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testUser.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testUser.getId())
         .hasFieldOrPropertyWithValue("username", testUser.getUsername())
         .hasFieldOrPropertyWithValue("email", testUser.getEmail())
         .hasFieldOrPropertyWithValue("isEnabled", testUser.getIsEnabled())
-        .hasFieldOrPropertyWithValue("isBlocked", testUser.getIsBlocked()).hasFieldOrPropertyWithValue("roles", roles);
+        .hasFieldOrPropertyWithValue("isBlocked", testUser.getIsBlocked())
+        .hasFieldOrPropertyWithValue("roles", roles);
   }
 
   @Test
@@ -105,28 +105,9 @@ public class UserProfileTest {
   }
 
   @Test
-  public void userProfileShouldHavePasswordGetterAndSetter() {
-    String password = RandomStringUtils.random(11);
-
-    fixture.setPassword(password);
-
-    assertThat(fixture).hasFieldOrPropertyWithValue("password", password);
-    assertThat(fixture.getPassword()).isEqualTo(password);
-  }
-
-  @Test
-  public void userProfileShouldHaveConfirmationGetterAndSetter() {
-    String confirmation = RandomStringUtils.random(11);
-
-    fixture.setConfirmation(confirmation);
-
-    assertThat(fixture).hasFieldOrPropertyWithValue("confirmation", confirmation);
-    assertThat(fixture.getConfirmation()).isEqualTo(confirmation);
-  }
-
-  @Test
   public void userProfileShouldHaveRoleGetterAndSetter() {
-    List<Role> roles = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList());
+    List<Role> roles = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole)
+        .collect(Collectors.toList());
 
     fixture.setRoles(roles);
 

@@ -1,13 +1,8 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration;
 
-import java.io.Serializable;
-
 import javax.annotation.PostConstruct;
-
-import org.apache.log4j.PatternLayout;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.appender.SocketAppender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +32,6 @@ public class LogstashAppenderConfiguration {
         + " - Port: " + logstashPort + "\n"
         + " - Buffer: "+ BUFFER_SIZE);
 
-    @SuppressWarnings("unchecked")
     SocketAppender logstashAppender = SocketAppender.newBuilder()
         .withName(appenderName)
         .withHost(logstashHost)
@@ -45,13 +39,13 @@ public class LogstashAppenderConfiguration {
         .withImmediateFail(false)
         .withBufferSize(BUFFER_SIZE)
         .withReconnectDelayMillis(-1)
-        .withLayout((Layout<? extends Serializable>) new PatternLayout("%-4d [%t] %-5p %c - %m%n"))
         .build();
     // @formatter:on
 
     logstashAppender.start();
 
-    ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addAppender(logstashAppender);
+    ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger())
+        .addAppender(logstashAppender);
   }
 
   public static String getAppenderName() {

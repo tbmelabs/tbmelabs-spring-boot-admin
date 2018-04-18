@@ -3,10 +3,8 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
@@ -30,10 +28,10 @@ public class UserProfileMapper {
     user.setId(userProfile.getId());
     user.setUsername(userProfile.getUsername());
     user.setEmail(userProfile.getEmail());
-    user.setPassword(userProfile.getPassword());
-    user.setConfirmation(userProfile.getConfirmation());
-    user.setIsEnabled(userProfile.getIsEnabled() != null ? userProfile.getIsEnabled() : new User().getIsEnabled());
-    user.setIsBlocked(userProfile.getIsBlocked() != null ? userProfile.getIsBlocked() : new User().getIsBlocked());
+    user.setIsEnabled(userProfile.getIsEnabled() != null ? userProfile.getIsEnabled()
+        : new User().getIsEnabled());
+    user.setIsBlocked(userProfile.getIsBlocked() != null ? userProfile.getIsBlocked()
+        : new User().getIsBlocked());
 
     final List<UserRoleAssociation> userRoleAssociations = new ArrayList<>();
     if (user.getId() != null) {
@@ -42,7 +40,8 @@ public class UserProfileMapper {
     if (userProfile.getRoles() != null) {
       userProfile.getRoles().stream()
           .filter(userProfileRole -> userRoleAssociations.stream()
-              .noneMatch(existingRole -> existingRole.getUserRole().getName().equals(userProfileRole.getName())))
+              .noneMatch(existingRole -> existingRole.getUserRole().getName()
+                  .equals(userProfileRole.getName())))
           .map(user::roleToAssociation).forEach(userRoleAssociations::add);
       user.setRoles(userRoleAssociations);
     }
