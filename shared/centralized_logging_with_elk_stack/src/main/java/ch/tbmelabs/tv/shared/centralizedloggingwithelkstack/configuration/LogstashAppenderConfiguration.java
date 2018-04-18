@@ -50,6 +50,7 @@ public class LogstashAppenderConfiguration {
     // @formatter:on
 
     logstashAppender.start();
+
     ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addAppender(logstashAppender);
   }
 
