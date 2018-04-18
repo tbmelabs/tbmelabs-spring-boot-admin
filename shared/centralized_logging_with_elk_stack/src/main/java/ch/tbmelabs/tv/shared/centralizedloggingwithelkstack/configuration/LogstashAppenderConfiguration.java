@@ -1,13 +1,14 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration;
 
-import java.nio.charset.StandardCharsets;
+import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.log4j.PatternLayout;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.appender.SocketAppender;
-import org.apache.logging.log4j.core.layout.JsonLayout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,26 +26,18 @@ public class LogstashAppenderConfiguration {
   @Value("${LOGSTASH_PORT}")
   private Integer logstashPort;
 
-  @Value("${spring.application.name:null}")
-  private String serviceName;
-
   @PostConstruct
   public void initBean() {
     LOGGER.info("Initializing..");
-
-    if (serviceName == null) {
-      throw new IllegalArgumentException(
-          "Specify an application name (\"spring.application.name\") to use the centralized logging.");
-    }
 
     // @formatter:off
     LOGGER.info("Configuring new " + SocketAppender.class + " with Logstash and ELK stack\n"
         + "Using the following configuration:\n"
         + " - Server: " + logstashHost + "\n"
         + " - Port: " + logstashPort + "\n"
-        + " - Name: " + serviceName + "\n"
         + " - Buffer: "+ BUFFER_SIZE);
 
+    @SuppressWarnings("unchecked")
     SocketAppender logstashAppender = SocketAppender.newBuilder()
         .withName(appenderName)
         .withHost(logstashHost)
@@ -52,26 +45,9 @@ public class LogstashAppenderConfiguration {
         .withImmediateFail(false)
         .withBufferSize(BUFFER_SIZE)
         .withReconnectDelayMillis(-1)
-        .withLayout(
-            // JsonLayout.createDefaultLayout()
-            JsonLayout.createLayout(
-                JsonLayout.createDefaultLayout().getConfiguration(),
-                true,
-                true,
-                true,
-                true,
-                true,
-                true, 
-                "", // Header patterns
-                "", // Footer pattern
-                StandardCharsets.UTF_8,
-                true)
-            )
+        .withLayout((Layout<? extends Serializable>) new PatternLayout("%-4d [%t] %-5p %c - %m%n"))
         .build();
     // @formatter:on
-
-    // TODO: How to add service name in json body?
-    // MDC.put("serviceName", serviceName);
 
     logstashAppender.start();
     ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).addAppender(logstashAppender);

@@ -1,7 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
-import java.util.Arrays;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
+    if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
       LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
 
       web.debug(true);

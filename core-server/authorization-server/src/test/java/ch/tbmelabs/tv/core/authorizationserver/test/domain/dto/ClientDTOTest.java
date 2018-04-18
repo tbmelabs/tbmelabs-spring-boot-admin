@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -36,7 +36,6 @@ public class ClientDTOTest {
     Client client = new Client();
     client.setCreated(new Date());
     client.setLastUpdated(new Date());
-    client.setId(new Random().nextLong());
     client.setClientId(RandomStringUtils.randomAlphabetic(36));
     client.setSecret(RandomStringUtils.randomAlphabetic(36));
     client.setAccessTokenValiditySeconds(new Random().nextInt());

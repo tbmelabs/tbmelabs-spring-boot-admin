@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -13,20 +12,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
+import org.springframework.mock.env.MockEnvironment;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class SecurityConfigurationTest {
-  @Mock
-  private WebSecurity webSecurityFixture;
+  private final MockEnvironment mockEnvironment = new MockEnvironment();
 
   @Mock
-  private Environment environmentFixture;
+  private WebSecurity webSecurityFixture;
 
   @Spy
   @InjectMocks
@@ -36,7 +35,8 @@ public class SecurityConfigurationTest {
   public void beforeTestSetUp() throws Exception {
     initMocks(this);
 
-    doReturn(new String[] { SpringApplicationProfile.DEV }).when(environmentFixture).getActiveProfiles();
+    mockEnvironment.setActiveProfiles(SpringApplicationProfile.DEV);
+    ReflectionTestUtils.setField(fixture, "environment", mockEnvironment);
 
     doCallRealMethod().when(fixture).init(webSecurityFixture);
   }

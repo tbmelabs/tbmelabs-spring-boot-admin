@@ -1,7 +1,5 @@
 package ch.tbmelabs.tv.core.entryserver.configuration;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -22,7 +20,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
 
   @Override
   public void configure(WebSecurity web) throws Exception {
-    if (Arrays.asList(environment.getActiveProfiles()).contains(SpringApplicationProfile.DEV)) {
+    if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
       web.debug(true);
     }
   }

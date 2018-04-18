@@ -7,7 +7,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Optional;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -32,18 +32,20 @@ public class UserProfileMapper {
     user.setEmail(userProfile.getEmail());
     user.setPassword(userProfile.getPassword());
     user.setConfirmation(userProfile.getConfirmation());
-    user.setIsEnabled(userProfile.getIsEnabled());
-    user.setIsBlocked(userProfile.getIsBlocked());
+    user.setIsEnabled(userProfile.getIsEnabled() != null ? userProfile.getIsEnabled() : new User().getIsEnabled());
+    user.setIsBlocked(userProfile.getIsBlocked() != null ? userProfile.getIsBlocked() : new User().getIsBlocked());
 
     final List<UserRoleAssociation> userRoleAssociations = new ArrayList<>();
     if (user.getId() != null) {
       userRoleAssociations.addAll(userRoleAssociationRepository.findAllByUser(user));
     }
-    userProfile.getRoles().stream()
-        .filter(userProfileRole -> userRoleAssociations.stream()
-            .noneMatch(existingRole -> existingRole.getUserRole().getName().equals(userProfileRole.getName())))
-        .map(user::roleToAssociation).forEach(userRoleAssociations::add);
-    user.setRoles(userRoleAssociations);
+    if (userProfile.getRoles() != null) {
+      userProfile.getRoles().stream()
+          .filter(userProfileRole -> userRoleAssociations.stream()
+              .noneMatch(existingRole -> existingRole.getUserRole().getName().equals(userProfileRole.getName())))
+          .map(user::roleToAssociation).forEach(userRoleAssociations::add);
+      user.setRoles(userRoleAssociations);
+    }
 
     return user;
   }

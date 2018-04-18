@@ -85,21 +85,6 @@ public class UserControllerTest {
   }
 
   @Test
-  public void createUserShouldPersistMappedDTO() {
-    fixture.createUser(testUserProfile);
-
-    verify(mockUserRepository, times(1)).save(testUser);
-  }
-
-  @Test
-  public void createUserShouldThrowErrorIfClientHasAlreadyAnId() {
-    testUserProfile.setId(new Random().nextLong());
-
-    assertThatThrownBy(() -> fixture.createUser(testUserProfile)).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only create a new user without an id!");
-  }
-
-  @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[] { Pageable.class });
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();

@@ -6,12 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -27,15 +27,6 @@ public class UserController {
   @Autowired
   private UserProfileMapper userMapper;
 
-  @PostMapping
-  public UserProfile createUser(@RequestBody(required = true) UserProfile userProfile) {
-    if (userProfile.getId() != null) {
-      throw new IllegalArgumentException("You can only create a new user without an id!");
-    }
-
-    return userMapper.toUserProfile(userRepository.save(userMapper.toUser(userProfile)));
-  }
-
   @GetMapping
   public Page<UserProfile> getAllUsers(Pageable pageable) {
     return userRepository.findAll(pageable).map(userMapper::toUserProfile);
@@ -47,7 +38,12 @@ public class UserController {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
 
-    return userMapper.toUserProfile(userRepository.save(userMapper.toUser(userProfile)));
+    User updatedUser = userMapper.toUser(userProfile);
+    if (updatedUser.getPassword() == null) {
+      updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
+    }
+
+    return userMapper.toUserProfile(userRepository.save(updatedUser));
   }
 
   @DeleteMapping

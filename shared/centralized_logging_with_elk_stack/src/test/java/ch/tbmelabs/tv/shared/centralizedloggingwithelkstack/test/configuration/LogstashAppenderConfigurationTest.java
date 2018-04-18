@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -15,8 +14,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
 
 public class LogstashAppenderConfigurationTest {
-  private static final String NO_APPLICATION_NAME_ERROR_MESSAGE = "Specify an application name (\"spring.application.name\") to use the centralized logging.";
-
   @Mock
   private LogstashAppenderConfiguration fixture;
 
@@ -36,15 +33,7 @@ public class LogstashAppenderConfigurationTest {
   }
 
   @Test
-  public void initBeanShouldThrowExceptionIfApplicationNameIsNull() {
-    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
-        .hasMessage(NO_APPLICATION_NAME_ERROR_MESSAGE);
-  }
-
-  @Test
   public void logstashAppenderShouldBeRegisteredToRootLogger() {
-    ReflectionTestUtils.setField(fixture, "serviceName", "testapplication");
-
     fixture.initBean();
 
     assertThat(((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).getAppenders())

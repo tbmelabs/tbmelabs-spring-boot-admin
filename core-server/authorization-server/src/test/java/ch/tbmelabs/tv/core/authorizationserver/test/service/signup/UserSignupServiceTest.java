@@ -18,7 +18,7 @@ import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
+import org.springframework.mock.env.MockEnvironment;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
@@ -32,8 +32,7 @@ import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 public class UserSignupServiceTest {
   private static final String SIGNUP_FAILED_ERROR_MESSAGE = "An error occured. Please check your details!";
 
-  @Mock
-  private Environment mockEnvironment;
+  private final MockEnvironment mockEnvironment = new MockEnvironment();
 
   @Mock
   private ApplicationContext mockApplicationContext;
@@ -52,7 +51,6 @@ public class UserSignupServiceTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(new String[] {}).when(mockEnvironment).getActiveProfiles();
     doReturn(mockEnvironment).when(mockApplicationContext).getEnvironment();
     doReturn(Mockito.mock(UserMailService.class)).when(mockApplicationContext).getBean(UserMailService.class);
 

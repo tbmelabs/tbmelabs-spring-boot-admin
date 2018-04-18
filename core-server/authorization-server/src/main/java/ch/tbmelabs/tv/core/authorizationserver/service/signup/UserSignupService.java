@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -107,11 +108,11 @@ public class UserSignupService {
   }
 
   private User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {
-    if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles())
-        .noneMatch(profile -> profile.equals(SpringApplicationProfile.NO_MAIL))) {
+    final Environment environment = applicationContext.getEnvironment();
+
+    if (!environment.acceptsProfiles(SpringApplicationProfile.NO_MAIL)) {
       applicationContext.getBean(UserMailService.class).sendSignupConfirmation(persistedUser);
-    } else if (Arrays.stream(applicationContext.getEnvironment().getActiveProfiles()).noneMatch(
-        profile -> profile.equals(SpringApplicationProfile.DEV) || profile.equals(SpringApplicationProfile.TEST))) {
+    } else if (!environment.acceptsProfiles(SpringApplicationProfile.DEV, SpringApplicationProfile.TEST)) {
       throw new IllegalArgumentException("You cannot run a productive environment without any mail configuration!");
     } else {
       persistedUser.setIsEnabled(true);

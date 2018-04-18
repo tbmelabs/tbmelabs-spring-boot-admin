@@ -1,8 +1,5 @@
 package ch.tbmelabs.tv.core.servicediscovery;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +20,8 @@ public class Application extends SpringBootServletInitializer {
 
   @PostConstruct
   public void initBean() {
-    List<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
-
-    if (activeProfiles.contains(SpringApplicationProfile.PROD)
-        && activeProfiles.contains(SpringApplicationProfile.DEV)) {
+    if (environment.acceptsProfiles(SpringApplicationProfile.PROD)
+        && environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
       throw new IllegalArgumentException(
           "Do not attempt to run an application in productive and development environment at the same time!");
     }
