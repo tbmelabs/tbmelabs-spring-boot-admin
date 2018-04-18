@@ -13,7 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
@@ -27,18 +26,10 @@ public class UserProfileTest {
 
   public static User createTestUser() {
     User user = new User();
-    user.setCreated(new Date());
-    user.setLastUpdated(new Date());
-    user.setId(new Random().nextLong());
     user.setUsername(RandomStringUtils.randomAlphabetic(11));
     user.setEmail(user.getUsername() + "@tbme.tv");
     user.setPassword(RandomStringUtils.random(60));
     user.setConfirmation(user.getPassword());
-    user.setEmailConfirmationToken(new EmailConfirmationToken(RandomStringUtils.random(36), user));
-
-    Role testRole = new Role("TEST_ROLE");
-    testRole.setId(new Random().nextLong());
-    user.setRoles(Arrays.asList(user.roleToAssociation(testRole)));
 
     return user;
   }
@@ -48,6 +39,10 @@ public class UserProfileTest {
     initMocks(this);
 
     testUser = createTestUser();
+    testUser.setCreated(new Date());
+    testUser.setLastUpdated(new Date());
+    testUser.setId(new Random().nextLong());
+    testUser.setRoles(Arrays.asList(testUser.roleToAssociation(new Role("TEST_ROLE"))));
 
     doReturn(new Random().nextLong()).when(fixture).getId();
   }

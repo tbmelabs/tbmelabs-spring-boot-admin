@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +25,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationA
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+
   @Value("${spring.data.rest.base-path}/users")
   private String usersEndpoint;
 
@@ -36,7 +38,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private UserProfile testUserProfile;
+  private UserProfile testUserProfile = createTestUserProfile();
 
   public static UserProfile createTestUserProfile() {
     UserProfile profile = new UserProfile();
@@ -48,8 +50,6 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
 
   @Before
   public void beforeTestSetUp() {
-    testUserProfile = createTestUserProfile();
-
     User existingUser;
     if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserProfile.getUsername())
         .orElse(null)) != null) {
