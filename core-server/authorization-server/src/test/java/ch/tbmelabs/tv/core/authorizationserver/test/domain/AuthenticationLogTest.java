@@ -2,22 +2,17 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Random;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
@@ -48,8 +43,9 @@ public class AuthenticationLogTest {
         .isEqualTo("authentication_log");
     assertThat(AuthenticationLog.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
-    assertThat(AuthenticationLog.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull()
-        .isTrue();
+    assertThat(
+        AuthenticationLog.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
+            .isNotNull().isTrue();
   }
 
   @Test
@@ -66,7 +62,8 @@ public class AuthenticationLogTest {
   public void authenticationLogShouldHaveAllArgsConstructor() {
     assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, mockUser))
         .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE.name())
-        .hasFieldOrPropertyWithValue("ip", TEST_IP).hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
+        .hasFieldOrPropertyWithValue("ip", TEST_IP)
+        .hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
         .hasFieldOrPropertyWithValue("user", mockUser);
   }
 

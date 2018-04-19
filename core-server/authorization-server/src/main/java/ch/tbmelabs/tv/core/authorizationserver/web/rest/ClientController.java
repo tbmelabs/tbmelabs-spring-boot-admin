@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
@@ -19,7 +18,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepos
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@RequestMapping({ "${spring.data.rest.base-path}/clients" })
+@RequestMapping({"${spring.data.rest.base-path}/clients"})
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class ClientController {
   @Autowired

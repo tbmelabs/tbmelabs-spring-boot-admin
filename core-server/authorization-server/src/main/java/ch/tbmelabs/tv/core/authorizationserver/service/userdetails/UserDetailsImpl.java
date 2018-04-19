@@ -2,10 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.service.userdetails;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 
@@ -20,7 +18,8 @@ public class UserDetailsImpl implements UserDetails {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return user.getRoles().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList());
+    return user.getRoles().stream().map(UserRoleAssociation::getUserRole)
+        .collect(Collectors.toList());
   }
 
   @Override

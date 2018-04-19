@@ -3,9 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.lang.reflect.InvocationTargetException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 
@@ -52,13 +49,14 @@ public class TokenServiceConfigurationTest {
 
   @Test
   public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    assertThat(TokenServiceConfiguration.class.getDeclaredMethod("tokenServiceBean", new Class<?>[] {})
-        .getDeclaredAnnotation(Bean.class)).isNotNull();
+    assertThat(TokenServiceConfiguration.class
+        .getDeclaredMethod("tokenServiceBean", new Class<?>[] {}).getDeclaredAnnotation(Bean.class))
+            .isNotNull();
   }
 
   @Test
-  public void tokenServiceBeanShouldReturnATokenService()
-      throws NoSuchMethodException, SecurityException, IllegalAccessException, InvocationTargetException {
+  public void tokenServiceBeanShouldReturnATokenService() throws NoSuchMethodException,
+      SecurityException, IllegalAccessException, InvocationTargetException {
     assertThat(fixture.tokenServiceBean()).isNotNull()
         .hasFieldOrPropertyWithValue("authenticationManager", authenticationManagerFixture)
         .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsServiceFixture)

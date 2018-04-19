@@ -2,11 +2,9 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
 import java.util.Collection;
 import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import lombok.Data;
@@ -30,7 +28,7 @@ public class UserProfile {
 
   private Boolean isBlocked;
 
-  @JsonIgnoreProperties({ "usersWithRoles" })
+  @JsonIgnoreProperties({"usersWithRoles"})
   private Collection<Role> roles;
 
   public UserProfile(User user, Collection<Role> roles) {

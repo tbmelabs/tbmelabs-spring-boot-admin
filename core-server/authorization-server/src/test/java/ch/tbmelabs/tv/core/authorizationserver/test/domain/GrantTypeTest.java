@@ -2,24 +2,19 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
@@ -37,12 +32,15 @@ public class GrantTypeTest {
 
   @Test
   public void grantTypeShouldBeAnnotated() {
-    assertThat(GrantType.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
-        .hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(GrantType.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
+        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(GrantType.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_grant_types");
-    assertThat(GrantType.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
-    assertThat(GrantType.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
+    assertThat(GrantType.class.getDeclaredAnnotation(Table.class).name())
+        .isEqualTo("client_grant_types");
+    assertThat(GrantType.class.getDeclaredAnnotation(JsonInclude.class).value())
+        .isEqualTo(Include.NON_NULL);
+    assertThat(GrantType.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
+        .isTrue();
   }
 
   @Test
@@ -57,7 +55,8 @@ public class GrantTypeTest {
 
   @Test
   public void grantTypeShouldHaveAllArgsConstructor() {
-    assertThat(new GrantType(TEST_GRANT_TYPE_NAME)).hasFieldOrPropertyWithValue("name", TEST_GRANT_TYPE_NAME);
+    assertThat(new GrantType(TEST_GRANT_TYPE_NAME)).hasFieldOrPropertyWithValue("name",
+        TEST_GRANT_TYPE_NAME);
   }
 
   @Test
@@ -82,7 +81,8 @@ public class GrantTypeTest {
 
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
-    List<ClientGrantTypeAssociation> associations = Arrays.asList(Mockito.mock(ClientGrantTypeAssociation.class));
+    List<ClientGrantTypeAssociation> associations =
+        Arrays.asList(Mockito.mock(ClientGrantTypeAssociation.class));
 
     fixture.setClientsWithGrantTypes(associations);
 

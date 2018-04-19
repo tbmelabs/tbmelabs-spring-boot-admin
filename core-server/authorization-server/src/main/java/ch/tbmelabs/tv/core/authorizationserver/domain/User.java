@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +14,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -24,7 +22,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,7 +30,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -55,8 +51,10 @@ public class User extends NicelyDocumentedJDBCResource {
   public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
   @Id
-  @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
-      @Parameter(name = "sequence_name", value = "users_id_seq"), @Parameter(name = "increment_size", value = "1") })
+  @GenericGenerator(name = "pk_sequence",
+      strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
+      parameters = {@Parameter(name = "sequence_name", value = "users_id_seq"),
+          @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
@@ -88,12 +86,12 @@ public class User extends NicelyDocumentedJDBCResource {
   private Boolean isBlocked = false;
 
   @JsonBackReference
-  @OneToOne(cascade = { CascadeType.ALL }, mappedBy = "user")
+  @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "user")
   private EmailConfirmationToken emailConfirmationToken;
 
   @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "user")
+  @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
   private Collection<UserRoleAssociation> roles;
 
   @Override

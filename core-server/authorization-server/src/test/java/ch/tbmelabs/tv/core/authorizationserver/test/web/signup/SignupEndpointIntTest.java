@@ -5,9 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.Optional;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -20,9 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -35,7 +31,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
 
-  private static final String USER_VALIDATION_ERROR_MESSAGE = "An error occured. Please check your details!";
+  private static final String USER_VALIDATION_ERROR_MESSAGE =
+      "An error occured. Please check your details!";
 
   @Autowired
   private MockMvc mockMvc;
@@ -77,7 +74,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
     existingUser = userRepository.save(existingUser);
 
     Optional<User> checkUnexistingUser;
-    if ((checkUnexistingUser = userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
+    if ((checkUnexistingUser =
+        userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
       userRepository.delete(checkUnexistingUser.get());
     }
   }
@@ -88,7 +86,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(NestedServletException.class)
+            .hasCauseInstanceOf(IllegalArgumentException.class)
             .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
   }
 
@@ -101,7 +100,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
+    assertThat(userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername()))
+        .isNotNull();
   }
 
   @Test
@@ -111,7 +111,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
             .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
                 .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString());
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString());
 
     Integer id = createdJsonUser.getInt("id");
     assertThat(id).isNotNull().isPositive();
@@ -141,6 +142,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
     assertThat(isBlocked).isFalse();
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
-    assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0)).isEqualTo(UserAuthority.USER);
+    assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0))
+        .isEqualTo(UserAuthority.USER);
   }
 }

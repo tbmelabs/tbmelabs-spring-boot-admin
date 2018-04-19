@@ -2,24 +2,19 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
@@ -37,12 +32,14 @@ public class ScopeTest {
 
   @Test
   public void scopeShouldBeAnnotated() {
-    assertThat(Scope.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
-        .hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Scope.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
+        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
 
     assertThat(Scope.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_scopes");
-    assertThat(Scope.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
-    assertThat(Scope.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
+    assertThat(Scope.class.getDeclaredAnnotation(JsonInclude.class).value())
+        .isEqualTo(Include.NON_NULL);
+    assertThat(Scope.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
+        .isTrue();
   }
 
   @Test
@@ -82,7 +79,8 @@ public class ScopeTest {
 
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
-    List<ClientScopeAssociation> associations = Arrays.asList(Mockito.mock(ClientScopeAssociation.class));
+    List<ClientScopeAssociation> associations =
+        Arrays.asList(Mockito.mock(ClientScopeAssociation.class));
 
     fixture.setClientsWithScopes(associations);
 

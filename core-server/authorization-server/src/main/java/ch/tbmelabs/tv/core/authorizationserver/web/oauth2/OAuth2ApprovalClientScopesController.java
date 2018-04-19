@@ -2,12 +2,10 @@ package ch.tbmelabs.tv.core.authorizationserver.web.oauth2;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
 
@@ -20,8 +18,10 @@ public class OAuth2ApprovalClientScopesController {
   private ClientScopeAssociationCRUDRepository clientScopeAssociationRepository;
 
   @RequestMapping("/oauth/confirm_access_scopes")
-  public List<String> getAccessConfirmation(@RequestParam(name = "client_id", required = true) String clientId) {
-    return clientScopeAssociationRepository.findAllByClient(clientRepository.findOneByClientId(clientId).get()).stream()
+  public List<String> getAccessConfirmation(
+      @RequestParam(name = "client_id", required = true) String clientId) {
+    return clientScopeAssociationRepository
+        .findAllByClient(clientRepository.findOneByClientId(clientId).get()).stream()
         .map(association -> association.getClientScope().getName()).collect(Collectors.toList());
   }
 }

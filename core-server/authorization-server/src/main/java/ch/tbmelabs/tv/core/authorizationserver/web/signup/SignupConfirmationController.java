@@ -1,16 +1,13 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 
@@ -28,9 +25,9 @@ public class SignupConfirmationController {
   @Autowired
   private EmailConfirmationTokenService emailConfirmationTokenService;
 
-  @GetMapping({ "/confirm-signup/{token}" })
-  public void confirmSignup(HttpServletResponse response, @PathVariable(name = "token", required = true) String token)
-      throws IOException {
+  @GetMapping({"/confirm-signup/{token}"})
+  public void confirmSignup(HttpServletResponse response,
+      @PathVariable(name = "token", required = true) String token) throws IOException {
     try {
       emailConfirmationTokenService.confirmRegistration(token);
     } catch (EmailConfirmationTokenNotFoundException e) {

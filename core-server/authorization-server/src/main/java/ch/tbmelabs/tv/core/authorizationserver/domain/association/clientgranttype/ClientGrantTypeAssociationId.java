@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype;
 
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

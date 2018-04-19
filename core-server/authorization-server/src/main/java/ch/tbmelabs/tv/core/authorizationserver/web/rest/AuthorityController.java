@@ -7,13 +7,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
-@RequestMapping({ "${spring.data.rest.base-path}/authorities" })
+@RequestMapping({"${spring.data.rest.base-path}/authorities"})
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class AuthorityController {
   @Autowired

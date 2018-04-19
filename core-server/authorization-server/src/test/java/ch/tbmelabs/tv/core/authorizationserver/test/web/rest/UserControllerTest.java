@@ -6,7 +6,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +13,7 @@ import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -55,12 +55,12 @@ public class UserControllerTest {
     testUser = new User();
     testUserProfile = new UserProfile(testUser, new ArrayList<>());
 
-    doReturn(testUser).when(mockUserRepository).findOne(Mockito.anyLong());
+    doReturn(testUser).when(mockUserRepository).findOne(ArgumentMatchers.anyLong());
     doReturn(new PageImpl<>(Arrays.asList(testUser))).when(mockUserRepository)
-        .findAll(Mockito.any(Pageable.class));
+        .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doReturn(testUserProfile).when(mockUserProfileMapper).toUserProfile(Mockito.any(User.class));
-    doReturn(testUser).when(mockUserProfileMapper).toUser(Mockito.any(UserProfile.class));
+    doReturn(testUserProfile).when(mockUserProfileMapper).toUserProfile(ArgumentMatchers.any(User.class));
+    doReturn(testUser).when(mockUserProfileMapper).toUser(ArgumentMatchers.any(UserProfile.class));
   }
 
   @Test
@@ -81,7 +81,7 @@ public class UserControllerTest {
   @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[]{Pageable.class});
+        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[] {Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -89,13 +89,13 @@ public class UserControllerTest {
   public void getAllUsersShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllUsers(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
         .containsExactly(testUserProfile);
-    verify(mockUserRepository, times(1)).findAll(Mockito.any(Pageable.class));
+    verify(mockUserRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 
   @Test
   public void updateUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserProfile.class});
+        UserController.class.getDeclaredMethod("updateUser", new Class<?>[] {UserProfile.class});
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -123,7 +123,7 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{UserProfile.class});
+        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[] {UserProfile.class});
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
   }
 

@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,7 +18,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-
 import ch.tbmelabs.tv.core.authorizationserver.configuration.OAuth2AuthorizationServerConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
@@ -65,8 +63,10 @@ public class OAuth2AuthorizationServerConfigurationTest {
   }
 
   @Test
-  public void configureAuthorizationServerEndpointsConfigurerShouldInitializeCorrectConfiguration() throws Exception {
-    AuthorizationServerEndpointsConfigurer configurer = Mockito.spy(AuthorizationServerEndpointsConfigurer.class);
+  public void configureAuthorizationServerEndpointsConfigurerShouldInitializeCorrectConfiguration()
+      throws Exception {
+    AuthorizationServerEndpointsConfigurer configurer =
+        Mockito.spy(AuthorizationServerEndpointsConfigurer.class);
 
     fixture.configure(configurer);
 
@@ -79,8 +79,10 @@ public class OAuth2AuthorizationServerConfigurationTest {
   }
 
   @Test
-  public void configureAuthorizationServerSecurityConfigurerShouldInitializeCorrectConfiguration() throws Exception {
-    AuthorizationServerSecurityConfigurer configurer = Mockito.spy(AuthorizationServerSecurityConfigurer.class);
+  public void configureAuthorizationServerSecurityConfigurerShouldInitializeCorrectConfiguration()
+      throws Exception {
+    AuthorizationServerSecurityConfigurer configurer =
+        Mockito.spy(AuthorizationServerSecurityConfigurer.class);
 
     fixture.configure(configurer);
 
@@ -89,7 +91,8 @@ public class OAuth2AuthorizationServerConfigurationTest {
   }
 
   @Test
-  public void configureClientDetailsServiceConfigurerShouldInitializeCorrectConfiguration() throws Exception {
+  public void configureClientDetailsServiceConfigurerShouldInitializeCorrectConfiguration()
+      throws Exception {
     ClientDetailsServiceConfigurer configurer = Mockito.mock(ClientDetailsServiceConfigurer.class);
 
     fixture.configure(configurer);

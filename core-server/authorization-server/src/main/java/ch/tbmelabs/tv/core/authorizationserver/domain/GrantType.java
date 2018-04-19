@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,21 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,9 +39,10 @@ public class GrantType extends NicelyDocumentedJDBCResource {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @GenericGenerator(name = "pk_sequence", strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY, parameters = {
-      @Parameter(name = "sequence_name", value = "client_grant_types_id_seq"),
-      @Parameter(name = "increment_size", value = "1") })
+  @GenericGenerator(name = "pk_sequence",
+      strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
+      parameters = {@Parameter(name = "sequence_name", value = "client_grant_types_id_seq"),
+          @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
@@ -57,7 +54,8 @@ public class GrantType extends NicelyDocumentedJDBCResource {
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = { CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE }, mappedBy = "clientGrantType")
+  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
+      mappedBy = "clientGrantType")
   private Collection<ClientGrantTypeAssociation> clientsWithGrantTypes;
 
   public GrantType(String name) {

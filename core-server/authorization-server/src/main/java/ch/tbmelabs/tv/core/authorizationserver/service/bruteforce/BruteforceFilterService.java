@@ -2,13 +2,11 @@ package ch.tbmelabs.tv.core.authorizationserver.service.bruteforce;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
 
@@ -41,7 +39,8 @@ public class BruteforceFilterService {
       BruteforceFilterService.failedLoginAttempts.put(ip, 0);
     }
 
-    BruteforceFilterService.failedLoginAttempts.put(ip, BruteforceFilterService.failedLoginAttempts.get(ip) + 1);
+    BruteforceFilterService.failedLoginAttempts.put(ip,
+        BruteforceFilterService.failedLoginAttempts.get(ip) + 1);
 
     if (BruteforceFilterService.failedLoginAttempts.get(ip) >= maxLoginAttempts) {
       LOGGER.fatal("Suspecting bruteforce attempt from " + ip + "!");

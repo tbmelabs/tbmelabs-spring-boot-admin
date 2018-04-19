@@ -4,13 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
 import java.util.UUID;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +17,6 @@ import org.mockito.Spy;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
@@ -36,7 +34,8 @@ public class ClientDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(Optional.of(new Client())).when(mockClientRepository).findOneByClientId(Mockito.anyString());
+    doReturn(Optional.of(new Client())).when(mockClientRepository)
+        .findOneByClientId(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -65,7 +64,8 @@ public class ClientDetailsServiceImplTest {
 
   @Test
   public void loadClientShouldThrowExceptionIfClientIdDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(mockClientRepository).findOneByClientId(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(mockClientRepository)
+        .findOneByClientId(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadClientByClientId(RandomStringUtils.random(11)))
         .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Client with ID")

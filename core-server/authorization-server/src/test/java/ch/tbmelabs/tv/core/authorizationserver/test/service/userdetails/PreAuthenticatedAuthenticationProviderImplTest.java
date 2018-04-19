@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import org.mockito.Spy;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.stereotype.Component;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticatedAuthenticationProviderImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticationUserDetailsServiceImpl;
 

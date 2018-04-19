@@ -1,10 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.exception;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 

@@ -4,20 +4,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -55,7 +53,7 @@ public class UserSignupServiceValidationTest {
 
         return Optional.ofNullable(null);
       }
-    }).when(userRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
+    }).when(userRepository).findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     doAnswer(new Answer<Optional<User>>() {
       @Override
@@ -66,14 +64,14 @@ public class UserSignupServiceValidationTest {
 
         return Optional.ofNullable(null);
       }
-    }).when(userRepository).findOneByEmailIgnoreCase(Mockito.anyString());
+    }).when(userRepository).findOneByEmailIgnoreCase(ArgumentMatchers.anyString());
 
-    doCallRealMethod().when(fixture).isUsernameUnique(Mockito.any(User.class));
-    doCallRealMethod().when(fixture).doesUsernameMatchFormat(Mockito.any(User.class));
-    doCallRealMethod().when(fixture).isEmailAddressUnique(Mockito.any(User.class));
-    doCallRealMethod().when(fixture).isEmailAddress(Mockito.any(User.class));
-    doCallRealMethod().when(fixture).doesPasswordMatchFormat(Mockito.any(User.class));
-    doCallRealMethod().when(fixture).doPasswordsMatch(Mockito.any(User.class));
+    doCallRealMethod().when(fixture).isUsernameUnique(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).isEmailAddressUnique(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).isEmailAddress(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).doPasswordsMatch(ArgumentMatchers.any(User.class));
   }
 
   @Test

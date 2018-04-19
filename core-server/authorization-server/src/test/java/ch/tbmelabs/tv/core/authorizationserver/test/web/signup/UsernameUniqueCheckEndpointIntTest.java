@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -21,7 +19,8 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
-public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+public class UsernameUniqueCheckEndpointIntTest
+    extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
 
@@ -50,12 +49,15 @@ public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2Authorizat
 
   @Test
   public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
-    assertThatThrownBy(() -> mockMvc
-        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USERNAME_NOT_UNIQUE_ERROR_MESSAGE);
+    assertThatThrownBy(
+        () -> mockMvc
+            .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername())
+                    .toString()))
+            .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+                .isInstanceOf(NestedServletException.class)
+                .hasCauseInstanceOf(IllegalArgumentException.class)
+                .hasStackTraceContaining(USERNAME_NOT_UNIQUE_ERROR_MESSAGE);
   }
 
   @Test

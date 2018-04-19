@@ -4,13 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +17,6 @@ import org.mockito.Spy;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.stereotype.Service;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
@@ -39,7 +37,7 @@ public class EmailConfirmationTokenServiceTest {
     initMocks(this);
 
     doReturn(Optional.ofNullable(null)).when(mockEmailConfirmationTokenRepository)
-        .findOneByTokenString(Mockito.anyString());
+        .findOneByTokenString(ArgumentMatchers.anyString());
     doAnswer(new Answer<EmailConfirmationToken>() {
       @Override
       public EmailConfirmationToken answer(InvocationOnMock invocation) throws Throwable {
@@ -50,7 +48,7 @@ public class EmailConfirmationTokenServiceTest {
 
         return newEmailConfirmationToken;
       }
-    }).when(mockEmailConfirmationTokenRepository).save(Mockito.any(EmailConfirmationToken.class));
+    }).when(mockEmailConfirmationTokenRepository).save(ArgumentMatchers.any(EmailConfirmationToken.class));
   }
 
   @Test

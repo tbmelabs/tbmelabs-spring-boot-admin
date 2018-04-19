@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.service.mail;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
-@Profile({ "!" + SpringApplicationProfile.NO_MAIL })
+@Profile({"!" + SpringApplicationProfile.NO_MAIL})
 public class MailService {
   protected static final Logger LOGGER = LogManager.getLogger(MailService.class);
 

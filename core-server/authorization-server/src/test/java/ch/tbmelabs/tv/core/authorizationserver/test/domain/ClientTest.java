@@ -3,26 +3,21 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
@@ -49,12 +44,14 @@ public class ClientTest {
 
   @Test
   public void clientShouldBeAnnotated() {
-    assertThat(Client.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
-        .hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Client.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
+        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
 
     assertThat(Client.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("clients");
-    assertThat(Client.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
-    assertThat(Client.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
+    assertThat(Client.class.getDeclaredAnnotation(JsonInclude.class).value())
+        .isEqualTo(Include.NON_NULL);
+    assertThat(Client.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
+        .isTrue();
   }
 
   @Test
@@ -130,7 +127,8 @@ public class ClientTest {
 
     fixture.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("accessTokenValiditySeconds", accessTokenValiditySeconds);
+    assertThat(fixture).hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
+        accessTokenValiditySeconds);
     assertThat(fixture.getAccessTokenValiditySeconds()).isEqualTo(accessTokenValiditySeconds);
   }
 
@@ -140,7 +138,8 @@ public class ClientTest {
 
     fixture.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", refreshTokenValiditySeconds);
+    assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
+        refreshTokenValiditySeconds);
     assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(refreshTokenValiditySeconds);
   }
 
@@ -178,8 +177,8 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
-    Collection<ClientScopeAssociation> scopes = Arrays
-        .asList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
+    Collection<ClientScopeAssociation> scopes =
+        Arrays.asList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
 
     fixture.setScopes(scopes);
 
@@ -195,7 +194,8 @@ public class ClientTest {
 
     assertThat(mockAssociation).isNotNull().hasSize(1);
     assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
-    assertThat(mockAssociation.get(0).getClientGrantType().getName()).isEqualTo(TEST_CLIENT_GRANT_TYPE);
+    assertThat(mockAssociation.get(0).getClientGrantType().getName())
+        .isEqualTo(TEST_CLIENT_GRANT_TYPE);
   }
 
   @Test
@@ -205,7 +205,8 @@ public class ClientTest {
 
     assertThat(mockAssociation).isNotNull().hasSize(1);
     assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
-    assertThat(mockAssociation.get(0).getClientAuthority().getName()).isEqualTo(TEST_CLIENT_AUTHORITY);
+    assertThat(mockAssociation.get(0).getClientAuthority().getName())
+        .isEqualTo(TEST_CLIENT_AUTHORITY);
   }
 
   @Test

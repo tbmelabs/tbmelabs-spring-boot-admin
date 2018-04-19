@@ -3,13 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.web.rest.UserControllerIntTest;
 import java.util.ArrayList;
 import java.util.Random;
 import org.junit.Before;
@@ -18,6 +11,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.stereotype.Component;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.web.rest.UserControllerIntTest;
 
 public class UserProfileMapperTest {
 

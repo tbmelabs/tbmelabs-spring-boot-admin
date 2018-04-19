@@ -5,17 +5,15 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -38,7 +36,8 @@ public class AuthenticationAttemptLoggerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(Optional.of(new User())).when(mockUserRepository).findOneByUsernameIgnoreCase(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(mockUserRepository)
+        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -53,9 +52,10 @@ public class AuthenticationAttemptLoggerTest {
 
   @Test
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
-    fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.", "Testuser");
+    fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.",
+        "Testuser");
 
-    verify(mockUserRepository, times(1)).findOneByUsernameIgnoreCase(Mockito.anyString());
-    verify(mockAuthenticationLogRepository, times(1)).save(Mockito.any(AuthenticationLog.class));
+    verify(mockUserRepository, times(1)).findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+    verify(mockAuthenticationLogRepository, times(1)).save(ArgumentMatchers.any(AuthenticationLog.class));
   }
 }

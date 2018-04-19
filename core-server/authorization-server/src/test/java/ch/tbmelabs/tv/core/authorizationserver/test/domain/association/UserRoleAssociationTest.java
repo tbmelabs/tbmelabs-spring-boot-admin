@@ -3,15 +3,11 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Random;
-
 import javax.persistence.IdClass;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
@@ -48,7 +44,8 @@ public class UserRoleAssociationTest {
   public void userRoleAssociationShouldHaveAllArgsConstructor() {
     assertThat(new UserRoleAssociation(userFixture, roleFixture))
         .hasFieldOrPropertyWithValue("userId", userFixture.getId())
-        .hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId()).hasFieldOrPropertyWithValue("user", userFixture)
+        .hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId())
+        .hasFieldOrPropertyWithValue("user", userFixture)
         .hasFieldOrPropertyWithValue("userRole", roleFixture);
   }
 
@@ -57,8 +54,8 @@ public class UserRoleAssociationTest {
     UserRoleAssociation fixture = new UserRoleAssociation();
     fixture.setUser(userFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("userId", userFixture.getId()).hasFieldOrPropertyWithValue("user",
-        userFixture);
+    assertThat(fixture).hasFieldOrPropertyWithValue("userId", userFixture.getId())
+        .hasFieldOrPropertyWithValue("user", userFixture);
     assertThat(fixture.getUser()).isEqualTo(userFixture);
   }
 

@@ -4,27 +4,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
@@ -46,12 +42,14 @@ public class UserTest {
 
   @Test
   public void userShouldBeAnnotated() {
-    assertThat(User.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
-        .hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(User.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
+        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
 
     assertThat(User.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("users");
-    assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
-    assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
+    assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value())
+        .isEqualTo(Include.NON_NULL);
+    assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
+        .isTrue();
   }
 
   @Test
@@ -127,13 +125,15 @@ public class UserTest {
 
     fixture.setEmailConfirmationToken(emailConfirmationToken);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("emailConfirmationToken", emailConfirmationToken);
+    assertThat(fixture).hasFieldOrPropertyWithValue("emailConfirmationToken",
+        emailConfirmationToken);
     assertThat(fixture.getEmailConfirmationToken()).isEqualTo(emailConfirmationToken);
   }
 
   @Test
   public void userShouldHaveRoleGetterAndSetter() {
-    Collection<UserRoleAssociation> roles = Arrays.asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
+    Collection<UserRoleAssociation> roles =
+        Arrays.asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
 
     fixture.setRoles(roles);
 
@@ -146,13 +146,12 @@ public class UserTest {
     String password = RandomStringUtils.random(11);
     ReflectionTestUtils.setField(fixture, "password", password);
     doReturn(password).when(fixture).getPassword();
-    doCallRealMethod().when(fixture).setPassword(Mockito.anyString());
+    doCallRealMethod().when(fixture).setPassword(ArgumentMatchers.anyString());
 
     fixture.onCreate();
 
-    assertThat(
-        new BCryptPasswordEncoder().matches(password, (String) ReflectionTestUtils.getField(fixture, "password")))
-            .isTrue();
+    assertThat(new BCryptPasswordEncoder().matches(password,
+        (String) ReflectionTestUtils.getField(fixture, "password"))).isTrue();
   }
 
   @Test

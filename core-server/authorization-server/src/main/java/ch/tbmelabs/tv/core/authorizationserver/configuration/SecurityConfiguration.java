@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-
 import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
@@ -47,7 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
-      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
+      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV
+          + "\" is active: Web request debugging is enabled!");
 
       web.debug(true);
     }

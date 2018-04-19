@@ -3,18 +3,15 @@ package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
@@ -44,7 +41,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
       } else {
         throw new IllegalArgumentException(noSavedRequestExceptionIdMessage);
       }
-    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+    } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
+        | SecurityException e) {
       if (IllegalArgumentException.class.isAssignableFrom(e.getClass())
           && !e.getLocalizedMessage().equals(noSavedRequestExceptionIdMessage)) {
         throw (IllegalArgumentException) e;
@@ -66,13 +64,15 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     bruteforceFilter.authenticationFromIpSucceed(requestIp);
   }
 
-  private String getSavedRequestCacheRedirectUrl(HttpServletRequest request, HttpServletResponse response)
-      throws IllegalAccessException, NoSuchFieldException {
-    Field requestCache = AuthenticationSuccessHandler.class.getSuperclass().getDeclaredField("requestCache");
+  private String getSavedRequestCacheRedirectUrl(HttpServletRequest request,
+      HttpServletResponse response) throws IllegalAccessException, NoSuchFieldException {
+    Field requestCache =
+        AuthenticationSuccessHandler.class.getSuperclass().getDeclaredField("requestCache");
     requestCache.setAccessible(true);
 
     SavedRequest savedRequest;
-    if ((savedRequest = ((RequestCache) requestCache.get(this)).getRequest(request, response)) != null) {
+    if ((savedRequest =
+        ((RequestCache) requestCache.get(this)).getRequest(request, response)) != null) {
       return savedRequest.getRedirectUrl();
     }
 

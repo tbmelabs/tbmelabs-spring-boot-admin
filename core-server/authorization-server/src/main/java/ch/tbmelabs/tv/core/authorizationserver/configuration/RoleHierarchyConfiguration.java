@@ -3,12 +3,10 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
-
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Configuration

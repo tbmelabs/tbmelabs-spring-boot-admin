@@ -3,21 +3,19 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.oauth2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
@@ -47,9 +45,10 @@ public class OAuth2ApprovalClientScopesControllerTest {
 
     doReturn(new Scope(CLIENT_SCOPE_NAME)).when(mockAssociation).getClientScope();
 
-    doReturn(Optional.of(new Client())).when(clientRepositoryFixture).findOneByClientId(Mockito.anyString());
+    doReturn(Optional.of(new Client())).when(clientRepositoryFixture)
+        .findOneByClientId(ArgumentMatchers.anyString());
     doReturn(Arrays.asList(mockAssociation)).when(clientScopeAssociationRepository)
-        .findAllByClient(Mockito.any(Client.class));
+        .findAllByClient(ArgumentMatchers.any(Client.class));
   }
 
   @Test
@@ -63,14 +62,17 @@ public class OAuth2ApprovalClientScopesControllerTest {
   }
 
   @Test
-  public void getAccessConfirmationShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method getAccessConfirmation = OAuth2ApprovalClientScopesController.class.getDeclaredMethod("getAccessConfirmation",
-        new Class<?>[] { String.class });
-    assertThat(getAccessConfirmation.getDeclaredAnnotation(RequestMapping.class).value()).containsExactly("/oauth/confirm_access_scopes");
+  public void getAccessConfirmationShouldBeAnnotated()
+      throws NoSuchMethodException, SecurityException {
+    Method getAccessConfirmation = OAuth2ApprovalClientScopesController.class
+        .getDeclaredMethod("getAccessConfirmation", new Class<?>[] {String.class});
+    assertThat(getAccessConfirmation.getDeclaredAnnotation(RequestMapping.class).value())
+        .containsExactly("/oauth/confirm_access_scopes");
   }
 
   @Test
   public void getAccessConfirmationShouldReturnScopeNamesOnly() {
-    assertThat(fixture.getAccessConfirmation(RandomStringUtils.random(11))).containsExactly(CLIENT_SCOPE_NAME);
+    assertThat(fixture.getAccessConfirmation(RandomStringUtils.random(11)))
+        .containsExactly(CLIENT_SCOPE_NAME);
   }
 }

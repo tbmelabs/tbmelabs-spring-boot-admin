@@ -1,17 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.sql.DataSource;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class DatasourceConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+public class DatasourceConfigurationIntTest
+    extends AbstractOAuth2AuthorizationServerContextAwareTest {
   @Autowired
   private DatasourceConfiguration configuration;
 

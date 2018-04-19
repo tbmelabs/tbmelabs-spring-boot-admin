@@ -1,16 +1,13 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
@@ -37,8 +34,8 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 
     logger.debug("Failed authentication from " + requestIp);
 
-    authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.NOK, requestIp, exception.getLocalizedMessage(),
-        request.getParameter(USERNAME_PARAMETER));
+    authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.NOK, requestIp,
+        exception.getLocalizedMessage(), request.getParameter(USERNAME_PARAMETER));
 
     bruteforceFilter.authenticationFromIpFailed(requestIp);
   }

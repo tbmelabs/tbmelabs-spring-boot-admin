@@ -3,21 +3,16 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Random;
-
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
@@ -45,17 +40,17 @@ public class ClientScopeAssociationTest {
 
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
         .isEqualTo("client_has_scopes");
-    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
-        .isEqualTo(Include.NON_NULL);
-    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
+    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value())
+        .isNotNull().isEqualTo(Include.NON_NULL);
+    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class)
+        .ignoreUnknown()).isTrue();
   }
 
   @Test
   public void clientScopeAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(ClientScopeAssociation.class).hasAnnotation(IdClass.class);
-    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(IdClass.class).value()).isNotNull()
-        .isEqualTo(ClientScopeAssociationId.class);
+    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(IdClass.class).value())
+        .isNotNull().isEqualTo(ClientScopeAssociationId.class);
   }
 
   @Test
@@ -68,7 +63,8 @@ public class ClientScopeAssociationTest {
     assertThat(new ClientScopeAssociation(clientFixture, scopeFixture))
         .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
         .hasFieldOrPropertyWithValue("clientScopeId", scopeFixture.getId())
-        .hasFieldOrPropertyWithValue("client", clientFixture).hasFieldOrPropertyWithValue("clientScope", scopeFixture);
+        .hasFieldOrPropertyWithValue("client", clientFixture)
+        .hasFieldOrPropertyWithValue("clientScope", scopeFixture);
   }
 
   @Test

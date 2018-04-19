@@ -11,17 +11,14 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
@@ -51,14 +48,14 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
   @JsonBackReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH })
+  @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_id", referencedColumnName = "id")
   private Client client;
 
   @JsonBackReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @ManyToOne(cascade = { CascadeType.MERGE })
+  @ManyToOne(cascade = {CascadeType.MERGE})
   @JoinColumn(insertable = false, updatable = false)
   @PrimaryKeyJoinColumn(name = "client_authority_id", referencedColumnName = "id")
   private Authority clientAuthority;

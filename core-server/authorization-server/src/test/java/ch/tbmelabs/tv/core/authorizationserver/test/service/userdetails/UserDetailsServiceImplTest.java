@@ -4,12 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -18,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
@@ -36,7 +34,8 @@ public class UserDetailsServiceImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doReturn(Optional.of(new User())).when(userRepositoryFixture).findOneByUsernameIgnoreCase(Mockito.anyString());
+    doReturn(Optional.of(new User())).when(userRepositoryFixture)
+        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -59,13 +58,14 @@ public class UserDetailsServiceImplTest {
       throws IllegalAccessException, NoSuchFieldException, SecurityException {
     UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.random(11));
 
-    assertThat(ReflectionTestUtils.getField(userDetails, "user"))
-        .isEqualTo(userRepositoryFixture.findOneByUsernameIgnoreCase(RandomStringUtils.random(11)).get());
+    assertThat(ReflectionTestUtils.getField(userDetails, "user")).isEqualTo(
+        userRepositoryFixture.findOneByUsernameIgnoreCase(RandomStringUtils.random(11)).get());
   }
 
   @Test
   public void loadUserShouldThrowExceptionIfUsernameDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(userRepositoryFixture).findOneByUsernameIgnoreCase(Mockito.anyString());
+    doReturn(Optional.ofNullable(null)).when(userRepositoryFixture)
+        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserByUsername(RandomStringUtils.random(11)))
         .isInstanceOf(UsernameNotFoundException.class).hasMessageContaining("Username")

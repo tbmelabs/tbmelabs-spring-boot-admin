@@ -1,11 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.spi.EvaluationContextExtension;
-
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SpELConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
@@ -17,7 +15,8 @@ public class SpELConfigurationIntTest extends AbstractOAuth2AuthorizationServerC
   private EvaluationContextExtension bean;
 
   @Test
-  public void primaryRegisteredBeanShouldEqualConfiguredEvaluationContextExtension() throws Exception {
+  public void primaryRegisteredBeanShouldEqualConfiguredEvaluationContextExtension()
+      throws Exception {
     assertThat(configuration.securityExtension()).isEqualTo(bean);
   }
 }

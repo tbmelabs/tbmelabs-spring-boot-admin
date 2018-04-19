@@ -4,22 +4,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.IntStream;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
@@ -58,11 +56,13 @@ public class BruteforceFilterServiceTest {
     Map<String, Integer> failedLoginAttempts = new HashMap<>();
     failedLoginAttempts.put(RandomStringUtils.random(11), new Random().nextInt());
 
-    ReflectionTestUtils.setField(BruteforceFilterService.class, "failedLoginAttempts", failedLoginAttempts);
+    ReflectionTestUtils.setField(BruteforceFilterService.class, "failedLoginAttempts",
+        failedLoginAttempts);
 
     BruteforceFilterService.resetFilter();
 
-    assertThat((Map<String, Integer>) ReflectionTestUtils.getField(fixture, "failedLoginAttempts")).hasSize(0);
+    assertThat((Map<String, Integer>) ReflectionTestUtils.getField(fixture, "failedLoginAttempts"))
+        .hasSize(0);
   }
 
   @Test
@@ -70,16 +70,18 @@ public class BruteforceFilterServiceTest {
     Map<String, Integer> failedLoginAttempts = new HashMap<>();
     failedLoginAttempts.put(RandomStringUtils.random(11), new Random().nextInt());
 
-    ReflectionTestUtils.setField(BruteforceFilterService.class, "failedLoginAttempts", failedLoginAttempts);
+    ReflectionTestUtils.setField(BruteforceFilterService.class, "failedLoginAttempts",
+        failedLoginAttempts);
 
     assertThat(BruteforceFilterService.getState()).isEqualTo(failedLoginAttempts);
   }
 
   @Test
   public void authenticationFromIpFailedShouldSuspectBruteforceAttemptIfMaxLoginAttemptsExceed() {
-    IntStream.range(0, MAX_LOGIN_ATTEMPTS).forEach(iterator -> fixture.authenticationFromIpFailed(IP_ADDRESS));
+    IntStream.range(0, MAX_LOGIN_ATTEMPTS)
+        .forEach(iterator -> fixture.authenticationFromIpFailed(IP_ADDRESS));
 
-    verify(ipBlacklistRepositoryFixture, atLeastOnce()).save(Mockito.any(BlacklistedIp.class));
+    verify(ipBlacklistRepositoryFixture, atLeastOnce()).save(ArgumentMatchers.any(BlacklistedIp.class));
   }
 
   @Test

@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
@@ -38,9 +37,9 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-    endpoints.authenticationManager(authenticationManager).exceptionTranslator(loggingExceptionTranslator)
-        .reuseRefreshTokens(false).tokenServices(tokenService).tokenStore(tokenStore)
-        .userDetailsService(userDetailsService);
+    endpoints.authenticationManager(authenticationManager)
+        .exceptionTranslator(loggingExceptionTranslator).reuseRefreshTokens(false)
+        .tokenServices(tokenService).tokenStore(tokenStore).userDetailsService(userDetailsService);
   }
 
   @Override

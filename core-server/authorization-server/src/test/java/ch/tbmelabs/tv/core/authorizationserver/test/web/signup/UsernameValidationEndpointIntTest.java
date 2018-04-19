@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -13,10 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class UsernameValidationEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+public class UsernameValidationEndpointIntTest
+    extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String USERNAME_VALIDATION_ENDPOINT = "/signup/does-username-match-format";
   private static final String USERNAME_PARAMETER_NAME = "username";
 
@@ -29,31 +28,39 @@ public class UsernameValidationEndpointIntTest extends AbstractOAuth2Authorizati
 
   @Test
   public void tooShortUsernameShouldFailValidation() throws Exception {
-    assertThatThrownBy(() -> mockMvc
-        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
+    assertThatThrownBy(
+        () -> mockMvc
+            .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4))
+                    .toString()))
+            .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+                .isInstanceOf(NestedServletException.class)
+                .hasCauseInstanceOf(IllegalArgumentException.class)
+                .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
   public void tooLongUsernameShouldFailValidation() throws Exception {
-    assertThatThrownBy(() -> mockMvc
-        .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
+    assertThatThrownBy(
+        () -> mockMvc
+            .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+                .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65))
+                    .toString()))
+            .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+                .isInstanceOf(NestedServletException.class)
+                .hasCauseInstanceOf(IllegalArgumentException.class)
+                .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
   public void usernameWithSpecialCharsShouldFailValidation() throws Exception {
     assertThatThrownBy(() -> mockMvc
         .perform(post(USERNAME_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
+            .content(new JSONObject()
+                .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class).hasCauseInstanceOf(IllegalArgumentException.class)
+            .isInstanceOf(NestedServletException.class)
+            .hasCauseInstanceOf(IllegalArgumentException.class)
             .hasStackTraceContaining(USERNAME_VALIDATION_ERROR_MESSAGE);
   }
 

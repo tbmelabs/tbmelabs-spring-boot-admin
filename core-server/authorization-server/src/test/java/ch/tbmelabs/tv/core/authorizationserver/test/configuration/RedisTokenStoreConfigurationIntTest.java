@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +16,17 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
-
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration.RedisTokenStoreConfiguration;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles({ SpringApplicationProfile.TEST, SpringApplicationProfile.NO_MAIL })
-@SpringBootTest(classes = { Application.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-@TestExecutionListeners({ ServletTestExecutionListener.class, DirtiesContextTestExecutionListener.class,
-    DirtiesContextBeforeModesTestExecutionListener.class, DependencyInjectionTestExecutionListener.class,
-    WithSecurityContextTestExecutionListener.class })
+@ActiveProfiles({SpringApplicationProfile.TEST, SpringApplicationProfile.NO_MAIL})
+@SpringBootTest(classes = {Application.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestExecutionListeners({ServletTestExecutionListener.class,
+    DirtiesContextTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+    DependencyInjectionTestExecutionListener.class, WithSecurityContextTestExecutionListener.class})
 public class RedisTokenStoreConfigurationIntTest {
   @Autowired
   private RedisTokenStoreConfiguration redisConfiguration;

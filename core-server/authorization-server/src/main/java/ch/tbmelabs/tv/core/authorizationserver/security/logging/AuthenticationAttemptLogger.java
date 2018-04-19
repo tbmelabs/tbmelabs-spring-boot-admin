@@ -1,12 +1,10 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -23,12 +21,14 @@ public class AuthenticationAttemptLogger {
   @Autowired
   private UserCRUDRepository userRepository;
 
-  public void logAuthenticationAttempt(AUTHENTICATION_STATE state, String ip, String message, String username) {
+  public void logAuthenticationAttempt(AUTHENTICATION_STATE state, String ip, String message,
+      String username) {
     LOGGER.debug("Authentication attempt from " + ip + " with state " + state.name());
 
     Optional<User> user;
     if (!(user = userRepository.findOneByUsernameIgnoreCase(username)).isPresent()) {
-      LOGGER.warn("Invalid username \"" + username + "\" detected: Probably a bruteforcing attempt?");
+      LOGGER
+          .warn("Invalid username \"" + username + "\" detected: Probably a bruteforcing attempt?");
 
       return;
     }

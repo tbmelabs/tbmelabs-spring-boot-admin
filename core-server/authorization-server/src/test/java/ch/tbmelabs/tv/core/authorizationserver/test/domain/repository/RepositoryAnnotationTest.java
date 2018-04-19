@@ -1,12 +1,10 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 public class RepositoryAnnotationTest {
@@ -14,8 +12,9 @@ public class RepositoryAnnotationTest {
 
   @Test
   public void packageShouldOnlyContainRepositories() {
-    new Reflections(Application.class.getPackage().getName() + ".domain.repository").getSubTypesOf(Object.class)
-        .forEach(repository -> assertThat(repository.getClass().getSimpleName()).contains("Repository"));
+    new Reflections(Application.class.getPackage().getName() + ".domain.repository")
+        .getSubTypesOf(Object.class).forEach(
+            repository -> assertThat(repository.getClass().getSimpleName()).contains("Repository"));
   }
 
   @Test

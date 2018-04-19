@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

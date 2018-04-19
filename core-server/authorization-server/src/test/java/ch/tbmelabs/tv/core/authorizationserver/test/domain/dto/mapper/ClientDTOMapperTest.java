@@ -3,17 +3,14 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.ArrayList;
 import java.util.Random;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
@@ -66,14 +63,17 @@ public class ClientDTOMapperTest {
 
   @Test
   public void toClientDTOShouldMapClientToDTO() {
-    assertThat(fixture.toClientDTO(testClient)).hasFieldOrPropertyWithValue("created", testClient.getCreated())
+    assertThat(fixture.toClientDTO(testClient))
+        .hasFieldOrPropertyWithValue("created", testClient.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testClient.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testClient.getId())
         .hasFieldOrPropertyWithValue("clientId", testClient.getClientId())
         .hasFieldOrPropertyWithValue("isSecretRequired", testClient.getIsSecretRequired())
         .hasFieldOrPropertyWithValue("isAutoApprove", testClient.getIsAutoApprove())
-        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds", testClient.getAccessTokenValiditySeconds())
-        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", testClient.getRefreshTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
+            testClient.getAccessTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
+            testClient.getRefreshTokenValiditySeconds())
         .hasFieldOrPropertyWithValue("redirectUri", testClient.getRedirectUri())
         .hasFieldOrPropertyWithValue("grantTypes", new ArrayList<>())
         .hasFieldOrPropertyWithValue("grantedAuthorities", new ArrayList<>())
@@ -84,15 +84,18 @@ public class ClientDTOMapperTest {
 
   @Test
   public void toClientShouldMapDTOToEntity() {
-    assertThat(fixture.toClient(testClientDTO)).hasFieldOrPropertyWithValue("created", testClientDTO.getCreated())
+    assertThat(fixture.toClient(testClientDTO))
+        .hasFieldOrPropertyWithValue("created", testClientDTO.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testClientDTO.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testClientDTO.getId())
         .hasFieldOrPropertyWithValue("clientId", testClientDTO.getClientId())
         .hasFieldOrPropertyWithValue("secret", testClientDTO.getSecret())
         .hasFieldOrPropertyWithValue("isSecretRequired", testClientDTO.getIsSecretRequired())
         .hasFieldOrPropertyWithValue("isAutoApprove", testClientDTO.getIsAutoApprove())
-        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds", testClientDTO.getAccessTokenValiditySeconds())
-        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", testClientDTO.getRefreshTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
+            testClientDTO.getAccessTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
+            testClientDTO.getRefreshTokenValiditySeconds())
         .hasFieldOrPropertyWithValue("redirectUri", testClientDTO.getRedirectUri())
         // TODO: Add value check
         .hasFieldOrProperty("grantTypes")

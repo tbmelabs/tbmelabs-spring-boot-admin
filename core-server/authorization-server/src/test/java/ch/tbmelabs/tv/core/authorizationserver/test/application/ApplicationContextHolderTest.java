@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.test.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +11,6 @@ import org.mockito.Spy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
 
 public class ApplicationContextHolderTest {
@@ -49,8 +47,10 @@ public class ApplicationContextHolderTest {
   public void applicationContextGetterAndSetterWorkAsExpected() {
     fixture.setApplicationContext(applicationContextFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("applicationContext", applicationContextFixture);
+    assertThat(fixture).hasFieldOrPropertyWithValue("applicationContext",
+        applicationContextFixture);
 
-    assertThat(ApplicationContextHolder.getApplicationContext()).isEqualTo(applicationContextFixture);
+    assertThat(ApplicationContextHolder.getApplicationContext())
+        .isEqualTo(applicationContextFixture);
   }
 }

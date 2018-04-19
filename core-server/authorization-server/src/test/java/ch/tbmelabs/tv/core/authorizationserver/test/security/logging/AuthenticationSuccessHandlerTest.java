@@ -4,14 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.io.IOException;
-
 import javax.servlet.ServletException;
-
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -21,7 +19,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
@@ -67,11 +64,13 @@ public class AuthenticationSuccessHandlerTest {
     mockRequest.setRemoteAddr("127.0.0.1");
     mockRequest.setParameter("username", "Testuser");
 
-    fixture.onAuthenticationSuccess(mockRequest, new MockHttpServletResponse(), new UsernamePasswordAuthenticationToken(
-        new User(), new UsernamePasswordCredentials("Testuser", "Testpassword")));
+    fixture.onAuthenticationSuccess(mockRequest, new MockHttpServletResponse(),
+        new UsernamePasswordAuthenticationToken(new User(),
+            new UsernamePasswordCredentials("Testuser", "Testpassword")));
 
-    verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(Mockito.eq(AUTHENTICATION_STATE.OK),
-        Mockito.eq("127.0.0.1"), Mockito.isNull(), Mockito.anyString());
+    verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(
+        ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"), ArgumentMatchers.isNull(),
+        ArgumentMatchers.anyString());
     verify(mockBruteforceFilterService, times(1)).authenticationFromIpSucceed("127.0.0.1");
   }
 }

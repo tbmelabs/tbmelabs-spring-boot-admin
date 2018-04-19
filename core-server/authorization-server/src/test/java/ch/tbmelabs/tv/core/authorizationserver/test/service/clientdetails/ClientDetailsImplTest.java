@@ -4,26 +4,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.security.oauth2.provider.ClientDetails;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
 
 public class ClientDetailsImplTest {
-  private static final String CLIENT_REDIRECT_URIS = "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR
-      + "uritwo";
+  private static final String CLIENT_REDIRECT_URIS =
+      "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR + "uritwo";
 
   @Mock
   private Client mockClient;
@@ -32,9 +30,9 @@ public class ClientDetailsImplTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doCallRealMethod().when(mockClient).grantTypesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(mockClient).authoritiesToAssociations(Mockito.anyList());
-    doCallRealMethod().when(mockClient).scopesToAssociations(Mockito.anyList());
+    doCallRealMethod().when(mockClient).grantTypesToAssociations(ArgumentMatchers.anyList());
+    doCallRealMethod().when(mockClient).authoritiesToAssociations(ArgumentMatchers.anyList());
+    doCallRealMethod().when(mockClient).scopesToAssociations(ArgumentMatchers.anyList());
 
     doReturn(UUID.randomUUID().toString()).when(mockClient).getClientId();
     doReturn(UUID.randomUUID().toString()).when(mockClient).getSecret();
@@ -64,11 +62,13 @@ public class ClientDetailsImplTest {
     assertThat(fixture.isSecretRequired()).isEqualTo(mockClient.getIsSecretRequired());
     assertThat(fixture.isAutoApprove(new String())).isEqualTo(mockClient.getIsAutoApprove());
     assertThat(fixture.getClientSecret()).isEqualTo(mockClient.getSecret());
-    assertThat(fixture.getAccessTokenValiditySeconds()).isEqualTo(fixture.getAccessTokenValiditySeconds());
-    assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(fixture.getRefreshTokenValiditySeconds());
+    assertThat(fixture.getAccessTokenValiditySeconds())
+        .isEqualTo(fixture.getAccessTokenValiditySeconds());
+    assertThat(fixture.getRefreshTokenValiditySeconds())
+        .isEqualTo(fixture.getRefreshTokenValiditySeconds());
     assertThat(fixture.isScoped()).isEqualTo(!mockClient.getScopes().isEmpty());
-    assertThat(fixture.getRegisteredRedirectUri()).isEqualTo(
-        new HashSet<>(Arrays.asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
+    assertThat(fixture.getRegisteredRedirectUri()).isEqualTo(new HashSet<>(Arrays
+        .asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
     assertThat(fixture.getAuthorities()).isEqualTo(mockClient.getGrantedAuthorities().stream()
         .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList()));
     assertThat(fixture.getAdditionalInformation()).isEqualTo(new HashMap<>());

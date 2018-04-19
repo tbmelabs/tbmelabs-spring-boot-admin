@@ -3,11 +3,9 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
@@ -39,16 +37,17 @@ public class ClientDTO {
 
   private String redirectUri;
 
-  @JsonIgnoreProperties({ "clientsWithGrantTypes" })
+  @JsonIgnoreProperties({"clientsWithGrantTypes"})
   private Collection<GrantType> grantTypes;
 
-  @JsonIgnoreProperties({ "clientsWithAuthorities" })
+  @JsonIgnoreProperties({"clientsWithAuthorities"})
   private Collection<Authority> grantedAuthorities;
 
-  @JsonIgnoreProperties({ "clientsWithScopes" })
+  @JsonIgnoreProperties({"clientsWithScopes"})
   private Collection<Scope> scopes;
 
-  public ClientDTO(Client client, List<GrantType> grantTypes, List<Authority> authorities, List<Scope> scopes) {
+  public ClientDTO(Client client, List<GrantType> grantTypes, List<Authority> authorities,
+      List<Scope> scopes) {
     this.created = client.getCreated();
     this.lastUpdated = client.getLastUpdated();
     this.id = client.getId();

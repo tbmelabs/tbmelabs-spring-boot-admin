@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver;
 
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -9,7 +8,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.web.WebApplicationInitializer;
-
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @SpringCloudApplication

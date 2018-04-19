@@ -12,7 +12,6 @@ public class SecurityEvaluationContextExtension extends EvaluationContextExtensi
 
   @Override
   public SecurityExpressionRoot getRootObject() {
-    return new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {
-    };
+    return new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {};
   }
 }

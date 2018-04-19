@@ -7,10 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 
@@ -68,8 +66,8 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Set<String> getAuthorizedGrantTypes() {
-    return client.getGrantTypes().stream().map(association -> association.getClientGrantType().getName())
-        .collect(Collectors.toSet());
+    return client.getGrantTypes().stream()
+        .map(association -> association.getClientGrantType().getName()).collect(Collectors.toSet());
   }
 
   @Override
@@ -80,13 +78,14 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
-    return new HashSet<>(Arrays.asList(client.getRedirectUri().split(CLIENT_REDIRECT_URI_SPLITTERATOR)));
+    return new HashSet<>(
+        Arrays.asList(client.getRedirectUri().split(CLIENT_REDIRECT_URI_SPLITTERATOR)));
   }
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
-    return client.getGrantedAuthorities().stream().map(ClientAuthorityAssociation::getClientAuthority)
-        .collect(Collectors.toList());
+    return client.getGrantedAuthorities().stream()
+        .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
   }
 
   @Override

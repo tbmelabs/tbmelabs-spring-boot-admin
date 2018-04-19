@@ -6,14 +6,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
@@ -54,19 +52,21 @@ public class ClientControllerTest {
     initMocks(this);
 
     testClient = new Client();
-    testClientDTO = new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    testClientDTO =
+        new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
-    doReturn(testClient).when(mockClientRepository).findOne(Mockito.anyLong());
-    doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository).findAll(Mockito.any(Pageable.class));
+    doReturn(testClient).when(mockClientRepository).findOne(ArgumentMatchers.anyLong());
+    doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository)
+        .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doReturn(testClientDTO).when(mockClientMapper).toClientDTO(Mockito.any(Client.class));
-    doReturn(testClient).when(mockClientMapper).toClient(Mockito.any(ClientDTO.class));
+    doReturn(testClientDTO).when(mockClientMapper).toClientDTO(ArgumentMatchers.any(Client.class));
+    doReturn(testClient).when(mockClientMapper).toClient(ArgumentMatchers.any(ClientDTO.class));
   }
 
   @Test
   public void clientControllerShouldBeAnnotated() {
-    assertThat(ClientController.class).hasAnnotation(RestController.class).hasAnnotation(RequestMapping.class)
-        .hasAnnotation(PreAuthorize.class);
+    assertThat(ClientController.class).hasAnnotation(RestController.class)
+        .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
     assertThat(ClientController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/clients");
     assertThat(ClientController.class.getDeclaredAnnotation(PreAuthorize.class).value())
@@ -80,7 +80,8 @@ public class ClientControllerTest {
 
   @Test
   public void createClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method method = ClientController.class.getDeclaredMethod("createClient", new Class<?>[] { ClientDTO.class });
+    Method method =
+        ClientController.class.getDeclaredMethod("createClient", new Class<?>[] {ClientDTO.class});
     assertThat(method.getDeclaredAnnotation(PostMapping.class).value()).isEmpty();
   }
 
@@ -95,13 +96,15 @@ public class ClientControllerTest {
   public void createClientsShouldThrowErrorIfClientHasAlreadyAnId() {
     testClientDTO.setId(new Random().nextLong());
 
-    assertThatThrownBy(() -> fixture.createClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
+    assertThatThrownBy(() -> fixture.createClient(testClientDTO))
+        .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only create a new client without an id!");
   }
 
   @Test
   public void getAllClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method method = ClientController.class.getDeclaredMethod("getAllClients", new Class<?>[] { Pageable.class });
+    Method method =
+        ClientController.class.getDeclaredMethod("getAllClients", new Class<?>[] {Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -109,12 +112,13 @@ public class ClientControllerTest {
   public void getAllClientsShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllClients(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
         .containsExactly(testClientDTO);
-    verify(mockClientRepository, times(1)).findAll(Mockito.any(Pageable.class));
+    verify(mockClientRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 
   @Test
   public void updateClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method method = ClientController.class.getDeclaredMethod("updateClient", new Class<?>[] { ClientDTO.class });
+    Method method =
+        ClientController.class.getDeclaredMethod("updateClient", new Class<?>[] {ClientDTO.class});
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -129,13 +133,15 @@ public class ClientControllerTest {
 
   @Test
   public void updateClientShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.updateClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
+    assertThatThrownBy(() -> fixture.updateClient(testClientDTO))
+        .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only update an existing client!");
   }
 
   @Test
   public void deleteClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method method = ClientController.class.getDeclaredMethod("deleteClient", new Class<?>[] { ClientDTO.class });
+    Method method =
+        ClientController.class.getDeclaredMethod("deleteClient", new Class<?>[] {ClientDTO.class});
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
   }
 
@@ -150,7 +156,8 @@ public class ClientControllerTest {
 
   @Test
   public void deleteClientShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.deleteClient(testClientDTO)).isInstanceOf(IllegalArgumentException.class)
+    assertThatThrownBy(() -> fixture.deleteClient(testClientDTO))
+        .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only delete an existing client!");
   }
 }
