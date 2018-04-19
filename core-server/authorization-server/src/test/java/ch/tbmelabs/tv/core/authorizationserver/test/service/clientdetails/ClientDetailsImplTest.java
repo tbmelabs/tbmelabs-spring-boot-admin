@@ -59,19 +59,18 @@ public class ClientDetailsImplTest {
   public void clientDetailsImplShouldReturnInformationEquelToUser() {
     ClientDetailsImpl fixture = new ClientDetailsImpl(mockClient);
 
-    assertThat(fixture.getClientId()).isNotNull().isEqualTo(mockClient.getClientId());
-    assertThat(fixture.getResourceIds()).isNotNull().isEqualTo(new HashSet<>());
-    assertThat(fixture.isSecretRequired()).isNotNull().isEqualTo(mockClient.getIsSecretRequired());
-    assertThat(fixture.isAutoApprove(new String())).isNotNull().isEqualTo(mockClient.getIsAutoApprove());
-    assertThat(fixture.getClientSecret()).isNotNull().isEqualTo(mockClient.getSecret());
-    assertThat(fixture.getAccessTokenValiditySeconds()).isNotNull().isEqualTo(fixture.getAccessTokenValiditySeconds());
-    assertThat(fixture.getRefreshTokenValiditySeconds()).isNotNull()
-        .isEqualTo(fixture.getRefreshTokenValiditySeconds());
-    assertThat(fixture.isScoped()).isNotNull().isEqualTo(!mockClient.getScopes().isEmpty());
-    assertThat(fixture.getRegisteredRedirectUri()).isNotNull().isEqualTo(
+    assertThat(fixture.getClientId()).isEqualTo(mockClient.getClientId());
+    assertThat(fixture.getResourceIds()).isEqualTo(new HashSet<>());
+    assertThat(fixture.isSecretRequired()).isEqualTo(mockClient.getIsSecretRequired());
+    assertThat(fixture.isAutoApprove(new String())).isEqualTo(mockClient.getIsAutoApprove());
+    assertThat(fixture.getClientSecret()).isEqualTo(mockClient.getSecret());
+    assertThat(fixture.getAccessTokenValiditySeconds()).isEqualTo(fixture.getAccessTokenValiditySeconds());
+    assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(fixture.getRefreshTokenValiditySeconds());
+    assertThat(fixture.isScoped()).isEqualTo(!mockClient.getScopes().isEmpty());
+    assertThat(fixture.getRegisteredRedirectUri()).isEqualTo(
         new HashSet<>(Arrays.asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
-    assertThat(fixture.getAuthorities()).isNotNull().isEqualTo(mockClient.getGrantedAuthorities().stream()
+    assertThat(fixture.getAuthorities()).isEqualTo(mockClient.getGrantedAuthorities().stream()
         .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList()));
-    assertThat(fixture.getAdditionalInformation()).isNotNull().isEqualTo(new HashMap<>());
+    assertThat(fixture.getAdditionalInformation()).isEqualTo(new HashMap<>());
   }
 }

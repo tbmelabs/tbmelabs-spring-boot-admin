@@ -40,9 +40,9 @@ public class ScopeTest {
     assertThat(Scope.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(Scope.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("client_scopes");
-    assertThat(Scope.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(Scope.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(Scope.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_scopes");
+    assertThat(Scope.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(Scope.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test

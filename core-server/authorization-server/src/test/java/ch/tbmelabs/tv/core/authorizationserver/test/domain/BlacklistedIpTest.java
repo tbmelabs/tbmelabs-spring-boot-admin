@@ -36,9 +36,8 @@ public class BlacklistedIpTest {
     assertThat(BlacklistedIp.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
         .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(BlacklistedIp.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("blacklisted_ips");
-    assertThat(BlacklistedIp.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
-        .isEqualTo(Include.NON_NULL);
+    assertThat(BlacklistedIp.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("blacklisted_ips");
+    assertThat(BlacklistedIp.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
     assertThat(BlacklistedIp.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull()
         .isTrue();
   }

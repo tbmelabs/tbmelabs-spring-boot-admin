@@ -20,9 +20,9 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   @Autowired
   private ApplicationContext applicationContext;
 
@@ -50,10 +50,9 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationAppli
         .getField(registry, "registrations");
 
     assertThat(registrations).isNotNull().hasSize(1);
-    assertThat((String[]) ReflectionTestUtils.getField(registrations.get(0), "pathPatterns")).isNotNull().hasSize(1)
+    assertThat((String[]) ReflectionTestUtils.getField(registrations.get(0), "pathPatterns")).hasSize(1)
         .containsExactly("/**");
-    assertThat((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues")).isNotNull()
-        .hasSize(1);
+    assertThat((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues")).hasSize(1);
     assertThat(((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues")).get(0))
         .isEqualTo("/");
   }

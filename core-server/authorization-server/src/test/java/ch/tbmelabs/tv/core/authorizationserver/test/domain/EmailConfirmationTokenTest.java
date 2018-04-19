@@ -43,7 +43,7 @@ public class EmailConfirmationTokenTest {
     assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
     assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isNotNull().isTrue();
+        .isTrue();
 
   }
 

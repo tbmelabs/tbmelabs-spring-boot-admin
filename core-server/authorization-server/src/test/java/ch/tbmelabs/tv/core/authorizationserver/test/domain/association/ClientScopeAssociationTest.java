@@ -48,7 +48,7 @@ public class ClientScopeAssociationTest {
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isNotNull().isTrue();
+        .isTrue();
   }
 
   @Test

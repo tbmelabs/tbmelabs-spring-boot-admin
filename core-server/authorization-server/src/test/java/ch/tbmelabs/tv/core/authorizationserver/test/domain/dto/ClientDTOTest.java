@@ -3,27 +3,20 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 
 public class ClientDTOTest {
@@ -34,25 +27,11 @@ public class ClientDTOTest {
 
   public static Client createTestClient() {
     Client client = new Client();
-    client.setCreated(new Date());
-    client.setLastUpdated(new Date());
     client.setClientId(RandomStringUtils.randomAlphabetic(36));
     client.setSecret(RandomStringUtils.randomAlphabetic(36));
     client.setAccessTokenValiditySeconds(new Random().nextInt());
     client.setRefreshTokenValiditySeconds(new Random().nextInt());
     client.setRedirectUri("https://tbme.tv");
-
-    GrantType testGrantType = new GrantType("TEST_GRANT_TYPE");
-    testGrantType.setId(new Random().nextLong());
-    client.setGrantTypes(Arrays.asList(client.grantTypeToAssociation(testGrantType)));
-
-    Authority testAuthority = new Authority("TEST_AUTHORITY");
-    testAuthority.setId(new Random().nextLong());
-    client.setGrantedAuthorities(Arrays.asList(client.authorityToAssociation(testAuthority)));
-
-    Scope testScope = new Scope("TEST_SCOPE");
-    testScope.setId(new Random().nextLong());
-    client.setScopes(Arrays.asList(client.scopeToAssociation(testScope)));
 
     return client;
   }
@@ -71,28 +50,24 @@ public class ClientDTOTest {
 
   @Test
   public void clientDTOShouldHaveAllArgsConstructor() {
-    List<GrantType> grantTypes = testClient.getGrantTypes().stream().map(ClientGrantTypeAssociation::getClientGrantType)
-        .collect(Collectors.toList());
-    List<Authority> grantedAuthorities = testClient.getGrantedAuthorities().stream()
-        .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
-    List<Scope> scopes = testClient.getScopes().stream().map(ClientScopeAssociation::getClientScope)
-        .collect(Collectors.toList());
-
-    assertThat(new ClientDTO(testClient, grantTypes, grantedAuthorities, scopes))
+    assertThat(new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()))
         .hasFieldOrPropertyWithValue("created", testClient.getCreated())
         .hasFieldOrPropertyWithValue("lastUpdated", testClient.getLastUpdated())
         .hasFieldOrPropertyWithValue("id", testClient.getId())
         .hasFieldOrPropertyWithValue("clientId", testClient.getClientId())
         .hasFieldOrPropertyWithValue("isSecretRequired", testClient.getIsSecretRequired())
         .hasFieldOrPropertyWithValue("isAutoApprove", testClient.getIsAutoApprove())
-        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds", testClient.getAccessTokenValiditySeconds())
-        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", testClient.getRefreshTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
+            testClient.getAccessTokenValiditySeconds())
+        .hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
+            testClient.getRefreshTokenValiditySeconds())
         .hasFieldOrPropertyWithValue("redirectUri", testClient.getRedirectUri())
-        .hasFieldOrPropertyWithValue("grantTypes", grantTypes)
-        .hasFieldOrPropertyWithValue("grantedAuthorities", grantedAuthorities)
-        .hasFieldOrPropertyWithValue("scopes", scopes);
+        .hasFieldOrPropertyWithValue("grantTypes", new ArrayList<>())
+        .hasFieldOrPropertyWithValue("grantedAuthorities", new ArrayList<>())
+        .hasFieldOrPropertyWithValue("scopes", new ArrayList<>());
 
-    assertThat(new ClientDTO(testClient, grantTypes, grantedAuthorities, scopes).getSecret()).isNull();
+    assertThat(new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
+        .getSecret()).isNull();
   }
 
   @Test
@@ -152,7 +127,8 @@ public class ClientDTOTest {
 
     fixture.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("accessTokenValiditySeconds", accessTokenValiditySeconds);
+    assertThat(fixture).hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
+        accessTokenValiditySeconds);
     assertThat(fixture.getAccessTokenValiditySeconds()).isEqualTo(accessTokenValiditySeconds);
   }
 
@@ -162,7 +138,8 @@ public class ClientDTOTest {
 
     fixture.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds", refreshTokenValiditySeconds);
+    assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
+        refreshTokenValiditySeconds);
     assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(refreshTokenValiditySeconds);
   }
 
@@ -178,9 +155,7 @@ public class ClientDTOTest {
 
   @Test
   public void clientDTOShouldHaveGrantTypesGetterAndSetter() {
-    List<GrantType> grantTypes = testClient.getGrantTypes().stream().map(ClientGrantTypeAssociation::getClientGrantType)
-        .collect(Collectors.toList());
-
+    List<GrantType> grantTypes = Arrays.asList(new GrantType("TEST_GRANT_TYPE"));
     fixture.setGrantTypes(grantTypes);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("grantTypes", grantTypes);
@@ -189,9 +164,7 @@ public class ClientDTOTest {
 
   @Test
   public void clientDTOShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    List<Authority> grantedAuthorities = testClient.getGrantedAuthorities().stream()
-        .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
-
+    List<Authority> grantedAuthorities = Arrays.asList(new Authority("TEST_AUTHORITY"));
     fixture.setGrantedAuthorities(grantedAuthorities);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("grantedAuthorities", grantedAuthorities);
@@ -200,9 +173,7 @@ public class ClientDTOTest {
 
   @Test
   public void clientDTOShouldHaveScopesGetterAndSetter() {
-    List<Scope> scopes = testClient.getScopes().stream().map(ClientScopeAssociation::getClientScope)
-        .collect(Collectors.toList());
-
+    List<Scope> scopes = Arrays.asList(new Scope("TEST_SCOPE"));
     fixture.setScopes(scopes);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("scopes", scopes);

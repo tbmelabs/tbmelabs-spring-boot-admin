@@ -6,8 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.apache.commons.lang3.RandomStringUtils;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   @Value("${spring.data.rest.base-path}/users")
   private String usersEndpoint;
@@ -41,11 +41,9 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   private UserProfile testUserProfile = createTestUserProfile();
 
   public static UserProfile createTestUserProfile() {
-    UserProfile profile = new UserProfile();
-    profile.setUsername(RandomStringUtils.randomAlphabetic(11));
-    profile.setEmail(profile.getUsername() + "@tbme.tv");
+    User user = UserProfileTest.createTestUser();
 
-    return profile;
+    return new UserProfile(user, new ArrayList<>());
   }
 
   @Before
@@ -76,9 +74,8 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void putClientEndpointIsAccessibleToServerSupports() throws Exception {
-    UserProfile persistedUser = userProfileMapper
-        .toUserProfile(userRepository.save(userProfileMapper.toUser(testUserProfile)));
-    persistedUser.setUsername(RandomStringUtils.randomAlphabetic(11));
+    User persistedUser = userRepository.save(UserProfileTest.createTestUser());
+    testUserProfile = userProfileMapper.toUserProfile(persistedUser);
 
     mockMvc
         .perform(put(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -102,8 +99,8 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationApplicatio
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void deleteClientEndpointIsAccessibleToServerSupports() throws Exception {
-    testUserProfile.setId(userProfileMapper
-        .toUserProfile(userRepository.save(userProfileMapper.toUser(testUserProfile))).getId());
+    User persistedUser = userRepository.save(UserProfileTest.createTestUser());
+    testUserProfile = userProfileMapper.toUserProfile(persistedUser);
 
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)

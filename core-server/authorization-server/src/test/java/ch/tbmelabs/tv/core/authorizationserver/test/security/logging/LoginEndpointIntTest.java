@@ -4,28 +4,27 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
-public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
-  private static final String USER_DISABLED_ERROR_MESSAGE = "Authentication Failed: User is disabled";
-  private static final String USER_BLOCKED_ERROR_MESSAGE = "Authentication Failed: User account is locked";
+  private static final String USER_DISABLED_ERROR_MESSAGE =
+      "Authentication Failed: User is disabled";
+  private static final String USER_BLOCKED_ERROR_MESSAGE =
+      "Authentication Failed: User account is locked";
 
   @Autowired
   private MockMvc mockMvc;
@@ -45,16 +44,17 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
     BruteforceFilterService.resetFilter();
 
     User newUser = UserProfileTest.createTestUser();
-    password = RandomStringUtils.random(60);
-    newUser.setPassword(password);
+    newUser.setIsEnabled(true);
+    password = newUser.getPassword();
 
-    testUser = userRepository.save(UserProfileTest.createTestUser());
+    testUser = userRepository.save(newUser);
   }
 
   @Test
   public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
-    mockMvc.perform(
-        post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid").param(PASSWORD_PARAMETER_NAME, password))
+    mockMvc
+        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid")
+            .param(PASSWORD_PARAMETER_NAME, password))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
   }
 
@@ -71,9 +71,10 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
     String redirectUrl = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse().getRedirectedUrl();
+        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
+        .getRedirectedUrl();
 
-    assertThat(redirectUrl).isNotNull().isEqualTo("/");
+    assertThat(redirectUrl).isEqualTo("/");
   }
 
   @Test
@@ -84,8 +85,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
     String errorMessage = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn()
+        .getResponse().getErrorMessage();
 
     assertThat(errorMessage).isEqualTo(USER_DISABLED_ERROR_MESSAGE);
   }
@@ -98,8 +99,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationApplication
     String errorMessage = mockMvc
         .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn().getResponse()
-        .getErrorMessage();
+        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn()
+        .getResponse().getErrorMessage();
 
     assertThat(errorMessage).isEqualTo(USER_BLOCKED_ERROR_MESSAGE);
   }

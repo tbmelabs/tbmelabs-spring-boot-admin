@@ -13,9 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
 
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class PasswordValidationEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class PasswordValidationEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String PASSWORD_VALIDATION_ENDPOINT = "/signup/does-password-match-format";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 

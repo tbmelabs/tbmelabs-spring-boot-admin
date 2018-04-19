@@ -27,10 +27,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
@@ -123,10 +123,10 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
     assertThat(lastUpdated).isNotNull().isPositive();
 
     String username = createdJsonUser.getString("username");
-    assertThat(username).isNotEmpty().isEqualTo(unexistingUser.getUsername());
+    assertThat(username).isEqualTo(unexistingUser.getUsername());
 
     String email = createdJsonUser.getString("email");
-    assertThat(email).isNotEmpty().isEqualTo(unexistingUser.getEmail());
+    assertThat(email).isEqualTo(unexistingUser.getEmail());
 
     passwordException.expect(JSONException.class);
     assertThat(createdJsonUser.getString("password")).isNullOrEmpty();
@@ -135,10 +135,10 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationApplicatio
     assertThat(createdJsonUser.getString("confirmation")).isNullOrEmpty();
 
     Boolean isEnabled = createdJsonUser.getBoolean("isEnabled");
-    assertThat(isEnabled).isNotNull().isTrue();
+    assertThat(isEnabled).isTrue();
 
     Boolean isBlocked = createdJsonUser.getBoolean("isBlocked");
-    assertThat(isBlocked).isNotNull().isFalse();
+    assertThat(isBlocked).isFalse();
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0)).isEqualTo(UserAuthority.USER);

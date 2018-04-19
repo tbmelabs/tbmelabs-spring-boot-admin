@@ -11,10 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
-public class ScopeControllerIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class ScopeControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   @Value("${spring.data.rest.base-path}/scopes")
   private String scopesEndpoint;
 

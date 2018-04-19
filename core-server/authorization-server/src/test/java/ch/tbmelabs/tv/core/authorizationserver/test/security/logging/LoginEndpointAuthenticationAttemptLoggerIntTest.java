@@ -17,11 +17,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
 public class LoginEndpointAuthenticationAttemptLoggerIntTest
-    extends AbstractOAuth2AuthorizationApplicationContextAware {
+    extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String LOGIN_PROCESSING_URL = "/signin";
   private static final String USERNAME_PARAMETER_NAME = "username";
   private static final String PASSWORD_PARAMETER_NAME = "password";
@@ -35,7 +35,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private User testUser = new User();
+  private User testUser;
   private String password;
 
   @Before
@@ -44,6 +44,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
     BruteforceFilterService.resetFilter();
 
     User newUser = UserProfileTest.createTestUser();
+    newUser.setIsEnabled(true);
     password = newUser.getPassword();
 
     testUser = userRepository.save(newUser);

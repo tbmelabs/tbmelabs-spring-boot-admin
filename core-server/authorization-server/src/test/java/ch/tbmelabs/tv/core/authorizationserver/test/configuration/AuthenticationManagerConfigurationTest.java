@@ -58,8 +58,7 @@ public class AuthenticationManagerConfigurationTest {
 
   @Test
   public void authenticationManagerBeanShouldReturnAnAuthenticationManager() throws Exception {
-    assertThat(((ProviderManager) fixture.authenticationManager()).getProviders()).isNotNull().hasSize(2)
-        .contains(preAuthProviderImplFixture);
+    assertThat(((ProviderManager) fixture.authenticationManager()).getProviders()).isNotNull().hasSize(2).contains(preAuthProviderImplFixture);
 
     Optional<AuthenticationProvider> daoProvider = ((ProviderManager) fixture.authenticationManager()).getProviders()
         .stream().filter(provider -> DaoAuthenticationProvider.class.isAssignableFrom(provider.getClass())).findFirst();

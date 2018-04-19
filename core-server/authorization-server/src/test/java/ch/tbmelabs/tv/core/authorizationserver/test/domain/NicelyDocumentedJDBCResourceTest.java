@@ -52,7 +52,7 @@ public class NicelyDocumentedJDBCResourceTest {
 
     fixture.onUpdate();
 
-    assertThat(fixture.created).isNotNull().isEqualTo(created);
+    assertThat(fixture.created).isEqualTo(created);
     assertThat(fixture.lastUpdated).isNotNull();
   }
 }

@@ -45,8 +45,7 @@ public class SignupControllerTest {
   @Test
   public void signupControllerShouldBeAnnotated() {
     assertThat(SignupController.class).hasAnnotation(RestController.class).hasAnnotation(RequestMapping.class);
-    assertThat(SignupController.class.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty()
-        .containsExactly("/signup");
+    assertThat(SignupController.class.getDeclaredAnnotation(RequestMapping.class).value()).containsExactly("/signup");
   }
 
   @Test
@@ -57,7 +56,7 @@ public class SignupControllerTest {
   @Test
   public void signupShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("signup", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty().containsExactly("/do-signup");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/do-signup");
   }
 
   @Test
@@ -70,8 +69,7 @@ public class SignupControllerTest {
   @Test
   public void isUsernameUniqueShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isUsernameUnique", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty()
-        .containsExactly("/is-username-unique");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/is-username-unique");
   }
 
   @Test
@@ -84,8 +82,7 @@ public class SignupControllerTest {
   @Test
   public void doesUsernameMatchFormatShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesUsernameMatchFormat", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty()
-        .containsExactly("/does-username-match-format");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/does-username-match-format");
   }
 
   @Test
@@ -98,8 +95,7 @@ public class SignupControllerTest {
   @Test
   public void isEmailAddressUniqueShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isEmailAddressUnique", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty()
-        .containsExactly("/is-email-unique");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/is-email-unique");
   }
 
   @Test
@@ -112,7 +108,7 @@ public class SignupControllerTest {
   @Test
   public void isEmailAddressShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isEmailAddress", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty().containsExactly("/is-email");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/is-email");
   }
 
   @Test
@@ -125,8 +121,7 @@ public class SignupControllerTest {
   @Test
   public void doesPasswordMatchFormatShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesPasswordMatchFormat", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty()
-        .containsExactly("/does-password-match-format");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/does-password-match-format");
   }
 
   @Test
@@ -139,8 +134,7 @@ public class SignupControllerTest {
   @Test
   public void doPasswordsMatchShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doPasswordsMatch", new Class<?>[] { User.class });
-    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).isNotEmpty()
-        .containsExactly("/do-passwords-match");
+    assertThat(signup.getDeclaredAnnotation(PostMapping.class).value()).containsExactly("/do-passwords-match");
   }
 
   @Test

@@ -52,9 +52,9 @@ public class ClientTest {
     assertThat(Client.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(Client.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("clients");
-    assertThat(Client.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(Client.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(Client.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("clients");
+    assertThat(Client.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(Client.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test
@@ -193,9 +193,9 @@ public class ClientTest {
     List<ClientGrantTypeAssociation> mockAssociation = (List<ClientGrantTypeAssociation>) fixture
         .grantTypesToAssociations(Arrays.asList(new GrantType(TEST_CLIENT_GRANT_TYPE)));
 
-    assertThat(mockAssociation).isNotNull().isNotEmpty().hasSize(1);
-    assertThat(mockAssociation.get(0).getClient()).isNotNull().isEqualTo(fixture);
-    assertThat(mockAssociation.get(0).getClientGrantType().getName()).isNotNull().isEqualTo(TEST_CLIENT_GRANT_TYPE);
+    assertThat(mockAssociation).isNotNull().hasSize(1);
+    assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
+    assertThat(mockAssociation.get(0).getClientGrantType().getName()).isEqualTo(TEST_CLIENT_GRANT_TYPE);
   }
 
   @Test
@@ -203,9 +203,9 @@ public class ClientTest {
     List<ClientAuthorityAssociation> mockAssociation = (List<ClientAuthorityAssociation>) fixture
         .authoritiesToAssociations(Arrays.asList(new Authority(TEST_CLIENT_AUTHORITY)));
 
-    assertThat(mockAssociation).isNotNull().isNotEmpty().hasSize(1);
-    assertThat(mockAssociation.get(0).getClient()).isNotNull().isEqualTo(fixture);
-    assertThat(mockAssociation.get(0).getClientAuthority().getName()).isNotNull().isEqualTo(TEST_CLIENT_AUTHORITY);
+    assertThat(mockAssociation).isNotNull().hasSize(1);
+    assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
+    assertThat(mockAssociation.get(0).getClientAuthority().getName()).isEqualTo(TEST_CLIENT_AUTHORITY);
   }
 
   @Test
@@ -213,8 +213,8 @@ public class ClientTest {
     List<ClientScopeAssociation> mockAssociation = (List<ClientScopeAssociation>) fixture
         .scopesToAssociations(Arrays.asList(new Scope(TEST_CLIENT_SCOPE)));
 
-    assertThat(mockAssociation).isNotNull().isNotEmpty().hasSize(1);
-    assertThat(mockAssociation.get(0).getClient()).isNotNull().isEqualTo(fixture);
-    assertThat(mockAssociation.get(0).getClientScope().getName()).isNotNull().isEqualTo(TEST_CLIENT_SCOPE);
+    assertThat(mockAssociation).isNotNull().hasSize(1);
+    assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
+    assertThat(mockAssociation.get(0).getClientScope().getName()).isEqualTo(TEST_CLIENT_SCOPE);
   }
 }

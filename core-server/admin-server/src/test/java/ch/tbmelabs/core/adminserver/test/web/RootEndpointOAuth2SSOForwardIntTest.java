@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.core.adminserver.test.AbstractAdminApplicationContextAware;
+import ch.tbmelabs.core.adminserver.test.AbstractAdminServerContextAwareTest;
 
-public class RootEndpointOAuth2SSOForwardIntTest extends AbstractAdminApplicationContextAware {
+public class RootEndpointOAuth2SSOForwardIntTest extends AbstractAdminServerContextAwareTest {
   private static final String FORWARD_HEADER_NAME = "location";
   private static final String EUREKA_AUTHENTICATOIN_ENTRY_POINT_URI = "http://localhost/login";
   private static final String OAUTH2_AUTHENTICATION_ENTRY_POINT_URI = "http://localhost/oauth/authorize";

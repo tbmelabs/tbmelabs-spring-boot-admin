@@ -40,10 +40,9 @@ public class AuthorityTest {
     assertThat(Authority.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(Authority.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("client_authorities");
-    assertThat(Authority.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
-        .isEqualTo(Include.NON_NULL);
-    assertThat(Authority.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(Authority.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_authorities");
+    assertThat(Authority.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(Authority.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test

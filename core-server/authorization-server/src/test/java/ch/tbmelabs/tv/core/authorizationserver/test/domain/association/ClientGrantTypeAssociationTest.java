@@ -48,7 +48,7 @@ public class ClientGrantTypeAssociationTest {
     assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
     assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isNotNull().isTrue();
+        .isTrue();
   }
 
   @Test

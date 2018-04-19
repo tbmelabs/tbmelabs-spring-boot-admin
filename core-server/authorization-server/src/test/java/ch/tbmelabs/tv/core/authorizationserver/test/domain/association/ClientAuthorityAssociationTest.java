@@ -48,7 +48,7 @@ public class ClientAuthorityAssociationTest {
     assertThat(ClientAuthorityAssociation.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
         .isEqualTo(Include.NON_NULL);
     assertThat(ClientAuthorityAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isNotNull().isTrue();
+        .isTrue();
   }
 
   @Test

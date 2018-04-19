@@ -41,9 +41,9 @@ public class RoleTest {
     assertThat(Role.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(Role.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("user_roles");
-    assertThat(Role.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(Role.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(Role.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("user_roles");
+    assertThat(Role.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(Role.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test

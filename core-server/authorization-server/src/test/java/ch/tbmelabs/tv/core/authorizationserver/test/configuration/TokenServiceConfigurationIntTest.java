@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class TokenServiceConfigurationIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class TokenServiceConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   @Autowired
   private TokenServiceConfiguration configuration;
 

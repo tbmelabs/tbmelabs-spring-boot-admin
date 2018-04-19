@@ -40,10 +40,9 @@ public class GrantTypeTest {
     assertThat(GrantType.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(GrantType.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("client_grant_types");
-    assertThat(GrantType.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull()
-        .isEqualTo(Include.NON_NULL);
-    assertThat(GrantType.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(GrantType.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_grant_types");
+    assertThat(GrantType.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(GrantType.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test

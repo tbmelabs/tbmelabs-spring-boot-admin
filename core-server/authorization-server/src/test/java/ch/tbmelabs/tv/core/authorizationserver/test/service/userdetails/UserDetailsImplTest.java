@@ -48,12 +48,12 @@ public class UserDetailsImplTest {
   public void userDetailsImplShouldReturnInformationEqualToUser() {
     UserDetailsImpl fixture = new UserDetailsImpl(mockUser);
 
-    assertThat(fixture.getUsername()).isNotNull().isEqualTo(mockUser.getUsername());
-    assertThat(fixture.getPassword()).isNotNull().isEqualTo(mockUser.getPassword());
-    assertThat(fixture.isEnabled()).isNotNull().isEqualTo(mockUser.getIsEnabled());
-    assertThat(fixture.isAccountNonLocked()).isNotNull().isEqualTo(!mockUser.getIsBlocked());
-    assertThat(fixture.isAccountNonExpired()).isNotNull().isTrue();
-    assertThat(fixture.isCredentialsNonExpired()).isNotNull().isTrue();
-    assertThat(fixture.getAuthorities()).isNotNull().isEqualTo(mockUser.getRoles());
+    assertThat(fixture.getUsername()).isEqualTo(mockUser.getUsername());
+    assertThat(fixture.getPassword()).isEqualTo(mockUser.getPassword());
+    assertThat(fixture.isEnabled()).isEqualTo(mockUser.getIsEnabled());
+    assertThat(fixture.isAccountNonLocked()).isEqualTo(!mockUser.getIsBlocked());
+    assertThat(fixture.isAccountNonExpired()).isTrue();
+    assertThat(fixture.isCredentialsNonExpired()).isTrue();
+    assertThat(fixture.getAuthorities()).isEqualTo(mockUser.getRoles());
   }
 }

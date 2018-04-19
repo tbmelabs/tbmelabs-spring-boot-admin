@@ -32,8 +32,7 @@ public class AuthenticationControllerTest {
   @Test
   public void authenticationControllerShouldBeAnnotated() {
     assertThat(AuthenticationController.class).hasAnnotation(RestController.class).hasAnnotation(RequestMapping.class);
-    assertThat(AuthenticationController.class.getDeclaredAnnotation(RequestMapping.class).value()).isNotEmpty()
-        .containsExactly("/authenticated");
+    assertThat(AuthenticationController.class.getDeclaredAnnotation(RequestMapping.class).value()).containsExactly("/authenticated");
   }
 
   @Test

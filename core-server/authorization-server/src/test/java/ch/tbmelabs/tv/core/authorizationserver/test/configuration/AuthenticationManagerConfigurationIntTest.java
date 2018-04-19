@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 
 import ch.tbmelabs.tv.core.authorizationserver.configuration.AuthenticationManagerConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class AuthenticationManagerConfigurationIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class AuthenticationManagerConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   @Autowired
   private AuthenticationManagerConfiguration configuration;
 

@@ -18,10 +18,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
-public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class UsernameUniqueCheckEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
 

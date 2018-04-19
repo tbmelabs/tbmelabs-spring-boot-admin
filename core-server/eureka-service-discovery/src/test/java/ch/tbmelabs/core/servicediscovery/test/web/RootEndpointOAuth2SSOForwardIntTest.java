@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaApplicationContextAware;
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaServerContextAwareTest;
 
-public class RootEndpointOAuth2SSOForwardIntTest extends AbstractEurekaApplicationContextAware {
+public class RootEndpointOAuth2SSOForwardIntTest extends AbstractEurekaServerContextAwareTest {
   private static final String FORWARD_HEADER_NAME = "location";
   private static final String EUREKA_AUTHENTICATOIN_ENTRY_POINT_URI = "http://localhost/login";
   private static final String OAUTH2_AUTHENTICATION_ENTRY_POINT_URI = "http://localhost/oauth/authorize";

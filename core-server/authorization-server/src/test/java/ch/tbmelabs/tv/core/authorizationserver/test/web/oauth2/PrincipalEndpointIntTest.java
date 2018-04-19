@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import java.util.Arrays;
 import java.util.stream.Collectors;
-
+import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -16,16 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationApplicationContextAware;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
-public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplicationContextAware {
+public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
   private static final String ME_ENDPOINT = "/me";
   private static final String USER_ENDPOINT = "/user";
   private static final String PROFILE_ENDPOINT = "/profile";
@@ -34,55 +32,73 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
   private MockMvc mockMvc;
 
   @Autowired
+  private RoleCRUDRepository roleRepository;
+
+  @Autowired
   private UserCRUDRepository userRepository;
 
   private User testUser;
 
   @Before
   public void beforeTestSetUp() {
-    testUser = UserProfileTest.createTestUser();
+    if ((testUser = userRepository.findOneByUsernameIgnoreCase("PrincipalEndpointIntTestUser")
+        .orElse(null)) == null) {
+      User newUser = new User();
+      newUser.setUsername("PrincipalEndpointIntTestUser");
+      newUser.setEmail(newUser.getUsername() + "@tbme.tv");
+      newUser.setPassword(RandomStringUtils.random(11));
 
-    if (!userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent()) {
-      testUser = userRepository.save(testUser);
+      User persistedUser = userRepository.save(newUser);
+
+      Role newRole = new Role("TEST_ROLE");
+      persistedUser
+          .setRoles(Arrays.asList(persistedUser.roleToAssociation(roleRepository.save(newRole))));
+
+      testUser = userRepository.save(persistedUser);
     }
   }
 
   @Test
-  @WithMockUser(username = "PrincipalEndpointIntTestUser", authorities = { UserAuthority.USER })
+  @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void meEndpointShouldReturnCorrectAuthentication() throws Exception {
     runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(ME_ENDPOINT)).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString()));
+        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString()));
   }
 
   @Test
-  @WithMockUser(username = "PrincipalEndpointIntTestUser", authorities = { UserAuthority.USER })
+  @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void userEndpointShouldReturnCorrectAuthentication() throws Exception {
     runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(USER_ENDPOINT)).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString()));
+        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString()));
   }
 
   private void runJsonCredentialAssertChain(JSONObject jsonCredential) throws JSONException {
-    assertThat(jsonCredential.getString("login")).isEqualTo("PrincipalEndpointIntTestUser");
+    assertThat(jsonCredential.getString("login")).isEqualTo(testUser.getUsername());
     assertThat(jsonCredential.getString("email")).isEqualTo(testUser.getEmail());
   }
 
   @Test
-  @WithMockUser(username = "PrincipalEndpointIntTestUser", authorities = { UserAuthority.USER })
+  @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void profileEndpointShouldReturnCorrectUserProfile() throws Exception {
-    JSONObject jsonUserRepresentation = new JSONObject(mockMvc.perform(get(PROFILE_ENDPOINT)).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse().getContentAsString());
+    JSONObject jsonUserRepresentation = new JSONObject(mockMvc.perform(get(PROFILE_ENDPOINT))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString());
 
-    assertThat(jsonUserRepresentation.getLong("created")).isEqualTo(testUser.getCreated().getTime());
-    assertThat(jsonUserRepresentation.getLong("lastUpdated")).isEqualTo(testUser.getLastUpdated().getTime());
+    assertThat(jsonUserRepresentation.getLong("created"))
+        .isEqualTo(testUser.getCreated().getTime());
+    assertThat(jsonUserRepresentation.getLong("lastUpdated"))
+        .isEqualTo(testUser.getLastUpdated().getTime());
     assertThat(jsonUserRepresentation.getLong("id")).isEqualTo(testUser.getId());
     assertThat(jsonUserRepresentation.getString("username")).isEqualTo(testUser.getUsername());
     assertThat(jsonUserRepresentation.getString("email")).isEqualTo(testUser.getEmail());
 
-    assertThatThrownBy(() -> jsonUserRepresentation.getString("password")).isInstanceOf(JSONException.class)
-        .hasMessage("No value for password");
+    assertThatThrownBy(() -> jsonUserRepresentation.getString("password"))
+        .isInstanceOf(JSONException.class).hasMessage("No value for password");
 
-    assertThatThrownBy(() -> jsonUserRepresentation.getString("confirmation")).isInstanceOf(JSONException.class)
-        .hasMessage("No value for confirmation");
+    assertThatThrownBy(() -> jsonUserRepresentation.getString("confirmation"))
+        .isInstanceOf(JSONException.class).hasMessage("No value for confirmation");
 
     assertThat(jsonUserRepresentation.getBoolean("isEnabled")).isEqualTo(testUser.getIsEnabled());
     assertThat(jsonUserRepresentation.getBoolean("isBlocked")).isEqualTo(testUser.getIsBlocked());
@@ -90,10 +106,11 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationApplica
     assertThat(jsonUserRepresentation.getJSONArray("roles").length()).isEqualTo(1);
 
     JSONObject actualRole = jsonUserRepresentation.getJSONArray("roles").getJSONObject(0);
-    Role expectedRole = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole).collect(Collectors.toList())
-        .get(0);
+    Role expectedRole = testUser.getRoles().stream().map(UserRoleAssociation::getUserRole)
+        .collect(Collectors.toList()).get(0);
     assertThat(actualRole.getLong("created")).isEqualTo(expectedRole.getCreated().getTime());
-    assertThat(actualRole.getLong("lastUpdated")).isEqualTo(expectedRole.getLastUpdated().getTime());
+    assertThat(actualRole.getLong("lastUpdated"))
+        .isEqualTo(expectedRole.getLastUpdated().getTime());
     assertThat(actualRole.getLong("id")).isEqualTo(expectedRole.getId());
     assertThat(actualRole.getString("name")).isEqualTo(expectedRole.getName());
     assertThat(actualRole.getString("authority")).isEqualTo(expectedRole.getAuthority());

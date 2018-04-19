@@ -49,9 +49,9 @@ public class UserTest {
     assertThat(User.class).hasAnnotation(Entity.class).hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
         .hasAnnotation(JsonIgnoreProperties.class);
 
-    assertThat(User.class.getDeclaredAnnotation(Table.class).name()).isNotNull().isEqualTo("users");
-    assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value()).isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isNotNull().isTrue();
+    assertThat(User.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("users");
+    assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value()).isEqualTo(Include.NON_NULL);
+    assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown()).isTrue();
   }
 
   @Test
@@ -160,8 +160,8 @@ public class UserTest {
     List<UserRoleAssociation> newAssociation = (List<UserRoleAssociation>) fixture
         .rolesToAssociations(Arrays.asList(new Role(TEST_USER_ROLE)));
 
-    assertThat(newAssociation).isNotNull().isNotEmpty().hasSize(1);
-    assertThat(newAssociation.get(0).getUser()).isNotNull().isEqualTo(fixture);
-    assertThat(newAssociation.get(0).getUserRole().getName()).isNotNull().isEqualTo(TEST_USER_ROLE);
+    assertThat(newAssociation).isNotNull().hasSize(1);
+    assertThat(newAssociation.get(0).getUser()).isEqualTo(fixture);
+    assertThat(newAssociation.get(0).getUserRole().getName()).isEqualTo(TEST_USER_ROLE);
   }
 }
