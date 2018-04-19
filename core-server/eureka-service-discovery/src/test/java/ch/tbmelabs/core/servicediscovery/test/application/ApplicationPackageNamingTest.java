@@ -1,9 +1,7 @@
 package ch.tbmelabs.core.servicediscovery.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
-
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
 public class ApplicationPackageNamingTest {

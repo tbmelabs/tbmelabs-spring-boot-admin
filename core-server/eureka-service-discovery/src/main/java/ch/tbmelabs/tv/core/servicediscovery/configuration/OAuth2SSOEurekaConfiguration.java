@@ -10,7 +10,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
@@ -26,7 +25,8 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
-      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
+      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV
+          + "\" is active: Web request debugging is enabled!");
 
       web.debug(true);
     }
