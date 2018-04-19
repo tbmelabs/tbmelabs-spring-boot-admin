@@ -1,13 +1,16 @@
-version: '3'
+version: '2'
 services:
   elasticsearch_logging:
     image: elasticsearch
+    expose:
+    - 9200
   logstash_logging:
     image: logstash
     volumes:
     - ./logstash-log4j2/config:/etc/logstash/conf.d
     ports:
     - 5000:5000
+    - 9600:9600
     links:
     - elasticsearch_logging:elasticsearch
     depends_on:

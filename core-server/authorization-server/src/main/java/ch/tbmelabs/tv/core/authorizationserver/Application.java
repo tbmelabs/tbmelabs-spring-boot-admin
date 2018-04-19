@@ -8,9 +8,11 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
 import org.springframework.web.WebApplicationInitializer;
+import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.annotation.EnableCentralizedLogging;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @SpringCloudApplication
+@EnableCentralizedLogging
 public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
 
   private static final Class<Application> APPLICATION_SOURCE_CLASS = Application.class;

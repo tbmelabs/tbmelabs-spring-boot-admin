@@ -13,7 +13,7 @@ public class LogstashAppenderConfiguration {
 
   private static final Logger LOGGER = LogManager.getLogger(LogstashAppenderConfiguration.class);
 
-  private static final Integer BUFFER_SIZE = 2048;
+  private static final Integer BUFFER_SIZE = 128;
 
   private static String appenderName = "logstash";
 
@@ -28,8 +28,7 @@ public class LogstashAppenderConfiguration {
     LOGGER.info("Initializing..");
 
     // @formatter:off
-    LOGGER.info("Configuring new " + SocketAppender.class + " with Logstash and ELK stack\n"
-        + "Using the following configuration:\n"
+    LOGGER.info("Configuring new " + SocketAppender.class + " using the following configuration:\n"
         + " - Server: " + logstashHost + "\n"
         + " - Port: " + logstashPort + "\n"
         + " - Buffer: "+ BUFFER_SIZE);
