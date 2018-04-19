@@ -1,7 +1,7 @@
 elasticsearch_logging:
   image: elasticsearch
 logstash_logging:
-  image: logstash:latest
+  image: logstash
   command: bash -c "plugin install /etc/logstash/conf.d/logstash-input-log4j2-5.2-java.gem && logstash -f /etc/logstash/conf.d/logstash.conf"
   volumes:
     - ./logstash-log4j2/config:/etc/logstash/conf.d
@@ -11,6 +11,7 @@ logstash_logging:
   links:
     - elasticsearch_logging
 kibana_logging:
+  image: kibana
   ports:
     - "5601:5601"
   links:
