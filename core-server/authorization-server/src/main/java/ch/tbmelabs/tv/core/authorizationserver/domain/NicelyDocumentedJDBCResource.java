@@ -18,6 +18,7 @@ import lombok.Data;
 @Data
 @MappedSuperclass
 public class NicelyDocumentedJDBCResource implements Serializable {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

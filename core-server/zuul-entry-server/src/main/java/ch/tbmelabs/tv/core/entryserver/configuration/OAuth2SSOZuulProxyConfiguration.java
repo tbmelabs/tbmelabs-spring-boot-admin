@@ -14,6 +14,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @EnableZuulProxy
 @EnableOAuth2Sso
 public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapter {
+
   @Autowired
   private Environment environment;
 

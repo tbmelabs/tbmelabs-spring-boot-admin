@@ -13,6 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 
 @Component
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+
   private static final String X_FORWARDED_HEADER = "X-FORWARDED-FOR";
   private static final String USERNAME_PARAMETER = "username";
 

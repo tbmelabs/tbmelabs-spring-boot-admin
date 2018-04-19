@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -26,6 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ScopeControllerTest {
+
   @Mock
   private ScopeCRUDRepository mockScopeRepository;
 
@@ -63,7 +65,7 @@ public class ScopeControllerTest {
   @Test
   public void getAllScopesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ScopeController.class.getDeclaredMethod("getAllScopes", new Class<?>[] {Pageable.class});
+        ScopeController.class.getDeclaredMethod("getAllScopes", new Class<?>[]{Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

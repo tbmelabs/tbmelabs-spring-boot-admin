@@ -17,6 +17,7 @@ import org.springframework.web.filter.GenericFilterBean;
 
 @Component
 public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
+
   private BearerTokenExtractor bearerTokenExtractor;
 
   @Autowired

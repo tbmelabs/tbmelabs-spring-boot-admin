@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthenticationLog extends NicelyDocumentedJDBCResource {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

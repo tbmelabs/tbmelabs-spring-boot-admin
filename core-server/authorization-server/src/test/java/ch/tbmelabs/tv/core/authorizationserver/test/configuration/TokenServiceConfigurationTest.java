@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.InvocationTargetException;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfigu
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 
 public class TokenServiceConfigurationTest {
+
   @Mock
   private AuthenticationManager authenticationManagerFixture;
 
@@ -50,8 +52,8 @@ public class TokenServiceConfigurationTest {
   @Test
   public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(TokenServiceConfiguration.class
-        .getDeclaredMethod("tokenServiceBean", new Class<?>[] {}).getDeclaredAnnotation(Bean.class))
-            .isNotNull();
+        .getDeclaredMethod("tokenServiceBean", new Class<?>[]{}).getDeclaredAnnotation(Bean.class))
+        .isNotNull();
   }
 
   @Test

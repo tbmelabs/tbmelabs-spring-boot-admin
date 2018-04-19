@@ -12,6 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUD
 
 @Service
 public class BruteforceFilterService {
+
   private static final Logger LOGGER = LogManager.getLogger(BruteforceFilterService.class);
 
   private static Map<String, Integer> failedLoginAttempts = new HashMap<>();

@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BlacklistedIp extends NicelyDocumentedJDBCResource {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

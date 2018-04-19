@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.security.filter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.springframework.web.filter.GenericFilterBean;
 import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
 
 public class OAuth2BearerTokenAuthenticationFilterTest {
+
   @Spy
   private OAuth2BearerTokenAuthenticationFilter fixture;
 

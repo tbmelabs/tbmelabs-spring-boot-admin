@@ -43,6 +43,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends NicelyDocumentedJDBCResource {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

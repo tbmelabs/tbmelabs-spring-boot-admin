@@ -33,6 +33,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientScopeAssociationId.class)
 public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

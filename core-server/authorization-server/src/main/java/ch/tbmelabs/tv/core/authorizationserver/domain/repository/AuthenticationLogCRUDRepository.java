@@ -6,4 +6,5 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 
 @Repository
 public interface AuthenticationLogCRUDRepository extends CrudRepository<AuthenticationLog, Long> {
+
 }

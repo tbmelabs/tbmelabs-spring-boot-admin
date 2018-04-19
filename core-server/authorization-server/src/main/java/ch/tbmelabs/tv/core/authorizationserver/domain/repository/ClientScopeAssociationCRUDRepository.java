@@ -9,5 +9,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.Cl
 @Repository
 public interface ClientScopeAssociationCRUDRepository
     extends CrudRepository<ClientScopeAssociation, Long> {
+
   Collection<ClientScopeAssociation> findAllByClient(Client client);
 }

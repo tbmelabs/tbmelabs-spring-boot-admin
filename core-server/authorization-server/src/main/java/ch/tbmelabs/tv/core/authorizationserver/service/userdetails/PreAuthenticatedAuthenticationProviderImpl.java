@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PreAuthenticatedAuthenticationProviderImpl
     extends PreAuthenticatedAuthenticationProvider {
+
   private static final Logger LOGGER =
       LogManager.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 

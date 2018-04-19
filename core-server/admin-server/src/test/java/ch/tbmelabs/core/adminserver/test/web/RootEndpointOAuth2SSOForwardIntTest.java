@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.core.adminserver.test.AbstractAdminServerContextAwareTest;
 
 public class RootEndpointOAuth2SSOForwardIntTest extends AbstractAdminServerContextAwareTest {
+
   private static final String FORWARD_HEADER_NAME = "location";
   private static final String EUREKA_AUTHENTICATOIN_ENTRY_POINT_URI = "http://localhost/login";
   private static final String OAUTH2_AUTHENTICATION_ENTRY_POINT_URI =

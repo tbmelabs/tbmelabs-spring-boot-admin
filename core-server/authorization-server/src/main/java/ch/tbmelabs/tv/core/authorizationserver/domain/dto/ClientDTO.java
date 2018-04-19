@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class ClientDTO {
+
   private Date created;
 
   private Date lastUpdated;

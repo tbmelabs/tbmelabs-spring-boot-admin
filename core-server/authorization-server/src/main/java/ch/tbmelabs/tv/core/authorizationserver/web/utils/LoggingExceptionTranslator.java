@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LoggingExceptionTranslator extends DefaultWebResponseExceptionTranslator {
+
   private static final Logger LOGGER = LogManager.getLogger(LoggingExceptionTranslator.class);
 
   @Override

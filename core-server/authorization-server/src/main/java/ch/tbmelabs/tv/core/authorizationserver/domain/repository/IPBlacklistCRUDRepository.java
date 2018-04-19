@@ -6,4 +6,5 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 
 @Repository
 public interface IPBlacklistCRUDRepository extends CrudRepository<BlacklistedIp, Long> {
+
 }

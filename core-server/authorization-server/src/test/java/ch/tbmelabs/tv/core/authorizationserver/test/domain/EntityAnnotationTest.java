@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.persistence.Entity;
 import org.junit.Test;
 import org.reflections.Reflections;
@@ -8,6 +9,7 @@ import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class EntityAnnotationTest {
+
   private static final Integer EXPECTED_ENTITIES_COUNT = 13;
 
   @Test

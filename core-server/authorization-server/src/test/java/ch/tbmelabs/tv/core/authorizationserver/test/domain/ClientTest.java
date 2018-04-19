@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -28,6 +29,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttyp
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 
 public class ClientTest {
+
   private static final String TEST_CLIENT_GRANT_TYPE = "TEST";
   private static final String TEST_CLIENT_AUTHORITY = "TEST";
   private static final String TEST_CLIENT_SCOPE = "TEST";

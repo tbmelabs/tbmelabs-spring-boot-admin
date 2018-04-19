@@ -7,4 +7,5 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 @Repository
 public interface UserAuthorityAssociationCRUDRepository
     extends CrudRepository<UserRoleAssociation, Long> {
+
 }

@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -12,6 +13,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @ActiveProfiles({SpringApplicationProfile.TEST, SpringApplicationProfile.NO_REDIS})
 public class JdbcTokenStoreConfigurationIntTest
     extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   @Autowired
   private JdbcTokenStoreConfiguration jdbcConfiguration;
 

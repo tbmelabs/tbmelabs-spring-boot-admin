@@ -16,6 +16,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Service
 @Profile({"!" + SpringApplicationProfile.NO_MAIL})
 public class MailService {
+
   protected static final Logger LOGGER = LogManager.getLogger(MailService.class);
 
   @Value("${spring.mail.username}")

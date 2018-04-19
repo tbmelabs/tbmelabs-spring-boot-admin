@@ -13,6 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 
 @Component
 public class AuthenticationAttemptLogger {
+
   private static final Logger LOGGER = LogManager.getLogger(AuthenticationAttemptLogger.class);
 
   @Autowired

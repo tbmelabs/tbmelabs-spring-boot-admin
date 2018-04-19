@@ -16,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 @Service
 public class PreAuthenticationUserDetailsServiceImpl
     implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
+
   private static final Logger LOGGER =
       LogManager.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 

@@ -12,6 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
   private static final Logger LOGGER = LogManager.getLogger(UserDetailsServiceImpl.class);
 
   @Autowired

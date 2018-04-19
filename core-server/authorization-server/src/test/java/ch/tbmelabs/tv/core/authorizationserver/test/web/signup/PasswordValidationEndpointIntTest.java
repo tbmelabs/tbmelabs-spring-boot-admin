@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 
 public class PasswordValidationEndpointIntTest
     extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   private static final String PASSWORD_VALIDATION_ENDPOINT = "/signup/does-password-match-format";
   private static final String PASSWORD_PARAMETER_NAME = "password";
 
@@ -36,9 +38,9 @@ public class PasswordValidationEndpointIntTest
         .perform(post(PASSWORD_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
@@ -49,9 +51,9 @@ public class PasswordValidationEndpointIntTest
                 .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS)
                     .toString()))
             .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-                .isInstanceOf(NestedServletException.class)
-                .hasCauseInstanceOf(IllegalArgumentException.class)
-                .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
@@ -61,9 +63,9 @@ public class PasswordValidationEndpointIntTest
             .content(new JSONObject()
                 .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
@@ -73,9 +75,9 @@ public class PasswordValidationEndpointIntTest
             .content(new JSONObject()
                 .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
@@ -85,9 +87,9 @@ public class PasswordValidationEndpointIntTest
             .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS)
                 .toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(PASSWORD_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

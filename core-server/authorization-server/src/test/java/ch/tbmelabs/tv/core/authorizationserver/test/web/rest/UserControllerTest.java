@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +60,8 @@ public class UserControllerTest {
     doReturn(new PageImpl<>(Arrays.asList(testUser))).when(mockUserRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doReturn(testUserProfile).when(mockUserProfileMapper).toUserProfile(ArgumentMatchers.any(User.class));
+    doReturn(testUserProfile).when(mockUserProfileMapper)
+        .toUserProfile(ArgumentMatchers.any(User.class));
     doReturn(testUser).when(mockUserProfileMapper).toUser(ArgumentMatchers.any(UserProfile.class));
   }
 
@@ -81,7 +83,7 @@ public class UserControllerTest {
   @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[] {Pageable.class});
+        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[]{Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -95,7 +97,7 @@ public class UserControllerTest {
   @Test
   public void updateUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("updateUser", new Class<?>[] {UserProfile.class});
+        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserProfile.class});
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -123,7 +125,7 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[] {UserProfile.class});
+        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{UserProfile.class});
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
   }
 

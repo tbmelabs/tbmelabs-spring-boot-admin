@@ -9,5 +9,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 @Repository
 public interface UserRoleAssociationCRUDRepository
     extends CrudRepository<UserRoleAssociation, Long> {
+
   Collection<UserRoleAssociation> findAllByUser(User user);
 }

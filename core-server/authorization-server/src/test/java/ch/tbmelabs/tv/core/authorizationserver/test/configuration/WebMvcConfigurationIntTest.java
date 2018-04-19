@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -19,6 +20,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
 public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   @Autowired
   private ApplicationContext applicationContext;
 
@@ -51,7 +53,7 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServe
         .hasSize(1).containsExactly("/**");
     assertThat(
         (ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues"))
-            .hasSize(1);
+        .hasSize(1);
     assertThat(
         ((ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues"))
             .get(0)).isEqualTo("/");

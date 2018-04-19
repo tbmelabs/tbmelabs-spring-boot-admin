@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +19,7 @@ import ch.tbmelabs.tv.core.entryserver.Application;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ApplicationTest {
+
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
       "Do not attempt to run an application in productive and development environment at the same time!";
 

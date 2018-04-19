@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Arrays;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
 
 public class LoggingExceptionTranslatorTest {
+
   private static final String EXCEPTION_MESSAGE = "This is a test exception.";
   private static final IllegalArgumentException EXCEPTION =
       new IllegalArgumentException(EXCEPTION_MESSAGE);
@@ -38,7 +40,7 @@ public class LoggingExceptionTranslatorTest {
     ReflectionTestUtils.setField(fixture, "throwableAnalyzer", throwableAnalyzerFixture);
 
     doCallRealMethod().when(fixture).translate(ArgumentMatchers.any(Exception.class));
-    doReturn(new Throwable[] {}).when(throwableAnalyzerFixture)
+    doReturn(new Throwable[]{}).when(throwableAnalyzerFixture)
         .determineCauseChain(ArgumentMatchers.any(Throwable.class));
   }
 

@@ -12,4 +12,5 @@ import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.Sleuth
 @Retention(RetentionPolicy.RUNTIME)
 @Import({LogstashAppenderConfiguration.class, SleuthSamplerConfiguration.class})
 public @interface EnableCentralizedLogging {
+
 }

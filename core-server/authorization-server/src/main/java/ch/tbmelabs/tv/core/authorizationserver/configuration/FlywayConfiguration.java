@@ -9,4 +9,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Profile("!" + SpringApplicationProfile.TEST)
 @PropertySource({"classpath:configuration/flyway.properties"})
 public class FlywayConfiguration {
+
 }

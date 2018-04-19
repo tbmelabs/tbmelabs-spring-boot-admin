@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.oauth2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAsso
 import ch.tbmelabs.tv.core.authorizationserver.web.oauth2.OAuth2ApprovalClientScopesController;
 
 public class OAuth2ApprovalClientScopesControllerTest {
+
   private static final String CLIENT_SCOPE_NAME = "TEST";
 
   @Mock
@@ -65,7 +67,7 @@ public class OAuth2ApprovalClientScopesControllerTest {
   public void getAccessConfirmationShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method getAccessConfirmation = OAuth2ApprovalClientScopesController.class
-        .getDeclaredMethod("getAccessConfirmation", new Class<?>[] {String.class});
+        .getDeclaredMethod("getAccessConfirmation", new Class<?>[]{String.class});
     assertThat(getAccessConfirmation.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("/oauth/confirm_access_scopes");
   }

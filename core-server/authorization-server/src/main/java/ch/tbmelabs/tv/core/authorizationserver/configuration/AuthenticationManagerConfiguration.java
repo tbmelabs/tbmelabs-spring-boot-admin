@@ -12,6 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsSe
 
 @Configuration
 public class AuthenticationManagerConfiguration {
+
   @Autowired
   private ObjectPostProcessor<Object> objectPostProcessor;
 

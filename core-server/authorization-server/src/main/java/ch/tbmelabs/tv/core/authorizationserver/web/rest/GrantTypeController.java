@@ -15,6 +15,7 @@ import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 @RequestMapping({"${spring.data.rest.base-path}/grant-types"})
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class GrantTypeController {
+
   @Autowired
   private GrantTypeCRUDRepository grantTypeRepository;
 

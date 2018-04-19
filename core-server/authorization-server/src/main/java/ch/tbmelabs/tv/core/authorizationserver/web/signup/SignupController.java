@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 @RestController
 @RequestMapping("/signup")
 public class SignupController {
+
   @Autowired
   private UserSignupService signupService;
 

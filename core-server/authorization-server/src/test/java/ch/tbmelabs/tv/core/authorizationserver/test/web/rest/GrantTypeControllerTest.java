@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -26,6 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class GrantTypeControllerTest {
+
   @Mock
   private GrantTypeCRUDRepository mockGrantTypeRepository;
 
@@ -63,7 +65,7 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
-        new Class<?>[] {Pageable.class});
+        new Class<?>[]{Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

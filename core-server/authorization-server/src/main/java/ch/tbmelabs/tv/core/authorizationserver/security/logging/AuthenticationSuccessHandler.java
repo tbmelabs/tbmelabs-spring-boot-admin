@@ -17,6 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilt
 
 @Component
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+
   private static final String NO_REDIRECT_HEADER = "no-redirect";
   private static final String X_FORWARDED_HEADER = "X-FORWARDED-FOR";
   private static final String USERNAME_PARAMETER = "username";

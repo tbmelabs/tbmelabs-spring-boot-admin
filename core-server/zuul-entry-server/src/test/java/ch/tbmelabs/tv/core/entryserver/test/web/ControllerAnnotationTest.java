@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.tbmelabs.tv.core.entryserver.Application;
 
 public class ControllerAnnotationTest {
+
   private static final Integer EXPECTED_CONTROLLER_COUNT = 1;
 
   private static Set<Class<?>> allControllers = new HashSet<>();

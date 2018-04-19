@@ -14,6 +14,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 public class DatasourceConfiguration {
+
   private static final Logger LOGGER = LogManager.getLogger(DatasourceConfiguration.class);
 
   @Bean

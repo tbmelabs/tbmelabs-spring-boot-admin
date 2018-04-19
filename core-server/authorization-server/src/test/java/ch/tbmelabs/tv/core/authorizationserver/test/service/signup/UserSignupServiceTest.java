@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import java.util.Random;
 import org.junit.Before;
@@ -28,6 +29,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserSignupServiceTest {
+
   private static final String SIGNUP_FAILED_ERROR_MESSAGE =
       "An error occured. Please check your details!";
 

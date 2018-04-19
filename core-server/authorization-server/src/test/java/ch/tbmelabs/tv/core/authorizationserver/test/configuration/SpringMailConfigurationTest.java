@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -9,6 +10,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.SpringMailConfigura
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class SpringMailConfigurationTest {
+
   @Test
   public void springMailConfigurationShouldBeAnnotated() {
     assertThat(SpringMailConfiguration.class).hasAnnotation(Configuration.class)

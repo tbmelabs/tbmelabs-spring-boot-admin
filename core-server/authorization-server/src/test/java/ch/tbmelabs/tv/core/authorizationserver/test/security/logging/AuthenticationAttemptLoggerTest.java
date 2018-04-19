@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 
 public class AuthenticationAttemptLoggerTest {
+
   @Mock
   private AuthenticationLogCRUDRepository mockAuthenticationLogRepository;
 
@@ -56,6 +58,7 @@ public class AuthenticationAttemptLoggerTest {
         "Testuser");
 
     verify(mockUserRepository, times(1)).findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
-    verify(mockAuthenticationLogRepository, times(1)).save(ArgumentMatchers.any(AuthenticationLog.class));
+    verify(mockAuthenticationLogRepository, times(1))
+        .save(ArgumentMatchers.any(AuthenticationLog.class));
   }
 }

@@ -13,6 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenN
 
 @Service
 public class EmailConfirmationTokenService {
+
   private static final Logger LOGGER = LogManager.getLogger(EmailConfirmationTokenService.class);
 
   @Autowired

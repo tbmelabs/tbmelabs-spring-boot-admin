@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
@@ -19,6 +20,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthorit
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 
 public class ClientAuthorityAssociationTest {
+
   @Mock
   private Client clientFixture;
 

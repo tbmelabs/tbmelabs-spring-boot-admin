@@ -17,6 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTransla
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
+
   @Autowired
   private AuthenticationManager authenticationManager;
 

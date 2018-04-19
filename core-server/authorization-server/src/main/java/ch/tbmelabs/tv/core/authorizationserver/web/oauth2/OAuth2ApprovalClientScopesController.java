@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAsso
 
 @RestController
 public class OAuth2ApprovalClientScopesController {
+
   @Autowired
   private ClientCRUDRepository clientRepository;
 

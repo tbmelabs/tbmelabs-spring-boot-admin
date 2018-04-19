@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.SleuthSamplerConfiguration;
 
 public class SleuthSamplerConfigurationTest {
+
   @Mock
   private SleuthSamplerConfiguration fixture;
 
@@ -35,8 +37,8 @@ public class SleuthSamplerConfigurationTest {
   @Test
   public void defaultSamplerShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(SleuthSamplerConfiguration.class
-        .getDeclaredMethod("defaultSampler", new Class<?>[] {}).getDeclaredAnnotation(Bean.class))
-            .isNotNull();
+        .getDeclaredMethod("defaultSampler", new Class<?>[]{}).getDeclaredAnnotation(Bean.class))
+        .isNotNull();
   }
 
   @Test

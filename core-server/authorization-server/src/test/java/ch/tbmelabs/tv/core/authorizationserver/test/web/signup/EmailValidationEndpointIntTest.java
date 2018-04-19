@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 
 public class EmailValidationEndpointIntTest
     extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   private static final String EMAIL_VALIDATION_ENDPOINT = "/signup/is-email";
   private static final String EMAIL_PARAMETER_NAME = "email";
 
@@ -32,9 +34,9 @@ public class EmailValidationEndpointIntTest
         .perform(post(EMAIL_VALIDATION_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(EMAIL_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(EMAIL_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

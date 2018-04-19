@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.lang.reflect.Method;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupController;
 
 public class SignupControllerTest {
+
   @Mock
   private UserSignupService userSignupServiceFixture;
 
@@ -32,12 +34,17 @@ public class SignupControllerTest {
   public void beforeClassSetUp() {
     initMocks(this);
 
-    doReturn(true).when(userSignupServiceFixture).isUsernameUnique(ArgumentMatchers.any(User.class));
-    doReturn(true).when(userSignupServiceFixture).doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
-    doReturn(true).when(userSignupServiceFixture).isEmailAddressUnique(ArgumentMatchers.any(User.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .isUsernameUnique(ArgumentMatchers.any(User.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .isEmailAddressUnique(ArgumentMatchers.any(User.class));
     doReturn(true).when(userSignupServiceFixture).isEmailAddress(ArgumentMatchers.any(User.class));
-    doReturn(true).when(userSignupServiceFixture).doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
-    doReturn(true).when(userSignupServiceFixture).doPasswordsMatch(ArgumentMatchers.any(User.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .doPasswordsMatch(ArgumentMatchers.any(User.class));
   }
 
   @Test
@@ -55,7 +62,7 @@ public class SignupControllerTest {
 
   @Test
   public void signupShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method signup = SignupController.class.getDeclaredMethod("signup", new Class<?>[] {User.class});
+    Method signup = SignupController.class.getDeclaredMethod("signup", new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/do-signup");
   }
@@ -70,7 +77,7 @@ public class SignupControllerTest {
   @Test
   public void isUsernameUniqueShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("isUsernameUnique", new Class<?>[] {User.class});
+        SignupController.class.getDeclaredMethod("isUsernameUnique", new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-username-unique");
   }
@@ -86,7 +93,7 @@ public class SignupControllerTest {
   public void doesUsernameMatchFormatShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesUsernameMatchFormat",
-        new Class<?>[] {User.class});
+        new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/does-username-match-format");
   }
@@ -95,14 +102,15 @@ public class SignupControllerTest {
   public void doesUsernameMatchFormatShouldCallServiceMethod() {
     fixture.doesUsernameMatchFormat(new User());
 
-    verify(userSignupServiceFixture, times(1)).doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1))
+        .doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
   }
 
   @Test
   public void isEmailAddressUniqueShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isEmailAddressUnique",
-        new Class<?>[] {User.class});
+        new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-email-unique");
   }
@@ -112,13 +120,14 @@ public class SignupControllerTest {
       throws NoSuchMethodException, SecurityException {
     fixture.isEmailAddressUnique(new User());
 
-    verify(userSignupServiceFixture, times(1)).isEmailAddressUnique(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1))
+        .isEmailAddressUnique(ArgumentMatchers.any(User.class));
   }
 
   @Test
   public void isEmailAddressShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("isEmailAddress", new Class<?>[] {User.class});
+        SignupController.class.getDeclaredMethod("isEmailAddress", new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-email");
   }
@@ -134,7 +143,7 @@ public class SignupControllerTest {
   public void doesPasswordMatchFormatShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesPasswordMatchFormat",
-        new Class<?>[] {User.class});
+        new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/does-password-match-format");
   }
@@ -143,13 +152,14 @@ public class SignupControllerTest {
   public void doesPasswordMatchFormatShouldCallServiceMethod() {
     fixture.doesPasswordMatchFormat(new User());
 
-    verify(userSignupServiceFixture, times(1)).doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1))
+        .doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
   }
 
   @Test
   public void doPasswordsMatchShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("doPasswordsMatch", new Class<?>[] {User.class});
+        SignupController.class.getDeclaredMethod("doPasswordsMatch", new Class<?>[]{User.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/do-passwords-match");
   }

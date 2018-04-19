@@ -8,5 +8,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 
 @Repository
 public interface ScopeCRUDRepository extends CrudRepository<Scope, Long> {
+
   Page<Scope> findAll(Pageable pageable);
 }

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -26,6 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSu
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 public class AuthenticationSuccessHandlerTest {
+
   @Mock
   private AuthenticationAttemptLogger mockAuthenticationAttemptLogger;
 
@@ -69,7 +71,8 @@ public class AuthenticationSuccessHandlerTest {
             new UsernamePasswordCredentials("Testuser", "Testpassword")));
 
     verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(
-        ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"), ArgumentMatchers.isNull(),
+        ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"),
+        ArgumentMatchers.isNull(),
         ArgumentMatchers.anyString());
     verify(mockBruteforceFilterService, times(1)).authenticationFromIpSucceed("127.0.0.1");
   }

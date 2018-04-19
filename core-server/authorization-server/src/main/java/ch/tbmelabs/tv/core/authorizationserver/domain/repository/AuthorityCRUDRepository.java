@@ -8,5 +8,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 
 @Repository
 public interface AuthorityCRUDRepository extends CrudRepository<Authority, Long> {
+
   Page<Authority> findAll(Pageable pageable);
 }

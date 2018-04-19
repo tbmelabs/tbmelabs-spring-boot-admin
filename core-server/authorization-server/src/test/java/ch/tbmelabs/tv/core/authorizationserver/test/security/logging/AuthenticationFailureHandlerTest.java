@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import org.junit.Before;
@@ -24,6 +25,7 @@ import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFa
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 public class AuthenticationFailureHandlerTest {
+
   private static final String AUTHENTICATION_FAILED_ERROR_MESSAGE = "Test-Authentication failed!";
 
   @Mock

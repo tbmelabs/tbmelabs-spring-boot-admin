@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulServerContextAwareTest;
 
 public class LogoutEndpointIntTest extends AbstractZuulServerContextAwareTest {
+
   private static final String LOGOUT_ENDPOINT_URI = "/logout";
   private static final String LOGOUT_FORWARD_URI = "/";
 

@@ -24,4 +24,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
     DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public abstract class AbstractEurekaServerContextAwareTest {
+
 }

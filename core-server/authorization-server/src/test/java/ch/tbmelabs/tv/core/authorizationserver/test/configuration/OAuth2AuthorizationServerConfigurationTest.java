@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -24,6 +25,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsSe
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
 
 public class OAuth2AuthorizationServerConfigurationTest {
+
   @Mock
   private AuthenticationManager authenticationManagerFixture;
 

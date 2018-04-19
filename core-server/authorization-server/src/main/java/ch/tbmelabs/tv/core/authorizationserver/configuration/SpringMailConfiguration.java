@@ -9,4 +9,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Profile({"!" + SpringApplicationProfile.NO_MAIL})
 @PropertySource({"classpath:configuration/mail.properties"})
 public class SpringMailConfiguration {
+
 }

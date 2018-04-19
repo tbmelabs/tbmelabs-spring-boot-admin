@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Configuration
 public class RoleHierarchyConfiguration {
+
   private static final List<String> ROLE_HIERARCHY = new ArrayList<>();
 
   static {

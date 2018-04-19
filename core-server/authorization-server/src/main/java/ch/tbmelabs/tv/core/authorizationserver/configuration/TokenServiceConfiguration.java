@@ -10,6 +10,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetai
 
 @Configuration
 public class TokenServiceConfiguration {
+
   @Autowired
   private AuthenticationManager authenticationManager;
 

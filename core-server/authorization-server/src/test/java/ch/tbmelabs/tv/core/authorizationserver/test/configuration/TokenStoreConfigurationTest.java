@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfigura
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class TokenStoreConfigurationTest {
+
   @Mock
   private RedisConnectionFactory mockRedisConnectionFactory;
 
@@ -69,7 +71,7 @@ public class TokenStoreConfigurationTest {
         .hasSize(1).containsExactly("!" + SpringApplicationProfile.NO_REDIS);
     assertThat(
         RedisTokenStoreConfiguration.class.getDeclaredAnnotation(PropertySource.class).value())
-            .hasSize(1).containsExactly("classpath:configuration/redis.properties");
+        .hasSize(1).containsExactly("classpath:configuration/redis.properties");
   }
 
   @Test

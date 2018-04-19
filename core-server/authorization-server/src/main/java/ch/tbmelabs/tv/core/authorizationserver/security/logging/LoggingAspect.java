@@ -17,6 +17,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Aspect
 @Component
 public class LoggingAspect {
+
   private static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
 
   @Autowired

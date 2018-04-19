@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepos
 
 @Service
 public class ClientDetailsServiceImpl implements ClientDetailsService {
+
   private static final Logger LOGGER = LogManager.getLogger(ClientDetailsServiceImpl.class);
 
   @Autowired

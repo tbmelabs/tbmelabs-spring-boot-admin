@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -23,6 +24,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmati
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 
 public class EmailConfirmationTokenServiceTest {
+
   @Mock
   private EmailConfirmationTokenCRUDRepository mockEmailConfirmationTokenRepository;
 
@@ -48,7 +50,8 @@ public class EmailConfirmationTokenServiceTest {
 
         return newEmailConfirmationToken;
       }
-    }).when(mockEmailConfirmationTokenRepository).save(ArgumentMatchers.any(EmailConfirmationToken.class));
+    }).when(mockEmailConfirmationTokenRepository)
+        .save(ArgumentMatchers.any(EmailConfirmationToken.class));
   }
 
   @Test

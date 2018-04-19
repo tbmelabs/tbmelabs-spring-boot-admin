@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import de.codecentric.boot.admin.config.EnableAdminServer;
 
 public class OAuth2SSOAdminServerConfigurationTest {
+
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 
   @Spy

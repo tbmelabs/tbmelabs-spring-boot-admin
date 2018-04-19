@@ -16,12 +16,14 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 public class TokenStoreConfiguration {
+
   private static final Logger LOGGER = LogManager.getLogger(TokenStoreConfiguration.class);
 
   @Configuration
   @Profile({"!" + SpringApplicationProfile.NO_REDIS})
   @PropertySource({"classpath:configuration/redis.properties"})
   public class RedisTokenStoreConfiguration {
+
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
@@ -34,6 +36,7 @@ public class TokenStoreConfiguration {
   @Configuration
   @Profile({SpringApplicationProfile.NO_REDIS})
   public class JdbcTokenStoreConfiguration {
+
     public static final String JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME = "jdbcTokenStoreDatasource";
 
     @Autowired

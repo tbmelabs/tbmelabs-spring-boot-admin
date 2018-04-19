@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.apache.logging.log4j.LogManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration.LogstashAppenderConfiguration;
 
 public class LogstashAppenderConfigurationTest {
+
   @Mock
   private LogstashAppenderConfiguration fixture;
 

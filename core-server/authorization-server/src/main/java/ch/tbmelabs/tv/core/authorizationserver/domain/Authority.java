@@ -36,6 +36,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Authority extends NicelyDocumentedJDBCResource implements GrantedAuthority {
+
   @Transient
   private static final long serialVersionUID = 1L;
 

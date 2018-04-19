@@ -16,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAsso
 
 @Component
 public class ClientDTOMapper {
+
   @Autowired
   private ClientGrantTypeAssociationCRUDRepository clientGrantTypeRepository;
 

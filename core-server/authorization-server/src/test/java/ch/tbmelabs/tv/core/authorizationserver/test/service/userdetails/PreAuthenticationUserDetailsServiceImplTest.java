@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -26,6 +27,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthentica
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 
 public class PreAuthenticationUserDetailsServiceImplTest {
+
   @Mock
   private PreAuthenticatedAuthenticationToken mockToken;
 
@@ -49,7 +51,8 @@ public class PreAuthenticationUserDetailsServiceImplTest {
     doReturn(RandomStringUtils.random(11)).when(mockToken).getPrincipal();
     doReturn(RandomStringUtils.random(11)).when(mockAuthentication).getName();
 
-    doReturn(mockAuthentication).when(mockTokenStore).readAuthentication(ArgumentMatchers.anyString());
+    doReturn(mockAuthentication).when(mockTokenStore)
+        .readAuthentication(ArgumentMatchers.anyString());
 
     doCallRealMethod().when(fixture)
         .loadUserDetails(ArgumentMatchers.any(PreAuthenticatedAuthenticationToken.class));

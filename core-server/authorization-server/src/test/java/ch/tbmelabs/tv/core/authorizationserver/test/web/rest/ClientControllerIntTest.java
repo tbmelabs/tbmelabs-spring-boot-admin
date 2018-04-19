@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.ArrayList;
 import java.util.Random;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   @Value("${spring.data.rest.base-path}/clients")
   private String clientsEndpoint;
 

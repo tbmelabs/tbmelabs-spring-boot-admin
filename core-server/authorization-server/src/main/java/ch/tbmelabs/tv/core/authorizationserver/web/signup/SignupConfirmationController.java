@@ -14,6 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationT
 @RestController
 @RequestMapping("/signup")
 public class SignupConfirmationController {
+
   public static final String CONFIRMATION_ENDPOINT = "/signup/confirm-signup/";
 
   private static final String CONFIRMATION_ERROR_REDIRECT = "/signin?confirmation_failed";

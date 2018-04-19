@@ -1,12 +1,14 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 public class ConfigurationAnnotationTest {
+
   private static final Integer EXPECTED_CONFIGURATION_COUNT = 13;
 
   @Test

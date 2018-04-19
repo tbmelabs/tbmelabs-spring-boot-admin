@@ -1,11 +1,13 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.Random;
 import org.junit.Test;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 
 public class ClientAuthorityAssociationIdTest {
+
   @Test
   public void clientAuthorityAssociationIdShouldHaveNoArgsConstructor() {
     assertThat(new ClientAuthorityAssociationId()).isNotNull();

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -23,6 +24,7 @@ import com.netflix.zuul.context.RequestContext;
 import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 
 public class ZuulAccessFilterTest {
+
   @Mock
   private static MockHttpServletRequest requestFixture;
 

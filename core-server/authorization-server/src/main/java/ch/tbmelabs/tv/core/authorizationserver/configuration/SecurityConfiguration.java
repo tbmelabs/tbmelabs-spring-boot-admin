@@ -21,6 +21,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
   private static final Logger LOGGER = LogManager.getLogger(SecurityConfiguration.class);
 
   @Autowired

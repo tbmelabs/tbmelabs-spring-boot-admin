@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthorit
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
 
 public class ClientDetailsImplTest {
+
   private static final String CLIENT_REDIRECT_URIS =
       "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR + "uritwo";
 

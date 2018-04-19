@@ -7,6 +7,7 @@ import ch.tbmelabs.tv.core.authorizationserver.security.spel.SecurityEvaluationC
 
 @Configuration
 public class SpELConfiguration {
+
   @Bean
   public EvaluationContextExtension securityExtension() {
     return new SecurityEvaluationContextExtension();

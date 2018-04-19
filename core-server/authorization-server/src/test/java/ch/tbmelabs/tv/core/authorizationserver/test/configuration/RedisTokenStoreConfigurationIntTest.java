@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
     DirtiesContextTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, WithSecurityContextTestExecutionListener.class})
 public class RedisTokenStoreConfigurationIntTest {
+
   @Autowired
   private RedisTokenStoreConfiguration redisConfiguration;
 

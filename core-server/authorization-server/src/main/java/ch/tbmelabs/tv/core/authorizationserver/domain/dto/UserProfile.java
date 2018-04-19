@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class UserProfile {
+
   private Date created;
 
   private Date lastUpdated;

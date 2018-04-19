@@ -18,6 +18,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @Service
 @Profile({"!" + SpringApplicationProfile.NO_MAIL})
 public class UserMailService extends MailService {
+
   private static final String TEMPLATE_FOLDER = "email-templates";
   private static final String SIGNUP_MAIL_TEMPLATE_LOCATION =
       TEMPLATE_FOLDER + "/signup.email.html";

@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
 
 public class ApplicationContextHolderTest {
+
   @Mock
   private ApplicationContext applicationContextFixture;
 

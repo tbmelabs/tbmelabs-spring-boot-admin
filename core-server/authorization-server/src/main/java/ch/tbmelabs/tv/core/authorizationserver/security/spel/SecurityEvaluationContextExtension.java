@@ -5,6 +5,7 @@ import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 public class SecurityEvaluationContextExtension extends EvaluationContextExtensionSupport {
+
   @Override
   public String getExtensionId() {
     return "security";
@@ -12,6 +13,7 @@ public class SecurityEvaluationContextExtension extends EvaluationContextExtensi
 
   @Override
   public SecurityExpressionRoot getRootObject() {
-    return new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {};
+    return new SecurityExpressionRoot(SecurityContextHolder.getContext().getAuthentication()) {
+    };
   }
 }

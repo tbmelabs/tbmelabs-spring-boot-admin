@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.MappedSuperclass;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class NicelyDocumentedJDBCResourceTest {
+
   @Mock
   private NicelyDocumentedJDBCResource fixture;
 

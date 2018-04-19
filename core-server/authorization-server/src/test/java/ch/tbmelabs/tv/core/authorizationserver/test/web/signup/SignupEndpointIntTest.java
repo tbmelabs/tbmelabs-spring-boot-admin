@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.util.Optional;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +28,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   private static final String SIGNUP_ENDPOINT = "/signup/do-signup";
   private static final String PASSWORD_PARAMETER_NAME = "password";
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
@@ -86,9 +88,9 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
         .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

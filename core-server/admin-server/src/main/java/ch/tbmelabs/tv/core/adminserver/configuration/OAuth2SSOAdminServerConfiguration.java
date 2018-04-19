@@ -17,6 +17,7 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
 @EnableOAuth2Sso
 @EnableAdminServer
 public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdapter {
+
   private static final Logger LOGGER =
       LogManager.getLogger(OAuth2SSOAdminServerConfiguration.class);
 

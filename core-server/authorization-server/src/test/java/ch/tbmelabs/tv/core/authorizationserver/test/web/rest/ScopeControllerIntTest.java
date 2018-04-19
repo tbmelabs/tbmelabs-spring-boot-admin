@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ScopeControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
+
   @Value("${spring.data.rest.base-path}/scopes")
   private String scopesEndpoint;
 

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
@@ -34,6 +35,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class MailServiceTest {
+
   private static final String TEST_SENDER_ADDRESS = "no-reply@tbme.tv";
 
   @Mock
@@ -96,7 +98,7 @@ public class MailServiceTest {
         .collect(Collectors.toList())).hasSize(1).containsExactly(TEST_SENDER_ADDRESS);
     assertThat(Arrays.stream(MailServiceTest.sentMimeMessage.getAllRecipients())
         .map(Address::toString).collect(Collectors.toList())).hasSize(1)
-            .containsExactly(receiver.getEmail());
+        .containsExactly(receiver.getEmail());
     assertThat(((MimeMultipart) ((MimeMultipart) MailServiceTest.sentMimeMessage.getContent())
         .getBodyPart(0).getContent()).getBodyPart(0).getContent()).isEqualTo(htmlBody);
   }

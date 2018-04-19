@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 
 public class GrantTypeTest {
+
   private static final String TEST_GRANT_TYPE_NAME = "TEST";
 
   @Spy

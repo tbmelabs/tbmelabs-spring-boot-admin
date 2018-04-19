@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.shared.constants.spring;
 
 public class SpringApplicationProfile {
+
   /**
    * Productive systems.
    */

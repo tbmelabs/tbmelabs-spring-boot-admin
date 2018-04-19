@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.ArrayList;
 import java.util.Random;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.web.rest.ClientControllerIntTest;
 
 public class ClientDTOMapperTest {
+
   @Mock
   private ClientGrantTypeAssociationCRUDRepository mockGrantTypeRepository;
 

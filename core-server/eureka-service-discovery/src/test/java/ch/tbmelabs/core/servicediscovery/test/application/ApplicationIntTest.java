@@ -5,11 +5,13 @@ import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaServerContextAwareTe
 import ch.tbmelabs.tv.core.servicediscovery.Application;
 
 public class ApplicationIntTest extends AbstractEurekaServerContextAwareTest {
+
   @Test
-  public void applicationContextLoads() {}
+  public void applicationContextLoads() {
+  }
 
   @Test
   public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] {"--spring.profiles.active=test"});
+    Application.main(new String[]{"--spring.profiles.active=test"});
   }
 }

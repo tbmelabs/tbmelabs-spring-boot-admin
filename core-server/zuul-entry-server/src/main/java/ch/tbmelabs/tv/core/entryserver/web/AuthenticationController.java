@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/authenticated")
 public class AuthenticationController {
+
   @GetMapping
   public boolean isAuthenticated(Principal principal) {
     return principal != null;

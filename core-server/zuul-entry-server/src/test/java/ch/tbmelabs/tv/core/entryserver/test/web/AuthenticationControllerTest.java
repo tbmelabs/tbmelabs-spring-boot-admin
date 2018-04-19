@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.entryserver.test.web;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.security.Principal;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.tbmelabs.tv.core.entryserver.web.AuthenticationController;
 
 public class AuthenticationControllerTest {
+
   @Mock
   private Principal mockPrincipal;
 

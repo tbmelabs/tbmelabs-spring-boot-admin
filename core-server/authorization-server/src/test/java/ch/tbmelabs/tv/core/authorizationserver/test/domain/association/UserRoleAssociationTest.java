@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Random;
 import javax.persistence.IdClass;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociationId;
 
 public class UserRoleAssociationTest {
+
   @Mock
   private User userFixture;
 

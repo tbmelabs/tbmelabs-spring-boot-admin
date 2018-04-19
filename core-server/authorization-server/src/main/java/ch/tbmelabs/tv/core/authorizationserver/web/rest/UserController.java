@@ -20,6 +20,7 @@ import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 @RequestMapping({"${spring.data.rest.base-path}/users"})
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
 public class UserController {
+
   @Autowired
   private UserCRUDRepository userRepository;
 

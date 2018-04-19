@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 
 @Repository
 public interface UserCRUDRepository extends CrudRepository<User, Long> {
+
   Page<User> findAll(Pageable pageable);
 
   Optional<User> findOneByUsernameIgnoreCase(String username);

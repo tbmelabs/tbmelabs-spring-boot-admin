@@ -9,5 +9,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttyp
 @Repository
 public interface ClientGrantTypeAssociationCRUDRepository
     extends CrudRepository<ClientGrantTypeAssociation, Long> {
+
   Collection<ClientGrantTypeAssociation> findAllByClient(Client client);
 }

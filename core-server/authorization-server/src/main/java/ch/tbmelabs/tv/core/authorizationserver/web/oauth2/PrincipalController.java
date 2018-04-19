@@ -14,6 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 
 @RestController
 public class PrincipalController {
+
   private static final Logger LOGGER = LogManager.getLogger(PrincipalController.class);
 
   @Autowired

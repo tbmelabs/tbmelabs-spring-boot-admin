@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthentica
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticationUserDetailsServiceImpl;
 
 public class PreAuthenticatedAuthenticationProviderImplTest {
+
   @Mock
   private PreAuthenticationUserDetailsServiceImpl mockPreAuthenticationUserDetailsServiceImpl;
 

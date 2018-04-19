@@ -8,5 +8,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 
 @Repository
 public interface GrantTypeCRUDRepository extends CrudRepository<GrantType, Long> {
+
   Page<GrantType> findAll(Pageable pageable);
 }

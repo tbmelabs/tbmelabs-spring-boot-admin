@@ -17,6 +17,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 @EnableOAuth2Sso
 @EnableEurekaServer
 public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
+
   private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOEurekaConfiguration.class);
 
   @Autowired

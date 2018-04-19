@@ -17,6 +17,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
 public class UserSignupService {
+
   private static final Logger LOGGER = LogManager.getLogger(UserSignupService.class);
 
   private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,64}";

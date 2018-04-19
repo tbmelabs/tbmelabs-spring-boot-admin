@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
 
 public class WebMvcConfigurationTest {
+
   @Mock
   private ResourceHandlerRegistry resourceHandlerRegistryFixture;
 
@@ -44,7 +46,7 @@ public class WebMvcConfigurationTest {
   @Test
   public void internalResourceViewResolverBeanShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
-    assertThat(WebMvcConfiguration.class.getMethod("viewResolver", new Class<?>[] {})
+    assertThat(WebMvcConfiguration.class.getMethod("viewResolver", new Class<?>[]{})
         .getDeclaredAnnotation(Bean.class)).isNotNull();
   }
 

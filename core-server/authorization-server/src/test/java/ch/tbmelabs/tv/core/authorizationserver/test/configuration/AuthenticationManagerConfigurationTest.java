@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthentica
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 
 public class AuthenticationManagerConfigurationTest {
+
   @Mock
   private PreAuthenticatedAuthenticationProviderImpl preAuthProviderImplFixture;
 
@@ -51,7 +53,7 @@ public class AuthenticationManagerConfigurationTest {
   public void authenticationManagerBeanShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     assertThat(AuthenticationManagerConfiguration.class
-        .getDeclaredMethod("authenticationManager", new Class<?>[] {})
+        .getDeclaredMethod("authenticationManager", new Class<?>[]{})
         .getDeclaredAnnotation(Bean.class)).isNotNull();
   }
 

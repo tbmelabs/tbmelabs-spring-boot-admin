@@ -5,6 +5,7 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +21,7 @@ import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfigurati
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class SecurityConfigurationTest {
+
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 
   @Mock

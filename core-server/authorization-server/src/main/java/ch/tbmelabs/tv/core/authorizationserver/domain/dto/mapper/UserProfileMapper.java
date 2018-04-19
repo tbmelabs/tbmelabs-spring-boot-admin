@@ -12,6 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssocia
 
 @Component
 public class UserProfileMapper {
+
   @Autowired
   private UserRoleAssociationCRUDRepository userRoleAssociationRepository;
 

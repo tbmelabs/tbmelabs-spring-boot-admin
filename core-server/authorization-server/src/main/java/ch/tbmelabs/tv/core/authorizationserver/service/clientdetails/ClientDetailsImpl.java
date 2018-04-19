@@ -13,6 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 
 public class ClientDetailsImpl implements ClientDetails {
+
   private static final long serialVersionUID = 1L;
 
   public static final String CLIENT_REDIRECT_URI_SPLITTERATOR = ",";

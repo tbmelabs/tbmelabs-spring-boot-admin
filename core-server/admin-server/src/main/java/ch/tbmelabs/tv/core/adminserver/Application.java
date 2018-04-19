@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @SpringCloudApplication
 public class Application extends SpringBootServletInitializer {
+
   private static final Class<Application> APPLICATION_SOURCE_CLASS = Application.class;
 
   @Autowired

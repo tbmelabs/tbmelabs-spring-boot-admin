@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,6 +16,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class BlacklistedIpTest {
+
   private static final String START_IP = "127.0.0.1";
   private static final String END_IP = "127.0.0.255";
 
@@ -37,7 +39,7 @@ public class BlacklistedIpTest {
         .isEqualTo(Include.NON_NULL);
     assertThat(
         BlacklistedIp.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-            .isNotNull().isTrue();
+        .isNotNull().isTrue();
   }
 
   @Test

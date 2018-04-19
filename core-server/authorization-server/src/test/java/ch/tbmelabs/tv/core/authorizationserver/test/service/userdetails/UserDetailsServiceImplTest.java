@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -23,6 +24,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsIm
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 
 public class UserDetailsServiceImplTest {
+
   @Mock
   private UserCRUDRepository userRepositoryFixture;
 

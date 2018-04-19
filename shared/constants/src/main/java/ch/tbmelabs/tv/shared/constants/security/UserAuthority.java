@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.shared.constants.security;
 
 public class UserAuthority {
+
   public static final String GANDALF = "GANDALF";
   public static final String SERVER_ADMIN = "SERVER_ADMIN";
   public static final String SERVER_SUPPORT = "SERVER_SUPPORT";

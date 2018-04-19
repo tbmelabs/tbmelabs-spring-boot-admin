@@ -5,11 +5,13 @@ import ch.tbmelabs.core.adminserver.test.AbstractAdminServerContextAwareTest;
 import ch.tbmelabs.tv.core.adminserver.Application;
 
 public class ApplicationIntTest extends AbstractAdminServerContextAwareTest {
+
   @Test
-  public void applicationContextLoads() {}
+  public void applicationContextLoads() {
+  }
 
   @Test
   public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] {});
+    Application.main(new String[]{});
   }
 }

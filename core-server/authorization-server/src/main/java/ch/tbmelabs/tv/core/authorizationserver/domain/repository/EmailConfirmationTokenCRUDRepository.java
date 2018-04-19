@@ -8,5 +8,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 @Repository
 public interface EmailConfirmationTokenCRUDRepository
     extends CrudRepository<EmailConfirmationToken, Long> {
+
   Optional<EmailConfirmationToken> findOneByTokenString(String tokenString);
 }

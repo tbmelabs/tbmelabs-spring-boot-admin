@@ -26,4 +26,5 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
     DirtiesContextTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
     DependencyInjectionTestExecutionListener.class, WithSecurityContextTestExecutionListener.class})
 public abstract class AbstractOAuth2AuthorizationServerContextAwareTest {
+
 }

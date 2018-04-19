@@ -9,6 +9,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 
 @Repository
 public interface ClientCRUDRepository extends CrudRepository<Client, Long> {
+
   Page<Client> findAll(Pageable pageable);
 
   Optional<Client> findOneByClientId(String clientId);

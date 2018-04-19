@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -23,6 +24,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUD
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 public class BruteforceFilterServiceTest {
+
   private static final Integer MAX_LOGIN_ATTEMPTS = 3;
   private static final String IP_ADDRESS = "127.0.0.1";
 
@@ -81,7 +83,8 @@ public class BruteforceFilterServiceTest {
     IntStream.range(0, MAX_LOGIN_ATTEMPTS)
         .forEach(iterator -> fixture.authenticationFromIpFailed(IP_ADDRESS));
 
-    verify(ipBlacklistRepositoryFixture, atLeastOnce()).save(ArgumentMatchers.any(BlacklistedIp.class));
+    verify(ipBlacklistRepositoryFixture, atLeastOnce())
+        .save(ArgumentMatchers.any(BlacklistedIp.class));
   }
 
   @Test

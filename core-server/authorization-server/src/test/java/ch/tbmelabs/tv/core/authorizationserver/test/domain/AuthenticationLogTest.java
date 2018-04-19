@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -19,6 +20,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 
 public class AuthenticationLogTest {
+
   private static final AUTHENTICATION_STATE TEST_AUTHENTICATION_STATE = AUTHENTICATION_STATE.OK;
   private static final String TEST_IP = "127.0.0.1";
   private static final String TEST_MESSAGE = "This is some message.";
@@ -45,7 +47,7 @@ public class AuthenticationLogTest {
         .isEqualTo(Include.NON_NULL);
     assertThat(
         AuthenticationLog.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-            .isNotNull().isTrue();
+        .isNotNull().isTrue();
   }
 
   @Test
