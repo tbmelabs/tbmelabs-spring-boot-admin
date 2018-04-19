@@ -5,6 +5,8 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -40,6 +42,16 @@ public class LogstashAppenderConfigurationTest {
         .containsKey(LogstashAppenderConfiguration.getAppenderName());
     assertThat(((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger()).getAppenders()
         .get(LogstashAppenderConfiguration.getAppenderName())).isNotNull();
+  }
+
+  @Test
+  public void appenderShouldHavePatternLayout() {
+    Appender appender = ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger())
+        .getAppenders().get(LogstashAppenderConfiguration.getAppenderName());
+
+    assertThat(appender).isNotNull();
+    assertThat(appender.getLayout())
+        .isEqualTo(PatternLayout.newBuilder().withPattern("%-4d [%t] %-5p %c - %m%n").build());
   }
 
   @Test

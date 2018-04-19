@@ -1,10 +1,13 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.configuration;
 
 import javax.annotation.PostConstruct;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Filter.Result;
 import org.apache.logging.log4j.core.appender.SocketAppender;
-import org.apache.logging.log4j.core.layout.SerializedLayout;
+import org.apache.logging.log4j.core.filter.ThresholdFilter;
+import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -40,7 +43,8 @@ public class LogstashAppenderConfiguration {
         .withImmediateFail(false)
         .withBufferSize(BUFFER_SIZE)
         .withReconnectDelayMillis(-1)
-        .withLayout(SerializedLayout.createLayout())
+        .withLayout(PatternLayout.newBuilder().withPattern("%-4d [%t] %-5p %c - %m%n").build())
+        .withFilter(ThresholdFilter.createFilter(Level.INFO, Result.NEUTRAL, Result.DENY))
         .build();
     // @formatter:on
 

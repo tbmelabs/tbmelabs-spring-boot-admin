@@ -9,7 +9,6 @@ services:
     command: logstash -e 'input{ tcp { port => 5000 } } output{ elasticsearch { hosts => ["elasticsearch"] } }'
     ports:
     - 5000:5000
-    - 9600:9600
     links:
     - elasticsearch_logging:elasticsearch
     depends_on:
