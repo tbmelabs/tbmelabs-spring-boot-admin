@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.appender.SocketAppender;
+import org.apache.logging.log4j.core.layout.SerializedLayout;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,6 +40,7 @@ public class LogstashAppenderConfiguration {
         .withImmediateFail(false)
         .withBufferSize(BUFFER_SIZE)
         .withReconnectDelayMillis(-1)
+        .withLayout(SerializedLayout.createLayout())
         .build();
     // @formatter:on
 

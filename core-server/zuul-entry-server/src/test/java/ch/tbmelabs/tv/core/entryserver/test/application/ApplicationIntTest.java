@@ -1,17 +1,15 @@
 package ch.tbmelabs.tv.core.entryserver.test.application;
 
 import org.junit.Test;
-
 import ch.tbmelabs.tv.core.entryserver.Application;
-import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulApplicationContextAware;
+import ch.tbmelabs.tv.core.entryserver.test.AbstractZuulServerContextAwareTest;
 
-public class ApplicationIntTest extends AbstractZuulApplicationContextAware {
+public class ApplicationIntTest extends AbstractZuulServerContextAwareTest {
   @Test
-  public void applicationContextLoads() {
-  }
+  public void applicationContextLoads() {}
 
   @Test
   public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] { "--spring.profiles.active=test" });
+    Application.main(new String[] {"--spring.profiles.active=test"});
   }
 }
