@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.appender.OutputStreamAppender;
 import org.apache.logging.log4j.core.net.Protocol;
@@ -20,10 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Component;
-
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-
 import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 
 public class ZuulAccessFilterTest {
@@ -89,7 +85,8 @@ public class ZuulAccessFilterTest {
   }
 
   @Test
-  public void zuulFilterShouldLogToRootLoggerOnIncomingRequest() throws UnsupportedEncodingException {
+  public void zuulFilterShouldLogToRootLoggerOnIncomingRequest()
+      throws UnsupportedEncodingException {
     ByteArrayOutputStream mockOut = new ByteArrayOutputStream();
 
     ((org.apache.logging.log4j.core.Logger) LogManager.getRootLogger())
@@ -97,7 +94,8 @@ public class ZuulAccessFilterTest {
 
     fixture.run();
 
-    assertThat(mockOut.toString(StandardCharsets.UTF_8.name())).contains("REQUEST  :: < HTTPS 127.0.0.1:80")
+    assertThat(mockOut.toString(StandardCharsets.UTF_8.name()))
+        .contains("REQUEST  :: < HTTPS 127.0.0.1:80")
         .contains("REQUEST  :: < GET https://tbme.tv/ SSL").contains("RESPONSE :: > HTTP:200");
   }
 }

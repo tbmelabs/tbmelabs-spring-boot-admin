@@ -1,18 +1,15 @@
 package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import ch.tbmelabs.tv.core.entryserver.Application;
 
 public class ControllerAnnotationTest {
@@ -23,18 +20,19 @@ public class ControllerAnnotationTest {
 
   @BeforeClass
   public static void beforeClassSetUp() {
-    allControllers
-        .addAll(new Reflections(Application.class.getPackage().getName() + ".web").getSubTypesOf(Object.class));
+    allControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
+        .getSubTypesOf(Object.class));
 
-    annotatedControllers.addAll(
-        new Reflections(Application.class.getPackage().getName() + ".web").getTypesAnnotatedWith(Controller.class));
-    annotatedControllers.addAll(
-        new Reflections(Application.class.getPackage().getName() + ".web").getTypesAnnotatedWith(RestController.class));
+    annotatedControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
+        .getTypesAnnotatedWith(Controller.class));
+    annotatedControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
+        .getTypesAnnotatedWith(RestController.class));
   }
 
   @Test
   public void packageShouldOnlyContainControllers() {
-    allControllers.forEach(controller -> assertThat(controller.getClass().getSimpleName()).contains("Controller"));
+    allControllers.forEach(
+        controller -> assertThat(controller.getClass().getSimpleName()).contains("Controller"));
   }
 
   @Test
