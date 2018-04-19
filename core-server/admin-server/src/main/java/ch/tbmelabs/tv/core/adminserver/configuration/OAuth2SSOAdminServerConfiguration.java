@@ -9,7 +9,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import de.codecentric.boot.admin.config.EnableAdminServer;
@@ -18,7 +17,8 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
 @EnableOAuth2Sso
 @EnableAdminServer
 public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdapter {
-  private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOAdminServerConfiguration.class);
+  private static final Logger LOGGER =
+      LogManager.getLogger(OAuth2SSOAdminServerConfiguration.class);
 
   @Autowired
   private Environment environment;
@@ -26,7 +26,8 @@ public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdap
   @Override
   public void configure(WebSecurity web) throws Exception {
     if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
-      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV + "\" is active: Web request debugging is enabled!");
+      LOGGER.warn("Profile \"" + SpringApplicationProfile.DEV
+          + "\" is active: Web request debugging is enabled!");
 
       web.debug(true);
     }
