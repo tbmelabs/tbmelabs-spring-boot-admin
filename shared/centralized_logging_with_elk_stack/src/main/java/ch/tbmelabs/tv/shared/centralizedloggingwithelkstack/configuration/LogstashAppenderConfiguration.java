@@ -13,7 +13,7 @@ public class LogstashAppenderConfiguration {
 
   private static final Logger LOGGER = LogManager.getLogger(LogstashAppenderConfiguration.class);
 
-  private static final Integer BUFFER_SIZE = 128;
+  private static final Integer BUFFER_SIZE = 2048;
 
   private static String appenderName = "logstash";
 

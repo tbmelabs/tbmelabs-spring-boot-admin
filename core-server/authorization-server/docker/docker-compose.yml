@@ -6,8 +6,7 @@ services:
     - 9200
   logstash_logging:
     image: logstash
-    volumes:
-    - ./logstash-log4j2/config:/etc/logstash/conf.d
+    command: logstash -e 'input{ tcp { port => 5000 } } output{ elasticsearch { hosts => ["elasticsearch"] } }'
     ports:
     - 5000:5000
     - 9600:9600
