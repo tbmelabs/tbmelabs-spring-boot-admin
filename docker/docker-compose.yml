@@ -1,5 +1,16 @@
 version: '2'
 services:
+  redis_tokenstore:
+    image: redis:alpine
+    ports:
+    - 6379:6379
+  postgres_auth:
+    image: postgres
+    environment:
+    - POSTGRES_DB=${DATABASE_NAME}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+    - 5432:5432
   elasticsearch_logging:
     image: elasticsearch
     expose:
