@@ -1,9 +1,9 @@
 package ch.tbmelabs.tv.shared.centralizedloggingwithelkstack.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.layout.PatternLayout;
@@ -23,6 +23,7 @@ public class LogstashAppenderConfigurationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
+    ReflectionTestUtils.setField(fixture, "applicationName", "TEST_APPLICATION");
     ReflectionTestUtils.setField(fixture, "logstashHost", "localhost");
     ReflectionTestUtils.setField(fixture, "logstashPort", 5000);
 
@@ -32,6 +33,14 @@ public class LogstashAppenderConfigurationTest {
   @Test
   public void logstashAppenderConfigurationShouldBeAnnotated() {
     assertThat(LogstashAppenderConfiguration.class).hasAnnotation(Configuration.class);
+  }
+
+  @Test
+  public void logstashAppenderConfigurationShouldThrowErrorIfApplicationNameIsNull() {
+    ReflectionTestUtils.setField(fixture, "applicationName", null);
+
+    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("Application name may not be empty!");
   }
 
   @Test
@@ -50,8 +59,10 @@ public class LogstashAppenderConfigurationTest {
         .getAppenders().get(LogstashAppenderConfiguration.getAppenderName());
 
     assertThat(appender).isNotNull();
-    assertThat(appender.getLayout())
-        .isEqualTo(PatternLayout.newBuilder().withPattern("%-4d [%t] %-5p %c - %m%n").build());
+    assertThat(appender.getLayout()).isEqualTo(PatternLayout.newBuilder()
+        .withPattern(
+            "application=TEST_APPLICATION; thread=%t; level=%-5p; package=%c; message=%m%n")
+        .build());
   }
 
   @Test

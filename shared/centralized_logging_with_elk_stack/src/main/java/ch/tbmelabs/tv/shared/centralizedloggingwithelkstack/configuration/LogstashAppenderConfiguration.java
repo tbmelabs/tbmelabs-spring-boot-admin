@@ -20,6 +20,9 @@ public class LogstashAppenderConfiguration {
 
   private static String appenderName = "logstash";
 
+  @Value("${spring.application.name}")
+  private String applicationName;
+
   @Value("${LOGSTASH_HOST}")
   private String logstashHost;
 
@@ -30,6 +33,14 @@ public class LogstashAppenderConfiguration {
   public void initBean() {
     LOGGER.info("Initializing..");
 
+    if (applicationName == null || appenderName.isEmpty()) {
+      throw new IllegalArgumentException("Application name may not be empty!");
+    }
+
+    addAppender();
+  }
+
+  private void addAppender() {
     // @formatter:off
     LOGGER.info("Configuring new " + SocketAppender.class + " using the following configuration:\n"
         + " - Server: " + logstashHost + "\n"
@@ -43,7 +54,8 @@ public class LogstashAppenderConfiguration {
         .withImmediateFail(false)
         .withBufferSize(BUFFER_SIZE)
         .withReconnectDelayMillis(-1)
-        .withLayout(PatternLayout.newBuilder().withPattern("%-4d [%t] %-5p %c - %m%n").build())
+        .withLayout(PatternLayout.newBuilder()
+            .withPattern("application=" + applicationName + "; thread=%t; level=%-5p; package=%c; message=%m%n").build())
         .withFilter(ThresholdFilter.createFilter(Level.INFO, Result.NEUTRAL, Result.DENY))
         .build();
     // @formatter:on

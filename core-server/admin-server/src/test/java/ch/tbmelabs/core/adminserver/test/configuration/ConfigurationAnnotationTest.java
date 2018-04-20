@@ -9,7 +9,7 @@ import ch.tbmelabs.tv.core.adminserver.Application;
 
 public class ConfigurationAnnotationTest {
 
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 3;
 
   @Test
   public void packageShouldOnlyContainConfigurations() {
