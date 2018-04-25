@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.oauth2;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -7,10 +11,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 
 @RestController
 public class PrincipalController {
@@ -21,7 +21,7 @@ public class PrincipalController {
   private UserCRUDRepository userRepository;
 
   @Autowired
-  private UserProfileMapper profileMapper;
+  private UserMapper userMapper;
 
   @GetMapping({"/me", "/user"})
   public Map<String, String> getPrincipal() {
@@ -37,11 +37,9 @@ public class PrincipalController {
   }
 
   @GetMapping({"/profile"})
-  public UserProfile getProfile() {
+  public UserDTO getProfile() {
     LOGGER.debug("Requesting current user profile.");
 
-    User user = userRepository.findCurrentUser();
-
-    return profileMapper.toUserProfile(user);
+    return userMapper.toDto(userRepository.findCurrentUser());
   }
 }

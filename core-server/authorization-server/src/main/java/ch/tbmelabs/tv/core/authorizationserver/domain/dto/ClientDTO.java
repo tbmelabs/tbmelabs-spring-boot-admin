@@ -1,65 +1,20 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Data
-@NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
-public class ClientDTO {
-
-  private Date created;
-
-  private Date lastUpdated;
-
-  private Long id;
+@EqualsAndHashCode(callSuper = true)
+public class ClientDTO extends AbstractBasicEntityDTO {
 
   private String clientId;
-
-  private String secret;
-
-  private Boolean isSecretRequired;
-
-  private Boolean isAutoApprove;
-
+  private Boolean isSecretRequired = true;
+  private Boolean isAutoApprove = false;
   private Integer accessTokenValiditySeconds;
-
   private Integer refreshTokenValiditySeconds;
-
-  private String redirectUri;
-
-  @JsonIgnoreProperties({"clientsWithGrantTypes"})
-  private Collection<GrantType> grantTypes;
-
-  @JsonIgnoreProperties({"clientsWithAuthorities"})
-  private Collection<Authority> grantedAuthorities;
-
-  @JsonIgnoreProperties({"clientsWithScopes"})
-  private Collection<Scope> scopes;
-
-  public ClientDTO(Client client, List<GrantType> grantTypes, List<Authority> authorities,
-      List<Scope> scopes) {
-    this.created = client.getCreated();
-    this.lastUpdated = client.getLastUpdated();
-    this.id = client.getId();
-    this.clientId = client.getClientId();
-    this.isSecretRequired = client.getIsSecretRequired();
-    this.isAutoApprove = client.getIsAutoApprove();
-    this.accessTokenValiditySeconds = client.getAccessTokenValiditySeconds();
-    this.refreshTokenValiditySeconds = client.getRefreshTokenValiditySeconds();
-    this.redirectUri = client.getRedirectUri();
-    this.grantTypes = grantTypes;
-    this.grantedAuthorities = authorities;
-    this.scopes = scopes;
-  }
+  private String[] redirectUri;
+  private Collection<GrantTypeDTO> grantTypes;
+  private Collection<AuthorityDTO> grantedAuthorities;
+  private Collection<ScopeDTO> scopes;
 }

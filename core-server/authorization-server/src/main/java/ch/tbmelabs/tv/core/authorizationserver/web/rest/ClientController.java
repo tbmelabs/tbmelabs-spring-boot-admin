@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
 @RequestMapping({"${spring.data.rest.base-path}/clients"})
@@ -26,7 +25,7 @@ public class ClientController {
   private ClientCRUDRepository clientRepository;
 
   @Autowired
-  private ClientDTOMapper clientMapper;
+  private ClientMapper clientMapper;
 
   @PostMapping
   public ClientDTO createClient(@RequestBody(required = true) ClientDTO clientDTO) {
@@ -34,14 +33,12 @@ public class ClientController {
       throw new IllegalArgumentException("You can only create a new client without an id!");
     }
 
-    Client client = clientMapper.toClient(clientDTO);
-
-    return clientMapper.toClientDTO(clientRepository.save(client));
+    return clientMapper.toDto(clientRepository.save(clientMapper.toEntity(clientDTO)));
   }
 
   @GetMapping
   public Page<ClientDTO> getAllClients(Pageable pageable) {
-    return clientRepository.findAll(pageable).map(clientMapper::toClientDTO);
+    return clientRepository.findAll(pageable).map(clientMapper::toDto);
   }
 
   @PutMapping
@@ -50,7 +47,7 @@ public class ClientController {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 
-    return clientMapper.toClientDTO(clientRepository.save(clientMapper.toClient(clientDTO)));
+    return clientMapper.toDto(clientRepository.save(clientMapper.toEntity(clientDTO)));
   }
 
   @DeleteMapping
@@ -59,6 +56,6 @@ public class ClientController {
       throw new IllegalArgumentException("You can only delete an existing client!");
     }
 
-    clientRepository.delete(clientMapper.toClient(clientDTO));
+    clientRepository.delete(clientMapper.toEntity(clientDTO));
   }
 }

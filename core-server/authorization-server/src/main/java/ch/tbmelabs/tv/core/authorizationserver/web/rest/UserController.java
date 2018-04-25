@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,11 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @RestController
 @RequestMapping({"${spring.data.rest.base-path}/users"})
@@ -25,33 +24,34 @@ public class UserController {
   private UserCRUDRepository userRepository;
 
   @Autowired
-  private UserProfileMapper userMapper;
+  private UserMapper userMapper;
 
   @GetMapping
-  public Page<UserProfile> getAllUsers(Pageable pageable) {
-    return userRepository.findAll(pageable).map(userMapper::toUserProfile);
+  public Page<UserDTO> getAllUsers(Pageable pageable) {
+    return userRepository.findAll(pageable).map(userMapper::toDto);
   }
 
   @PutMapping
-  public UserProfile updateUser(@RequestBody(required = true) UserProfile userProfile) {
+  public UserDTO updateUser(@RequestBody(required = true) UserDTO userProfile) {
     if (userProfile.getId() == null) {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
 
-    User updatedUser = userMapper.toUser(userProfile);
-    if (updatedUser.getPassword() == null) {
-      updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
-    }
+    // TODO: Is this still required?
+    // User updatedUser = userMapper.toUser(userProfile);
+    // if (updatedUser.getPassword() == null) {
+    // updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
+    // }
 
-    return userMapper.toUserProfile(userRepository.save(updatedUser));
+    return userMapper.toDto(userRepository.save(userMapper.toEntity(userProfile)));
   }
 
   @DeleteMapping
-  public void deleteUser(@RequestBody(required = true) UserProfile userProfile) {
+  public void deleteUser(@RequestBody(required = true) UserDTO userProfile) {
     if (userProfile.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing user!");
     }
 
-    userRepository.delete(userMapper.toUser(userProfile));
+    userRepository.delete(userMapper.toEntity(userProfile));
   }
 }
