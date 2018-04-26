@@ -32,26 +32,26 @@ public class UserController {
   }
 
   @PutMapping
-  public UserDTO updateUser(@RequestBody(required = true) UserDTO userProfile) {
-    if (userProfile.getId() == null) {
+  public UserDTO updateUser(@RequestBody(required = true) UserDTO userDTO) {
+    if (userDTO.getId() == null) {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
 
     // TODO: Is this still required?
-    // User updatedUser = userMapper.toUser(userProfile);
+    // User updatedUser = userMapper.toUser(userDTO);
     // if (updatedUser.getPassword() == null) {
     // updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
     // }
 
-    return userMapper.toDto(userRepository.save(userMapper.toEntity(userProfile)));
+    return userMapper.toDto(userRepository.save(userMapper.toEntity(userDTO)));
   }
 
   @DeleteMapping
-  public void deleteUser(@RequestBody(required = true) UserDTO userProfile) {
-    if (userProfile.getId() == null) {
+  public void deleteUser(@RequestBody(required = true) UserDTO userDTO) {
+    if (userDTO.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing user!");
     }
 
-    userRepository.delete(userMapper.toEntity(userProfile));
+    userRepository.delete(userMapper.toEntity(userDTO));
   }
 }

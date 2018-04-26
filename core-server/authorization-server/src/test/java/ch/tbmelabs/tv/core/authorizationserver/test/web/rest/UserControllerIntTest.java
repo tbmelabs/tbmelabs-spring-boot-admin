@@ -7,6 +7,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,14 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -34,23 +34,23 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   private MockMvc mockMvc;
 
   @Autowired
-  private UserProfileMapper userProfileMapper;
+  private UserMapper userMapper;
 
   @Autowired
   private UserCRUDRepository userRepository;
 
-  private UserProfile testUserProfile = createTestUserProfile();
+  private UserDTO testUserDTO = createTestUserDTO();
 
-  public static UserProfile createTestUserProfile() {
-    User user = UserProfileTest.createTestUser();
+  public static UserDTO createTestUserDTO() {
+    User user = UserDTOTest.createTestUser();
 
-    return new UserProfile(user, new ArrayList<>());
+    return new UserDTO(user, new ArrayList<>());
   }
 
   @Before
   public void beforeTestSetUp() {
     User existingUser;
-    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserProfile.getUsername())
+    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserDTO.getUsername())
         .orElse(null)) != null) {
       userRepository.delete(existingUser);
     }
@@ -75,8 +75,8 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void putClientEndpointIsAccessibleToServerSupports() throws Exception {
-    User persistedUser = userRepository.save(UserProfileTest.createTestUser());
-    testUserProfile = userProfileMapper.toUserProfile(persistedUser);
+    User persistedUser = userRepository.save(UserDTOTest.createTestUser());
+    testUserDTO = userMapper.toDto(persistedUser);
 
     mockMvc
         .perform(put(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -92,7 +92,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   public void putClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(put(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testUserProfile)))
+            .content(new ObjectMapper().writeValueAsString(testUserDTO)))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 
@@ -100,12 +100,12 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void deleteClientEndpointIsAccessibleToServerSupports() throws Exception {
-    User persistedUser = userRepository.save(UserProfileTest.createTestUser());
-    testUserProfile = userProfileMapper.toUserProfile(persistedUser);
+    User persistedUser = userRepository.save(UserDTOTest.createTestUser());
+    testUserDTO = userMapper.toDto(persistedUser);
 
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testUserProfile)))
+            .content(new ObjectMapper().writeValueAsString(testUserDTO)))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
@@ -114,7 +114,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   public void deleteClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testUserProfile)))
+            .content(new ObjectMapper().writeValueAsString(testUserDTO)))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }

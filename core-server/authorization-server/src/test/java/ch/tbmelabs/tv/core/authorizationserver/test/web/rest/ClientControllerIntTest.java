@@ -7,6 +7,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Random;
 import org.junit.Test;
@@ -16,14 +24,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -34,7 +34,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   private MockMvc mockMvc;
 
   @Autowired
-  private ClientDTOMapper clientMapper;
+  private ClientMapper clientMapper;
 
   @Autowired
   private ClientCRUDRepository clientRepository;
@@ -42,6 +42,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   private final ClientDTO testClientDTO = createTestClientDTO();
 
   public static ClientDTO createTestClientDTO() {
+    // TODO
     Client client = ClientDTOTest.createTestClient();
 
     return new ClientDTO(client, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
@@ -87,8 +88,8 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   @WithMockUser(username = "ClientControllerIntTestUser",
       authorities = {UserAuthority.SERVER_ADMIN})
   public void putClientEndpointIsAccessibleToServerAdmins() throws Exception {
-    testClientDTO.setId(clientMapper
-        .toClientDTO(clientRepository.save(clientMapper.toClient(testClientDTO))).getId());
+    testClientDTO.setId(
+        clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO))).getId());
 
     mockMvc
         .perform(put(clientsEndpoint).contentType(MediaType.APPLICATION_JSON)

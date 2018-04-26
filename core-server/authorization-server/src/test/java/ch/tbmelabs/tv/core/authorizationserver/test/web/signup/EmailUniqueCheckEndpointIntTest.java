@@ -5,6 +5,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,12 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
 
 public class EmailUniqueCheckEndpointIntTest
     extends AbstractOAuth2AuthorizationServerContextAwareTest {
@@ -46,7 +46,7 @@ public class EmailUniqueCheckEndpointIntTest
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
 
-    User newUser = UserProfileTest.createTestUser();
+    User newUser = UserDTOTest.createTestUser();
 
     testUser = userRepository.save(newUser);
   }

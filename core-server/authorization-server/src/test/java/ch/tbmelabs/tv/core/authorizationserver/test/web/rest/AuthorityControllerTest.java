@@ -1,11 +1,11 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.AuthorityMapperTest.AuthorityMapperImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
@@ -30,6 +32,9 @@ public class AuthorityControllerTest {
 
   @Mock
   private AuthorityCRUDRepository mockAuthorityRepository;
+
+  @Mock
+  private AuthorityMapperImpl mockAuthorityMapper;
 
   @Spy
   @InjectMocks
@@ -45,6 +50,8 @@ public class AuthorityControllerTest {
 
     doReturn(new PageImpl<>(Arrays.asList(testAuthority))).when(mockAuthorityRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
+
+    doCallRealMethod().when(mockAuthorityMapper).toDto(Mockito.any(Authority.class));
   }
 
   @Test
@@ -65,14 +72,14 @@ public class AuthorityControllerTest {
   @Test
   public void getAllAuthoritiesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = AuthorityController.class.getDeclaredMethod("getAllAuthorities",
-        new Class<?>[]{Pageable.class});
+        new Class<?>[] {Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
   @Test
   public void getAllAuthoritiesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllAuthorities(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testAuthority);
+        .containsExactly(new AuthorityDTO(testAuthority.getName()));
     verify(mockAuthorityRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

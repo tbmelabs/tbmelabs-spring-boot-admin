@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import java.util.ArrayList;
 import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,4 +16,18 @@ public class UserDTO extends AbstractBasicEntityDTO {
   private Boolean isBlocked = false;
   private String emailConfirmationToken;
   private Collection<RoleDTO> roles;
+
+  public UserDTO() {
+  }
+
+  public UserDTO(User user, ArrayList<RoleDTO> roles) {
+    setUsername(user.getUsername());
+    setEmail(user.getEmail());
+    setIsEnabled(user.getIsEnabled());
+    setIsBlocked(user.getIsBlocked());
+    setEmailConfirmationToken(
+        user.getEmailConfirmationToken() != null ? user.getEmailConfirmationToken().getTokenString()
+            : null);
+    setRoles(roles);
+  }
 }

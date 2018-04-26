@@ -8,4 +8,8 @@ import lombok.EqualsAndHashCode;
 public class GrantTypeDTO extends AbstractBasicEntityDTO {
 
   private String name;
+
+  public GrantTypeDTO(String name) {
+    setName(name);
+  }
 }

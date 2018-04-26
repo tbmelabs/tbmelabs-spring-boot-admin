@@ -83,7 +83,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
 
   @Test
   @WithMockUser(username = "PrincipalEndpointIntTestUser")
-  public void profileEndpointShouldReturnCorrectUserProfile() throws Exception {
+  public void profileEndpointShouldReturnCorrectUserDTO() throws Exception {
     JSONObject jsonUserRepresentation = new JSONObject(mockMvc.perform(get(PROFILE_ENDPOINT))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
         .getContentAsString());

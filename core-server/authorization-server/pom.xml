@@ -136,14 +136,14 @@
         <artifactId>maven-compiler-plugin</artifactId>
 
         <configuration>
-          <annotationProcessors>
+          <annotationProcessorPaths>
             <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
-            <annotationProcessor>
+            <path>
               <groupId>org.mapstruct</groupId>
               <artifactId>mapstruct-processor</artifactId>
               <version>${org.mapstruct.mapstruct-processor.version}</version>
-            </annotationProcessor>
-          </annotationProcessors>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
     </plugins>

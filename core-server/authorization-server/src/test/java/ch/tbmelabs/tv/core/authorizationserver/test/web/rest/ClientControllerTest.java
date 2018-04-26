@@ -7,6 +7,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,12 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientDTOMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ClientControllerTest {
 
@@ -40,7 +40,7 @@ public class ClientControllerTest {
   private ClientCRUDRepository mockClientRepository;
 
   @Mock
-  private ClientDTOMapper mockClientMapper;
+  private ClientMapper mockClientMapper;
 
   @Spy
   @InjectMocks
@@ -61,8 +61,8 @@ public class ClientControllerTest {
     doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doReturn(testClientDTO).when(mockClientMapper).toClientDTO(ArgumentMatchers.any(Client.class));
-    doReturn(testClient).when(mockClientMapper).toClient(ArgumentMatchers.any(ClientDTO.class));
+    doReturn(testClientDTO).when(mockClientMapper).toDto(ArgumentMatchers.any(Client.class));
+    doReturn(testClient).when(mockClientMapper).toEntity(ArgumentMatchers.any(ClientDTO.class));
   }
 
   @Test

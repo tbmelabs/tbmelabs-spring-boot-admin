@@ -1,11 +1,18 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.GrantTypeMapperTest.GrantTypeMapperImpl;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -21,15 +28,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class GrantTypeControllerTest {
 
   @Mock
   private GrantTypeCRUDRepository mockGrantTypeRepository;
+
+  @Mock
+  private GrantTypeMapperImpl mockGrantTypeMapper;
 
   @Spy
   @InjectMocks
@@ -45,6 +51,8 @@ public class GrantTypeControllerTest {
 
     doReturn(new PageImpl<>(Arrays.asList(testGrantType))).when(mockGrantTypeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
+
+    doCallRealMethod().when(mockGrantTypeMapper).toDto(Mockito.any(GrantType.class));
   }
 
   @Test
@@ -72,7 +80,7 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllGrantTypes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testGrantType);
+        .containsExactly(new GrantTypeDTO(testGrantType.getName()));
     verify(mockGrantTypeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

@@ -5,13 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.web.servlet.MockMvc;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -19,7 +12,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationL
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserProfileTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.test.web.servlet.MockMvc;
 
 public class LoginEndpointAuthenticationAttemptLoggerIntTest
     extends AbstractOAuth2AuthorizationServerContextAwareTest {
@@ -45,7 +45,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
     authenticationLogRepository.deleteAll();
     BruteforceFilterService.resetFilter();
 
-    User newUser = UserProfileTest.createTestUser();
+    User newUser = UserDTOTest.createTestUser();
     newUser.setIsEnabled(true);
     password = newUser.getPassword();
 

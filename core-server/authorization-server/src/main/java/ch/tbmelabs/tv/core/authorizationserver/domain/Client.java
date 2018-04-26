@@ -43,6 +43,9 @@ public class Client extends NicelyDocumentedJDBCResource {
   @Transient
   private static final long serialVersionUID = 1L;
 
+  @Transient
+  public static final String REDIRECT_URI_SPLITTERATOR = ";";
+
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,

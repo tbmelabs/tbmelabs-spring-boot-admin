@@ -7,6 +7,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,12 +33,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserProfile;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserProfileMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserControllerTest {
 
@@ -40,29 +40,28 @@ public class UserControllerTest {
   private UserCRUDRepository mockUserRepository;
 
   @Mock
-  private UserProfileMapper mockUserProfileMapper;
+  private UserMapper mockUserMapper;
 
   @Spy
   @InjectMocks
   private UserController fixture;
 
   private User testUser;
-  private UserProfile testUserProfile;
+  private UserDTO testUserDTO;
 
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
 
     testUser = new User();
-    testUserProfile = new UserProfile(testUser, new ArrayList<>());
+    testUserDTO = new UserDTO(testUser, new ArrayList<>());
 
     doReturn(testUser).when(mockUserRepository).findOne(ArgumentMatchers.anyLong());
     doReturn(new PageImpl<>(Arrays.asList(testUser))).when(mockUserRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doReturn(testUserProfile).when(mockUserProfileMapper)
-        .toUserProfile(ArgumentMatchers.any(User.class));
-    doReturn(testUser).when(mockUserProfileMapper).toUser(ArgumentMatchers.any(UserProfile.class));
+    doReturn(testUserDTO).when(mockUserMapper).toDto(ArgumentMatchers.any(User.class));
+    doReturn(testUser).when(mockUserMapper).toEntity(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
@@ -90,24 +89,24 @@ public class UserControllerTest {
   @Test
   public void getAllUsersShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllUsers(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testUserProfile);
+        .containsExactly(testUserDTO);
     verify(mockUserRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 
   @Test
   public void updateUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserProfile.class});
+        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserDTO.class});
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
   @Test
   public void updateUserShouldPersistMappedDTO() {
     testUser.setPassword(RandomStringUtils.random(60));
-    testUserProfile.setId(new Random().nextLong());
+    testUserDTO.setId(new Random().nextLong());
 
     try {
-      fixture.updateUser(testUserProfile);
+      fixture.updateUser(testUserDTO);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -117,7 +116,7 @@ public class UserControllerTest {
 
   @Test
   public void updateUserShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.updateUser(testUserProfile))
+    assertThatThrownBy(() -> fixture.updateUser(testUserDTO))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only update an existing user!");
   }
@@ -125,22 +124,22 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{UserProfile.class});
+        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{UserDTO.class});
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
   }
 
   @Test
   public void deleteUserShouldDeleteMappedDTO() {
-    testUserProfile.setId(new Random().nextLong());
+    testUserDTO.setId(new Random().nextLong());
 
-    fixture.deleteUser(testUserProfile);
+    fixture.deleteUser(testUserDTO);
 
     verify(mockUserRepository, times(1)).delete(testUser);
   }
 
   @Test
   public void deleteUserShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.deleteUser(testUserProfile))
+    assertThatThrownBy(() -> fixture.deleteUser(testUserDTO))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("You can only delete an existing user!");
   }

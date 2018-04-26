@@ -1,11 +1,18 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.ScopeMapperTest.ScopeMapperImpl;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -21,15 +28,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class ScopeControllerTest {
 
   @Mock
   private ScopeCRUDRepository mockScopeRepository;
+
+  @Mock
+  private ScopeMapperImpl mockScopeMapper;
 
   @Spy
   @InjectMocks
@@ -45,6 +51,8 @@ public class ScopeControllerTest {
 
     doReturn(new PageImpl<>(Arrays.asList(testScope))).when(mockScopeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
+
+    doCallRealMethod().when(mockScopeMapper).toDto(Mockito.any(Scope.class));
   }
 
   @Test
@@ -72,7 +80,7 @@ public class ScopeControllerTest {
   @Test
   public void getAllScopesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllScopes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testScope);
+        .containsExactly(new ScopeDTO(testScope.getName()));
     verify(mockScopeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

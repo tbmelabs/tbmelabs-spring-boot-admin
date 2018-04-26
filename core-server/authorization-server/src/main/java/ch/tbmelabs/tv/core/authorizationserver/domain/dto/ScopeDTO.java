@@ -8,4 +8,8 @@ import lombok.EqualsAndHashCode;
 public class ScopeDTO extends AbstractBasicEntityDTO {
 
   private String name;
+
+  public ScopeDTO(String name) {
+    setName(name);
+  }
 }
