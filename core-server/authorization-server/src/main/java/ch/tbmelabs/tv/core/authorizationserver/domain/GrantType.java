@@ -60,6 +60,6 @@ public class GrantType extends NicelyDocumentedJDBCResource {
   private Collection<ClientGrantTypeAssociation> clientsWithGrantTypes;
 
   public GrantType(String name) {
-    this.name = name;
+    setName(name);
   }
 }

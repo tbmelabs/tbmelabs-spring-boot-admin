@@ -4,6 +4,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -14,25 +29,18 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 
 public class ClientTest {
 
   private static final String TEST_CLIENT_GRANT_TYPE = "TEST";
   private static final String TEST_CLIENT_AUTHORITY = "TEST";
   private static final String TEST_CLIENT_SCOPE = "TEST";
+
+  @Mock
+  private ClientMapper mockClientMapper;
 
   @Spy
   private Client fixture;
@@ -191,8 +199,12 @@ public class ClientTest {
 
   @Test
   public void clientShouldConvertGrantTypeToClientGrantTypeAssociation() {
-    List<ClientGrantTypeAssociation> mockAssociation = (List<ClientGrantTypeAssociation>) fixture
-        .grantTypesToAssociations(Arrays.asList(new GrantType(TEST_CLIENT_GRANT_TYPE)));
+    GrantTypeDTO dto = new GrantTypeDTO();
+    dto.setName(TEST_CLIENT_GRANT_TYPE);
+
+    List<ClientGrantTypeAssociation> mockAssociation =
+        (List<ClientGrantTypeAssociation>) mockClientMapper
+            .grantTypesToGrantTypeAssociations(Arrays.asList(dto), fixture);
 
     assertThat(mockAssociation).isNotNull().hasSize(1);
     assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
@@ -202,8 +214,12 @@ public class ClientTest {
 
   @Test
   public void clientShouldConvertAuthorityToClientAuthorityAssociation() {
-    List<ClientAuthorityAssociation> mockAssociation = (List<ClientAuthorityAssociation>) fixture
-        .authoritiesToAssociations(Arrays.asList(new Authority(TEST_CLIENT_AUTHORITY)));
+    AuthorityDTO dto = new AuthorityDTO();
+    dto.setName(TEST_CLIENT_AUTHORITY);
+
+    List<ClientAuthorityAssociation> mockAssociation =
+        (List<ClientAuthorityAssociation>) mockClientMapper
+            .authoritiesToAuthorityAssociations(Arrays.asList(dto), fixture);
 
     assertThat(mockAssociation).isNotNull().hasSize(1);
     assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);
@@ -213,8 +229,11 @@ public class ClientTest {
 
   @Test
   public void clientShouldConvertScopeToClientScopeAssociation() {
-    List<ClientScopeAssociation> mockAssociation = (List<ClientScopeAssociation>) fixture
-        .scopesToAssociations(Arrays.asList(new Scope(TEST_CLIENT_SCOPE)));
+    ScopeDTO dto = new ScopeDTO();
+    dto.setName(TEST_CLIENT_SCOPE);
+
+    List<ClientScopeAssociation> mockAssociation = (List<ClientScopeAssociation>) mockClientMapper
+        .scopesToScopeAssociations(Arrays.asList(dto), fixture);
 
     assertThat(mockAssociation).isNotNull().hasSize(1);
     assertThat(mockAssociation.get(0).getClient()).isEqualTo(fixture);

@@ -61,10 +61,9 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
   private User user;
 
   public EmailConfirmationToken(String tokenString, User user) {
-    this.tokenString = tokenString;
-    this.user = user;
-
-    this.expirationDate = calculateExpirationDate();
+    setTokenString(tokenString);
+    setUser(user);
+    setExpirationDate(calculateExpirationDate());
   }
 
   private Date calculateExpirationDate() {

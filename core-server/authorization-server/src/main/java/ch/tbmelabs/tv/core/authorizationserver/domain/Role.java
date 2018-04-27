@@ -61,7 +61,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   private Collection<UserRoleAssociation> usersWithRoles;
 
   public Role(String authority) {
-    this.name = authority;
+    setName(authority);
   }
 
   @Override

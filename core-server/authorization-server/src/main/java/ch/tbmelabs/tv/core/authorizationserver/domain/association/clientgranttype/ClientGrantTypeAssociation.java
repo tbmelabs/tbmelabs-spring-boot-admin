@@ -62,24 +62,18 @@ public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
   private GrantType clientGrantType;
 
   public ClientGrantTypeAssociation(Client client, GrantType grantType) {
-    this.client = client;
-    this.clientId = client.getId();
-    this.clientGrantType = grantType;
-    this.clientGrantTypeId = grantType.getId();
+    setClient(client);
+    setGrantType(grantType);
   }
 
-  public ClientGrantTypeAssociation setClient(Client client) {
+  public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
-
-    return this;
   }
 
-  public ClientGrantTypeAssociation setGrantType(GrantType grantType) {
+  public void setGrantType(GrantType grantType) {
     this.clientGrantType = grantType;
     this.clientGrantTypeId = grantType.getId();
-
-    return this;
   }
 
   public Client getClient() {

@@ -62,24 +62,18 @@ public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
   private Scope clientScope;
 
   public ClientScopeAssociation(Client client, Scope scope) {
-    this.client = client;
-    this.clientId = client.getId();
-    this.clientScope = scope;
-    this.clientScopeId = scope.getId();
+    setClient(client);
+    setClientScope(scope);
   }
 
-  public ClientScopeAssociation setClient(Client client) {
+  public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
-
-    return this;
   }
 
-  public ClientScopeAssociation setClientScope(Scope scope) {
+  public void setClientScope(Scope scope) {
     this.clientScope = scope;
     this.clientScopeId = scope.getId();
-
-    return this;
   }
 
   public Client getClient() {

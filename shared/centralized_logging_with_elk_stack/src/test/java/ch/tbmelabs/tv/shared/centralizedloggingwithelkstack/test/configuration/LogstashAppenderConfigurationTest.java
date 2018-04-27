@@ -23,6 +23,7 @@ public class LogstashAppenderConfigurationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
+    LogstashAppenderConfiguration.setAppenderName("logstash");
     ReflectionTestUtils.setField(fixture, "applicationName", "TEST_APPLICATION");
     ReflectionTestUtils.setField(fixture, "logstashHost", "localhost");
     ReflectionTestUtils.setField(fixture, "logstashPort", 5000);
@@ -59,10 +60,8 @@ public class LogstashAppenderConfigurationTest {
         .getAppenders().get(LogstashAppenderConfiguration.getAppenderName());
 
     assertThat(appender).isNotNull();
-    assertThat(appender.getLayout()).isEqualTo(PatternLayout.newBuilder()
-        .withPattern(
-            "application=TEST_APPLICATION; thread=%t; level=%-5p; package=%c; message=%m%n")
-        .build());
+    assertThat(((PatternLayout) appender.getLayout()).getConversionPattern())
+        .isEqualTo("application=TEST_APPLICATION; thread=%t; level=%-5p; package=%c; message=%m%n");
   }
 
   @Test

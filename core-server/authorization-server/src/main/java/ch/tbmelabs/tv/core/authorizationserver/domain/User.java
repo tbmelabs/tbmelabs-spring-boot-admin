@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,7 +46,6 @@ public class User extends NicelyDocumentedJDBCResource {
   private static final long serialVersionUID = 1L;
 
   @Transient
-  @JsonIgnore
   public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
   @Id
@@ -102,13 +99,5 @@ public class User extends NicelyDocumentedJDBCResource {
     super.onCreate();
 
     this.setPassword(PASSWORD_ENCODER.encode(this.getPassword()));
-  }
-
-  public UserRoleAssociation roleToAssociation(Role role) {
-    return new UserRoleAssociation(this, role);
-  }
-
-  public Collection<UserRoleAssociation> rolesToAssociations(Collection<Role> roles) {
-    return roles.stream().map(this::roleToAssociation).collect(Collectors.toList());
   }
 }

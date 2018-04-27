@@ -1,5 +1,13 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Arrays;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
@@ -8,12 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
 public class UserSignupService {
@@ -32,6 +34,12 @@ public class UserSignupService {
 
   @Autowired
   private RoleCRUDRepository roleRepository;
+
+  @Autowired
+  private UserMapper userMapper;
+
+  @Autowired
+  private RoleMapper roleMapper;
 
   public boolean isUsernameUnique(User testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");
@@ -99,8 +107,9 @@ public class UserSignupService {
 
     if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
       try {
-        newUser.setRoles(newUser.rolesToAssociations(
-            Arrays.asList(roleRepository.findOneByName(UserAuthority.USER).get())));
+        newUser.setRoles(userMapper.rolesToAssociations(
+            Arrays.asList(roleMapper.toDto(roleRepository.findOneByName(UserAuthority.USER).get())),
+            newUser));
       } catch (NullPointerException e) {
         throw new IllegalArgumentException(
             "Unable to find default authority \"" + UserAuthority.USER + "\"!");

@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -98,30 +97,4 @@ public class Client extends NicelyDocumentedJDBCResource {
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "client")
   private Collection<ClientScopeAssociation> scopes;
-
-  public ClientGrantTypeAssociation grantTypeToAssociation(GrantType grantType) {
-    return new ClientGrantTypeAssociation(this, grantType);
-  }
-
-  public Collection<ClientGrantTypeAssociation> grantTypesToAssociations(
-      Collection<GrantType> grantTypes) {
-    return grantTypes.stream().map(this::grantTypeToAssociation).collect(Collectors.toList());
-  }
-
-  public ClientAuthorityAssociation authorityToAssociation(Authority authority) {
-    return new ClientAuthorityAssociation(this, authority);
-  }
-
-  public Collection<ClientAuthorityAssociation> authoritiesToAssociations(
-      Collection<Authority> authorities) {
-    return authorities.stream().map(this::authorityToAssociation).collect(Collectors.toList());
-  }
-
-  public ClientScopeAssociation scopeToAssociation(Scope scope) {
-    return new ClientScopeAssociation(this, scope);
-  }
-
-  public Collection<ClientScopeAssociation> scopesToAssociations(Collection<Scope> scopeList) {
-    return scopeList.stream().map(this::scopeToAssociation).collect(Collectors.toList());
-  }
 }

@@ -60,6 +60,6 @@ public class Scope extends NicelyDocumentedJDBCResource {
   private Collection<ClientScopeAssociation> clientsWithScopes;
 
   public Scope(String name) {
-    this.name = name;
+    setName(name);
   }
 }

@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.clientdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -12,7 +11,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
@@ -30,10 +28,6 @@ public class ClientDetailsImplTest {
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
-
-    doCallRealMethod().when(mockClient).grantTypesToAssociations(ArgumentMatchers.anyList());
-    doCallRealMethod().when(mockClient).authoritiesToAssociations(ArgumentMatchers.anyList());
-    doCallRealMethod().when(mockClient).scopesToAssociations(ArgumentMatchers.anyList());
 
     doReturn(UUID.randomUUID().toString()).when(mockClient).getClientId();
     doReturn(UUID.randomUUID().toString()).when(mockClient).getSecret();

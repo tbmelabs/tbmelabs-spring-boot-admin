@@ -62,24 +62,18 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
   private Authority clientAuthority;
 
   public ClientAuthorityAssociation(Client client, Authority authority) {
-    this.client = client;
-    this.clientId = client.getId();
-    this.clientAuthority = authority;
-    this.clientAuthorityId = authority.getId();
+    setClient(client);
+    setClientAuthority(authority);
   }
 
-  public ClientAuthorityAssociation setClient(Client client) {
+  public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
-
-    return this;
   }
 
-  public ClientAuthorityAssociation setClientAuthority(Authority authority) {
+  public void setClientAuthority(Authority authority) {
     this.clientAuthority = authority;
     this.clientAuthorityId = authority.getId();
-
-    return this;
   }
 
   public Client getClient() {

@@ -50,7 +50,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(max = 3)
-  private String state;
+  private AUTHENTICATION_STATE state;
 
   @NotEmpty
   @Length(max = 45)
@@ -65,15 +65,10 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  public AuthenticationLog(AUTHENTICATION_STATE authenticationState, String ip, String message,
-      User user) {
-    this.state = authenticationState.name();
-    this.ip = ip;
-    this.message = message;
-    this.user = user;
-  }
-
-  public void setState(AUTHENTICATION_STATE authenticationState) {
-    this.state = authenticationState.name();
+  public AuthenticationLog(AUTHENTICATION_STATE state, String ip, String message, User user) {
+    setState(state);
+    setIp(ip);
+    setMessage(message);
+    setUser(user);
   }
 }

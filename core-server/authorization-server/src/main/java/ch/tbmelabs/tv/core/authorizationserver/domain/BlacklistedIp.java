@@ -48,7 +48,7 @@ public class BlacklistedIp extends NicelyDocumentedJDBCResource {
   private String endIp;
 
   public BlacklistedIp(String startIp, String endIp) {
-    this.startIp = startIp;
-    this.endIp = endIp;
+    setStartIp(startIp);
+    setEndIp(endIp);
   }
 }

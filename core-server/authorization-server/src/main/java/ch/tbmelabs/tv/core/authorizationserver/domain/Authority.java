@@ -64,7 +64,7 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
 
   public Authority(String name) {
-    this.name = name;
+    setName(name);
   }
 
   @Override

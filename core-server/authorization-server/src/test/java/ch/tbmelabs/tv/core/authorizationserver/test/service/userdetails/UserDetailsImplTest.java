@@ -1,14 +1,12 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.service.userdetails;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -22,8 +20,6 @@ public class UserDetailsImplTest {
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
-
-    doCallRealMethod().when(mockUser).rolesToAssociations(ArgumentMatchers.anyList());
 
     doReturn(RandomStringUtils.random(11)).when(mockUser).getUsername();
     doReturn(RandomStringUtils.random(11)).when(mockUser).getEmail();

@@ -62,24 +62,18 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
   private Role userRole;
 
   public UserRoleAssociation(User user, Role role) {
-    this.user = user;
-    this.userId = user.getId();
-    this.userRole = role;
-    this.userRoleId = role.getId();
+    setUser(user);
+    setUserRole(role);
   }
 
-  public UserRoleAssociation setUser(User user) {
+  public void setUser(User user) {
     this.user = user;
     this.userId = user.getId();
-
-    return this;
   }
 
-  public UserRoleAssociation setUserRole(Role role) {
+  public void setUserRole(Role role) {
     this.userRole = role;
     this.userRoleId = role.getId();
-
-    return this;
   }
 
   public User getUser() {
