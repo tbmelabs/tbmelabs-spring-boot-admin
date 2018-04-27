@@ -15,7 +15,6 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +42,16 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
 
   public static UserDTO createTestUserDTO() {
     User user = UserDTOTest.createTestUser();
-
-    return new UserDTO(user, new ArrayList<>());
+    UserDTO dto = new UserDTO();
+    dto.setId(user.getId());
+    dto.setCreated(user.getCreated());
+    dto.setLastUpdated(user.getLastUpdated());
+    dto.setUsername(user.getUsername());
+    dto.setEmail(user.getEmail());
+    dto.setIsEnabled(user.getIsEnabled());
+    dto.setIsBlocked(user.getIsBlocked());
+    // TODO: Associations
+    return dto;
   }
 
   @Before

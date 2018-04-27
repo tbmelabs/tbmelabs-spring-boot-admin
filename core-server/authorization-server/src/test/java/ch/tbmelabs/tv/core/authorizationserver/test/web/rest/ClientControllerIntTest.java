@@ -15,7 +15,6 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
 import java.util.Random;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,17 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   private final ClientDTO testClientDTO = createTestClientDTO();
 
   public static ClientDTO createTestClientDTO() {
-    // TODO
     Client client = ClientDTOTest.createTestClient();
-
-    return new ClientDTO(client, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    ClientDTO dto = new ClientDTO();
+    dto.setId(client.getId());
+    dto.setCreated(client.getCreated());
+    dto.setLastUpdated(client.getLastUpdated());
+    dto.setClientId(client.getClientId());
+    dto.setAccessTokenValiditySeconds(client.getAccessTokenValiditySeconds());
+    dto.setRefreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds());
+    dto.setRedirectUris(client.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
+    // TODO: Associations
+    return dto;
   }
 
   @Test

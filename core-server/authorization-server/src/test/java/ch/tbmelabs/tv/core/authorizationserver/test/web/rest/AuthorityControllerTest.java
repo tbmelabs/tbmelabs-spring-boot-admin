@@ -89,7 +89,7 @@ public class AuthorityControllerTest {
   @Test
   public void getAllAuthoritiesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllAuthorities(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(new AuthorityDTO(testAuthority.getName()));
+        .containsExactly(mockAuthorityMapper.toDto(testAuthority));
     verify(mockAuthorityRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

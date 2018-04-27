@@ -82,14 +82,14 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
-        new Class<?>[] {Pageable.class});
+        new Class<?>[]{Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
   @Test
   public void getAllGrantTypesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllGrantTypes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(new GrantTypeDTO(testGrantType.getName()));
+        .containsExactly(mockGrantTypeMapper.toDto(testGrantType));
     verify(mockGrantTypeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

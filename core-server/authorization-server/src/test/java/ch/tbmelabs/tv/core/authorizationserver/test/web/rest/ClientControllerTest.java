@@ -11,10 +11,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import org.junit.Before;
@@ -53,9 +53,17 @@ public class ClientControllerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    testClient = new Client();
-    testClientDTO =
-        new ClientDTO(testClient, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
+    testClient = ClientDTOTest.createTestClient();
+    testClientDTO = new ClientDTO();
+    // testClientDTO.setId(testClient.getId());
+    testClientDTO.setCreated(testClient.getCreated());
+    testClientDTO.setLastUpdated(testClient.getLastUpdated());
+    testClientDTO.setClientId(testClient.getClientId());
+    testClientDTO.setAccessTokenValiditySeconds(testClient.getAccessTokenValiditySeconds());
+    testClientDTO.setRefreshTokenValiditySeconds(testClient.getRefreshTokenValiditySeconds());
+    testClientDTO
+        .setRedirectUris(testClient.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
+    // TODO: Associations
 
     doReturn(testClient).when(mockClientRepository).findOne(ArgumentMatchers.anyLong());
     doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository)

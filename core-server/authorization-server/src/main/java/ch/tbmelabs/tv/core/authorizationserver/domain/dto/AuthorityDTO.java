@@ -21,8 +21,4 @@ public class AuthorityDTO extends AbstractBasicEntityDTO {
     this.name = name;
     this.authority = Authority.ROLE_PREFIX + name;
   }
-
-  public AuthorityDTO(String name) {
-    setName(name);
-  }
 }

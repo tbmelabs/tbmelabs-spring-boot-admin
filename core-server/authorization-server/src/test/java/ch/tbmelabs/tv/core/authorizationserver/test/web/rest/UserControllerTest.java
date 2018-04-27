@@ -14,7 +14,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -54,7 +53,15 @@ public class UserControllerTest {
     initMocks(this);
 
     testUser = new User();
-    testUserDTO = new UserDTO(testUser, new ArrayList<>());
+    testUserDTO = new UserDTO();
+    // testUserDTO.setId(testUser.getId());
+    testUserDTO.setCreated(testUser.getCreated());
+    testUserDTO.setLastUpdated(testUser.getLastUpdated());
+    testUserDTO.setUsername(testUser.getUsername());
+    testUserDTO.setEmail(testUser.getEmail());
+    testUserDTO.setIsEnabled(testUser.getIsEnabled());
+    testUserDTO.setIsBlocked(testUser.getIsBlocked());
+    // TODO: Associations
 
     doReturn(testUser).when(mockUserRepository).findOne(ArgumentMatchers.anyLong());
     doReturn(new PageImpl<>(Arrays.asList(testUser))).when(mockUserRepository)

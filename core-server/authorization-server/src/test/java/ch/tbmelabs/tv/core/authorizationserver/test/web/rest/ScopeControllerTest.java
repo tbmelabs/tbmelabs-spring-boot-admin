@@ -89,7 +89,7 @@ public class ScopeControllerTest {
   @Test
   public void getAllScopesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllScopes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(new ScopeDTO(testScope.getName()));
+        .containsExactly(mockScopeMapper.toDto(testScope));
     verify(mockScopeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }
