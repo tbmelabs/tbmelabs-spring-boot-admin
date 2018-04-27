@@ -4,9 +4,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class AuthorityDTO extends AbstractBasicEntityDTO {
 

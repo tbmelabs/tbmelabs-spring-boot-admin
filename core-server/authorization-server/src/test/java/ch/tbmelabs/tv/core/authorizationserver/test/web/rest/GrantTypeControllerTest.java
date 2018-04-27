@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,8 +9,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.GrantTypeMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.GrantTypeMapperTest.GrantTypeMapperImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
@@ -22,6 +22,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,7 +37,7 @@ public class GrantTypeControllerTest {
   private GrantTypeCRUDRepository mockGrantTypeRepository;
 
   @Mock
-  private GrantTypeMapperImpl mockGrantTypeMapper;
+  private GrantTypeMapper mockGrantTypeMapper;
 
   @Spy
   @InjectMocks
@@ -52,7 +54,14 @@ public class GrantTypeControllerTest {
     doReturn(new PageImpl<>(Arrays.asList(testGrantType))).when(mockGrantTypeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doCallRealMethod().when(mockGrantTypeMapper).toDto(Mockito.any(GrantType.class));
+    doAnswer(new Answer<GrantTypeDTO>() {
+      @Override
+      public GrantTypeDTO answer(InvocationOnMock arg0) throws Throwable {
+        GrantTypeDTO dto = new GrantTypeDTO();
+        dto.setName(((GrantType) arg0.getArgument(0)).getName());
+        return dto;
+      }
+    }).when(mockGrantTypeMapper).toDto(Mockito.any(GrantType.class));
   }
 
   @Test
@@ -73,7 +82,7 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
-        new Class<?>[]{Pageable.class});
+        new Class<?>[] {Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

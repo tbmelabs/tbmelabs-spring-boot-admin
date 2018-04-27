@@ -1,11 +1,18 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.AuthorityMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import org.junit.Before;
@@ -15,18 +22,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.AuthorityMapperTest.AuthorityMapperImpl;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class AuthorityControllerTest {
 
@@ -34,7 +37,7 @@ public class AuthorityControllerTest {
   private AuthorityCRUDRepository mockAuthorityRepository;
 
   @Mock
-  private AuthorityMapperImpl mockAuthorityMapper;
+  private AuthorityMapper mockAuthorityMapper;
 
   @Spy
   @InjectMocks
@@ -51,7 +54,14 @@ public class AuthorityControllerTest {
     doReturn(new PageImpl<>(Arrays.asList(testAuthority))).when(mockAuthorityRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doCallRealMethod().when(mockAuthorityMapper).toDto(Mockito.any(Authority.class));
+    doAnswer(new Answer<AuthorityDTO>() {
+      @Override
+      public AuthorityDTO answer(InvocationOnMock arg0) throws Throwable {
+        AuthorityDTO dto = new AuthorityDTO();
+        dto.setName(((Authority) arg0.getArgument(0)).getName());
+        return dto;
+      }
+    }).when(mockAuthorityMapper).toDto(Mockito.any(Authority.class));
   }
 
   @Test
@@ -72,7 +82,7 @@ public class AuthorityControllerTest {
   @Test
   public void getAllAuthoritiesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = AuthorityController.class.getDeclaredMethod("getAllAuthorities",
-        new Class<?>[] {Pageable.class});
+        new Class<?>[]{Pageable.class});
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

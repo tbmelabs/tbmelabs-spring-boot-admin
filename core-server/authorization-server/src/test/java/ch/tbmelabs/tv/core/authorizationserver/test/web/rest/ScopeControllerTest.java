@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,8 +9,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ScopeMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.mapper.ScopeMapperTest.ScopeMapperImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
@@ -22,6 +22,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,7 +37,7 @@ public class ScopeControllerTest {
   private ScopeCRUDRepository mockScopeRepository;
 
   @Mock
-  private ScopeMapperImpl mockScopeMapper;
+  private ScopeMapper mockScopeMapper;
 
   @Spy
   @InjectMocks
@@ -52,7 +54,14 @@ public class ScopeControllerTest {
     doReturn(new PageImpl<>(Arrays.asList(testScope))).when(mockScopeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doCallRealMethod().when(mockScopeMapper).toDto(Mockito.any(Scope.class));
+    doAnswer(new Answer<ScopeDTO>() {
+      @Override
+      public ScopeDTO answer(InvocationOnMock arg0) throws Throwable {
+        ScopeDTO dto = new ScopeDTO();
+        dto.setName(((Scope) arg0.getArgument(0)).getName());
+        return dto;
+      }
+    }).when(mockScopeMapper).toDto(Mockito.any(Scope.class));
   }
 
   @Test

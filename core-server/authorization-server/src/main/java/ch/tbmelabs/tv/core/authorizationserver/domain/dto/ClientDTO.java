@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ClientDTO extends AbstractBasicEntityDTO {
 
@@ -15,13 +17,10 @@ public class ClientDTO extends AbstractBasicEntityDTO {
   private Boolean isAutoApprove = false;
   private Integer accessTokenValiditySeconds;
   private Integer refreshTokenValiditySeconds;
-  private String[] redirectUri;
+  private String[] redirectUris;
   private Collection<GrantTypeDTO> grantTypes;
   private Collection<AuthorityDTO> grantedAuthorities;
   private Collection<ScopeDTO> scopes;
-
-  public ClientDTO() {
-  }
 
   public ClientDTO(Client client, ArrayList<GrantTypeDTO> grantTypes,
       ArrayList<AuthorityDTO> grantedAuthorities, ArrayList<ScopeDTO> scopes) {
@@ -30,7 +29,7 @@ public class ClientDTO extends AbstractBasicEntityDTO {
     setIsAutoApprove(client.getIsAutoApprove());
     setAccessTokenValiditySeconds(client.getAccessTokenValiditySeconds());
     setRefreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds());
-    setRedirectUri(client.getRedirectUri() != null
+    setRedirectUris(client.getRedirectUri() != null
         ? client.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR)
         : null);
     setGrantTypes(grantTypes);

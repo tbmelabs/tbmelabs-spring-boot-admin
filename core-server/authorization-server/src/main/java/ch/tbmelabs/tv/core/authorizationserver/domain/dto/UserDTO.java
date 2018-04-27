@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class UserDTO extends AbstractBasicEntityDTO {
 
@@ -14,20 +16,13 @@ public class UserDTO extends AbstractBasicEntityDTO {
   private String email;
   private Boolean isEnabled = false;
   private Boolean isBlocked = false;
-  private String emailConfirmationToken;
   private Collection<RoleDTO> roles;
-
-  public UserDTO() {
-  }
 
   public UserDTO(User user, ArrayList<RoleDTO> roles) {
     setUsername(user.getUsername());
     setEmail(user.getEmail());
     setIsEnabled(user.getIsEnabled());
     setIsBlocked(user.getIsBlocked());
-    setEmailConfirmationToken(
-        user.getEmailConfirmationToken() != null ? user.getEmailConfirmationToken().getTokenString()
-            : null);
     setRoles(roles);
   }
 }
