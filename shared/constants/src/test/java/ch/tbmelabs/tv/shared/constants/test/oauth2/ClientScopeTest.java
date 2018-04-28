@@ -22,12 +22,12 @@ public class ClientScopeTest {
   }
 
   @Test
-  public void staticHolderClassShouldNotHaveAnyAccessableConstructor() throws NoSuchMethodException,
+  public void staticHolderClassShouldNotHaveAnyAccessibleConstructor() throws NoSuchMethodException,
       SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
-    Constructor<ClientScope> fixture = ClientScope.class.getDeclaredConstructor(new Class<?>[]{});
+    Constructor<ClientScope> fixture = ClientScope.class.getDeclaredConstructor();
     fixture.setAccessible(true);
 
     assertThat(Modifier.isPrivate(fixture.getModifiers())).isTrue();
-    assertThat(fixture.newInstance(new Object[]{})).isNotNull();
+    assertThat(fixture.newInstance()).isNotNull();
   }
 }

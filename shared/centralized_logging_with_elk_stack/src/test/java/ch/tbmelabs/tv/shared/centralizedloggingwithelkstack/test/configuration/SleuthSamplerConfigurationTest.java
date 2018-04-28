@@ -37,7 +37,7 @@ public class SleuthSamplerConfigurationTest {
   @Test
   public void defaultSamplerShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(SleuthSamplerConfiguration.class
-        .getDeclaredMethod("defaultSampler", new Class<?>[]{}).getDeclaredAnnotation(Bean.class))
+        .getDeclaredMethod("defaultSampler").getDeclaredAnnotation(Bean.class))
         .isNotNull();
   }
 

@@ -20,7 +20,7 @@ public class LogoutEndpointIntTest extends AbstractZuulServerContextAwareTest {
   private MockMvc mockMvc;
 
   @Test
-  public void successfulLogoutShouldRedirectToAuthorizatoinServerLogout() throws Exception {
+  public void successfulLogoutShouldRedirectToAuthorizationServerLogout() throws Exception {
     String redirectUrl = mockMvc.perform(post(LOGOUT_ENDPOINT_URI)).andDo(print())
         .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
         .getRedirectedUrl();

@@ -23,7 +23,7 @@ public class SpringApplicationProfile {
   public static final String ELK = "elk";
 
   /**
-   * Disables chaching via REDIS-Server.
+   * Disables caching via REDIS-Server.
    */
   public static final String NO_REDIS = "no-redis";
 

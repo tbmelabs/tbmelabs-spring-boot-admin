@@ -27,13 +27,13 @@ public class SpringApplicationProfileTest {
   }
 
   @Test
-  public void staticHolderClassShouldNotHaveAnyAccessableConstructor() throws NoSuchMethodException,
+  public void staticHolderClassShouldNotHaveAnyAccessibleConstructor() throws NoSuchMethodException,
       SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
     Constructor<SpringApplicationProfile> fixture =
-        SpringApplicationProfile.class.getDeclaredConstructor(new Class<?>[]{});
+        SpringApplicationProfile.class.getDeclaredConstructor();
     fixture.setAccessible(true);
 
     assertThat(Modifier.isPrivate(fixture.getModifiers())).isTrue();
-    assertThat(fixture.newInstance(new Object[]{})).isNotNull();
+    assertThat(fixture.newInstance()).isNotNull();
   }
 }

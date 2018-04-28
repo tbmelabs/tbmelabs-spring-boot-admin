@@ -21,7 +21,7 @@ public class CentralizedLoggingConfigurationTest {
   }
 
   @Test
-  public void centralizedLoggingConfigurationShouldHavePublicConstructr() {
+  public void centralizedLoggingConfigurationShouldHavePublicConstructor() {
     assertThat(new CentralizedLoggingConfiguration()).isNotNull();
   }
 }
