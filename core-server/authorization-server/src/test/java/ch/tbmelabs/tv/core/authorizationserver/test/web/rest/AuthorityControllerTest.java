@@ -14,7 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRe
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -22,7 +22,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -51,16 +50,13 @@ public class AuthorityControllerTest {
 
     testAuthority = new Authority("TEST_AUTHORITY");
 
-    doReturn(new PageImpl<>(Arrays.asList(testAuthority))).when(mockAuthorityRepository)
+    doReturn(new PageImpl<>(Collections.singletonList(testAuthority))).when(mockAuthorityRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doAnswer(new Answer<AuthorityDTO>() {
-      @Override
-      public AuthorityDTO answer(InvocationOnMock arg0) throws Throwable {
-        AuthorityDTO dto = new AuthorityDTO();
-        dto.setName(((Authority) arg0.getArgument(0)).getName());
-        return dto;
-      }
+    doAnswer((Answer<AuthorityDTO>) arg0 -> {
+      AuthorityDTO dto = new AuthorityDTO();
+      dto.setName(((Authority) arg0.getArgument(0)).getName());
+      return dto;
     }).when(mockAuthorityMapper).toDto(Mockito.any(Authority.class));
   }
 

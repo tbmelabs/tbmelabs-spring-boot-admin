@@ -3,7 +3,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Arrays;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.Entity;
@@ -14,11 +19,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 
 public class AuthorityTest {
 
@@ -79,7 +79,7 @@ public class AuthorityTest {
   @Test
   public void authorityShouldHaveClientsGetterAndSetter() {
     List<ClientAuthorityAssociation> associations =
-        Arrays.asList(Mockito.mock(ClientAuthorityAssociation.class));
+        Collections.singletonList(Mockito.mock(ClientAuthorityAssociation.class));
 
     fixture.setClientsWithAuthorities(associations);
 

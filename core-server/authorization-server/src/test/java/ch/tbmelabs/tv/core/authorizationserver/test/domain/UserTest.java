@@ -10,14 +10,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -25,7 +22,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,9 +30,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 public class UserTest {
 
   private static final String TEST_USER_ROLE = "TEST";
-
-  @Mock
-  private UserMapper mockUserMapper;
 
   @Spy
   private User fixture;
@@ -141,7 +134,7 @@ public class UserTest {
   @Test
   public void userShouldHaveRoleGetterAndSetter() {
     Collection<UserRoleAssociation> roles =
-        Arrays.asList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
+        Collections.singletonList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
 
     fixture.setRoles(roles);
 
@@ -160,18 +153,5 @@ public class UserTest {
 
     assertThat(new BCryptPasswordEncoder().matches(password,
         (String) ReflectionTestUtils.getField(fixture, "password"))).isTrue();
-  }
-
-  @Test
-  public void userShouldConvertRoleToUserRoleAssociation() {
-    RoleDTO dto = new RoleDTO();
-    dto.setName(TEST_USER_ROLE);
-
-    List<UserRoleAssociation> newAssociation =
-        (List<UserRoleAssociation>) mockUserMapper.rolesToAssociations(Arrays.asList(dto), fixture);
-
-    assertThat(newAssociation).isNotNull().hasSize(1);
-    assertThat(newAssociation.get(0).getUser()).isEqualTo(fixture);
-    assertThat(newAssociation.get(0).getUserRole().getName()).isEqualTo(TEST_USER_ROLE);
   }
 }

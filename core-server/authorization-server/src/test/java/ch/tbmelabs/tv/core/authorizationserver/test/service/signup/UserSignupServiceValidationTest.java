@@ -14,8 +14,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -45,26 +43,20 @@ public class UserSignupServiceValidationTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    doAnswer(new Answer<Optional<User>>() {
-      @Override
-      public Optional<User> answer(InvocationOnMock invocation) throws Throwable {
-        if (((String) invocation.getArgument(0)).equals(existingUser.getUsername())) {
-          return Optional.of(existingUser);
-        }
-
-        return Optional.ofNullable(null);
+    doAnswer(invocation -> {
+      if (invocation.getArgument(0).equals(existingUser.getUsername())) {
+        return Optional.of(existingUser);
       }
+
+      return Optional.empty();
     }).when(userRepository).findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
-    doAnswer(new Answer<Optional<User>>() {
-      @Override
-      public Optional<User> answer(InvocationOnMock invocation) throws Throwable {
-        if (((String) invocation.getArgument(0)).equals(existingUser.getEmail())) {
-          return Optional.of(existingUser);
-        }
-
-        return Optional.ofNullable(null);
+    doAnswer(invocation -> {
+      if (invocation.getArgument(0).equals(existingUser.getEmail())) {
+        return Optional.of(existingUser);
       }
+
+      return Optional.empty();
     }).when(userRepository).findOneByEmailIgnoreCase(ArgumentMatchers.anyString());
 
     doCallRealMethod().when(fixture).isUsernameUnique(ArgumentMatchers.any(User.class));

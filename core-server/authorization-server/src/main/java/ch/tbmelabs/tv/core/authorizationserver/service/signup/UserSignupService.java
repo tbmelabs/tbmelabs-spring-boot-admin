@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
@@ -8,7 +9,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -106,14 +108,15 @@ public class UserSignupService {
     LOGGER.debug("Setting default roles to " + newUser.getUsername());
 
     if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
-      try {
-        newUser.setRoles(userMapper.rolesToAssociations(
-            Arrays.asList(roleMapper.toDto(roleRepository.findOneByName(UserAuthority.USER).get())),
-            newUser));
-      } catch (NullPointerException e) {
+      Optional<Role> userRole;
+      if (!(userRole = roleRepository.findOneByName(UserAuthority.USER)).isPresent()) {
         throw new IllegalArgumentException(
             "Unable to find default authority \"" + UserAuthority.USER + "\"!");
       }
+
+      newUser.setRoles(
+          userMapper.rolesToAssociations(
+              Collections.singletonList(roleMapper.toDto(userRole.get())), newUser));
     }
 
     return newUser;

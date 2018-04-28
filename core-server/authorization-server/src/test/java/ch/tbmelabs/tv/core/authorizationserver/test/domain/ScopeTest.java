@@ -3,7 +3,13 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Arrays;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import javax.persistence.Entity;
@@ -13,12 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 
 public class ScopeTest {
 
@@ -82,7 +82,7 @@ public class ScopeTest {
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
     List<ClientScopeAssociation> associations =
-        Arrays.asList(Mockito.mock(ClientScopeAssociation.class));
+        Collections.singletonList(Mockito.mock(ClientScopeAssociation.class));
 
     fixture.setClientsWithScopes(associations);
 

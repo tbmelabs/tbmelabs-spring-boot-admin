@@ -63,7 +63,7 @@ public class AuthenticationLogTest {
   @Test
   public void authenticationLogShouldHaveAllArgsConstructor() {
     assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, mockUser))
-        .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE.name())
+        .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE)
         .hasFieldOrPropertyWithValue("ip", TEST_IP)
         .hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
         .hasFieldOrPropertyWithValue("user", mockUser);
@@ -85,8 +85,8 @@ public class AuthenticationLogTest {
 
     fixture.setState(state);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("state", state.name());
-    assertThat(fixture.getState()).isEqualTo(state.name());
+    assertThat(fixture).hasFieldOrPropertyWithValue("state", state);
+    assertThat(fixture.getState()).isEqualTo(state);
   }
 
   @Test

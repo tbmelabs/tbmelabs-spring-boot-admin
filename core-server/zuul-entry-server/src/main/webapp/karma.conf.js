@@ -5,7 +5,7 @@ var BUILD_DIR = path.resolve(__dirname, 'public');
 var NODE_DIR = path.resolve(__dirname, 'node_modules');
 var TEST_DIR = path.resolve(__dirname, '__tests__');
 
-process.env.CHROMIUM_BIN = require('puppeteer').executablePath()
+process.env.CHROMIUM_BIN = require('puppeteer').executablePath();
 
 const WATCH = process.argv.indexOf('--watch') > -1;
 

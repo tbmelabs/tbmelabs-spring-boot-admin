@@ -15,7 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +66,7 @@ public class ClientControllerTest {
     // TODO: Associations
 
     doReturn(testClient).when(mockClientRepository).findOne(ArgumentMatchers.anyLong());
-    doReturn(new PageImpl<>(Arrays.asList(testClient))).when(mockClientRepository)
+    doReturn(new PageImpl<>(Collections.singletonList(testClient))).when(mockClientRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
     doReturn(testClientDTO).when(mockClientMapper).toDto(ArgumentMatchers.any(Client.class));

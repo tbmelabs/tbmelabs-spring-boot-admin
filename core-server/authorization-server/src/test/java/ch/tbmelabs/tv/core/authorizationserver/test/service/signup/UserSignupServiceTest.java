@@ -3,9 +3,9 @@ package ch.tbmelabs.tv.core.authorizationserver.test.service.signup;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
-
 import java.util.Optional;
 import java.util.Random;
 import org.junit.Before;
@@ -15,13 +15,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.stereotype.Service;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
@@ -32,6 +34,8 @@ public class UserSignupServiceTest {
 
   private static final String SIGNUP_FAILED_ERROR_MESSAGE =
       "An error occured. Please check your details!";
+  private static final String DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE =
+      "Unable to find default authority \"" + UserAuthority.USER + "\"!";
 
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 
@@ -43,6 +47,12 @@ public class UserSignupServiceTest {
 
   @Mock
   private RoleCRUDRepository mockRoleRepository;
+
+  @Mock
+  private UserMapper mockUserMapper;
+
+  @Mock
+  private RoleMapper mockRoleMapper;
 
   @Spy
   @InjectMocks
@@ -56,17 +66,23 @@ public class UserSignupServiceTest {
     doReturn(Mockito.mock(UserMailService.class)).when(mockApplicationContext)
         .getBean(UserMailService.class);
 
-    doAnswer(new Answer<User>() {
-      @Override
-      public User answer(InvocationOnMock invocation) throws Throwable {
-        User newUser = invocation.getArgument(0);
-        newUser.setId(new Random().nextLong());
-        return newUser;
-      }
+    doAnswer((Answer<User>) invocation -> {
+      User newUser = invocation.getArgument(0);
+      newUser.setId(new Random().nextLong());
+      return newUser;
     }).when(mockUserRepository).save(ArgumentMatchers.any(User.class));
 
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
         .findOneByName(UserAuthority.USER);
+
+    doCallRealMethod().when(mockUserMapper).rolesToAssociations(Mockito.anyCollection(),
+        Mockito.any(User.class));
+
+    doAnswer((Answer<RoleDTO>) invocation -> {
+      RoleDTO dto = new RoleDTO();
+      dto.setName(((Role) invocation.getArgument(0)).getName());
+      return dto;
+    }).when(mockRoleMapper).toDto(Mockito.any(Role.class));
 
     doReturn(true).when(fixture).isUsernameUnique(ArgumentMatchers.any(User.class));
     doReturn(true).when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
@@ -135,7 +151,19 @@ public class UserSignupServiceTest {
   }
 
   @Test
+  public void userSignupServiceShouldThrowErrorIfUserRoleDoesNotExist() {
+    doReturn(Optional.empty()).when(mockRoleRepository).findOneByName(UserAuthority.USER);
+
+    assertThatThrownBy(() -> fixture.signUpNewUser(new User()))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE);
+  }
+
+  @Test
   public void userSignupServiceShouldSaveValidUser() {
+    doReturn(Optional.of(new Role("TEST_USER_ROLE"))).when(mockRoleRepository)
+        .findOneByName(UserAuthority.USER);
+
     assertThat(fixture.signUpNewUser(new User()).getId()).isNotNull().isInstanceOf(Long.class);
   }
 }

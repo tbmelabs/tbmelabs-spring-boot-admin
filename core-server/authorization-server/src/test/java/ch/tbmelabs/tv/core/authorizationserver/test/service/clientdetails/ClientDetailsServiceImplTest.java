@@ -65,7 +65,7 @@ public class ClientDetailsServiceImplTest {
 
   @Test
   public void loadClientShouldThrowExceptionIfClientIdDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(mockClientRepository)
+    doReturn(Optional.empty()).when(mockClientRepository)
         .findOneByClientId(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadClientByClientId(RandomStringUtils.random(11)))

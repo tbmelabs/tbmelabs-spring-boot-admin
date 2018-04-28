@@ -29,7 +29,7 @@ public class RoleHierarchyConfiguration {
   private String getRoleHierarchy() {
     StringBuilder builder = new StringBuilder();
 
-    builder.append(ROLE_HIERARCHY.get(0) + " > " + ROLE_HIERARCHY.get(1));
+    builder.append(ROLE_HIERARCHY.get(0)).append(" > ").append(ROLE_HIERARCHY.get(1));
 
     IntStream.range(2, ROLE_HIERARCHY.size()).forEach(index -> builder.append(" AND ")
         .append(ROLE_HIERARCHY.get(index - 1)).append(" > ").append(ROLE_HIERARCHY.get(index)));

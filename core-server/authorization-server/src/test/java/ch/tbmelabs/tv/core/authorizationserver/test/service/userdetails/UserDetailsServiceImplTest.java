@@ -65,7 +65,7 @@ public class UserDetailsServiceImplTest {
 
   @Test
   public void loadUserShouldThrowExceptionIfUsernameDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(userRepositoryFixture)
+    doReturn(Optional.empty()).when(userRepositoryFixture)
         .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserByUsername(RandomStringUtils.random(11)))

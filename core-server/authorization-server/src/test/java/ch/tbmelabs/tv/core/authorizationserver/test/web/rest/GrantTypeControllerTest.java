@@ -14,7 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRe
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -22,7 +22,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -51,16 +50,13 @@ public class GrantTypeControllerTest {
 
     testGrantType = new GrantType("TEST_GRANT_TYPE");
 
-    doReturn(new PageImpl<>(Arrays.asList(testGrantType))).when(mockGrantTypeRepository)
+    doReturn(new PageImpl<>(Collections.singletonList(testGrantType))).when(mockGrantTypeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doAnswer(new Answer<GrantTypeDTO>() {
-      @Override
-      public GrantTypeDTO answer(InvocationOnMock arg0) throws Throwable {
-        GrantTypeDTO dto = new GrantTypeDTO();
-        dto.setName(((GrantType) arg0.getArgument(0)).getName());
-        return dto;
-      }
+    doAnswer((Answer<GrantTypeDTO>) arg0 -> {
+      GrantTypeDTO dto = new GrantTypeDTO();
+      dto.setName(((GrantType) arg0.getArgument(0)).getName());
+      return dto;
     }).when(mockGrantTypeMapper).toDto(Mockito.any(GrantType.class));
   }
 

@@ -23,7 +23,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -57,12 +56,9 @@ public class MailServiceTest {
 
     doReturn(new Properties()).when(mockSession).getProperties();
     doReturn(new MimeMessage(mockSession)).when(mockJavaMailSender).createMimeMessage();
-    doAnswer(new Answer<MimeMessage>() {
-      @Override
-      public MimeMessage answer(InvocationOnMock invocation) throws Throwable {
-        MailServiceTest.sentMimeMessage = invocation.getArgument(0);
-        return MailServiceTest.sentMimeMessage;
-      }
+    doAnswer((Answer<MimeMessage>) invocation -> {
+      MailServiceTest.sentMimeMessage = invocation.getArgument(0);
+      return MailServiceTest.sentMimeMessage;
     }).when(mockJavaMailSender).send(ArgumentMatchers.any(MimeMessage.class));
   }
 

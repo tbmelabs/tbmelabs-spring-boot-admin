@@ -6,7 +6,8 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Arrays;
+import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
+import java.util.Collections;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import org.springframework.security.oauth2.provider.error.DefaultWebResponseExce
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.stereotype.Component;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
 
 public class LoggingExceptionTranslatorTest {
 
@@ -62,7 +62,7 @@ public class LoggingExceptionTranslatorTest {
     assertThat(responseFixture.getBody()).hasCause(EXCEPTION).hasMessage(EXCEPTION_MESSAGE);
     assertThat(responseFixture.getStatusCodeValue()).isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     assertThat(responseFixture.getHeaders()).hasSize(2).containsExactly(
-        entry("Cache-Control", Arrays.asList("no-store")),
-        entry("Pragma", Arrays.asList("no-cache")));
+        entry("Cache-Control", Collections.singletonList("no-store")),
+        entry("Pragma", Collections.singletonList("no-cache")));
   }
 }

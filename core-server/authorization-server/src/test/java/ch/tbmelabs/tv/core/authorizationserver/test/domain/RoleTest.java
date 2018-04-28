@@ -3,6 +3,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -14,12 +20,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.test.util.ReflectionTestUtils;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 
 public class RoleTest {
 
@@ -83,7 +83,8 @@ public class RoleTest {
 
   @Test
   public void roleShouldHaveUserGetterAndSetter() {
-    List<UserRoleAssociation> associations = Arrays.asList(Mockito.mock(UserRoleAssociation.class));
+    List<UserRoleAssociation> associations = Arrays.asList(
+        Mockito.mock(UserRoleAssociation.class));
 
     fixture.setUsersWithRoles(associations);
 

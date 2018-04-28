@@ -85,7 +85,7 @@ public class PreAuthenticationUserDetailsServiceImplTest {
 
   @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
-    doReturn(Optional.ofNullable(null)).when(mockUserRepository)
+    doReturn(Optional.empty()).when(mockUserRepository)
         .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken))

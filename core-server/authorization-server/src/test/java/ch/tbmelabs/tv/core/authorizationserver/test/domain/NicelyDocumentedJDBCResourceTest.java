@@ -1,28 +1,24 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.MappedSuperclass;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import org.mockito.Spy;
 
 public class NicelyDocumentedJDBCResourceTest {
 
-  @Mock
+  @Spy
   private NicelyDocumentedJDBCResource fixture;
 
   @Before
   public void beforeClassSetUp() {
     initMocks(this);
-
-    doCallRealMethod().when(fixture).onCreate();
-    doCallRealMethod().when(fixture).onUpdate();
   }
 
   @Test

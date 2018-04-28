@@ -10,7 +10,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 @MappedSuperclass
@@ -24,22 +26,24 @@ public class NicelyDocumentedJDBCResource implements Serializable {
       "org.hibernate.id.enhanced.SequenceStyleGenerator";
 
   @NotNull
+  @Setter(AccessLevel.NONE)
   @Temporal(TemporalType.TIMESTAMP)
   public Date created;
 
   @NotNull
+  @Setter(AccessLevel.NONE)
   @Column(name = "last_updated")
   @Temporal(TemporalType.TIMESTAMP)
   public Date lastUpdated;
 
   @PrePersist
   public void onCreate() {
-    setCreated(new Date());
-    setLastUpdated(new Date());
+    this.created = new Date();
+    this.lastUpdated = new Date();
   }
 
   @PreUpdate
   public void onUpdate() {
-    setLastUpdated(new Date());
+    this.lastUpdated = new Date();
   }
 }

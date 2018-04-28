@@ -14,7 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDReposi
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -22,7 +22,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -51,16 +50,13 @@ public class ScopeControllerTest {
 
     testScope = new Scope("TEST_SCOPE");
 
-    doReturn(new PageImpl<>(Arrays.asList(testScope))).when(mockScopeRepository)
+    doReturn(new PageImpl<>(Collections.singletonList(testScope))).when(mockScopeRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
-    doAnswer(new Answer<ScopeDTO>() {
-      @Override
-      public ScopeDTO answer(InvocationOnMock arg0) throws Throwable {
-        ScopeDTO dto = new ScopeDTO();
-        dto.setName(((Scope) arg0.getArgument(0)).getName());
-        return dto;
-      }
+    doAnswer((Answer<ScopeDTO>) arg0 -> {
+      ScopeDTO dto = new ScopeDTO();
+      dto.setName(((Scope) arg0.getArgument(0)).getName());
+      return dto;
     }).when(mockScopeMapper).toDto(Mockito.any(Scope.class));
   }
 

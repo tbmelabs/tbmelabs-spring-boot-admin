@@ -37,12 +37,12 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public boolean isSecretRequired() {
-    return client.getIsSecretRequired().booleanValue();
+    return client.getIsSecretRequired();
   }
 
   @Override
   public boolean isAutoApprove(String scope) {
-    return client.getIsAutoApprove().booleanValue();
+    return client.getIsAutoApprove();
   }
 
   @Override

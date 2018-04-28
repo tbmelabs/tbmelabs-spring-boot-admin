@@ -55,7 +55,7 @@ public class ClientDetailsImplTest {
     assertThat(fixture.getClientId()).isEqualTo(mockClient.getClientId());
     assertThat(fixture.getResourceIds()).isEqualTo(new HashSet<>());
     assertThat(fixture.isSecretRequired()).isEqualTo(mockClient.getIsSecretRequired());
-    assertThat(fixture.isAutoApprove(new String())).isEqualTo(mockClient.getIsAutoApprove());
+    assertThat(fixture.isAutoApprove("")).isEqualTo(mockClient.getIsAutoApprove());
     assertThat(fixture.getClientSecret()).isEqualTo(mockClient.getSecret());
     assertThat(fixture.getAccessTokenValiditySeconds())
         .isEqualTo(fixture.getAccessTokenValiditySeconds());

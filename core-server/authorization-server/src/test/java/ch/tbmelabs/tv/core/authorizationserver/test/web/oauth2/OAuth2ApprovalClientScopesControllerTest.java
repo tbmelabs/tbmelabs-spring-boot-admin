@@ -4,8 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.oauth2.OAuth2ApprovalClientScopesController;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -16,12 +22,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.oauth2.OAuth2ApprovalClientScopesController;
 
 public class OAuth2ApprovalClientScopesControllerTest {
 
@@ -48,7 +48,7 @@ public class OAuth2ApprovalClientScopesControllerTest {
 
     doReturn(Optional.of(new Client())).when(clientRepositoryFixture)
         .findOneByClientId(ArgumentMatchers.anyString());
-    doReturn(Arrays.asList(mockAssociation)).when(clientScopeAssociationRepository)
+    doReturn(Collections.singletonList(mockAssociation)).when(clientScopeAssociationRepository)
         .findAllByClient(ArgumentMatchers.any(Client.class));
   }
 
