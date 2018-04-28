@@ -15,7 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Random;
+import java.util.ArrayList;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +38,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   @Autowired
   private ClientCRUDRepository clientRepository;
 
-  private final ClientDTO testClientDTO = createTestClientDTO();
+  private ClientDTO testClientDTO = createTestClientDTO();
 
   public static ClientDTO createTestClientDTO() {
     Client client = ClientDTOTest.createTestClient();
@@ -50,7 +50,13 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
     dto.setAccessTokenValiditySeconds(client.getAccessTokenValiditySeconds());
     dto.setRefreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds());
     dto.setRedirectUris(client.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
-    // TODO: Associations
+
+    dto.setGrantTypes(new ArrayList<>());
+
+    dto.setGrantedAuthorities(new ArrayList<>());
+
+    dto.setScopes(new ArrayList<>());
+
     return dto;
   }
 
@@ -94,8 +100,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   @WithMockUser(username = "ClientControllerIntTestUser",
       authorities = {UserAuthority.SERVER_ADMIN})
   public void putClientEndpointIsAccessibleToServerAdmins() throws Exception {
-    testClientDTO.setId(
-        clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO))).getId());
+    testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc
         .perform(put(clientsEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -117,7 +122,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   @WithMockUser(username = "ClientControllerIntTestUser",
       authorities = {UserAuthority.SERVER_ADMIN})
   public void deleteClientEndpointIsAccessibleToServerAdmins() throws Exception {
-    testClientDTO.setId(new Random().nextLong());
+    testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc
         .perform(delete(clientsEndpoint).contentType(MediaType.APPLICATION_JSON)

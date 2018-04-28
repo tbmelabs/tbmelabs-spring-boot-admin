@@ -22,7 +22,7 @@ import org.mockito.Spy;
 
 public class ScopeTest {
 
-  private static final String TEST_SCOPE_NAME = "TEST";
+  private static final String TEST_SCOPE_NAME = RandomStringUtils.random(11);
 
   @Spy
   private Scope fixture;

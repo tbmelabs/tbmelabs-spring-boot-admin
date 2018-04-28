@@ -3,6 +3,13 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,19 +18,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 
 public class AuthenticationLogTest {
 
   private static final AUTHENTICATION_STATE TEST_AUTHENTICATION_STATE = AUTHENTICATION_STATE.OK;
   private static final String TEST_IP = "127.0.0.1";
-  private static final String TEST_MESSAGE = "This is some message.";
+  private static final String TEST_MESSAGE = RandomStringUtils.random(11);
 
   @Mock
   private User mockUser;

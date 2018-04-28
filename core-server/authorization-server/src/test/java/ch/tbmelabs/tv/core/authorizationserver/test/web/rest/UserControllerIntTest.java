@@ -15,6 +15,8 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,9 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
     dto.setEmail(user.getEmail());
     dto.setIsEnabled(user.getIsEnabled());
     dto.setIsBlocked(user.getIsBlocked());
-    // TODO: Associations
+
+    dto.setRoles(new ArrayList<>());
+
     return dto;
   }
 
@@ -66,14 +70,14 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
-  public void getClientsEndpointIsAccessibleToServerSupports() throws Exception {
+  public void getUsersEndpointIsAccessibleToServerSupports() throws Exception {
     mockMvc.perform(get(usersEndpoint)).andDo(print())
         .andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
-  public void getClientsEndpointIsNotAccessibleToNonServerSupports() throws Exception {
+  public void getUsersEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc.perform(get(usersEndpoint)).andDo(print())
         .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
@@ -81,8 +85,10 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
-  public void putClientEndpointIsAccessibleToServerSupports() throws Exception {
-    User persistedUser = userRepository.save(UserDTOTest.createTestUser());
+  public void putUserEndpointIsAccessibleToServerSupports() throws Exception {
+    User newUser = userMapper.toEntity(testUserDTO);
+    newUser.setPassword(RandomStringUtils.random(11));
+    User persistedUser = userRepository.save(newUser);
     testUserDTO = userMapper.toDto(persistedUser);
 
     mockMvc
@@ -96,7 +102,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
-  public void putClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
+  public void putUserEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(put(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(testUserDTO)))
@@ -106,9 +112,10 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
-  public void deleteClientEndpointIsAccessibleToServerSupports() throws Exception {
-    User persistedUser = userRepository.save(UserDTOTest.createTestUser());
-    testUserDTO = userMapper.toDto(persistedUser);
+  public void deleteUserEndpointIsAccessibleToServerSupports() throws Exception {
+    User newUser = userMapper.toEntity(testUserDTO);
+    newUser.setPassword(RandomStringUtils.random(11));
+    testUserDTO = userMapper.toDto(userRepository.save(newUser));
 
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
@@ -118,7 +125,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
-  public void deleteClientEndpointIsNotAccessibleToNonServerSupports() throws Exception {
+  public void deleteUserEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(testUserDTO)))

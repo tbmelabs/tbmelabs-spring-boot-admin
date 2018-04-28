@@ -29,9 +29,9 @@ import org.mockito.Spy;
 
 public class ClientTest {
 
-  private static final String TEST_CLIENT_GRANT_TYPE = "TEST";
-  private static final String TEST_CLIENT_AUTHORITY = "TEST";
-  private static final String TEST_CLIENT_SCOPE = "TEST";
+  private static final String TEST_CLIENT_GRANT_TYPE = RandomStringUtils.random(11);
+  private static final String TEST_CLIENT_AUTHORITY = RandomStringUtils.random(11);
+  private static final String TEST_CLIENT_SCOPE = RandomStringUtils.random(11);
 
   @Spy
   private Client fixture;

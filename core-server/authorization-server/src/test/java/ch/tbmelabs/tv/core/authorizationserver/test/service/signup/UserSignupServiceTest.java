@@ -6,8 +6,20 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.util.Optional;
 import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -19,16 +31,6 @@ import org.mockito.stubbing.Answer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class UserSignupServiceTest {
 
@@ -161,7 +163,7 @@ public class UserSignupServiceTest {
 
   @Test
   public void userSignupServiceShouldSaveValidUser() {
-    doReturn(Optional.of(new Role("TEST_USER_ROLE"))).when(mockRoleRepository)
+    doReturn(Optional.of(new Role(RandomStringUtils.random(11)))).when(mockRoleRepository)
         .findOneByName(UserAuthority.USER);
 
     assertThat(fixture.signUpNewUser(new User()).getId()).isNotNull().isInstanceOf(Long.class);

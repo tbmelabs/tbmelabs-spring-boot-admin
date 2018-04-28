@@ -23,7 +23,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 public class RoleTest {
 
-  private static final String TEST_AUTHORITY_NAME = "TEST";
+  private static final String TEST_ROLE_NAME = RandomStringUtils.random(11);
 
   @Spy
   private Role fixture;
@@ -57,8 +57,8 @@ public class RoleTest {
 
   @Test
   public void roleShouldHaveAllArgsConstructor() {
-    assertThat(new Role(TEST_AUTHORITY_NAME)).hasFieldOrPropertyWithValue("name",
-        TEST_AUTHORITY_NAME);
+    assertThat(new Role(TEST_ROLE_NAME)).hasFieldOrPropertyWithValue("name",
+        TEST_ROLE_NAME);
   }
 
   @Test
@@ -94,8 +94,8 @@ public class RoleTest {
 
   @Test
   public void getAuthorityShouldReturnSecurityRole() {
-    ReflectionTestUtils.setField(fixture, "name", TEST_AUTHORITY_NAME);
+    ReflectionTestUtils.setField(fixture, "name", TEST_ROLE_NAME);
 
-    assertThat(fixture.getAuthority()).isEqualTo(TEST_AUTHORITY_NAME);
+    assertThat(fixture.getAuthority()).isEqualTo(Role.ROLE_PREFIX + TEST_ROLE_NAME);
   }
 }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -48,8 +49,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   @Column(unique = true)
   private Long id;
 
-  @NotEmpty
-  @Length(max = 3)
+  @NotNull
   private AUTHENTICATION_STATE state;
 
   @NotEmpty

@@ -22,7 +22,7 @@ import org.mockito.Spy;
 
 public class GrantTypeTest {
 
-  private static final String TEST_GRANT_TYPE_NAME = "TEST";
+  private static final String TEST_GRANT_TYPE_NAME = RandomStringUtils.random(11);
 
   @Spy
   private GrantType fixture;

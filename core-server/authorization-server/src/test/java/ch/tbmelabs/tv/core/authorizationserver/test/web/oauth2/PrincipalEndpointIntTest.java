@@ -60,7 +60,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
 
       User persistedUser = userRepository.save(newUser);
 
-      Role newRole = new Role("TEST_ROLE");
+      Role newRole = new Role(RandomStringUtils.random(11));
       persistedUser.setRoles(userMapper.rolesToAssociations(
           Collections.singletonList(roleMapper.toDto(roleRepository.save(newRole))),
           persistedUser));

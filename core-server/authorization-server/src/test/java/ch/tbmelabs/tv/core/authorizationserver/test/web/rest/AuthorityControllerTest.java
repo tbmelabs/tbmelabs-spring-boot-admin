@@ -15,6 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -48,7 +49,7 @@ public class AuthorityControllerTest {
   public void beforeTestSetUp() {
     initMocks(this);
 
-    testAuthority = new Authority("TEST_AUTHORITY");
+    testAuthority = new Authority(RandomStringUtils.random(11));
 
     doReturn(new PageImpl<>(Collections.singletonList(testAuthority))).when(mockAuthorityRepository)
         .findAll(ArgumentMatchers.any(Pageable.class));

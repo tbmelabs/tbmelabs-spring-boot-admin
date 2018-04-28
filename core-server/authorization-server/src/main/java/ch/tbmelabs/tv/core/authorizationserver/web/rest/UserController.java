@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -37,13 +38,12 @@ public class UserController {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
 
-    // TODO: Is this still required?
-    // User updatedUser = userMapper.toUser(userDTO);
-    // if (updatedUser.getPassword() == null) {
-    // updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
-    // }
+    User updatedUser = userMapper.toEntity(userDTO);
+    if (updatedUser.getPassword() == null) {
+      updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
+    }
 
-    return userMapper.toDto(userRepository.save(userMapper.toEntity(userDTO)));
+    return userMapper.toDto(userRepository.save(updatedUser));
   }
 
   @DeleteMapping

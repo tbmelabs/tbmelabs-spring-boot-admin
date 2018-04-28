@@ -29,7 +29,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 public class UserTest {
 
-  private static final String TEST_USER_ROLE = "TEST";
+  private static final String TEST_USER_ROLE = RandomStringUtils.random(11);
 
   @Spy
   private User fixture;

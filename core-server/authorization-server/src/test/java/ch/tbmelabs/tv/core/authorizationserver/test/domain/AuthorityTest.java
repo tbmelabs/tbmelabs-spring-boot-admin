@@ -22,7 +22,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 public class AuthorityTest {
 
-  private static final String TEST_AUTHORITY_NAME = "TEST";
+  private static final String TEST_AUTHORITY_NAME = RandomStringUtils.random(11);
 
   @Spy
   private Authority fixture;

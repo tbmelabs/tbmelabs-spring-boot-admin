@@ -73,7 +73,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
         (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 
     assertThat(logs).hasSize(1).extracting("state")
-        .containsExactly(AUTHENTICATION_STATE.NOK.name());
+        .containsExactly(AUTHENTICATION_STATE.NOK);
     assertThat(logs).extracting("user").extracting("username")
         .containsExactly(testUser.getUsername());
   }
@@ -91,7 +91,7 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
     List<AuthenticationLog> logs =
         (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 
-    assertThat(logs).hasSize(1).extracting("state").containsExactly(AUTHENTICATION_STATE.OK.name());
+    assertThat(logs).hasSize(1).extracting("state").containsExactly(AUTHENTICATION_STATE.OK);
     assertThat(logs).extracting("user").extracting("username")
         .containsExactly(testUser.getUsername());
   }
