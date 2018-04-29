@@ -1,11 +1,11 @@
-'use strict';
+// @flow
 
 import {combineReducers} from 'redux';
 
-import auth from './auth';
-import flashMessages from './flashMessages';
-import language from './language';
+import authentication from './authentication.reducer';
+import flashMessages from './flashMessage.reducer';
+import language from './language.reducer';
 
 export default combineReducers({
-  auth, flashMessages, language
+  authentication, flashMessages, language
 });

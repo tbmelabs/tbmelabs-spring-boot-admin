@@ -1,6 +1,0 @@
-'use strict';
-
-export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
-export const ADD_FLASH_MESSAGE = 'ADD_FLASH_MESSAGE';
-export const DELETE_FLASH_MESSAGE = 'DELETE_FLASH_MESSAGE';
-export const SET_LANGUAGE = 'SET_LANGUAGE';

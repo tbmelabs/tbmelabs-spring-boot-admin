@@ -2,11 +2,9 @@
 'use strict';
 
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 
-import {connect} from 'react-redux';
-
-import {login, logout} from '../../actions/authActions';
+import AuthenticationQueries from '../../queries/authentication.queries';
+import LanguageQueries from '../../queries/language.queries';
 
 import Navigation from '../../components/Navigation';
 
@@ -16,22 +14,11 @@ class Navbar extends Component<Navbar.propTypes> {
 
     return (
       <div>
-        <Navigation login={login} logout={logout} isAuthenticated={auth.isAuthenticated} texts={texts}/>
+        <Navigation login={AuthenticationQueries.signin} logout={AuthenticationQueries.signout}
+                    isAuthenticated={AuthenticationQueries.isAuthenticated} texts={LanguageQueries.getTexts('navbar')}/>
       </div>
     );
   }
 }
 
-Navbar.propTypes = {
-  auth: PropTypes.object.isRequired,
-  texts: PropTypes.object.isRequired
-}
-
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-    texts: state.language.texts.navbar
-  }
-}
-
-export default connect(mapStateToProps)(Navbar);
+export default Navbar;

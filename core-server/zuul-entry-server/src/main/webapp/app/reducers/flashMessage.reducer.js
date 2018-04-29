@@ -1,13 +1,14 @@
-'use strict';
+// @flow
 
-import {ADD_FLASH_MESSAGE, DELETE_FLASH_MESSAGE} from '../actions/types';
+import type FlashMessage from './types/flashMessage.type';
+import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from '../actions/flashmessage';
 
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
-const initialState = [];
+const initialState: FlashMessage[] = [];
 
-export default (state = initialState, action = {}) => {
+export default (state: FlashMessage[] = initialState, action = {message: FlashMessage}): FlashMessage => {
   switch (action.type) {
     case ADD_FLASH_MESSAGE:
       return [
@@ -19,7 +20,7 @@ export default (state = initialState, action = {}) => {
           text: action.message.text
         }
       ];
-    case DELETE_FLASH_MESSAGE:
+    case REMOVE_FLASH_MESSAGE:
       const index = findIndex(state, {id: action.id});
 
       if (index >= 0) {
@@ -29,7 +30,7 @@ export default (state = initialState, action = {}) => {
         ];
       }
 
-      return state;
+      return [...state];
     default:
       return state;
   }
