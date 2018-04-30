@@ -14,7 +14,8 @@ class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
         {
           messages.map(message =>
             <FlashMessage key={message.id} message={message}
-                          deleteFlashMessage={() => {}}/>
+                          deleteFlashMessage={() => {
+                          }}/>
           )
         }
       </div>

@@ -11,14 +11,16 @@ import sagas from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
-export default () => {
-  return createStore(
-    reducers,
-    compose(
-      applyMiddleware(thunk, sagaMiddleware),
-      window.devToolsExtension ? window.devToolsExtension() : f => f
-    )
-  );
-}
+const store = createStore(
+  reducers,
+  compose(
+    applyMiddleware(thunk, sagaMiddleware),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
+  )
+);
 
-sagas.forEach((saga: func) => sagaMiddleware.run(saga));
+sagas.forEach(saga => sagaMiddleware.run(saga));
+
+export default () => {
+  return store;
+}

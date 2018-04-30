@@ -3,6 +3,9 @@
 
 import React, {Component} from 'react';
 
+import {getIsAuthenticated, signinUser, signoutUser} from '../../queries/authentication';
+import {getTexts} from '../../queries/language';
+
 import Navigation from '../../components/Navigation';
 
 class Navbar extends Component<Navbar.propTypes> {
@@ -11,7 +14,8 @@ class Navbar extends Component<Navbar.propTypes> {
 
     return (
       <div>
-        <Navigation login={() => {}} logout={() => {}} isAuthenticated={false} texts={{}}/>
+        <Navigation login={signinUser} logout={signoutUser} isAuthenticated={getIsAuthenticated()}
+                    texts={getTexts('navbar')}/>
       </div>
     );
   }

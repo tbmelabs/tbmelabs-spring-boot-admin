@@ -8,7 +8,10 @@ var TEST_DIR = path.resolve(__dirname, '__tests__');
 var APP_DIR = path.resolve(__dirname, 'app');
 
 var config = {
-  entry: APP_DIR + '/index.js',
+  entry: [
+    'babel-polyfill',
+    APP_DIR + '/index.js'
+  ],
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'
@@ -28,8 +31,7 @@ var config = {
         options: {
           plugins: [
             'transform-flow-strip-types',
-            'transform-object-rest-spread',
-            'transform-regenerator'
+            'transform-object-rest-spread'
           ],
           presets: [
             'env',
@@ -39,10 +41,10 @@ var config = {
         }
       }, {
         test: /\.css$/,
-        loader: "style-loader!css-loader"
+        loader: 'style-loader!css-loader'
       }, {
         test: /\.(jpe?g|png|svg|ai)$/,
-        loader: "file-loader?publicPath=public/"
+        loader: 'file-loader?publicPath=public/'
       }, {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'url-loader?limit=100000'
@@ -50,8 +52,8 @@ var config = {
     ]
   },
   plugins: [new webpack.ProvidePlugin({
-    $: "jquery",
-    jQuery: "jquery"
+    $: 'jquery',
+    jQuery: 'jquery'
   })]
 };
 
