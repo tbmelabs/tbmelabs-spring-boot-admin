@@ -1,17 +1,17 @@
 // @flow
 
-import type Language from './types/language.type';
+import type LanguageState from './types/language.state';
 import {SET_LANGUAGE} from '../actions/language';
 
 const en = require('../config/languages/en.json');
 
-const initialState: Language = {
+const initialState: LanguageState = {
   name: en.language,
   texts: en,
   id: 'en'
 }
 
-export default (state: Language = initialState, action: { payload: string } = {}): Language => {
+export default (state: LanguageState = initialState, action: { payload: string } = {}): LanguageState => {
   switch (action.type) {
     case SET_LANGUAGE:
       try {

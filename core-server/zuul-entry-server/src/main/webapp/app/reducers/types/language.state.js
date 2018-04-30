@@ -1,6 +1,6 @@
 // @flow
 
-export default class Language {
+export default class LanguageState {
   name: string;
   texts: any;
   id: string;

@@ -28,7 +28,8 @@ var config = {
         options: {
           plugins: [
             'transform-flow-strip-types',
-            'transform-object-rest-spread'
+            'transform-object-rest-spread',
+            'transform-regenerator'
           ],
           presets: [
             'env',

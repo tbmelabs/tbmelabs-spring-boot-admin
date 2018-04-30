@@ -3,9 +3,6 @@
 
 import React, {Component} from 'react';
 
-import AuthenticationQueries from '../../queries/authentication.queries';
-import LanguageQueries from '../../queries/language.queries';
-
 import Navigation from '../../components/Navigation';
 
 class Navbar extends Component<Navbar.propTypes> {
@@ -14,8 +11,7 @@ class Navbar extends Component<Navbar.propTypes> {
 
     return (
       <div>
-        <Navigation login={AuthenticationQueries.signin} logout={AuthenticationQueries.signout}
-                    isAuthenticated={AuthenticationQueries.isAuthenticated} texts={LanguageQueries.getTexts('navbar')}/>
+        <Navigation login={() => {}} logout={() => {}} isAuthenticated={false} texts={{}}/>
       </div>
     );
   }

@@ -1,13 +1,13 @@
 // @flow
 
-import type Authentication from './types/authentication.type';
+import type AuthenticationState from './types/authentication.state';
 import {SET_AUTHENTICATION} from '../actions/authentication';
 
-const initialState: Authentication = {
+const initialState: AuthenticationState = {
   isAuthenticated: false
 };
 
-export default (state: Authentication = initialState, action: { payload: boolean } = {}): Authentication => {
+export default (state: AuthenticationState = initialState, action: { payload: boolean } = {}): AuthenticationState => {
   switch (action.type) {
     case SET_AUTHENTICATION:
       return {

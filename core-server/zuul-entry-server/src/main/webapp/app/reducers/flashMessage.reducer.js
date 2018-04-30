@@ -1,14 +1,14 @@
 // @flow
 
-import type FlashMessage from './types/flashMessage.type';
+import type FlashMessageState from './types/flashMessage.state';
 import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from '../actions/flashmessage';
 
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
-const initialState: FlashMessage[] = [];
+const initialState: FlashMessageState[] = [];
 
-export default (state: FlashMessage[] = initialState, action = {payload: FlashMessage | number}): FlashMessage => {
+export default (state: FlashMessageState[] = initialState, action = {payload: FlashMessageState | number}): FlashMessageState => {
   switch (action.type) {
     case ADD_FLASH_MESSAGE:
       return [

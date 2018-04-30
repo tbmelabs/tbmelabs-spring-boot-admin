@@ -4,9 +4,8 @@ import {Action} from 'redux';
 
 import {SET_LANGUAGE} from './language.types';
 
-export class SetCurrentLanguageAction implements Action {
-  +type = SET_LANGUAGE;
-
+export class SetLanguageAction implements Action {
   constructor(payload: string) {
+    this.type = SET_LANGUAGE;
   }
 }
