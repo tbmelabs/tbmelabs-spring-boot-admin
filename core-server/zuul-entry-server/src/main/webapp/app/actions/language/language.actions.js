@@ -1,10 +1,12 @@
 // @flow
 
+import {Action} from 'redux';
+
 import {SET_LANGUAGE} from './language.types';
 
-export function setCurrentLanguage(language: string) {
-  return {
-    type: SET_LANGUAGE,
-    language
+export class SetCurrentLanguageAction implements Action {
+  +type = SET_LANGUAGE;
+
+  constructor(payload: string) {
   }
 }

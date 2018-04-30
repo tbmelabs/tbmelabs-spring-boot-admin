@@ -1,9 +1,12 @@
 // @flow
 
+import {Action} from 'redux';
+
 import {SIGNIN_USER} from './signin.types';
 
-export function signinUser() {
-  return {
-    type: SIGNIN_USER
-  };
+export class SigninUserAction implements Action {
+  +type = SIGNIN_USER;
+
+  constructor() {
+  }
 }

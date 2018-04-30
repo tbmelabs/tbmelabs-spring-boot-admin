@@ -7,11 +7,11 @@ const initialState: Authentication = {
   isAuthenticated: false
 };
 
-export default (state: Authentication = initialState, action: { state: boolean } = {}): Authentication => {
+export default (state: Authentication = initialState, action: { payload: boolean } = {}): Authentication => {
   switch (action.type) {
     case SET_AUTHENTICATION:
       return {
-        isAuthenticated: action.state
+        isAuthenticated: action.payload
       };
     default:
       return state;

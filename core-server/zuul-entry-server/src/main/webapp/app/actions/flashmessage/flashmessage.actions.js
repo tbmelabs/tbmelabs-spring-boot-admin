@@ -1,18 +1,20 @@
 // @flow
 
+import {Action} from 'redux';
+
 import type FlashMessage from '../../reducers/types/flashMessage.type';
 import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from './flashmessage.types';
 
-export function addFlashMessage(message: FlashMessage) {
-  return {
-    type: ADD_FLASH_MESSAGE,
-    message
+export class AddFlashMessageAction implements Action {
+  +type = ADD_FLASH_MESSAGE;
+
+  constructor(payload: FlashMessage) {
   }
 }
 
-export function removeFlashMessage(id) {
-  return {
-    type: REMOVE_FLASH_MESSAGE,
-    id
+export class RemoveFlashMessageAction implements Action {
+  +type = REMOVE_FLASH_MESSAGE;
+
+  constructor(payload: number) {
   }
 }

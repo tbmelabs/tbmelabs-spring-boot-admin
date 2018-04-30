@@ -11,16 +11,16 @@ const initialState: Language = {
   id: 'en'
 }
 
-export default (state: Language = initialState, action: { language: string } = {}): Language => {
+export default (state: Language = initialState, action: { payload: string } = {}): Language => {
   switch (action.type) {
     case SET_LANGUAGE:
       try {
-        const language = require(`../config/languages/${action.language}.json`);
+        const language = require(`../config/languages/${action.payload}.json`);
 
         return {
           name: language.name,
           texts: language,
-          id: action.language
+          id: action.payload
         }
       } catch (error) {
         return state;

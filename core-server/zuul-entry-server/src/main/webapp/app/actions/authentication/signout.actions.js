@@ -1,9 +1,12 @@
 // @flow
 
+import {Action} from 'redux';
+
 import {SIGNOUT_USER} from './signout.types';
 
-export function signoutUser() {
-  return {
-    type: SIGNOUT_USER
-  };
+export class SignoutUserAction implements Action {
+  +type = SIGNOUT_USER;
+
+  constructor() {
+  }
 }

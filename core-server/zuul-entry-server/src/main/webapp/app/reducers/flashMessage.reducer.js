@@ -8,20 +8,20 @@ import findIndex from 'lodash/findIndex';
 
 const initialState: FlashMessage[] = [];
 
-export default (state: FlashMessage[] = initialState, action = {message: FlashMessage}): FlashMessage => {
+export default (state: FlashMessage[] = initialState, action = {payload: FlashMessage | number}): FlashMessage => {
   switch (action.type) {
     case ADD_FLASH_MESSAGE:
       return [
         ...state,
         {
           id: shortid.generate(),
-          type: action.message.type,
-          title: action.message.title,
-          text: action.message.text
+          type: action.payload.type,
+          title: action.payload.title,
+          text: action.payload.text
         }
       ];
     case REMOVE_FLASH_MESSAGE:
-      const index = findIndex(state, {id: action.id});
+      const index = findIndex(state, {id: action.payload});
 
       if (index >= 0) {
         return [

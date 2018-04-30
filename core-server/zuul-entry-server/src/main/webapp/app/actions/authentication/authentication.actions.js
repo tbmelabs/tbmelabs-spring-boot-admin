@@ -1,16 +1,19 @@
 // @flow
 
+import {Action} from 'redux';
+
 import {REQUEST_AUTHENTICATION, SET_AUTHENTICATION} from './authentication.types';
 
-export function setAuthentication(state: boolean) {
-  return {
-    type: SET_AUTHENTICATION,
-    state
-  };
+export class SetAuthenticationAction implements Action {
+  +type = SET_AUTHENTICATION;
+
+  constructor(payload: boolean) {
+  }
 }
 
-export function requestAuthentication() {
-  return {
-    type: REQUEST_AUTHENTICATION
-  };
+export class RequestAuthenticationAction implements Action  {
+  +type = REQUEST_AUTHENTICATION;
+
+  constructor() {
+  }
 }
