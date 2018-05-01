@@ -3,15 +3,15 @@
 import getStore from '../../getStore';
 
 import {AddFlashMessageAction, RemoveFlashMessageAction} from '../../actions/flashmessage';
-import type FlashMessage from '../../reducers/types/flashMessage.state';
+import {type FlashMessageType, type FlashMessageState} from '../../reducers/flashMessage.reducer';
 
 const store = getStore();
 
-export function getFlashMessages(): FlashMessage[] {
+export function getFlashMessages(): FlashMessageState {
   return store.getState().flashMessages
 }
 
-export function addFlashMessage(flashMessage: FlashMessage) {
+export function addFlashMessage(flashMessage: FlashMessageType) {
   store.dispatch(new AddFlashMessageAction(flashMessage));
 }
 

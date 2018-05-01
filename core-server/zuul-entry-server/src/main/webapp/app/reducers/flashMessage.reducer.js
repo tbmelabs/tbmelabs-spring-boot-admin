@@ -1,26 +1,39 @@
 // @flow
 
-import type FlashMessageState from './types/flashMessage.state';
 import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from '../actions/flashmessage';
 
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
-const initialState: FlashMessageState[] = [];
+// TODO: Probably model or entity folder?
+export type FlashMessageType = {
+  id: number;
+  type: string;
+  title: string;
+  text: string;
+}
 
-export default (state: FlashMessageState[] = initialState, action = {payload: FlashMessageState | number}): FlashMessageState => {
+export type FlashMessageState = FlashMessageType[];
+
+const initialState: FlashMessageState = [];
+
+export default (state: FlashMessageState = initialState, action: { type: string, payload: FlashMessageType | number }): FlashMessageState => {
   switch (action.type) {
     case ADD_FLASH_MESSAGE:
+      const flashMessagePayload: FlashMessageType = ((action.payload: any): FlashMessageType);
+
       return [
         ...state,
         {
           id: shortid.generate(),
-          type: action.payload.type,
-          title: action.payload.title,
-          text: action.payload.text
+          type: flashMessagePayload.type,
+          title: flashMessagePayload.title,
+          text: flashMessagePayload.text
         }
       ];
     case REMOVE_FLASH_MESSAGE:
+      const numberPayload: number = ((action.payload: any): number);
+
       const index = findIndex(state, {id: action.payload});
 
       if (index >= 0) {
