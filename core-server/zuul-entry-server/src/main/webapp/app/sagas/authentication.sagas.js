@@ -1,11 +1,10 @@
 // @flow
-'use strict';
 
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import axios from 'axios';
 
-import {REQUEST_AUTHENTICATION, SetAuthenticationAction, SIGNIN_USER, SIGNOUT_USER} from "../actions/authentication";
+import {REQUEST_AUTHENTICATION, SetAuthenticationAction, SIGNIN_USER, SIGNOUT_USER} from '../actions/authentication';
 
 export function* requestAuthenticationSaga() {
   yield takeLatest(REQUEST_AUTHENTICATION, () => {
