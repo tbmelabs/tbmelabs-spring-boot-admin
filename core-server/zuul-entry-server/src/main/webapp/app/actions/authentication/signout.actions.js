@@ -1,9 +1,11 @@
 // @flow
 
-import ObjectLiteralReduxAction from '../ObjectLiteralReduxAction';
+import {Action} from 'redux';
 
 import {SIGNOUT_USER} from './signout.types';
 
-export class SignoutUserAction extends ObjectLiteralReduxAction {
-  type = SIGNOUT_USER;
+export function signoutUserAction(): Action {
+  return {
+    type: SIGNOUT_USER
+  };
 }

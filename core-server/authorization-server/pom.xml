@@ -11,13 +11,18 @@
     <!-- General configuration -->
     <start-class>ch.tbmelabs.tv.core.authorizationserver.Application</start-class>
 
+    <!-- org.flyway default properties during post-integration-test cleanup -->
+    <flyway.url>jdbc:postgresql://localhost:5432/auth_test_database</flyway.url>
+    <flyway.user>auth_test_user</flyway.user>
+    <flyway.password>auth_test_user_password</flyway.password>
+
     <!-- Dependency configuration -->
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
     <org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
 
     <!-- Plugin configuration -->
-    <org.apache.maven.plugins.maven-compiler-plugin.version>3.7.0</org.apache.maven.plugins.maven-compiler-plugin.version>
+    <org.flywaydb.flyway-maven-plugin.version>5.0.7</org.flywaydb.flyway-maven-plugin.version>
     <org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
     <com.github.eirslett.frontend-maven-plugin.node.version>v8.9.3</com.github.eirslett.frontend-maven-plugin.node.version>
@@ -137,6 +142,27 @@
         <targetPath>static</targetPath>
       </resource>
     </resources>
+
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
+        <version>${org.flywaydb.flyway-maven-plugin.version}</version>
+
+        <executions>
+          <execution>
+            <id>pre-integration-test</id>
+
+            <phase>pre-integration-test</phase>
+
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
   <profiles>

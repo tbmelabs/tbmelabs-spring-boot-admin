@@ -1,13 +1,12 @@
 // @flow
 
-import ObjectLiteralReduxAction from '../ObjectLiteralReduxAction';
+import {Action} from 'redux';
 
 import {SET_LANGUAGE} from './language.types';
 
-export class SetLanguageAction extends ObjectLiteralReduxAction {
-  type: string = SET_LANGUAGE;
-
-  constructor(payload: string) {
-    super(payload);
-  }
+export function setLanguageAction(payload: string): Action {
+  return {
+    type: SET_LANGUAGE,
+    payload: payload
+  };
 }

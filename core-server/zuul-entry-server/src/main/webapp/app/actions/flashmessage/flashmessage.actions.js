@@ -1,22 +1,20 @@
 // @flow
 
-import ObjectLiteralReduxAction from '../ObjectLiteralReduxAction';
+import {Action} from 'redux';
 
 import {type FlashMessageType} from '../../reducers/flashMessage.reducer';
 import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from './flashmessage.types';
 
-export class AddFlashMessageAction extends ObjectLiteralReduxAction {
-  type = ADD_FLASH_MESSAGE;
-
-  constructor(payload: FlashMessageType) {
-    super(payload);
-  }
+export function addFlashMessageAction(payload: FlashMessageType): Action {
+  return {
+    type: ADD_FLASH_MESSAGE,
+    payload: payload
+  };
 }
 
-export class RemoveFlashMessageAction extends ObjectLiteralReduxAction {
-  type = REMOVE_FLASH_MESSAGE;
-
-  constructor(payload: number) {
-    super(payload);
-  }
+export function removeFlashMessageAction(payload: number): Action {
+  return {
+    type: REMOVE_FLASH_MESSAGE,
+    payload: payload
+  };
 }

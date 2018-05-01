@@ -1,17 +1,18 @@
 // @flow
 
-import ObjectLiteralReduxAction from '../ObjectLiteralReduxAction';
+import {Action} from 'redux';
 
 import {REQUEST_AUTHENTICATION, SET_AUTHENTICATION} from './authentication.types';
 
-export class SetAuthenticationAction extends ObjectLiteralReduxAction {
-  type = SET_AUTHENTICATION;
-
-  constructor(payload: boolean) {
-    super(payload);
-  }
+export function setAuthenticationAction(payload: boolean): Action {
+  return {
+    type: SET_AUTHENTICATION,
+    payload: payload
+  };
 }
 
-export class RequestAuthenticationAction extends ObjectLiteralReduxAction {
-  type = REQUEST_AUTHENTICATION;
+export function requestAuthenticationAction(): Action {
+  return {
+    type: REQUEST_AUTHENTICATION
+  };
 }

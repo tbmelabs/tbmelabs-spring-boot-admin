@@ -2,7 +2,7 @@
 
 import getStore from '../../getStore';
 
-import {RequestAuthenticationAction} from '../../actions/authentication';
+import {requestAuthenticationAction} from '../../actions/authentication';
 
 const store = getStore();
 
@@ -11,5 +11,5 @@ export function getIsAuthenticated(): boolean {
 }
 
 export function requestAuthentication() {
-  store.dispatch(new RequestAuthenticationAction());
+  store.dispatch(requestAuthenticationAction());
 }

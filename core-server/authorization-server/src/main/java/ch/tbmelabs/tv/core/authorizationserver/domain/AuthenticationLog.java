@@ -50,6 +50,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   private Long id;
 
   @NotNull
+  @Column(columnDefinition = "varchar(3)")
   private AUTHENTICATION_STATE state;
 
   @NotEmpty
