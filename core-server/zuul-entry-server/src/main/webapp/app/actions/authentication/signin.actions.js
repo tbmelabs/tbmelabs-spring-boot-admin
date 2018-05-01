@@ -1,13 +1,9 @@
 // @flow
 
-import {Action} from 'redux';
+import ObjectLiteralReduxAction from '../ObjectLiteralReduxAction';
 
 import {SIGNIN_USER} from './signin.types';
 
-export class SigninUserAction implements Action {
-  constructor() {
-    this.type = SIGNIN_USER;
-
-    return {...this};
-  }
+export class SigninUserAction extends ObjectLiteralReduxAction {
+  type = SIGNIN_USER;
 }

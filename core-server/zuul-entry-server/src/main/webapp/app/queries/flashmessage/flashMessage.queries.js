@@ -3,7 +3,7 @@
 import getStore from '../../getStore';
 
 import {AddFlashMessageAction, RemoveFlashMessageAction} from '../../actions/flashmessage';
-import {type FlashMessageType, type FlashMessageState} from '../../reducers/flashMessage.reducer';
+import {type FlashMessageState, type FlashMessageType} from '../../reducers/flashMessage.reducer';
 
 const store = getStore();
 
