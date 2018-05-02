@@ -28,6 +28,6 @@ CollapsableAlert.propTypes = {
   style: PropTypes.string.isRequired,
   title: PropTypes.string,
   message: PropTypes.string
-}
+};
 
 export default CollapsableAlert;

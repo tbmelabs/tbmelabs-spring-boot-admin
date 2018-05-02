@@ -14,7 +14,7 @@ require('bootstrap/dist/css/bootstrap.css');
 
 type FlashMessageState = {
   collapse: boolean
-}
+};
 
 class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> {
   onClick: () => void;
@@ -24,7 +24,7 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
 
     this.state = {
       collapse: false
-    }
+    };
 
     this.onClick = this.onClick.bind(this);
   }
@@ -61,6 +61,6 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
 FlashMessage.propTypes = {
   message: PropTypes.object.isRequired,
   deleteFlashMessage: PropTypes.func.isRequired
-}
+};
 
 export default FlashMessage;

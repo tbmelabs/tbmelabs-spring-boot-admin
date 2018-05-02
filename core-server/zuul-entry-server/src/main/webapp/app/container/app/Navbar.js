@@ -3,8 +3,8 @@
 
 import React, {Component} from 'react';
 
-import {getIsAuthenticated, signinUser, signoutUser} from '../../queries/authentication';
-import {getTexts} from '../../queries/language';
+import {getIsAuthenticated, signinUser, signoutUser} from '../../state/queries/authentication';
+import {getTexts} from '../../state/queries/language';
 
 import Navigation from '../../components/Navigation';
 

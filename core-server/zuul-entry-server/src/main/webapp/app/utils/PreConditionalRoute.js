@@ -33,6 +33,6 @@ PreConditionalRoute.propTypes = {
   onEnter: PropTypes.func,
   shouldMount: PropTypes.func,
   onShouldMountError: PropTypes.func
-}
+};
 
 export default PreConditionalRoute;

@@ -3,7 +3,7 @@
 
 import React, {Component} from 'react';
 
-import {getFlashMessages, removeFlashMessage} from '../../queries/flashmessage'
+import {getFlashMessages, removeFlashMessage} from '../../state/queries/flashmessage'
 
 import FlashMessage from '../../components/common/FlashMessage';
 

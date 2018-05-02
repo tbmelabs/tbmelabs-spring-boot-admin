@@ -77,6 +77,6 @@ Navigation.propTypes = {
   logout: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 export default Navigation;

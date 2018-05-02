@@ -4,10 +4,10 @@
 import {applyMiddleware, compose, createStore} from 'redux';
 import thunk from 'redux-thunk';
 
-import reducers from './reducers';
+import reducers from './state/reducers';
 
 import createSagaMiddleware from 'redux-saga';
-import sagas from './sagas';
+import sagas from './state/sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -23,4 +23,4 @@ sagas.forEach(saga => sagaMiddleware.run(saga));
 
 export default () => {
   return store;
-}
+};

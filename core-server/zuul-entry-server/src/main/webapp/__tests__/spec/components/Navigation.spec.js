@@ -17,4 +17,4 @@ describe('Navigation', () => {
 
     expect(navigation).to.be.ok;
   });
-})
+});
