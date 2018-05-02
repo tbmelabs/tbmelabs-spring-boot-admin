@@ -3,7 +3,10 @@
 
 import React, {Component} from 'react';
 
-import {HashRouter, Switch} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
+import PreConditionalRoute from './utils/PreConditionalRoute';
+
+import {requestAuthentication} from "./queries/authentication";
 
 import App from './container/app';
 
@@ -12,8 +15,7 @@ class Router extends Component<Router.propTypes> {
     return (
       <HashRouter>
         <Switch>
-          <App>
-          </App>
+          <PreConditionalRoute path='/' component={App} onEnter={requestAuthentication} />
         </Switch>
       </HashRouter>
     );

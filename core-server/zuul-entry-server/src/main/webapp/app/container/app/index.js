@@ -16,6 +16,7 @@ class App extends Component<App.propTypes> {
 
         <div className='container'>
           <FlashMessageList/>
+
           {this.props.children}
         </div>
       </div>
