@@ -2,17 +2,15 @@
 
 import {put, takeLatest} from 'redux-saga/effects';
 
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 import {REQUEST_AUTHENTICATION, setAuthenticationAction} from '../../actions/authentication';
 
+function* requestAuthentication() {
+  const response: AxiosResponse = yield axios.get('authenticated');
+  yield put(setAuthenticationAction(response.data));
+}
+
 export function* requestAuthenticationSaga(): Generator<any, void, any> {
-  yield takeLatest(REQUEST_AUTHENTICATION, () => {
-    axios.get('authenticated').then(
-      function* (response) {
-        yield put(setAuthenticationAction(response.data));
-      }
-      // TODO: new BackendNotReachableAction(error.response.data.message)
-    );
-  });
+  yield takeLatest(REQUEST_AUTHENTICATION, requestAuthentication);
 }
