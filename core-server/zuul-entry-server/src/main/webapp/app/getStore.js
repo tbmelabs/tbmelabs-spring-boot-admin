@@ -12,11 +12,11 @@ import createSagaMiddleware from 'redux-saga';
 import sagas from './state/sagas';
 
 const middlewares = [];
-const environment = require('./config/environment').environment;
+const environment = process.env.NODE_ENV;
 
 middlewares.push(thunk);
 
-if (environment === 'dev') {
+if (environment === 'development') {
   middlewares.push(logger);
 }
 

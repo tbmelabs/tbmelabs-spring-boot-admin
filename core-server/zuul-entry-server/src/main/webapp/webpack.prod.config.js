@@ -1,13 +1,17 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
-var NODE_DIR = path.resolve(__dirname, 'node_modules');
-var TEST_DIR = path.resolve(__dirname, '__tests__');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
-var APP_DIR = path.resolve(__dirname, 'app');
+const BUILD_DIR = path.resolve(__dirname, 'public');
+const NODE_DIR = path.resolve(__dirname, 'node_modules');
+const TEST_DIR = path.resolve(__dirname, '__tests__');
 
-var config = {
+const APP_DIR = path.resolve(__dirname, 'app');
+
+const ENV = 'production';
+
+module.exports = {
   entry: [
     'babel-polyfill',
     APP_DIR + '/index.js'
@@ -51,10 +55,12 @@ var config = {
       }
     ]
   },
-  plugins: [new webpack.ProvidePlugin({
-    $: 'jquery',
-    jQuery: 'jquery'
-  })]
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(ENV)
+      }
+    }),
+    new UglifyJSPlugin()
+  ]
 };
-
-module.exports = config;
