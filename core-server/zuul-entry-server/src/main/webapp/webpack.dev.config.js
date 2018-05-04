@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
@@ -32,6 +34,7 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           plugins: [
+            'babel-plugin-syntax-dynamic-import',
             'transform-flow-strip-types',
             'transform-object-rest-spread'
           ],
@@ -57,6 +60,18 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(ENV)
+      }
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
+    }),
+    new HtmlWebpackPlugin({
+      name: 'TBME TV',
+      filename: '../index.html',
+      favicon: 'favicon.ico',
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
       }
     })
   ]

@@ -10,6 +10,7 @@ export function setAuthenticationAction(payload: boolean): Action {
     payload: payload
   };
 }
+
 export function requestAuthenticationAction(): Action {
   return {
     type: REQUEST_AUTHENTICATION

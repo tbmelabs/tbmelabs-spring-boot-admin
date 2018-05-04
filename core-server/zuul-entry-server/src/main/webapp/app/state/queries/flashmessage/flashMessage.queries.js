@@ -11,9 +11,11 @@ const store = getStore();
 export function getFlashMessages(): FlashMessageState {
   return store.getState().flashMessages;
 }
+
 export function addFlashMessage(flashMessage: FlashMessageType) {
   store.dispatch(addFlashMessageAction(flashMessage));
 }
+
 export function removeFlashMessage(id: number) {
   store.dispatch(removeFlashMessageAction(id));
 }

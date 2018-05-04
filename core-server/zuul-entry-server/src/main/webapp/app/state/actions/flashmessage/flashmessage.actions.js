@@ -11,6 +11,7 @@ export function addFlashMessageAction(payload: FlashMessageType): Action {
     payload: payload
   };
 }
+
 export function removeFlashMessageAction(payload: number): Action {
   return {
     type: REMOVE_FLASH_MESSAGE,
