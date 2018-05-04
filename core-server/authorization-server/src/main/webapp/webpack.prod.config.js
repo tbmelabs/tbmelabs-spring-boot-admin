@@ -1,35 +1,50 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
 
-const APP_DIR = path.resolve(__dirname, 'app');
+const APP = path.resolve(__dirname, 'app');
+const COMMON_UTILS = path.resolve(__dirname, 'common');
+const AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
+const SIGNIN_APP = path.resolve(__dirname, 'signin');
+const SIGNUP_APP = path.resolve(__dirname, 'signup');
 
-const ENV = 'development';
+const ENV = 'production';
 
 module.exports = {
   entry: [
     'babel-polyfill',
-    APP_DIR
+    {
+      app: APP,
+      authorize: AUTHORIZE_APP,
+      signin: SIGNIN_APP,
+      signup: SIGNUP_APP
+    }
   ],
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
         exclude: [
           NODE_DIR,
           TEST_DIR
         ],
         include: [
-          APP_DIR
+          APP,
+          COMMON_UTILS,
+          AUTHORIZE_APP,
+          SIGNIN_APP,
+          SIGNUP_APP
         ],
         loader: 'babel-loader',
+        test: /\.js$/,
         options: {
           plugins: [
             'transform-flow-strip-types',
@@ -42,14 +57,14 @@ module.exports = {
           ]
         }
       }, {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        loader: 'style-loader!css-loader',
+        test: /\.css$/
       }, {
-        test: /\.(jpe?g|png|svg|ai)$/,
-        loader: 'file-loader?publicPath=public/'
+        loader: 'file-loader?publicPath=public/',
+        test: /\.(jpe?g|png|svg|ai)$/
       }, {
-        test: /\.(woff|woff2|eot|ttf)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url-loader?limit=100000',
+        test: /\.(woff|woff2|eot|ttf)$/
       }
     ]
   },
@@ -58,6 +73,7 @@ module.exports = {
       'process.env': {
         'NODE_ENV': JSON.stringify(ENV)
       }
-    })
+    }),
+    new UglifyJSPlugin()
   ]
 };

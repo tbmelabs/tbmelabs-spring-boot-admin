@@ -14,7 +14,7 @@ const ENV = 'production';
 module.exports = {
   entry: [
     'babel-polyfill',
-    APP_DIR + '/index.js'
+    APP_DIR
   ],
   output: {
     path: BUILD_DIR,

@@ -1,22 +1,31 @@
-var webpack = require('webpack');
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
-var NODE_DIR = path.resolve(__dirname, 'node_modules');
-var TEST_DIR = path.resolve(__dirname, '__tests__');
+const BUILD_DIR = path.resolve(__dirname, 'public');
+const NODE_DIR = path.resolve(__dirname, 'node_modules');
+const TEST_DIR = path.resolve(__dirname, '__tests__');
 
-var APP = path.resolve(__dirname, 'app');
-var COMMON_UTILS = path.resolve(__dirname, 'common');
-var AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
-var SIGNIN_APP = path.resolve(__dirname, 'signin');
-var SIGNUP_APP = path.resolve(__dirname, 'signup');
+const APP = path.resolve(__dirname, 'app');
+const COMMON_UTILS = path.resolve(__dirname, 'common');
+const AUTHORIZE_APP = path.resolve(__dirname, 'authorize');
+const SIGNIN_APP = path.resolve(__dirname, 'signin');
+const SIGNUP_APP = path.resolve(__dirname, 'signup');
+
+const ENV = 'development';
 
 module.exports = {
-  entry: {
-    app: APP,
-    authorize: AUTHORIZE_APP,
-    signin: SIGNIN_APP,
-    signup: SIGNUP_APP
+  entry: [
+    'babel-polyfill',
+    {
+      app: APP,
+      authorize: AUTHORIZE_APP,
+      signin: SIGNIN_APP,
+      signup: SIGNUP_APP
+    }
+  ],
+  output: {
+    path: BUILD_DIR,
+    filename: '[name].js'
   },
   module: {
     rules: [
@@ -57,14 +66,11 @@ module.exports = {
       }
     ]
   },
-  output: {
-    path: BUILD_DIR,
-    filename: '[name].js'
-  },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify(ENV)
+      }
     })
   ]
 };

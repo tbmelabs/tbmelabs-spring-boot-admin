@@ -1,9 +1,9 @@
-var webpack = require('karma-webpack');
-var path = require('path');
+const webpack = require('karma-webpack');
+const path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
-var NODE_DIR = path.resolve(__dirname, 'node_modules');
-var TEST_DIR = path.resolve(__dirname, '__tests__');
+const BUILD_DIR = path.resolve(__dirname, 'public');
+const NODE_DIR = path.resolve(__dirname, 'node_modules');
+const TEST_DIR = path.resolve(__dirname, '__tests__');
 
 process.env.CHROMIUM_BIN = require('puppeteer').executablePath()
 

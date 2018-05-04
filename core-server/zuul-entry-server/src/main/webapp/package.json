@@ -3,21 +3,19 @@
   "description": "Free to use streaming application.",
   "version": "1.0.0",
   "author": "TBME Labs",
-  "license": {
-    "type": "GPL",
-    "url": "https://github.com/tbmelabs/tbme-tv/blob/master/LICENSE"
-  },
+  "license": "GPL-3.0",
   "main": "index.html",
   "scripts": {
-    "build": "npm run prod",
-    "prod": "webpack -p --config webpack.prod.config.js",
-    "dev": "webpack -d --watch --config webpack.dev.config.js",
+    "dev": "npm run webpack:dev",
+    "build": "npm run webpack:prod",
     "flow": "flow check",
     "flow:start": "flow",
     "flow:status": "flow status",
     "flow:stop": "flow stop",
     "test": "karma start",
-    "test:watch": "npm test -- --watch"
+    "test:watch": "npm test -- --watch",
+    "webpack:dev": "webpack -d --watch --config webpack.dev.config.js",
+    "webpack:prod": "webpack -p --config webpack.prod.config.js"
   },
   "repository": {
     "type": "git",
@@ -80,6 +78,7 @@
     "style-loader": "^0.19.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "url-loader": "^0.6.2",
-    "webpack": "^3.8.1"
+    "webpack": "^3.8.1",
+    "webpack-cli": "^2.1.2"
   }
 }
