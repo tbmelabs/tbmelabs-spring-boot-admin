@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const BUILD_DIR = path.resolve(__dirname, 'public');
@@ -16,18 +17,16 @@ const SIGNUP_APP = path.resolve(__dirname, 'signup');
 const ENV = 'production';
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    {
-      app: APP,
-      authorize: AUTHORIZE_APP,
-      signin: SIGNIN_APP,
-      signup: SIGNUP_APP
-    }
-  ],
+  entry: {
+    app: ['babel-polyfill', APP],
+    authorize: AUTHORIZE_APP,
+    signin: SIGNIN_APP,
+    signup: SIGNUP_APP
+  },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[hash].js'
   },
   module: {
     rules: [
@@ -47,6 +46,7 @@ module.exports = {
         test: /\.js$/,
         options: {
           plugins: [
+            'babel-plugin-syntax-dynamic-import',
             'transform-flow-strip-types',
             'transform-object-rest-spread'
           ],
@@ -74,6 +74,49 @@ module.exports = {
         'NODE_ENV': JSON.stringify(ENV)
       }
     }),
-    new UglifyJSPlugin()
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'common'
+    }),
+    new UglifyJSPlugin(),
+    new HtmlWebpackPlugin({
+      name: 'TBME TV | Account Management',
+      chunks: ['app'],
+      filename: '../index.html',
+      favicon: 'favicon.ico',
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
+      }
+    }),
+    new HtmlWebpackPlugin({
+      name: 'TBME TV | Authorize Application',
+      chunks: ['authorize'],
+      filename: '../authorize.html',
+      favicon: 'favicon.ico',
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
+      }
+    }),
+    new HtmlWebpackPlugin({
+      name: 'TBME TV | Signin',
+      chunks: ['signin'],
+      filename: '../signin.html',
+      favicon: 'favicon.ico',
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
+      }
+    }),
+    new HtmlWebpackPlugin({
+      name: 'TBME TV | Signup',
+      chunks: ['signup'],
+      filename: '../signup.html',
+      favicon: 'favicon.ico',
+      meta: {
+        charset: 'utf-8',
+        viewport: 'width=device-width, initial-scale=1'
+      }
+    })
   ]
 };
