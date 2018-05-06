@@ -8,21 +8,22 @@ import PreConditionalRoute from './utils/PreConditionalRoute';
 
 import Loadable from 'react-loadable';
 
-import {requestAuthentication} from "./state/queries/authentication";
+import {requestAuthentication} from './state/queries/authentication';
 
 const AsyncApp = Loadable({
-  loader: () => import("./container/app"),
+  loader: () => import('./container/app'),
   loading: () => <div>Loading...</div>
 });
 
 class Router extends Component<Router.propTypes> {
   render() {
     return (
-      <HashRouter>
-        <Switch>
-          <PreConditionalRoute path='/' component={AsyncApp} onEnter={requestAuthentication} />
-        </Switch>
-      </HashRouter>
+        <HashRouter>
+          <Switch>
+            <PreConditionalRoute path='/' component={AsyncApp}
+                                 onEnter={requestAuthentication}/>
+          </Switch>
+        </HashRouter>
     );
   }
 }

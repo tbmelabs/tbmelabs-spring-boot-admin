@@ -13,12 +13,10 @@ import Router from './Router';
 
 require('./styles/tbme-tv.css');
 
-const store = getStore();
-
 render(
-  <Provider store={getStore()}>
-    <CookiesProvider>
-      <Router/>
-    </CookiesProvider>
-  </Provider>
-  , (document.getElementById('app'): any));
+    <Provider store={getStore()}>
+      <CookiesProvider>
+        <Router/>
+      </CookiesProvider>
+    </Provider>
+    , (document.getElementById('app'): any));

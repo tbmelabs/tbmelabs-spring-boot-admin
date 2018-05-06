@@ -2,7 +2,10 @@
 
 import {Action} from 'redux';
 
-import {REQUEST_AUTHENTICATION, SET_AUTHENTICATION} from './authentication.types';
+import {
+  REQUEST_AUTHENTICATION,
+  SET_AUTHENTICATION
+} from './authentication.types';
 
 export function setAuthenticationAction(payload: boolean): Action {
   return {

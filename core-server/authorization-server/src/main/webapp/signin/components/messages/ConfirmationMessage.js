@@ -10,13 +10,15 @@ class ConfirmationMessage extends Component<ConfirmationMessage.propTypes> {
   componentDidMount() {
     const {addFlashMessage, texts} = this.props;
 
-    if (parse(window.location.search.substr(1)).confirmation_failed !== undefined) {
+    if (parse(window.location.search.substr(1)).confirmation_failed
+        !== undefined) {
       addFlashMessage({
         type: 'danger',
         title: texts.confirmation_failed_alert_title,
         text: texts.confirmation_failed_alert_text
       });
-    } else if (parse(window.location.search.substr(1)).confirmation_succeed !== undefined) {
+    } else if (parse(window.location.search.substr(1)).confirmation_succeed
+        !== undefined) {
       addFlashMessage({
         type: 'success',
         title: texts.confirmation_succeed_alert_title,

@@ -10,7 +10,8 @@ const initialState: AuthenticationState = {
   isAuthenticated: false
 };
 
-export default (state: AuthenticationState = initialState, action: { type: string, payload: boolean }): AuthenticationState => {
+export default (state: AuthenticationState = initialState,
+    action: { type: string, payload: boolean }): AuthenticationState => {
   switch (action.type) {
     case SET_AUTHENTICATION:
       return {

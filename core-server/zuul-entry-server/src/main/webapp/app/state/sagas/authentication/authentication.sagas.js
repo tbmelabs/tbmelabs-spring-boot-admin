@@ -4,7 +4,10 @@ import {put, takeLatest} from 'redux-saga/effects';
 
 import axios, {AxiosResponse} from 'axios';
 
-import {REQUEST_AUTHENTICATION, setAuthenticationAction} from '../../actions/authentication';
+import {
+  REQUEST_AUTHENTICATION,
+  setAuthenticationAction
+} from '../../actions/authentication';
 
 function* requestAuthentication() {
   const response: AxiosResponse = yield axios.get('authenticated');

@@ -5,7 +5,7 @@ import React from 'react';
 import {render} from 'react-dom';
 
 import {Provider} from 'react-redux';
-import configureStore from './configureStore';
+import getStore from './getStore.js';
 
 import {CookiesProvider} from 'react-cookie';
 
@@ -14,14 +14,12 @@ import Signin from './container/app/Signin';
 
 require('../common/styles/tbme-tv.css');
 
-const store = configureStore();
-
 render(
-  <Provider store={store}>
-    <CookiesProvider>
-      <App>
-        <Signin/>
-      </App>
-    </CookiesProvider>
-  </Provider>
-  , (document.getElementById('app'): any));
+    <Provider store={getStore()}>
+      <CookiesProvider>
+        <App>
+          <Signin/>
+        </App>
+      </CookiesProvider>
+    </Provider>
+    , (document.getElementById('app'): any));

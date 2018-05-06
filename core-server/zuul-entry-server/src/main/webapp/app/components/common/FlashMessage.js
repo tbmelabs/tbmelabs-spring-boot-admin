@@ -49,11 +49,12 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
     const {type, title, text} = this.props.message;
 
     return (
-      <TransitionGroup component='div'>
-        <CollapsableAlert collapse={collapse} style={type} title={title} message={' ' + text}>
-          <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
-        </CollapsableAlert>
-      </ TransitionGroup>
+        <TransitionGroup component='div'>
+          <CollapsableAlert collapse={collapse} style={type} title={title}
+                            message={' ' + text}>
+            <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
+          </CollapsableAlert>
+        </ TransitionGroup>
     );
   }
 }

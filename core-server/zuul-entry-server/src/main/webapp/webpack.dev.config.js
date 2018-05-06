@@ -68,11 +68,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       name: 'TBME TV',
       filename: '../index.html',
-      favicon: 'favicon.ico',
-      meta: {
-        charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1'
-      }
+      template: 'templates/index.template.ejs'
     })
   ]
 };

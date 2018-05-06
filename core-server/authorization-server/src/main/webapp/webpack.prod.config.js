@@ -82,41 +82,25 @@ module.exports = {
       name: 'TBME TV | Account Management',
       chunks: ['app'],
       filename: '../index.html',
-      favicon: 'favicon.ico',
-      meta: {
-        charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1'
-      }
+      templates: 'templates/index.template.ejs'
     }),
     new HtmlWebpackPlugin({
       name: 'TBME TV | Authorize Application',
       chunks: ['authorize'],
       filename: '../authorize.html',
-      favicon: 'favicon.ico',
-      meta: {
-        charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1'
-      }
+      template: 'templates/authorize.template.ejs'
     }),
     new HtmlWebpackPlugin({
       name: 'TBME TV | Signin',
       chunks: ['signin'],
       filename: '../signin.html',
-      favicon: 'favicon.ico',
-      meta: {
-        charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1'
-      }
+      template: 'templates/signin.template.ejs'
     }),
     new HtmlWebpackPlugin({
       name: 'TBME TV | Signup',
       chunks: ['signup'],
       filename: '../signup.html',
-      favicon: 'favicon.ico',
-      meta: {
-        charset: 'utf-8',
-        viewport: 'width=device-width, initial-scale=1'
-      }
+      template: 'templates/signup.template.ejs'
     })
   ]
 };
