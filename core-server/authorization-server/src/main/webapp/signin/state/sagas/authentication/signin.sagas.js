@@ -5,6 +5,8 @@ import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import axios from 'axios';
 
+import shortid from 'shortid';
+
 import getStore from '../../../getStore';
 
 import {
@@ -14,11 +16,17 @@ import {
   signinUserFailedAction,
   signinUserSucceedAction
 } from '../../actions/authentication';
-import {addFlashMessageAction} from '../../actions/flashmessage';
+import {
+  addFlashMessageAction,
+  removeFlashMessageAction
+} from '../../actions/flashmessage';
 
 import {getTexts} from '../../selectors/language';
 
 import translateAuthenticationError from '../../../utils/translateAuthenticationError';
+import {getFlashMessageByUid} from "../../selectors/flashmessage";
+
+const SIGNIN_FAILED_ERROR_UID = shortid.generate();
 
 function* signinUser(credentials: { username: string, password: string }) {
   var formData = new FormData();
@@ -48,7 +56,15 @@ export function* signinUserSucceedSaga(): Generator<any, void, any> {
 }
 
 function* signinUserFailed(action: Action) {
+  const existingFlashMessage = getFlashMessageByUid(getStore().getState(),
+      SIGNIN_FAILED_ERROR_UID);
+
+  if (existingFlashMessage !== null) {
+    yield put(removeFlashMessageAction(existingFlashMessage.id));
+  }
+
   yield put(addFlashMessageAction({
+    uid: SIGNIN_FAILED_ERROR_UID,
     type: 'danger',
     title: getTexts(getStore().getState())['signin'].errors.title,
     text: translateAuthenticationError(action.payload)

@@ -6,7 +6,8 @@ import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
 export type FlashMessageType = {
-  id?: number;
+  id?: string;
+  uid?: string;
   type: string;
   title: string;
   text: string;
@@ -26,6 +27,7 @@ export default (state: FlashMessageState = initialState,
         ...state,
         {
           id: shortid.generate(),
+          uid: flashMessagePayload.uid,
           type: flashMessagePayload.type,
           title: flashMessagePayload.title,
           text: flashMessagePayload.text
