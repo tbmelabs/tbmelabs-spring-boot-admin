@@ -23,6 +23,15 @@ export default (state: FlashMessageState = initialState,
     case ADD_FLASH_MESSAGE:
       const flashMessagePayload: FlashMessageType = ((action.payload: any): FlashMessageType);
 
+      if (!!flashMessagePayload.uid) {
+        const index = findIndex(state, {uid: flashMessagePayload.uid});
+
+        state = [
+          ...state.slice(0, index),
+          ...state.slice(index + 1)
+        ];
+      }
+
       return [
         ...state,
         {

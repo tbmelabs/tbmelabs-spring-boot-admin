@@ -16,15 +16,11 @@ import {
   signinUserFailedAction,
   signinUserSucceedAction
 } from '../../actions/authentication';
-import {
-  addFlashMessageAction,
-  removeFlashMessageAction
-} from '../../actions/flashmessage';
+import {addFlashMessageAction} from '../../actions/flashmessage';
 
 import {getTexts} from '../../selectors/language';
 
 import translateAuthenticationError from '../../../utils/translateAuthenticationError';
-import {getFlashMessageByUid} from "../../selectors/flashmessage";
 
 const SIGNIN_FAILED_ERROR_UID = shortid.generate();
 
@@ -56,13 +52,6 @@ export function* signinUserSucceedSaga(): Generator<any, void, any> {
 }
 
 function* signinUserFailed(action: Action) {
-  const existingFlashMessage = getFlashMessageByUid(getStore().getState(),
-      SIGNIN_FAILED_ERROR_UID);
-
-  if (existingFlashMessage !== null) {
-    yield put(removeFlashMessageAction(existingFlashMessage.id));
-  }
-
   yield put(addFlashMessageAction({
     uid: SIGNIN_FAILED_ERROR_UID,
     type: 'danger',
