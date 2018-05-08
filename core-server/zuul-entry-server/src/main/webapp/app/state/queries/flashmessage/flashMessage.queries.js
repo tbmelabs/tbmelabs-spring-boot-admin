@@ -12,16 +12,14 @@ import {
   type FlashMessageType
 } from '../../reducers/flashMessage.reducer';
 
-const store = getStore();
-
 export function getFlashMessages(): FlashMessageState {
-  return store.getState().flashMessages;
+  return getStore().getState().flashMessages;
 }
 
 export function addFlashMessage(flashMessage: FlashMessageType) {
-  store.dispatch(addFlashMessageAction(flashMessage));
+  getStore().dispatch(addFlashMessageAction(flashMessage));
 }
 
 export function removeFlashMessage(id: number) {
-  store.dispatch(removeFlashMessageAction(id));
+  getStore().dispatch(removeFlashMessageAction(id));
 }

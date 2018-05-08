@@ -2,8 +2,11 @@
 'use strict';
 
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-import {getTexts} from '../../state/queries/language';
+import {connect} from 'react-redux';
+
+import {getTexts} from '../../state/selectors/language';
 import {addFlashMessage} from '../../state/queries/flashmessage';
 
 import SigninJumbotron from '../../components/signin/SigninJumbotron';
@@ -15,7 +18,7 @@ require('bootstrap/dist/css/bootstrap.css');
 
 class App extends Component<App.propTypes> {
   render() {
-    const texts = getTexts('app');
+    const {texts} = this.props;
 
     return (
         <div className='container'>
@@ -34,4 +37,14 @@ class App extends Component<App.propTypes> {
   }
 }
 
-export default App;
+App.propTypes = {
+  texts: PropTypes.object.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    texts: getTexts(state)['app']
+  }
+}
+
+export default connect(mapStateToProps)(App);

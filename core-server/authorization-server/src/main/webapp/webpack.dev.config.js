@@ -17,9 +17,9 @@ const ENV = 'development';
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', APP],
+    app: APP,
     authorize: AUTHORIZE_APP,
-    signin: SIGNIN_APP,
+    signin: ['babel-polyfill', SIGNIN_APP],
     signup: SIGNUP_APP
   },
   output: {
@@ -94,7 +94,7 @@ module.exports = {
       template: 'templates/signin.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signup',
+      name: 'TBME TV | Signin',
       chunks: ['signup'],
       filename: '../signup.html',
       template: 'templates/signup.template.ejs'

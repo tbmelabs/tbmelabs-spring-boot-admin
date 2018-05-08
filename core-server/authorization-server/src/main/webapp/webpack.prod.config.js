@@ -97,7 +97,7 @@ module.exports = {
       template: 'templates/signin.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signup',
+      name: 'TBME TV | Signin',
       chunks: ['signup'],
       filename: '../signup.html',
       template: 'templates/signup.template.ejs'

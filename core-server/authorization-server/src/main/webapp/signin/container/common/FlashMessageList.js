@@ -2,23 +2,24 @@
 'use strict';
 
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
-import {
-  getFlashMessages,
-  removeFlashMessage
-} from '../../state/queries/flashmessage';
+import {connect} from 'react-redux';
+
+import {getFlashMessages} from '../../state/selectors/flashmessage';
+import {removeFlashMessage} from '../../state/queries/flashmessage';
 
 import FlashMessage from '../../../common/components/FlashMessage';
 
 class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
   render() {
-    const messages = getFlashMessages();
+    const {flashMessages} = this.props;
 
     return (
         <div>
           {
-            messages.map(message =>
-                <FlashMessage key={message.id} message={message}
+            flashMessages.map(flashMessage =>
+                <FlashMessage key={flashMessage.id} message={flashMessage}
                               deleteFlashMessage={removeFlashMessage}/>
             )
           }
@@ -27,4 +28,14 @@ class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
   }
 }
 
-export default FlashMessagesList;
+FlashMessagesList.propTypes = {
+  flashMessages: PropTypes.array.isRequired
+}
+
+function mapStateToProps(state) {
+  return {
+    flashMessages: getFlashMessages(state)
+  }
+}
+
+export default connect(mapStateToProps)(FlashMessagesList);

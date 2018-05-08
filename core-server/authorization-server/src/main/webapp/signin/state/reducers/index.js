@@ -2,8 +2,13 @@
 
 import {combineReducers} from 'redux';
 
-import flashMessages from './flashMessage.reducer';
-import language from './language.reducer';
+import flashMessages, {type FlashMessageState} from './flashMessage.reducer';
+import language, {type LanguageState} from './language.reducer';
+
+export type ApplicationState = {
+  flashMessages: FlashMessageState,
+  language: LanguageState
+};
 
 export default combineReducers({
   flashMessages, language

@@ -4,28 +4,18 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import translateAuthenticationError from '../../utils/translateAuthenticationError';
-
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
-
-import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
 type UsernamePasswordSigninFormState = {
   username: string,
   password: string,
-  errors: {
-    username: string;
-    password: string;
-    form: string
-  },
   isValid: boolean,
   isLoading: boolean
 }
@@ -41,11 +31,6 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
     this.state = {
       username: '',
       password: '',
-      errors: {
-        username: '',
-        password: '',
-        form: ''
-      },
       isValid: false,
       isLoading: false
     }
@@ -61,36 +46,22 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
   }
 
   validateForm() {
-    this.setState({isValid: this.state.username && this.state.password});
+    this.setState({isValid: !!this.state.username && !!this.state.password});
   }
 
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    this.setState({errors: {form: ''}}, () => {
-      this.props.signinUser(this.state).then(
-          response => window.location.replace(response.headers['no-redirect'])
-          , error => this.setState({
-            errors: {
-              form: translateAuthenticationError(error.response.data.message)
-            }
-          })
-      );
-    });
+    this.props.signinUser(this.state);
   }
 
   render() {
-    const {isValid, isLoading, errors} = this.state;
+    const {isValid, isLoading} = this.state;
     const {texts} = this.props;
 
     return (
         <Form onSubmit={this.onSubmit} horizontal>
-          <CollapsableAlert style='danger' title={texts.errors.title}
-                            message={errors.form} collapse={!!errors.form}/>
-
-          <FormGroup controlId='username'
-                     validationState={!!errors.username ? 'error' : null}>
-            <HelpBlock>{errors.username}</HelpBlock>
+          <FormGroup controlId='username'>
             <Col componentClass={ControlLabel} sm={4}>
               {texts.username_form_control}
             </Col>
@@ -102,9 +73,7 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
             </Col>
           </FormGroup>
 
-          <FormGroup controlId='password'
-                     validationState={!!errors.password ? 'error' : null}>
-            <HelpBlock>{errors.password}</HelpBlock>
+          <FormGroup controlId='password'>
             <Col componentClass={ControlLabel} sm={4}>
               {texts.password_form_control}
             </Col>

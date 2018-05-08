@@ -6,7 +6,7 @@ import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
 export type FlashMessageType = {
-  id: number;
+  id?: number;
   type: string;
   title: string;
   text: string;
