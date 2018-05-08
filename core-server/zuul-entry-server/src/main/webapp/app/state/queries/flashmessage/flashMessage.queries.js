@@ -7,14 +7,7 @@ import {
   removeFlashMessageAction,
 } from '../../actions/flashmessage';
 
-import {
-  type FlashMessageState,
-  type FlashMessageType
-} from '../../reducers/flashMessage.reducer';
-
-export function getFlashMessages(): FlashMessageState {
-  return getStore().getState().flashMessages;
-}
+import {type FlashMessageType} from '../../reducers/flashMessage.reducer';
 
 export function addFlashMessage(flashMessage: FlashMessageType) {
   getStore().dispatch(addFlashMessageAction(flashMessage));
