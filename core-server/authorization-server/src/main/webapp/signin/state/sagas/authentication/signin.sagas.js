@@ -46,16 +46,21 @@ export function* signinUserSaga(): Generator<any, void, any> {
   yield takeEvery(SIGNIN_USER, signinUser);
 }
 
+function* signinUserSucceed(action: { type: string, payload: string }) {
+  window.location.replace(action.payload);
+}
+
 export function* signinUserSucceedSaga(): Generator<any, void, any> {
-  yield takeLatest(SIGNIN_SUCCEED,
-      (action: Action) => window.location.replace(action.payload));
+  yield takeLatest(SIGNIN_SUCCEED, signinUserSucceed);
 }
 
 function* signinUserFailed(action: Action) {
+  const texts = getTexts(getStore().getState())['signin'];
+
   yield put(addFlashMessageAction({
     uid: SIGNIN_FAILED_ERROR_UID,
     type: 'danger',
-    title: getTexts(getStore().getState())['signin'].errors.title,
+    title: texts.errors.title,
     text: translateAuthenticationError(action.payload)
   }));
 }

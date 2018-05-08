@@ -2,7 +2,7 @@
 
 import type {ApplicationState} from '../../reducers';
 
-import type {FlashMessageType} from "../../reducers/flashMessage.reducer";
+import type {FlashMessageType} from '../../reducers/flashMessage.reducer';
 import {type FlashMessageState} from '../../reducers/flashMessage.reducer';
 
 export function getFlashMessages(state: ApplicationState): FlashMessageState {

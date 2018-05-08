@@ -5,46 +5,37 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import {deleteFlashMessage} from '../../../common/actions/flashMessageActions';
+import {getFlashMessages} from '../../state/selectors/flashmessage';
+import {removeFlashMessage} from '../../state/queries/flashmessage';
 
 import FlashMessage from '../../../common/components/FlashMessage';
 
 class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
   render() {
-    const {messages} = this.props;
-    const {deleteFlashMessage} = this.props.actions;
+    const {flashMessages} = this.props;
 
     return (
-      <div>
-        {
-          messages.map(message =>
-            <FlashMessage key={message.id} message={message} deleteFlashMessage={deleteFlashMessage}/>
-          )
-        }
-      </div>
+        <div>
+          {
+            flashMessages.map(flashMessage =>
+                <FlashMessage key={flashMessage.id} message={flashMessage}
+                              deleteFlashMessage={removeFlashMessage}/>
+            )
+          }
+        </div>
     );
   }
 }
 
 FlashMessagesList.propTypes = {
-  messages: PropTypes.array.isRequired,
-  actions: PropTypes.object.isRequired
+  flashMessages: PropTypes.array.isRequired
 }
 
 function mapStateToProps(state) {
   return {
-    messages: state.flashMessages
+    flashMessages: getFlashMessages(state)
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      deleteFlashMessage: bindActionCreators(deleteFlashMessage, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FlashMessagesList);
+export default connect(mapStateToProps)(FlashMessagesList);

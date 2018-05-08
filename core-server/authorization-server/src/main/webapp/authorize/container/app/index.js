@@ -10,10 +10,10 @@ require('bootstrap/dist/css/bootstrap.css');
 class App extends Component<App.propTypes> {
   render() {
     return (
-      <div className='container'>
-        <FlashMessageList/>
-        {this.props.children}
-      </div>
+        <div className='container'>
+          <FlashMessageList/>
+          {this.props.children}
+        </div>
     );
   }
 }

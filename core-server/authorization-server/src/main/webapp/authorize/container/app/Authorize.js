@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
-import loadScopesForClientId from '../../utils/loadScopesForClientId';
+import {getTexts} from '../../state/selectors/language';
+import {requestClientScopes} from '../../state/queries/client';
 
 import ClientApprovalForm from '../../components/authorize/ClientApprovalForm';
 
@@ -17,9 +18,10 @@ class Authorize extends Component<Authorize.propTypes> {
     const {texts} = this.props;
 
     return (
-      <div className='approval-form'>
-        <ClientApprovalForm getClientApprovals={loadScopesForClientId} texts={texts}/>
-      </div>
+        <div className='approval-form'>
+          <ClientApprovalForm getClientApprovals={requestClientScopes}
+                              texts={texts}/>
+        </div>
     );
   }
 }
@@ -30,7 +32,7 @@ Authorize.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    texts: state.language.texts.authorize
+    texts: getTexts(state)['authorize']
   }
 }
 

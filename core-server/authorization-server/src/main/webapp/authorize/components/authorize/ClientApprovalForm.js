@@ -38,12 +38,14 @@ class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, ClientA
   }
 
   componentWillMount() {
-    this.setState({clientId: parse(window.location.search.substr(1)).client_id}, () => {
-      this.props.getClientApprovals(this.state.clientId).then(
-        response => this.setState({scopes: response.data})
-        , error => this.setState({errors: {form: error.response.data.message}})
-      );
-    });
+    this.setState({clientId: parse(window.location.search.substr(1)).client_id},
+        () => {
+          this.props.getClientApprovals(this.state.clientId).then(
+              response => this.setState({scopes: response.data})
+              , error => this.setState(
+                  {errors: {form: error.response.data.message}})
+          );
+        });
   }
 
   render() {
@@ -51,44 +53,49 @@ class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, ClientA
     const {texts} = this.props;
 
     return (
-      <Form id='confirmationForm' name='confirmationForm' action='authorize' method='post' horizontal>
-        {/*TODO: ClientId is not the most beautiful thing here.. maybe add client name?*/}
-        <h1>{texts.approve_title_question.replace(CLIENT_PLACEHOLDER, '\'' + this.state.clientId + '\'')}</h1>
+        <Form id='confirmationForm' name='confirmationForm' action='authorize'
+              method='post' horizontal>
+          {/*TODO: ClientId is not the most beautiful thing here.. maybe add client name?*/}
+          <h1>{texts.approve_title_question.replace(CLIENT_PLACEHOLDER, '\''
+              + this.state.clientId + '\'')}</h1>
 
-        <CollapsableAlert style='danger' title={texts.scope_fetch_failed_alert_title}
-                          message={texts.scope_fetch_failed_alert_text}
-                          collapse={!!errors.form}/>
+          <CollapsableAlert style='danger'
+                            title={texts.scope_fetch_failed_alert_title}
+                            message={texts.scope_fetch_failed_alert_text}
+                            collapse={!!errors.form}/>
 
-        <FormControl name='user_oauth_approval' value='true' type='hidden'/>
+          <FormControl name='user_oauth_approval' value='true' type='hidden'/>
 
-        {
-          scopes.map(scope => {
-            return (
-              <FormGroup key={scope}>
-                <Col componentClass={ControlLabel} sm={4}>
-                  {scope}
-                </Col>
-                <Col sm={8}>
-                  <Radio name={'scope.' + scope} value='true' inline defaultChecked>
-                    {texts.toggle_approve}
-                  </Radio>
-                  <Radio name={'scope.' + scope} value='false' inline>
-                    {texts.toggle_deny}
-                  </Radio>
-                </Col>
-              </FormGroup>
-            );
-          })
-        }
+          {
+            scopes.map(scope => {
+              return (
+                  <FormGroup key={scope}>
+                    <Col componentClass={ControlLabel} sm={4}>
+                      {scope}
+                    </Col>
+                    <Col sm={8}>
+                      <Radio name={'scope.' + scope} value='true' inline
+                             defaultChecked>
+                        {texts.toggle_approve}
+                      </Radio>
+                      <Radio name={'scope.' + scope} value='false' inline>
+                        {texts.toggle_deny}
+                      </Radio>
+                    </Col>
+                  </FormGroup>
+              );
+            })
+          }
 
-        <FormGroup className='link-group'>
-          <Col smOffset={8} sm={4}>
-            <Button name='authorize' value='Authorize' type='submit' bsStyle='primary' className='pull-right'>
-              {texts.approve_button_text}
-            </Button>
-          </Col>
-        </FormGroup>
-      </Form>
+          <FormGroup className='link-group'>
+            <Col smOffset={8} sm={4}>
+              <Button name='authorize' value='Authorize' type='submit'
+                      bsStyle='primary' className='pull-right'>
+                {texts.approve_button_text}
+              </Button>
+            </Col>
+          </FormGroup>
+        </Form>
     );
   }
 }
