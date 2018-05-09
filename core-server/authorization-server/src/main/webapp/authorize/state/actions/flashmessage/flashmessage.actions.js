@@ -2,7 +2,7 @@
 
 import {Action} from 'redux';
 
-import {type FlashMessageType} from '../../reducers/flashMessage.reducer';
+import type {FlashMessageType} from '../../reducers/flashMessage.reducer';
 import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from './flashmessage.types';
 
 export function addFlashMessageAction(payload: FlashMessageType): Action {

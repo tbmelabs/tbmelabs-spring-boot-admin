@@ -4,8 +4,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {parse} from 'query-string';
-
 import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import Col from 'react-bootstrap/lib/Col';
@@ -14,55 +12,20 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import Radio from 'react-bootstrap/lib/Radio';
 import Button from 'react-bootstrap/lib/Button';
 
-import CollapsableAlert from '../../../common/components/CollapsableAlert';
-
 require('bootstrap/dist/css/bootstrap.css');
 
 const CLIENT_PLACEHOLDER = '[CLIENT_ID]';
 
-type ClientApprovalFormState = {
-  clientId: string,
-  scopes: string[],
-  errors: { form: string }
-};
-
-class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, ClientApprovalFormState> {
-  constructor(props: ClientApprovalForm.propTypes) {
-    super(props);
-
-    this.state = {
-      clientId: '',
-      scopes: [],
-      errors: {form: ''}
-    }
-  }
-
-  componentWillMount() {
-    this.setState({clientId: parse(window.location.search.substr(1)).client_id},
-        () => {
-          this.props.getClientApprovals(this.state.clientId).then(
-              response => this.setState({scopes: response.data})
-              , error => this.setState(
-                  {errors: {form: error.response.data.message}})
-          );
-        });
-  }
-
+class ClientApprovalForm extends Component<ClientApprovalForm.propTypes> {
   render() {
-    const {scopes, errors} = this.state;
-    const {texts} = this.props;
+    const {clientId, scopes, texts} = this.props;
 
     return (
         <Form id='confirmationForm' name='confirmationForm' action='authorize'
               method='post' horizontal>
           {/*TODO: ClientId is not the most beautiful thing here.. maybe add client name?*/}
           <h1>{texts.approve_title_question.replace(CLIENT_PLACEHOLDER, '\''
-              + this.state.clientId + '\'')}</h1>
-
-          <CollapsableAlert style='danger'
-                            title={texts.scope_fetch_failed_alert_title}
-                            message={texts.scope_fetch_failed_alert_text}
-                            collapse={!!errors.form}/>
+              + clientId + '\'')}</h1>
 
           <FormControl name='user_oauth_approval' value='true' type='hidden'/>
 
@@ -101,8 +64,9 @@ class ClientApprovalForm extends Component<ClientApprovalForm.propTypes, ClientA
 }
 
 ClientApprovalForm.propTypes = {
-  getClientApprovals: PropTypes.func.isRequired,
-  texts: PropTypes.object.isRequired
+  clientId: PropTypes.string.isRequired,
+  scopes: PropTypes.array.isRequired,
+  texts: PropTypes.array.isRequired
 }
 
 export default ClientApprovalForm;
