@@ -16,8 +16,8 @@ require('bootstrap/dist/css/bootstrap.css');
 type UsernamePasswordSigninFormState = {
   username: string,
   password: string,
-  isValid: boolean,
-  isLoading: boolean
+  hasChanged: boolean,
+  isValid: boolean
 }
 
 class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.propTypes, UsernamePasswordSigninFormState> {
@@ -31,8 +31,8 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
     this.state = {
       username: '',
       password: '',
-      isValid: false,
-      isLoading: false
+      hasChanged: false,
+      isValid: false
     }
 
     this.onChange = this.onChange.bind(this);
@@ -42,7 +42,8 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
-    this.setState({[event.target.name]: event.target.value}, this.validateForm);
+    this.setState({hasChanged: true, [event.target.name]: event.target.value},
+        this.validateForm);
   }
 
   validateForm() {
@@ -52,11 +53,13 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
+    this.setState({hasChanged: false});
+
     this.props.signinUser(this.state);
   }
 
   render() {
-    const {isValid, isLoading} = this.state;
+    const {isValid, hasChanged} = this.state;
     const {texts} = this.props;
 
     return (
@@ -92,10 +95,9 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
             </Col>
             <Col sm={3}>
               <Button type='submit' bsStyle='primary' className='pull-right'
-                      disabled={!isValid || isLoading}
-                      onClick={isValid && !isLoading ? this.onSubmit : null}>
-                {isLoading ? texts.signin_button_loading_text
-                    : texts.signin_button_text}
+                      disabled={!isValid && !hasChanged}
+                      onClick={isValid && hasChanged ? this.onSubmit : null}>
+                {texts.signin_button_text}
               </Button>
             </Col>
           </FormGroup>

@@ -1,4 +1,6 @@
--- update blacklisted_ips to store an ip range
+-----------------------------------
+--   BLACKLIST TO STORE RANGE   ---
+-----------------------------------
 ALTER TABLE blacklisted_ips
 	RENAME COLUMN ip TO start_ip;
 

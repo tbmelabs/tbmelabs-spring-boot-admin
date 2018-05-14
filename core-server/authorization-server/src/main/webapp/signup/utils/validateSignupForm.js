@@ -35,6 +35,5 @@ export default (control: string, data: userType & { errors: userType & { form: s
           });
         });
       });
-  }
+  };
 }
-

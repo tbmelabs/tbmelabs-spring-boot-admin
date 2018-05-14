@@ -18,10 +18,10 @@ const ENV = 'production';
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', APP],
+    app: APP,
     authorize: AUTHORIZE_APP,
-    signin: SIGNIN_APP,
-    signup: SIGNUP_APP
+    signin: ['babel-polyfill', SIGNIN_APP],
+    signup: ['babel-polyfill', SIGNUP_APP]
   },
   output: {
     path: BUILD_DIR,
@@ -81,8 +81,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       name: 'TBME TV | Account Management',
       chunks: ['app'],
-      filename: '../index.html',
-      templates: 'templates/index.template.ejs'
+      filename: '../index.js.html',
+      templates: 'templates/index.js.template.ejs'
     }),
     new HtmlWebpackPlugin({
       name: 'TBME TV | Authorize Application',

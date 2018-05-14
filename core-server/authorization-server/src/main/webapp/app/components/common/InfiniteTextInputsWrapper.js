@@ -53,7 +53,7 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
     const {values} = this.state;
 
-    // $FlowFixMe: Dirty string array index as number
+    // $FlowFixMe: Dirty string array index.js as number
     values[this.extractIndex(event.target.name)] = event.target.value;
 
     this.setState({values: values}, () => this.props.setConcatenatedValue(this.props.concatenateTextValues(this.state.values)));

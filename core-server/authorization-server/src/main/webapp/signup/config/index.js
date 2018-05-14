@@ -1,1 +1,3 @@
-export const DEBOUNCE_DELAY = 2500;
+// @flow
+
+export const DEBOUNCE_DELAY = 500;

@@ -24,10 +24,10 @@ import translateAuthenticationError from '../../../utils/translateAuthentication
 
 const SIGNIN_FAILED_ERROR_UID = shortid.generate();
 
-function* signinUser(credentials: { username: string, password: string }) {
+function* signinUser(action: { type: string, payload: { username: string, password: string } }) {
   var formData = new FormData();
-  formData.append('username', credentials.username);
-  formData.append('password', credentials.password);
+  formData.append('username', action.payload.username);
+  formData.append('password', action.payload.password);
 
   try {
     const response = yield axios.post('signin', formData, {
