@@ -28,3 +28,7 @@ ALTER TABLE ONLY client_has_scopes
 ALTER TABLE ONLY authentication_log
 	DROP CONSTRAINT authentication_log_user,
 	ADD CONSTRAINT authentication_log_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY email_confirmation_tokens
+	DROP CONSTRAINT email_confirmation_tokens_user,
+    ADD CONSTRAINT email_confirmation_tokens_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;

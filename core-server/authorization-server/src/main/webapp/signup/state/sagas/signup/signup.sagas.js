@@ -9,9 +9,9 @@ import shortid from 'shortid';
 
 import type userType from '../../../../common/types/userType';
 
-import getStore from '../../../../signin/getStore';
+import getStore from '../../../getStore';
 
-import {getTexts} from '../../../../signin/state/selectors/language';
+import {getTexts} from '../../selectors/language';
 import {
   SIGNUP_USER,
   SIGNUP_USER_FAILED,
@@ -19,7 +19,7 @@ import {
   signupUserFailedAction,
   signupUserSucceedAction
 } from '../../actions/signup';
-import {addFlashMessageAction} from '../../../../signin/state/actions/flashmessage';
+import {addFlashMessageAction} from '../../actions/flashmessage';
 
 const SIGNUP_FAILED_ERROR_UID = shortid.generate();
 
@@ -43,28 +43,21 @@ export function* signupUserSaga(): Generator<any, void, any> {
 }
 
 function* signupUserSucceed() {
-  const texts = getTexts(getStore().getState())['signup'];
-
-  yield put(addFlashMessageAction({
-    uid: SIGNUP_FAILED_ERROR_UID,
-    type: 'success',
-    title: texts.signup_succeed_title,
-    text: texts.signup_succeed_text
-  }));
+  window.location.replace('signin?signup_succeed')
 }
 
 export function* signupUserSucceedSaga(): Generator<any, void, any> {
   yield takeEvery(SIGNUP_USER_SUCCEED, signupUserSucceed);
 }
 
-function* signupUserFailed(action: Action) {
+function* signupUserFailed() {
   const texts = getTexts(getStore().getState())['signup'];
 
   yield put(addFlashMessageAction({
     uid: SIGNUP_FAILED_ERROR_UID,
     type: 'danger',
     title: texts.errors.title,
-    text: action.payload
+    text: texts.errors.signup_failed_message
   }));
 }
 

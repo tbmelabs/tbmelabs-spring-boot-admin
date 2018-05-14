@@ -1,15 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 
 @Service
 public class EmailConfirmationTokenService {
@@ -45,9 +45,10 @@ public class EmailConfirmationTokenService {
       throw new EmailConfirmationTokenNotFoundException(token);
     }
 
-    User user = emailConfirmationToken.get().getUser();
+    final User user = emailConfirmationToken.get().getUser();
     user.setIsEnabled(true);
 
+    // TODO: This is not affected?
     emailConfirmationTokenRepository.delete(emailConfirmationToken.get());
 
     LOGGER.debug("User " + user.getUsername() + " confirmed registration with token " + token);

@@ -135,6 +135,6 @@ public class UserSignupService {
       persistedUser.setIsEnabled(true);
     }
 
-    return persistedUser;
+    return userRepository.save(persistedUser);
   }
 }

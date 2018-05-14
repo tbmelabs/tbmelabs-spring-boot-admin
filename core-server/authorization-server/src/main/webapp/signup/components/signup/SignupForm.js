@@ -88,16 +88,6 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
     this.props.validateForm(event.target.name, this.state, errors => {
       if (this.isFormValid(errors)) {
         this.props.signupUser(this.state);
-        // TODO: Clear form after submit
-        // this.setState({
-        //   username: '',
-        //   email: '',
-        //   password: '',
-        //   confirmation: '',
-        //   errors: {},
-        //   isValid: false,
-        //   isLoading: false
-        // });
       } else {
         this.setState({errors: errors, isValid: false});
       }
