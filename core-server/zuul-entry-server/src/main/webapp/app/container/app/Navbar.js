@@ -34,7 +34,7 @@ Navbar.propTypes = {
 function mapStateToProps(state) {
   return {
     isAuthenticated: getIsAuthenticated(state),
-    texts: getTexts(state)['navbar']
+    texts: getTexts(state).navbar
   }
 }
 

@@ -31,7 +31,7 @@ export function* requestClientScopesSaga(): Generator<any, void, any> {
 }
 
 function* requestClientScopesFailed() {
-  const texts = getTexts(getStore().getState())['authorize'];
+  const texts = getTexts(getStore().getState()).authorize;
 
   yield put(addFlashMessageAction({
     type: 'danger',

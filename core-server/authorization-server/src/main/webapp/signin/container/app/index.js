@@ -7,27 +7,29 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
 import {getTexts} from '../../state/selectors/language';
-import {addFlashMessage} from '../../state/queries/flashmessage';
+
+import addConfirmationMessageIfRequested from '../../utils/messages/addConfirmationMessageIfRequested';
+import addGoodbyeMessageIfRequested from '../../utils/messages/addGoodbyeMessageIfRequested';
+import addSignupMessageIfRequested from '../../utils/messages/addSignupMessageIfRequested';
 
 import SigninJumbotron from '../../components/signin/SigninJumbotron';
-import GoodbyeMessage from '../../components/messages/GoodbyeMessage';
-import ConfirmationMessage from '../../components/messages/ConfirmationMessage';
 import FlashMessageList from '../common/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
 
 class App extends Component<App.propTypes> {
+  componentWillMount() {
+    addConfirmationMessageIfRequested();
+    addGoodbyeMessageIfRequested();
+    addSignupMessageIfRequested();
+  }
+
   render() {
     const {texts} = this.props;
 
     return (
         <div className='container'>
           <SigninJumbotron texts={texts}/>
-
-          <GoodbyeMessage addFlashMessage={addFlashMessage}
-                          texts={texts.flash_messages.logout}/>
-          <ConfirmationMessage addFlashMessage={addFlashMessage}
-                               texts={texts.flash_messages.confirmation}/>
 
           <FlashMessageList/>
 
@@ -43,7 +45,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    texts: getTexts(state)['app']
+    texts: getTexts(state).app
   }
 }
 

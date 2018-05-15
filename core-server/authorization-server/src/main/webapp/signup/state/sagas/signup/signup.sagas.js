@@ -51,7 +51,7 @@ export function* signupUserSucceedSaga(): Generator<any, void, any> {
 }
 
 function* signupUserFailed() {
-  const texts = getTexts(getStore().getState())['signup'];
+  const texts = getTexts(getStore().getState()).signup;
 
   yield put(addFlashMessageAction({
     uid: SIGNUP_FAILED_ERROR_UID,

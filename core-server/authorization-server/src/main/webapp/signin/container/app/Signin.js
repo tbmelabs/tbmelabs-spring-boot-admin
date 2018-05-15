@@ -36,7 +36,7 @@ Signin.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    texts: getTexts(state)['signin']
+    texts: getTexts(state).signin
   }
 }
 

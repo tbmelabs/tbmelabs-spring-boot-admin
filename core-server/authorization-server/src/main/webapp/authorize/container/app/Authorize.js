@@ -41,7 +41,7 @@ Authorize.propTypes = {
 function mapStateToProps(state) {
   return {
     client: getClient(state),
-    texts: getTexts(state)['authorize']
+    texts: getTexts(state).authorize
   }
 }
 

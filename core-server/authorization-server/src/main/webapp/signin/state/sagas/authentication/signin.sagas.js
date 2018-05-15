@@ -55,7 +55,7 @@ export function* signinUserSucceedSaga(): Generator<any, void, any> {
 }
 
 function* signinUserFailed(action: Action) {
-  const texts = getTexts(getStore().getState())['signin'];
+  const texts = getTexts(getStore().getState()).signin;
 
   yield put(addFlashMessageAction({
     uid: SIGNIN_FAILED_ERROR_UID,

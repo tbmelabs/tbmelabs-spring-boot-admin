@@ -4,13 +4,17 @@
     "jumbotron_title": "TBME Labs - Sign In",
     "jumbotron_text": "Sign in to your TBME Labs account using your username and password.",
     "flash_messages": {
+      "signup": {
+        "signup_succeed_alert_title": "Signup succeed: ",
+        "signup_succeed_alert_text": "Check your email to confirm your account now."
+      },
       "logout": {
         "logout_succeed_alert_title": "Logout succeed: ",
         "logout_succeed_alert_text": "We hope to see you again soon!"
       },
       "confirmation": {
         "confirmation_failed_alert_title": "E-Mail confirmation failed: ",
-        "confirmation_failed_alert_text": "Please try to sign up again or contact our support.",
+        "confirmation_failed_alert_text": "Please try again or contact our support.",
         "confirmation_succeed_alert_title": "E-Mail confirmation succeed: ",
         "confirmation_succeed_alert_text": "Start using all our TBME Labs applications now."
       }
