@@ -58,15 +58,8 @@ module.exports = {
       }
     ]
   },
+  mode: JSON.stringify(ENV),
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(ENV)
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common'
-    }),
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       name: 'TBME TV',

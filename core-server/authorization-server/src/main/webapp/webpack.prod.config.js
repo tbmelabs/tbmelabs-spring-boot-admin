@@ -68,20 +68,33 @@ module.exports = {
       }
     ]
   },
+  mode: JSON.stringify(ENV),
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          minChunks: 2,
+        },
+        vendor: {
+          test: NODE_DIR,
+          chunks: 'all',
+          name: 'vendor'
+        }
+      }
+    }
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(ENV)
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common'
-    }),
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       name: 'TBME TV | Account Management',
       chunks: ['app'],
-      filename: '../index.js.html',
+      filename: '../index.html',
       templates: 'templates/index.js.template.ejs'
     }),
     new HtmlWebpackPlugin({

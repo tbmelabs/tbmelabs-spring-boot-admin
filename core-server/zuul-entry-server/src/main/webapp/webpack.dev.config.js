@@ -56,12 +56,23 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(ENV)
+  mode: JSON.stringify(ENV),
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          minChunks: 2,
+        },
+        vendor: {
+          test: NODE_DIR,
+          chunks: 'all',
+          name: 'vendor'
+        }
       }
-    }),
+    }
+  },
+  plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     }),
