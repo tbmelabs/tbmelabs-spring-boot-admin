@@ -1,6 +1,8 @@
 // @flow
 
-import type {ApplicationState, FlashMessageState} from '../../reducers';
+import {type ApplicationState} from '../../reducers';
+
+import {type FlashMessageState} from '../../reducers/flashMessage.reducer';
 
 export function getFlashMessages(state: ApplicationState): FlashMessageState {
   return state.flashMessages;
