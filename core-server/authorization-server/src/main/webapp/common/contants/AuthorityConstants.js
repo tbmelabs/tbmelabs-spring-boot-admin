@@ -1,3 +1,4 @@
+// @flow
 'use strict';
 
 export const GANDALF = 'GANDALF';
@@ -22,4 +23,4 @@ const AUTHORITIES = [
   ANONYMOUS
 ];
 
-export default AUTHORITIES.slice(0);
+export default [...AUTHORITIES];

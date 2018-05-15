@@ -1,5 +1,10 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
+import ch.tbmelabs.tv.core.authorizationserver.security.filter.BlacklistedIpFilter;
+import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
+import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +17,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
-import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
-import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 @EnableWebSecurity
@@ -38,6 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
+
+  @Autowired
+  private BlacklistedIpFilter blacklistedIpFilter;
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -83,7 +87,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .permitAll()
       
       .and()
-        .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
+        .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class)
+        .addFilterBefore(blacklistedIpFilter, OAuth2BearerTokenAuthenticationFilter.class);
     // @formatter:on
   }
 }
