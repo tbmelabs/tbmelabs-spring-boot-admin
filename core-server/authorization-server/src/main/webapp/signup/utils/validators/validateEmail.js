@@ -3,7 +3,7 @@
 
 import axios, {CancelToken} from 'axios';
 
-import type userType from '../../../common/types/userType';
+import type userType from '../../../common/types/user.type';
 
 var cancelEmail;
 

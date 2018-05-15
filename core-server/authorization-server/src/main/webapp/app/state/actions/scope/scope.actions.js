@@ -8,17 +8,18 @@ import {
   SET_CLIENT_SCOPES
 } from './client.types';
 
-export function setClientScopesAction(scopes: string[]): Action {
+import type scopeType from '../../../../common/types/scope.type';
+
+export function setClientScopesAction(scopes: scopeType[]): Action {
   return {
     type: SET_CLIENT_SCOPES,
     payload: scopes
   }
 }
 
-export function requestClientScopesAction(clientId: string): Action {
+export function requestClientScopesAction(): Action {
   return {
-    type: REQUEST_CLIENT_SCOPES,
-    payload: clientId
+    type: REQUEST_CLIENT_SCOPES
   }
 }
 

@@ -1,13 +1,12 @@
 // @flow
 
-import {Action} from 'redux';
 import {put, takeEvery} from 'redux-saga/effects';
 
 import axios from 'axios/index';
 
 import shortid from 'shortid';
 
-import type userType from '../../../../common/types/userType';
+import type userType from '../../../../common/types/user.type';
 
 import getStore from '../../../getStore';
 

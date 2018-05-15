@@ -1,7 +1,7 @@
 // @flow
 'use strict';
 
-import type userType from '../../common/types/userType';
+import type userType from '../../common/types/user.type';
 
 import validateUsername from './validators/validateUsername';
 import validateEmail from './validators/validateEmail';

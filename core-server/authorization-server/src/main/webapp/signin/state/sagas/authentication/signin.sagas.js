@@ -1,6 +1,7 @@
 // @flow
 
 import {Action} from 'redux';
+
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 
 import axios from 'axios';

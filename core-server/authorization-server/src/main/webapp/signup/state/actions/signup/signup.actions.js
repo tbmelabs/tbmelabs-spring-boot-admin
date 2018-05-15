@@ -8,7 +8,7 @@ import {
   SIGNUP_USER_SUCCEED
 } from './signup.types';
 
-import type userType from '../../../../common/types/userType';
+import type userType from '../../../../common/types/user.type';
 
 export function signupUserAction(payload: userType): Action {
   return {

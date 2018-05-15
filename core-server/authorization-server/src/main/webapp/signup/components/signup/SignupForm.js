@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import type userType from '../../../common/types/userType';
+import type userType from '../../../common/types/user.type';
 
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';

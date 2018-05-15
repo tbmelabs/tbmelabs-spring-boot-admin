@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import type grantTypeType from '../../../common/types/grantTypeType';
-import type authorityType from '../../../common/types/authorityType';
-import type scopeType from '../../../common/types/scopeType';
+import type grantTypeType from '../../../common/types/grantType.type';
+import type authorityType from '../../../common/types/authority.type';
+import type scopeType from '../../../common/types/scope.type';
 
 import axios from 'axios';
 
