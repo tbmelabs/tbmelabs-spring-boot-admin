@@ -1,3 +1,3 @@
 // @flow
 
-export * from './client.selectors';
+export * from './scope.selectors';

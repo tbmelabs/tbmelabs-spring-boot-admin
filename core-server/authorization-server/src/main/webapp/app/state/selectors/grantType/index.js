@@ -1,3 +1,3 @@
 // @flow
 
-export * from './scope.selectors';
+export * from './grantType.selectors';

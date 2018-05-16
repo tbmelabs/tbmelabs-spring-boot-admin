@@ -1,8 +1,8 @@
 // @flow
 
 import {type ApplicationState} from '../../reducers';
-import type {GrantTypeState} from '../../reducers/grantType.reducer';
+import type {AuthorityState} from '../../reducers/authority.reducer';
 
-export function getClientGrantTypes(state: ApplicationState): GrantTypeState {
-  return state.grantTypes;
+export function getClientAuthorities(state: ApplicationState): AuthorityState {
+  return state.authorities;
 }

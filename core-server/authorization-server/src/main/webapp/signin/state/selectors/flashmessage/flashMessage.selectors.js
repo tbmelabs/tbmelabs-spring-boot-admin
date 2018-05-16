@@ -1,7 +1,6 @@
 // @flow
 
 import {type ApplicationState} from '../../reducers';
-
 import {
   type FlashMessageState,
   type FlashMessageType

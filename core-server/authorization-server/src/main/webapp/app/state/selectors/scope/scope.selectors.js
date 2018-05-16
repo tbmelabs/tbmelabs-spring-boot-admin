@@ -1,9 +1,8 @@
 // @flow
 
-import type {ApplicationState} from '../../reducers';
+import {type ApplicationState} from '../../reducers';
+import {type ScopeState} from '../../reducers/scope.reducer';
 
-import type {ClientState} from '../../reducers/client.reducer';
-
-export function getClients(state: ApplicationState): ClientState {
-  return state.clients;
+export function getClientScopes(state: ApplicationState): ScopeState {
+  return state.scopes;
 }

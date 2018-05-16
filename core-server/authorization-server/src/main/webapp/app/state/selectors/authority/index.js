@@ -1,3 +1,3 @@
 // @flow
 
-export * from './grantType.selectors';
+export * from './authority.selectors';
