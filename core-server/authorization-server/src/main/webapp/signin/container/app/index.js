@@ -41,12 +41,12 @@ class App extends Component<App.propTypes> {
 
 App.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     texts: getTexts(state).app
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);

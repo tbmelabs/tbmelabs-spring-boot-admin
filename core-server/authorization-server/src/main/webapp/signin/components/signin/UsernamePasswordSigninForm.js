@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import Form from 'react-bootstrap/lib/Form';
-import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -33,7 +33,7 @@ class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.pr
       password: '',
       hasChanged: false,
       isValid: false
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
@@ -110,6 +110,6 @@ UsernamePasswordSigninForm.propTypes = {
   signinUser: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 export default UsernamePasswordSigninForm;

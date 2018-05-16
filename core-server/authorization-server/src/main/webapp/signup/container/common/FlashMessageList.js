@@ -30,12 +30,12 @@ class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
 
 FlashMessagesList.propTypes = {
   messages: PropTypes.array.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     messages: getFlashMessages(state)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(FlashMessagesList);

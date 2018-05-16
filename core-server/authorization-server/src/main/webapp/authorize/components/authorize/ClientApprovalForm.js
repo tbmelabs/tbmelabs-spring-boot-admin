@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import Form from 'react-bootstrap/lib/Form';
-import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -67,6 +67,6 @@ ClientApprovalForm.propTypes = {
   clientId: PropTypes.string.isRequired,
   scopes: PropTypes.array.isRequired,
   texts: PropTypes.array.isRequired
-}
+};
 
 export default ClientApprovalForm;

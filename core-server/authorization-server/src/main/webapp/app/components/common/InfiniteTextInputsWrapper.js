@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import shortid from 'shortid';
 
-import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -34,7 +34,7 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
 
     this.state = {
       values: ['']
-    }
+    };
 
     this.onFocus = this.onFocus.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -56,7 +56,8 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
     // $FlowFixMe: Dirty string array index.js as number
     values[this.extractIndex(event.target.name)] = event.target.value;
 
-    this.setState({values: values}, () => this.props.setConcatenatedValue(this.props.concatenateTextValues(this.state.values)));
+    this.setState({values: values}, () => this.props.setConcatenatedValue(
+        this.props.concatenateTextValues(this.state.values)));
   }
 
   extractIndex(concatenatedKey: string) {
@@ -73,49 +74,56 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
   componentDidUpdate() {
     // TODO: Whoo.. this is dirty!
     let possibleFocusElement;
-    if ((possibleFocusElement = document.getElementsByName(nextFocus)[0]) != null) {
+    if ((possibleFocusElement = document.getElementsByName(nextFocus)[0])
+        != null) {
       possibleFocusElement.focus();
     }
   }
 
   render() {
     const {controlId, validationState, inputName} = this.props;
-    const continuousButtonRowOffset = this.state.values.length > 1 ? 'continuous-input-offset-top' : '';
+    const continuousButtonRowOffset = this.state.values.length > 1
+        ? 'continuous-input-offset-top' : '';
 
     const shortId = shortid.generate();
     nextFocus = shortId + SPLITTERATOR + lastFocused;
 
     return (
-      <FormGroup controlId={controlId} validationState={!!validationState ? 'error' : null}>
-        <HelpBlock>{validationState}</HelpBlock>
-        <Col componentClass={ControlLabel} sm={4}>{inputName}</Col>
+        <FormGroup controlId={controlId}
+                   validationState={!!validationState ? 'error' : null}>
+          <HelpBlock>{validationState}</HelpBlock>
+          <Col componentClass={ControlLabel} sm={4}>{inputName}</Col>
 
-        {this.state.values.map((value, index) => {
-          const id = shortId + SPLITTERATOR + index;
+          {this.state.values.map((value, index) => {
+            const id = shortId + SPLITTERATOR + index;
 
-          if (index === 0) {
+            if (index === 0) {
+              return (
+                  <Col key={id} sm={4}>
+                    <FormControl name={id} type='text' value={value}
+                                 onFocus={this.onFocus} onChange={this.onChange}
+                                 required/>
+                    <FormControl.Feedback/>
+                  </Col>
+              );
+            }
+
             return (
-              <Col key={id} sm={4}>
-                <FormControl name={id} type='text' value={value} onFocus={this.onFocus} onChange={this.onChange}
-                             required/>
-                <FormControl.Feedback/>
-              </Col>
+                <Col key={id} smOffset={4} sm={4}
+                     className='continuous-input-offset-top'>
+                  <FormControl name={id} type='text' value={value}
+                               onFocus={this.onFocus} onChange={this.onChange}
+                               required/>
+                  <FormControl.Feedback/>
+                </Col>
             );
-          }
+          })}
 
-          return (
-            <Col key={id} smOffset={4} sm={4} className='continuous-input-offset-top'>
-              <FormControl name={id} type='text' value={value} onFocus={this.onFocus} onChange={this.onChange}
-                           required/>
-              <FormControl.Feedback/>
-            </Col>
-          );
-        })}
-
-        <Col sm={2} className={continuousButtonRowOffset}>
-          <Button bsStyle='primary' className='pull-right' onClick={this.addNewEmptyValue}>+</Button>
-        </Col>
-      </FormGroup>
+          <Col sm={2} className={continuousButtonRowOffset}>
+            <Button bsStyle='primary' className='pull-right'
+                    onClick={this.addNewEmptyValue}>+</Button>
+          </Col>
+        </FormGroup>
     );
   }
 }
@@ -126,6 +134,6 @@ InfiniteTextInputsWrapper.propTypes = {
   inputName: PropTypes.string.isRequired,
   concatenateTextValues: PropTypes.func.isRequired,
   setConcatenatedValue: PropTypes.func.isRequired
-}
+};
 
 export default InfiniteTextInputsWrapper;

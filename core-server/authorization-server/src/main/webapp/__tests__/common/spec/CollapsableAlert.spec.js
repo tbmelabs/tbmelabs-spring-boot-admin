@@ -15,7 +15,7 @@ describe('CollapsableAlert', () => {
 
   it('renders success-message without problems', () => {
     var collapsableAlert = shallow(
-      <CollapsableAlert collapse={false} style={STYLE_SUCCESS}/>
+        <CollapsableAlert collapse={false} style={STYLE_SUCCESS}/>
     );
 
     expect(collapsableAlert).to.be.ok;
@@ -23,7 +23,7 @@ describe('CollapsableAlert', () => {
 
   it('renders info-message without problems', () => {
     var collapsableAlert = shallow(
-      <CollapsableAlert collapse={false} style={STYLE_INFO}/>
+        <CollapsableAlert collapse={false} style={STYLE_INFO}/>
     );
 
     expect(collapsableAlert).to.be.ok;
@@ -31,7 +31,7 @@ describe('CollapsableAlert', () => {
 
   it('renders danger-message without problems', () => {
     var collapsableAlert = shallow(
-      <CollapsableAlert collapse={false} style={STYLE_DANGER}/>
+        <CollapsableAlert collapse={false} style={STYLE_DANGER}/>
     );
 
     expect(collapsableAlert).to.be.ok;
@@ -39,7 +39,7 @@ describe('CollapsableAlert', () => {
 
   it('renders warning-message without problems', () => {
     var collapsableAlert = shallow(
-      <CollapsableAlert collapse={false} style={STYLE_WARNING}/>
+        <CollapsableAlert collapse={false} style={STYLE_WARNING}/>
     );
 
     expect(collapsableAlert).to.be.ok;

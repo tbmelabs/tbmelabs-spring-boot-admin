@@ -51,7 +51,8 @@ module.exports = (config) => {
         html: '../../../target/test-results/coverage'
       }
     },
-    reporters: ['progress', 'mocha', 'coverage-istanbul', 'karma-remap-istanbul'],
+    reporters: ['progress', 'mocha', 'coverage-istanbul',
+      'karma-remap-istanbul'],
     singleRun: !WATCH,
     webpack: {
       devtool: 'inline-source-map',

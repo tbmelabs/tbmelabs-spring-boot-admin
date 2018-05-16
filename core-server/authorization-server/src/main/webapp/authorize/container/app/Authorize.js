@@ -36,13 +36,13 @@ class Authorize extends Component<Authorize.propTypes> {
 Authorize.propTypes = {
   client: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     client: getClient(state),
     texts: getTexts(state).authorize
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Authorize);

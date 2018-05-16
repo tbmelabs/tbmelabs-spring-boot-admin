@@ -19,7 +19,7 @@ export default (state: ClientState = initialState,
       return {
         ...state,
         scopes: [...action.payload]
-      }
+      };
     default:
       return state;
   }

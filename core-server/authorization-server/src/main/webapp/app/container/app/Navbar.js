@@ -13,9 +13,9 @@ class Navbar extends Component<Navbar.propTypes> {
     const {profile, logout, texts} = this.props;
 
     return (
-      <div>
-        <Navigation account={profile} texts={texts}/>
-      </div>
+        <div>
+          <Navigation account={profile} texts={texts}/>
+        </div>
     );
   }
 }
@@ -23,13 +23,13 @@ class Navbar extends Component<Navbar.propTypes> {
 Navbar.propTypes = {
   profile: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     profile: state.profile,
     texts: state.language.texts.navbar
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Navbar);

@@ -32,12 +32,12 @@ class Signin extends Component<Signin.propTypes> {
 
 Signin.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     texts: getTexts(state).signin
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Signin);

@@ -5,7 +5,7 @@ const BUILD_DIR = path.resolve(__dirname, 'public');
 const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
 
-process.env.CHROMIUM_BIN = require('puppeteer').executablePath()
+process.env.CHROMIUM_BIN = require('puppeteer').executablePath();
 
 const WATCH = process.argv.indexOf('--watch') > -1;
 
@@ -51,7 +51,8 @@ module.exports = function (config) {
         html: '../../../target/test-results/coverage'
       }
     },
-    reporters: ['progress', 'mocha', 'coverage-istanbul', 'karma-remap-istanbul'],
+    reporters: ['progress', 'mocha', 'coverage-istanbul',
+      'karma-remap-istanbul'],
     singleRun: !WATCH,
     webpack: {
       devtool: 'inline-source-map',
@@ -72,10 +73,10 @@ module.exports = function (config) {
               ]
             }
           }, {
-            loader: "style-loader!css-loader",
+            loader: 'style-loader!css-loader',
             test: /\.css$/
           }, {
-            loader: "file-loader?publicPath=public/",
+            loader: 'file-loader?publicPath=public/',
             test: /\.(jpe?g|png|svg|ai)$/
           }, {
             loader: 'url-loader?limit=100000',

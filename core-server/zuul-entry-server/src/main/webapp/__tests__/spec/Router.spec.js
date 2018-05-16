@@ -10,7 +10,7 @@ import Router from '../../app/Router';
 describe('Router', () => {
   it('renders without problems', () => {
     const router = shallow(
-      <Router/>
+        <Router/>
     );
 
     expect(router).to.be.ok;

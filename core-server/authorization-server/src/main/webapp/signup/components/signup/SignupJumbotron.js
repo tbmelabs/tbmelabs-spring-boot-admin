@@ -13,16 +13,16 @@ class SignupJumbotron extends Component<SignupJumbotron.propTypes> {
     const {texts} = this.props;
 
     return (
-      <Jumbotron>
-        <h1>{texts.jumbotron_title}</h1>
-        <p>{texts.jumbotron_text}</p>
-      </Jumbotron>
+        <Jumbotron>
+          <h1>{texts.jumbotron_title}</h1>
+          <p>{texts.jumbotron_text}</p>
+        </Jumbotron>
     );
   }
 }
 
 SignupJumbotron.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 export default SignupJumbotron;

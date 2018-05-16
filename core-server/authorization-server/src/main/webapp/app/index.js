@@ -14,9 +14,9 @@ import Router from './Router';
 require('../common/styles/tbme-tv.css');
 
 render(
-  <Provider store={getStore()}>
-    <CookiesProvider>
-      <Router/>
-    </CookiesProvider>
-  </Provider>
-  , (document.getElementById('app'): any));
+    <Provider store={getStore()}>
+      <CookiesProvider>
+        <Router/>
+      </CookiesProvider>
+    </Provider>
+    , (document.getElementById('app'): any));

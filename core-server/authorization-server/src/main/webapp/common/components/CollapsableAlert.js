@@ -12,13 +12,13 @@ require('bootstrap/dist/css/bootstrap.css');
 class CollapsableAlert extends Component<CollapsableAlert.propTypes> {
   render() {
     return (
-      <Collapse in={this.props.collapse}>
-        <Alert bsStyle={this.props.style}>
-          <strong>{this.props.title}</strong>
-          {this.props.message}
-          {this.props.children}
-        </Alert>
-      </Collapse>
+        <Collapse in={this.props.collapse}>
+          <Alert bsStyle={this.props.style}>
+            <strong>{this.props.title}</strong>
+            {this.props.message}
+            {this.props.children}
+          </Alert>
+        </Collapse>
     );
   }
 }
@@ -28,6 +28,6 @@ CollapsableAlert.propTypes = {
   style: PropTypes.string.isRequired,
   title: PropTypes.string,
   message: PropTypes.string
-}
+};
 
 export default CollapsableAlert;

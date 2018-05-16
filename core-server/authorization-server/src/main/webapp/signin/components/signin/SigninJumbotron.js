@@ -23,6 +23,6 @@ class SigninJumbotron extends Component<SigninJumbotron.propTypes> {
 
 SigninJumbotron.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 export default SigninJumbotron;

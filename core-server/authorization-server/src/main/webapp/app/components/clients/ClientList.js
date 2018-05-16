@@ -19,20 +19,21 @@ class ClientList extends Component<ClientList.propTypes> {
 
     if (isEmpty(clients)) {
       return (
-        <CollapsableAlert collapse={true} style='warning' title={texts.errors.no_clients_alert_title}
-                          message={texts.errors.no_clients_alert_text}/>
+          <CollapsableAlert collapse={true} style='warning'
+                            title={texts.errors.no_clients_alert_title}
+                            message={texts.errors.no_clients_alert_text}/>
       );
     } else {
       return (
-        <div>
-          <Table hover responsive>
-            <thead>
-            {
-              Object.keys(clients[0]).forEach(key => <th>key</th>)
-            }
-            </thead>
-          </Table>
-        </div>
+          <div>
+            <Table hover responsive>
+              <thead>
+              {
+                Object.keys(clients[0]).forEach(key => <th>key</th>)
+              }
+              </thead>
+            </Table>
+          </div>
       );
     }
   }
@@ -41,6 +42,6 @@ class ClientList extends Component<ClientList.propTypes> {
 ClientList.propTypes = {
   clientPage: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 export default ClientList;

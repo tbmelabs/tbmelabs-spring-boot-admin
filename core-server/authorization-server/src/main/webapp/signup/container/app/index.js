@@ -16,23 +16,23 @@ class App extends Component<App.propTypes> {
     const {texts} = this.props;
 
     return (
-      <div className='container'>
-        <SignupJumbotron texts={texts}/>
-        <FlashMessageList/>
-        {this.props.children}
-      </div>
+        <div className='container'>
+          <SignupJumbotron texts={texts}/>
+          <FlashMessageList/>
+          {this.props.children}
+        </div>
     );
   }
 }
 
 App.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     texts: state.language.texts.app
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);

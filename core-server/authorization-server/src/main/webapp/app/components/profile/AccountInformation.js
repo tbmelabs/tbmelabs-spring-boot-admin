@@ -17,24 +17,27 @@ class AccountInformation extends Component<AccountInformation.propTypes> {
     const createdDate = new Date(account.created).toDateString();
 
     return (
-      <div>
-        <PageHeader>{texts.title}</PageHeader>
+        <div>
+          <PageHeader>{texts.title}</PageHeader>
 
-        <Grid>
-          <Row>
-            <Col className='text-heavy' sm={4} smOffset={2}>{texts.information.created}</Col>
-            <Col sm={4}>{createdDate ? createdDate : null}</Col>
-          </Row>
-          <Row>
-            <Col className='text-heavy' sm={4} smOffset={2}>{texts.information.username}</Col>
-            <Col sm={4}>{account.username}</Col>
-          </Row>
-          <Row>
-            <Col className='text-heavy' sm={4} smOffset={2}>{texts.information.email}</Col>
-            <Col sm={4}>{account.email}</Col>
-          </Row>
-        </Grid>
-      </div>
+          <Grid>
+            <Row>
+              <Col className='text-heavy' sm={4}
+                   smOffset={2}>{texts.information.created}</Col>
+              <Col sm={4}>{createdDate ? createdDate : null}</Col>
+            </Row>
+            <Row>
+              <Col className='text-heavy' sm={4}
+                   smOffset={2}>{texts.information.username}</Col>
+              <Col sm={4}>{account.username}</Col>
+            </Row>
+            <Row>
+              <Col className='text-heavy' sm={4}
+                   smOffset={2}>{texts.information.email}</Col>
+              <Col sm={4}>{account.email}</Col>
+            </Row>
+          </Grid>
+        </div>
     );
   }
 }
@@ -42,6 +45,6 @@ class AccountInformation extends Component<AccountInformation.propTypes> {
 AccountInformation.propTypes = {
   account: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired,
-}
+};
 
 export default AccountInformation;

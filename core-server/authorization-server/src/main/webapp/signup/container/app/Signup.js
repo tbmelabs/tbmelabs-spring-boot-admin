@@ -35,12 +35,12 @@ class Signup extends Component<Signup.propTypes> {
 
 Signup.propTypes = {
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
     texts: getTexts(state).signup
-  }
+  };
 }
 
 export default connect(mapStateToProps)(Signup);

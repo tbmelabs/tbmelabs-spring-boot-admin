@@ -24,7 +24,7 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
 
     this.state = {
       collapse: false
-    }
+    };
 
     this.onClick = this.onClick.bind(this);
   }
@@ -49,11 +49,12 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
     const {type, title, text} = this.props.message;
 
     return (
-      <TransitionGroup component='div'>
-        <CollapsableAlert collapse={collapse} style={type} title={title} message={' ' + text}>
-          <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
-        </CollapsableAlert>
-      </ TransitionGroup>
+        <TransitionGroup component='div'>
+          <CollapsableAlert collapse={collapse} style={type} title={title}
+                            message={' ' + text}>
+            <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
+          </CollapsableAlert>
+        </ TransitionGroup>
     );
   }
 }
@@ -61,6 +62,6 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
 FlashMessage.propTypes = {
   message: PropTypes.object.isRequired,
   deleteFlashMessage: PropTypes.func.isRequired
-}
+};
 
 export default FlashMessage;

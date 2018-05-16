@@ -12,7 +12,8 @@ describe('FlashMessage', () => {
 
   it('renders without problems', () => {
     var flashMessage = shallow(
-      <FlashMessage message={testMessage} deleteFlashMessage={() => 'delete'}/>
+        <FlashMessage message={testMessage}
+                      deleteFlashMessage={() => 'delete'}/>
     );
 
     expect(flashMessage).to.be.ok;
