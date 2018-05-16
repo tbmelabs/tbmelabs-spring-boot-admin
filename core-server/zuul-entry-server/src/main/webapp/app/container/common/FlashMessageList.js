@@ -30,7 +30,7 @@ class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
 
 FlashMessagesList.propTypes = {
   flashMessages: PropTypes.array.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {

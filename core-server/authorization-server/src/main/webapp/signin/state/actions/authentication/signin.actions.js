@@ -15,12 +15,12 @@ export function signinUserSucceedAction(payload: string): Action {
   return {
     type: SIGNIN_SUCCEED,
     payload: payload
-  }
+  };
 }
 
 export function signinUserFailedAction(payload: string): Action {
   return {
     type: SIGNIN_FAILED,
     payload: payload
-  }
+  };
 }
