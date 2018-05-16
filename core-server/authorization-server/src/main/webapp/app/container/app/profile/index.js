@@ -5,7 +5,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
+
+import {getTexts} from '../../../state/selectors/language';
+import {getProfile} from '../../../state/selectors/profile';
 
 import AccountInformation from '../../../components/profile/AccountInformation';
 
@@ -16,9 +18,9 @@ class Profile extends Component<Profile.propTypes> {
     const {profile, texts} = this.props;
 
     return (
-      <div>
-        <AccountInformation account={profile} texts={texts}/>
-      </div>
+        <div>
+          <AccountInformation account={profile} texts={texts}/>
+        </div>
     );
   }
 }
@@ -26,13 +28,13 @@ class Profile extends Component<Profile.propTypes> {
 Profile.propTypes = {
   profile: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
-    profile: state.profile,
-    texts: state.language.texts.profile
-  }
+    profile: getProfile(state),
+    texts: getTexts(state).profile
+  };
 }
 
 export default connect(mapStateToProps)(Profile);

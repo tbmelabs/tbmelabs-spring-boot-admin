@@ -4,7 +4,7 @@ import {parse} from 'query-string';
 
 import getStore from '../../getStore';
 
-import {getTexts} from '../../../signup/state/selectors/language';
+import {getTexts} from '../../state/selectors/language';
 import {addFlashMessage} from '../../state/queries/flashmessage';
 
 const texts = getTexts(getStore().getState()).app.flash_messages.signup;

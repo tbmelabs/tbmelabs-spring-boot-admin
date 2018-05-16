@@ -2,11 +2,11 @@
 
 import {put, takeEvery} from 'redux-saga/effects';
 
-import axios from 'axios/index';
+import axios, {AxiosResponse} from 'axios/index';
 
 import shortid from 'shortid';
 
-import type userType from '../../../../common/types/user.type';
+import {type userType} from '../../../../common/types/user.type';
 
 import getStore from '../../../getStore';
 
@@ -24,7 +24,7 @@ const SIGNUP_FAILED_ERROR_UID = shortid.generate();
 
 function* signupUser(action: { type: string, payload: userType }) {
   try {
-    const response = yield axios.post('signup/do-signup', {
+    const response: AxiosResponse = yield axios.post('signup/do-signup', {
       username: action.payload.username,
       email: action.payload.email,
       password: action.payload.password,
@@ -42,7 +42,7 @@ export function* signupUserSaga(): Generator<any, void, any> {
 }
 
 function* signupUserSucceed() {
-  window.location.replace('signin?signup_succeed')
+  window.location.replace('signin?signup_succeed');
 }
 
 export function* signupUserSucceedSaga(): Generator<any, void, any> {

@@ -3,12 +3,14 @@
 
 import axios, {CancelToken} from 'axios';
 
-import type userType from '../../../common/types/user.type';
+import {type userType} from '../../../common/types/user.type';
 
 var cancelConfirmation;
 
-export default (password: string, confirmation: string, errors: userType, callback: (errors: userType) => void) => {
-  if (password == undefined || password == '' || confirmation == undefined || confirmation == '') {
+export default (password: string, confirmation: string, errors: userType,
+    callback: (errors: userType) => void) => {
+  if (password == undefined || password == '' || confirmation == undefined
+      || confirmation == '') {
     delete errors.confirmation;
     return;
   }
@@ -17,19 +19,20 @@ export default (password: string, confirmation: string, errors: userType, callba
     cancelConfirmation();
   }
 
-  axios.post('signup/do-passwords-match', {password: password, confirmation: confirmation}, {
-    cancelToken: new CancelToken(function executor(c) {
-      cancelConfirmation = c;
-    })
-  }).then(
-    response => {
-      delete errors.confirmation;
-      callback(errors);
-    }, error => {
-      if (!axios.isCancel(error)) {
-        errors.confirmation = error.response.data.message;
+  axios.post('signup/do-passwords-match',
+      {password: password, confirmation: confirmation}, {
+        cancelToken: new CancelToken(function executor(c) {
+          cancelConfirmation = c;
+        })
+      }).then(
+      response => {
+        delete errors.confirmation;
         callback(errors);
+      }, error => {
+        if (!axios.isCancel(error)) {
+          errors.confirmation = error.response.data.message;
+          callback(errors);
+        }
       }
-    }
   );
 }

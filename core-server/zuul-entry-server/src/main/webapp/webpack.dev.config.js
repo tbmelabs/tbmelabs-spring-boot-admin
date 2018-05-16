@@ -77,7 +77,6 @@ module.exports = {
       maxChunks: 1
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV',
       filename: '../index.html',
       template: 'templates/index.template.ejs'
     })

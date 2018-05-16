@@ -1,8 +1,8 @@
 // @flow
 
-import {takeEvery} from 'redux-saga';
+import {put, takeEvery} from 'redux-saga/effects';
 
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 import {REST_API_BASE_PATH} from '../../../config';
 
@@ -12,10 +12,11 @@ import {
 } from '../../actions/scope';
 
 function* requestClientScopes() {
-  const response = yield axios.get(`${REST_API_BASE_PATH}/scopes`);
+  const response: AxiosResponse = yield axios.get(
+      `${REST_API_BASE_PATH}/scopes`);
   yield put(setClientScopesAction(response.data));
 }
 
-export function* requestClientScopesSaga() {
+export function* requestClientScopesSaga(): Generator<any, void, any> {
   yield takeEvery(REQUEST_CLIENT_SCOPES, requestClientScopes);
 }

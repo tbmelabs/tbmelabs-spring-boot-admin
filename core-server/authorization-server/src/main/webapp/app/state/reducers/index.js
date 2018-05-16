@@ -11,13 +11,13 @@ import profile, {type ProfileState} from './profile.reducer';
 import scopes, {type ScopeState} from './scope.reducer';
 
 export type ApplicationState = {
-  authorities: AuthorityState,
-  clients: ClientState,
-  flashMessages: FlashMessageState,
-  grantTypes: GrantTypeState,
-  language: LanguageState,
-  profile: ProfileState,
-  scopes: ScopeState
+  authorities: AuthorityState;
+  clients: ClientState;
+  flashMessages: FlashMessageState;
+  grantTypes: GrantTypeState;
+  language: LanguageState;
+  profile: ProfileState;
+  scopes: ScopeState;
 };
 
 export default combineReducers({

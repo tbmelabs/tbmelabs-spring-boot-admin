@@ -6,13 +6,13 @@ import axios, {AxiosResponse} from 'axios';
 
 import getStore from '../../../getStore';
 
+import {getTexts} from '../../selectors/language';
 import {
   REQUEST_CLIENT_SCOPES,
   REQUEST_CLIENT_SCOPES_FAILED,
   requestClientScopesFailedAction,
   setClientScopesAction
 } from '../../actions/client';
-import {getTexts} from '../../selectors/language';
 import {addFlashMessageAction} from '../../actions/flashmessage';
 
 function* requestClientScopes(clientId: string) {

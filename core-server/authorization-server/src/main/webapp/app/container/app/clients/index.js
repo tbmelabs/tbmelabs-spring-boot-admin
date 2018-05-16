@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import {loadClients} from '../../../actions/clientActions';
-import {addFlashMessage} from '../../../../common/actions/flashMessageActions';
+import {getClients} from '../../../state/selectors/client';
+import {getTexts} from '../../../state/selectors/language';
+import {requestClients} from '../../../state/queries/client';
 
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Row from 'react-bootstrap/lib/Row';
@@ -23,61 +23,41 @@ require('bootstrap/dist/css/bootstrap.css');
 
 class Clients extends Component <Clients.propTypes> {
   componentWillMount() {
-    const {texts} = this.props;
-    const {addFlashMessage, loadClients} = this.props.actions;
-
-    loadClients().then(
-      response => {
-      },
-      error => addFlashMessage({
-        type: 'danger',
-        title: texts.errors.clients_fetch_failed_alert_title,
-        text: texts.errors.clients_fetch_failed_alert_text
-      })
-    )
+    requestClients();
   }
 
   render() {
     const {clients, texts} = this.props;
 
     return (
-      <div>
-        <PageHeader>{texts.title}</PageHeader>
+        <div>
+          <PageHeader>{texts.title}</PageHeader>
 
-        <Row>
-          <Link to='/clients/new'>
-            <Button bsStyle='primary' className='pull-right'>{texts.create_client_button}</Button>
-          </Link>
-        </Row>
+          <Row>
+            <Link to='/clients/new'>
+              <Button bsStyle='primary'
+                      className='pull-right'>{texts.create_client_button}</Button>
+            </Link>
+          </Row>
 
-        <Row>
-          <ClientList clientPage={clients} texts={texts}/>
-        </Row>
-      </div>
+          <Row>
+            <ClientList clientPage={clients} texts={texts}/>
+          </Row>
+        </div>
     );
   }
 }
 
 Clients.propTypes = {
-  actions: PropTypes.object.isRequired,
   clients: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
-    clients: state.clients,
-    texts: state.language.texts.clients
-  }
+    clients: getClients(state),
+    texts: getTexts(state).clients
+  };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      addFlashMessage: bindActionCreators(addFlashMessage, dispatch),
-      loadClients: bindActionCreators(loadClients, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Clients);
+export default connect(mapStateToProps)(Clients);

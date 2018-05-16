@@ -14,10 +14,10 @@ import Button from 'react-bootstrap/lib/Button';
 require('bootstrap/dist/css/bootstrap.css');
 
 type UsernamePasswordSigninFormState = {
-  username: string,
-  password: string,
-  hasChanged: boolean,
-  isValid: boolean
+  username: string;
+  password: string;
+  hasChanged: boolean;
+  isValid: boolean;
 }
 
 class UsernamePasswordSigninForm extends Component<UsernamePasswordSigninForm.propTypes, UsernamePasswordSigninFormState> {

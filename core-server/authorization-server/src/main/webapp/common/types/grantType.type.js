@@ -1,10 +1,8 @@
 // @flow
 
-type grantTypeType = {
+export type grantTypeType = {
   id?: number;
   created?: number;
   lastUpdated?: number;
   name: string;
 }
-
-export default grantTypeType;

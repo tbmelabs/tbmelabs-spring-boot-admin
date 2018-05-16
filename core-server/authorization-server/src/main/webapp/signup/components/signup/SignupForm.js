@@ -4,13 +4,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import type userType from '../../../common/types/user.type';
+import {type userType} from '../../../common/types/user.type';
 
 import isEmpty from 'lodash/isEmpty';
 import debounce from 'lodash/debounce';
 
 import Form from 'react-bootstrap/lib/Form';
-import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -22,11 +22,11 @@ import {DEBOUNCE_DELAY} from '../../config';
 require('bootstrap/dist/css/bootstrap.css');
 
 type SignupFormState = {
-  ...userType,
-  target: HTMLInputElement,
-  errors: { ...userType },
-  hasChanged: boolean,
-  isValid: boolean
+  ...userType;
+  target: HTMLInputElement;
+  errors: { ...userType };
+  hasChanged: boolean;
+  isValid: boolean;
 }
 
 class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
@@ -53,7 +53,7 @@ class SignupForm extends Component<SignupForm.propTypes, SignupFormState> {
       },
       hasChanged: false,
       isValid: false
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.isFormValid = this.isFormValid.bind(this);
@@ -182,6 +182,6 @@ SignupForm.propTypes = {
   signupUser: PropTypes.func.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 export default SignupForm;

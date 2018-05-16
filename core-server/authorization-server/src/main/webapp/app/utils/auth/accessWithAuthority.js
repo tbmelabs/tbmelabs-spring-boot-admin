@@ -5,13 +5,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 import isEmpty from 'lodash/isEmpty';
 
-import {addFlashMessage} from '../../../common/actions/flashMessageActions';
-
 import hasAuthority from './hasAuthority';
+import {addFlashMessage} from '../../state/queries/flashmessage';
 
 // TODO: ComposedComponent cannot be "Component" because of missing 1-2 type arguments
 export default (ComposedComponent: any, authority: string) => {
@@ -44,7 +42,6 @@ export default (ComposedComponent: any, authority: string) => {
 
     displayWarningMessage(props: AccessWithAuthority.propTypes) {
       const {texts} = props;
-      const {addFlashMessage} = props.actions;
 
       addFlashMessage({
         type: 'warning',
@@ -62,35 +59,26 @@ export default (ComposedComponent: any, authority: string) => {
       }
 
       return (
-        <ComposedComponent {...this.props} />
+          <ComposedComponent {...this.props} />
       );
     }
   }
 
   AccessWithAuthority.propTypes = {
-    actions: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired,
     texts: PropTypes.object.isRequired
-  }
+  };
 
   AccessWithAuthority.contextTypes = {
     router: PropTypes.object.isRequired
-  }
+  };
 
   function mapStateToProps(state) {
     return {
       profile: state.profile,
       texts: state.language.texts.app
-    }
+    };
   }
 
-  function mapDispatchToProps(dispatch) {
-    return {
-      actions: {
-        addFlashMessage: bindActionCreators(addFlashMessage, dispatch)
-      }
-    }
-  }
-
-  return connect(mapStateToProps, mapDispatchToProps)(AccessWithAuthority);
+  return connect(mapStateToProps)(AccessWithAuthority);
 }

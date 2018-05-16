@@ -18,7 +18,7 @@ const ENV = 'production';
 
 module.exports = {
   entry: {
-    app: APP,
+    app: ['babel-polyfill', APP],
     authorize: AUTHORIZE_APP,
     signin: ['babel-polyfill', SIGNIN_APP],
     signup: ['babel-polyfill', SIGNUP_APP]
@@ -92,25 +92,21 @@ module.exports = {
     }),
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Account Management',
       chunks: ['app'],
       filename: '../index.html',
-      templates: 'templates/index.js.template.ejs'
+      template: 'templates/index.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Authorize Application',
       chunks: ['authorize'],
       filename: '../authorize.html',
       template: 'templates/authorize.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signin',
       chunks: ['signin'],
       filename: '../signin.html',
       template: 'templates/signin.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signin',
       chunks: ['signup'],
       filename: '../signup.html',
       template: 'templates/signup.template.ejs'

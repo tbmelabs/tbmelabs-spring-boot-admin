@@ -3,11 +3,12 @@
 
 import axios, {CancelToken} from 'axios';
 
-import type userType from '../../../common/types/user.type';
+import {type userType} from '../../../common/types/user.type';
 
 var cancelPassword;
 
-export default (password: string, errors: userType, callback: (errors: userType) => void) => {
+export default (password: string, errors: userType,
+    callback: (errors: userType) => void) => {
   if (password == undefined || password == '') {
     delete errors.password;
     return;
@@ -22,14 +23,14 @@ export default (password: string, errors: userType, callback: (errors: userType)
       cancelPassword = c;
     })
   }).then(
-    response => {
-      delete errors.password;
-      callback(errors);
-    }, error => {
-      if (!axios.isCancel(error)) {
-        errors.password = error.response.data.message;
+      response => {
+        delete errors.password;
         callback(errors);
+      }, error => {
+        if (!axios.isCancel(error)) {
+          errors.password = error.response.data.message;
+          callback(errors);
+        }
       }
-    }
   );
 }

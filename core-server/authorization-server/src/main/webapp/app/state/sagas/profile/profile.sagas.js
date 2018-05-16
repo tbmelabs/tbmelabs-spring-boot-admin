@@ -1,16 +1,17 @@
 // @flow
 
-import {takeEvery} from 'redux-saga';
+import {put, takeEvery} from 'redux-saga/effects';
 
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 import {REQUEST_PROFILE, setProfileAction} from '../../actions/profile';
+import type {profileType} from '../../../../common/types/profile.type';
 
 function* requestProfile() {
-  const response = yield axios.get('profile');
-  yield put(setProfileAction(response.data));
+  const response: AxiosResponse = yield axios.get('profile');
+  yield put(setProfileAction((response.data: profileType)));
 }
 
-export function* requestProfileSaga() {
+export function* requestProfileSaga(): Generator<any, void, any> {
   yield takeEvery(REQUEST_PROFILE, requestProfile);
 }

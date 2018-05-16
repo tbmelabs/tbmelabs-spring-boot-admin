@@ -2,14 +2,14 @@
 
 import {SET_PROFILE} from '../actions/profile';
 
-import type profileType from '../../../common/types/profile.type';
+import {type profileType} from '../../../common/types/profile.type';
 
 const initialState: ProfileState = {};
 
-export type ProfileState = profileType;
+export type ProfileState = { ...profileType };
 
 export default (state: ProfileState = initialState,
-    action = {type: string, payload: profileType}): ProfileState => {
+    action: { type: string, payload: ProfileState }): ProfileState => {
   switch (action.type) {
     case SET_PROFILE:
       return action.payload;

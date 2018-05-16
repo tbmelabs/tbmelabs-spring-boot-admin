@@ -13,8 +13,8 @@ import CollapsableAlert from './CollapsableAlert';
 require('bootstrap/dist/css/bootstrap.css');
 
 type FlashMessageState = {
-  collapse: boolean
-}
+  collapse: boolean;
+};
 
 class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> {
   onClick: () => void;

@@ -1,10 +1,10 @@
 // @flow
 
-import type scopeType from './scope.type';
-import type authorityType from './authority.type';
-import type grantTypeType from './grantType.type';
+import {type scopeType} from './scope.type';
+import {type authorityType} from './authority.type';
+import {type grantTypeType} from './grantType.type';
 
-type clientType = {
+export type clientType = {
   id?: number;
   created?: number;
   lastUpdated?: number;
@@ -18,5 +18,3 @@ type clientType = {
   grantedAuthorities: authorityType[];
   scopes: scopeType[];
 }
-
-export default clientType;

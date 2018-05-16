@@ -4,12 +4,13 @@ import {Action} from 'redux';
 
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 import shortid from 'shortid';
 
 import getStore from '../../../getStore';
 
+import {getTexts} from '../../selectors/language';
 import {
   SIGNIN_FAILED,
   SIGNIN_SUCCEED,
@@ -18,8 +19,6 @@ import {
   signinUserSucceedAction
 } from '../../actions/authentication';
 import {addFlashMessageAction} from '../../actions/flashmessage';
-
-import {getTexts} from '../../selectors/language';
 
 import translateAuthenticationError from '../../../utils/translateAuthenticationError';
 
@@ -31,7 +30,7 @@ function* signinUser(action: { type: string, payload: { username: string, passwo
   formData.append('password', action.payload.password);
 
   try {
-    const response = yield axios.post('signin', formData, {
+    const response: AxiosResponse = yield axios.post('signin', formData, {
       headers: {
         'no-redirect': ''
       }

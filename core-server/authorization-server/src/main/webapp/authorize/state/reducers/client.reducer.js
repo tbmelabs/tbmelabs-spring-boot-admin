@@ -3,8 +3,8 @@
 import {SET_CLIENT_SCOPES} from '../actions/client/client.types';
 
 export type ClientState = {
-  clientId: string,
-  scopes: string[]
+  clientId: string;
+  scopes: string[];
 };
 
 const initialState: ClientState = {

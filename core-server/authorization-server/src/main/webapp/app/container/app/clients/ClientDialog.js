@@ -5,46 +5,38 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import {saveClient} from '../../../actions/clientActions';
-import {addFlashMessage} from '../../../../common/actions/flashMessageActions';
+import {getTexts} from '../../../state/selectors/language';
+import {requestClientGrantTypes} from '../../../state/queries/grantType';
+import {requestClientAuthorities} from '../../../state/queries/authority';
+import {requestClientScopes} from '../../../state/queries/scope';
+import {addFlashMessage} from '../../../state/queries/flashmessage';
+import {saveClient} from '../../../state/queries/client';
 
 import EditClientModal from '../../../components/clients/EditClientModal';
-import {loadGrantTypes} from '../../../actions/grantTypeActions';
-import {loadAuthorities} from '../../../actions/authorityActions';
-import {loadScopes} from '../../../actions/scopeActions';
 
 class ClientDialog extends Component<ClientDialog.propTypes> {
   render() {
     const {texts} = this.props;
-    const {addFlashMessage, saveClient} = this.props.actions;
 
     return (
-      <EditClientModal loadGrantTypes={loadGrantTypes} loadAuthorities={loadAuthorities} loadScopes={loadScopes}
-                       addFlashMessage={addFlashMessage} saveClient={saveClient} texts={texts.modal}/>
+        <EditClientModal loadGrantTypes={requestClientGrantTypes}
+                         loadAuthorities={requestClientAuthorities}
+                         loadScopes={requestClientScopes}
+                         addFlashMessage={addFlashMessage}
+                         saveClient={saveClient} texts={texts.modal}/>
     );
   }
 }
 
 ClientDialog.propTypes = {
-  actions: PropTypes.object.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 function mapStateToProps(state) {
   return {
-    texts: state.language.texts.clients
-  }
+    texts: getTexts(state).clients
+  };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      addFlashMessage: bindActionCreators(addFlashMessage, dispatch),
-      saveClient: bindActionCreators(saveClient, dispatch)
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClientDialog);
+export default connect(mapStateToProps)(ClientDialog);

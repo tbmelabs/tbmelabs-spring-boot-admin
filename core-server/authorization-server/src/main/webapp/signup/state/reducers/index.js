@@ -6,8 +6,8 @@ import flashMessages, {type FlashMessageState} from './flashMessage.reducer';
 import language, {type LanguageState} from './language.reducer';
 
 export type ApplicationState = {
-  flashMessages: FlashMessageState,
-  language: LanguageState
+  flashMessages: FlashMessageState;
+  language: LanguageState;
 };
 
 export default combineReducers({

@@ -17,7 +17,7 @@ const ENV = 'development';
 
 module.exports = {
   entry: {
-    app: APP,
+    app: ['babel-polyfill', APP],
     authorize: AUTHORIZE_APP,
     signin: ['babel-polyfill', SIGNIN_APP],
     signup: ['babel-polyfill', SIGNUP_APP]
@@ -72,25 +72,21 @@ module.exports = {
       maxChunks: 1
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Account Management',
       chunks: ['app'],
-      filename: '../index.js.html',
-      templates: 'templates/index.js.template.ejs'
+      filename: '../index.html',
+      template: 'templates/index.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Authorize Application',
       chunks: ['authorize'],
       filename: '../authorize.html',
       template: 'templates/authorize.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signin',
       chunks: ['signin'],
       filename: '../signin.html',
       template: 'templates/signin.template.ejs'
     }),
     new HtmlWebpackPlugin({
-      name: 'TBME TV | Signin',
       chunks: ['signup'],
       filename: '../signup.html',
       template: 'templates/signup.template.ejs'

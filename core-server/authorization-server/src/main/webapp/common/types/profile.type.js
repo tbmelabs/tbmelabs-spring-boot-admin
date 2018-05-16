@@ -1,8 +1,8 @@
 // @flow
 
-import type roleType from './role.type';
+import {type roleType} from './role.type';
 
-type profileType = {
+export type profileType = {
   id?: number;
   created?: number;
   lastUpdated?: number;
@@ -12,5 +12,3 @@ type profileType = {
   isBlocked: boolean;
   roles: roleType[];
 }
-
-export default profileType;

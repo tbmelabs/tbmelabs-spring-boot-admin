@@ -7,9 +7,9 @@ import language, {type LanguageState} from './language.reducer';
 import client, {type ClientState} from './client.reducer';
 
 export type ApplicationState = {
-  client: ClientState,
-  flashMessages: FlashMessageState,
-  language: LanguageState
+  client: ClientState;
+  flashMessages: FlashMessageState;
+  language: LanguageState;
 };
 
 export default combineReducers({

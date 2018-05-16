@@ -60,9 +60,11 @@
       <resource>
         <directory>src/main/webapp</directory>
         <excludes>
+          <exclude>.*</exclude>
           <exclude>__tests__/**</exclude>
           <exclude>app/**</exclude>
           <exclude>node_modules/**</exclude>
+          <exclude>templates/**</exclude>
           <exclude>*.json</exclude>
           <exclude>*.js</exclude>
         </excludes>

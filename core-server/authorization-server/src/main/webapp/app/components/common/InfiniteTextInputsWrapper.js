@@ -21,8 +21,8 @@ let lastFocused = 0;
 let nextFocus = '';
 
 type InfiniteTextInputsWrapperState = {
-  values: string[]
-}
+  values: string[];
+};
 
 class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.propTypes, InfiniteTextInputsWrapperState> {
   onFocus: () => void;

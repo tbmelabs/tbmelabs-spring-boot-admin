@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import type grantTypeType from '../../../common/types/grantType.type';
-import type authorityType from '../../../common/types/authority.type';
-import type scopeType from '../../../common/types/scope.type';
+import {type grantTypeType} from '../../../common/types/grantType.type';
+import {type authorityType} from '../../../common/types/authority.type';
+import {type scopeType} from '../../../common/types/scope.type';
 
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOp
 
 import Modal from 'react-bootstrap/lib/Modal';
 import Form from 'react-bootstrap/lib/Form';
-import FormGroup from 'react-bootstrap/lib/FormGroup'
+import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import InputGroup from 'react-bootstrap/lib/InputGroup';
@@ -31,31 +31,31 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 require('bootstrap/dist/css/bootstrap.css');
 
 type EditClientModalState = {
-  id: ?number,
-  clientId: string,
-  secret: string,
-  accessTokenValidity: string,
-  refreshTokenValidity: string,
-  redirectUri: string,
-  grantTypes: grantTypeType[],
-  allGrantTypes: grantTypeType[],
-  authorities: authorityType[],
-  allAuthorities: authorityType[],
-  scopes: scopeType[],
-  allScopes: scopeType[],
+  id?: number;
+  clientId: string;
+  secret: string;
+  accessTokenValidity: string;
+  refreshTokenValidity: string;
+  redirectUri: string;
+  grantTypes: grantTypeType[];
+  allGrantTypes: grantTypeType[];
+  authorities: authorityType[];
+  allAuthorities: authorityType[];
+  scopes: scopeType[];
+  allScopes: scopeType[];
   errors: {
-    clientId: string,
-    secret: string,
-    accessTokenValidity: string,
-    refreshTokenValidity: string,
-    redirectUri: string,
-    grantTypes: string,
-    authorities: string,
-    scopes: string,
+    clientId: string;
+    secret: string;
+    accessTokenValidity: string;
+    refreshTokenValidity: string;
+    redirectUri: string;
+    grantTypes: string;
+    authorities: string;
+    scopes: string;
     form: string
-  },
-  isValid: boolean,
-  isLoading: boolean
+  };
+  isValid: boolean;
+  isLoading: boolean;
 }
 
 class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
@@ -69,7 +69,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     super(props);
 
     this.state = {
-      id: null,
       clientId: '',
       secret: '',
       accessTokenValidity: '',
@@ -94,7 +93,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       },
       isValid: false,
       isLoading: false
-    }
+    };
 
     this.onChange = this.onChange.bind(this);
     this.handleMultipleSelected = this.handleMultipleSelected.bind(this);
@@ -104,19 +103,22 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   componentWillMount() {
-    axios.all([this.props.loadGrantTypes(), this.props.loadAuthorities(), this.props.loadScopes()]).then(
-      axios.spread((grantTypes, authorities, scopes) => this.setState({
-        allGrantTypes: grantTypes.data.content,
-        allAuthorities: authorities.data.content,
-        allScopes: scopes.data.content
-      }))).catch(error => this.setState({errors: {form: error.response.data.message}}));
+    axios.all([this.props.loadGrantTypes(), this.props.loadAuthorities(),
+      this.props.loadScopes()]).then(
+        axios.spread((grantTypes, authorities, scopes) => this.setState({
+          allGrantTypes: grantTypes.data.content,
+          allAuthorities: authorities.data.content,
+          allScopes: scopes.data.content
+        }))).catch(
+        error => this.setState({errors: {form: error.response.data.message}}));
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
     if (event.target.type === 'select-multiple') {
       this.handleMultipleSelected(event.target);
     } else {
-      this.setState({[event.target.name]: event.target.value}, this.validateForm);
+      this.setState({[event.target.name]: event.target.value},
+          this.validateForm);
     }
   }
 
@@ -125,19 +127,24 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     switch (eventTarget.name) {
       case 'grantTypes':
-        extractMultiSelectedOptions(eventTarget, allGrantTypes, (selectedGrantTypes) => {
-          this.setState({grantTypes: selectedGrantTypes}, this.validateForm);
-        });
+        extractMultiSelectedOptions(eventTarget, allGrantTypes,
+            (selectedGrantTypes) => {
+              this.setState({grantTypes: selectedGrantTypes},
+                  this.validateForm);
+            });
         break;
       case 'authorities':
-        extractMultiSelectedOptions(eventTarget, allAuthorities, (selectedAuthorities) => {
-          this.setState({authorities: selectedAuthorities}, this.validateForm);
-        });
+        extractMultiSelectedOptions(eventTarget, allAuthorities,
+            (selectedAuthorities) => {
+              this.setState({authorities: selectedAuthorities},
+                  this.validateForm);
+            });
         break;
       case 'scopes':
-        extractMultiSelectedOptions(eventTarget, allScopes, (selectedScopes) => {
-          this.setState({scopes: selectedScopes}, this.validateForm);
-        });
+        extractMultiSelectedOptions(eventTarget, allScopes,
+            (selectedScopes) => {
+              this.setState({scopes: selectedScopes}, this.validateForm);
+            });
         break;
     }
   }
@@ -150,8 +157,12 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
 
     this.setState({
-      isValid: isEmpty(errors.clientId) && isEmpty(errors.secret) && isEmpty(errors.accessTokenValidity) && isEmpty(errors.refreshTokenValidity) && isEmpty(errors.redirectUri)
-      && !!clientId && !!secret && !!accessTokenValidity && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes) && !isEmpty(authorities) && !isEmpty(scopes)
+      isValid: isEmpty(errors.clientId) && isEmpty(errors.secret) && isEmpty(
+          errors.accessTokenValidity) && isEmpty(errors.refreshTokenValidity)
+      && isEmpty(errors.redirectUri)
+      && !!clientId && !!secret && !!accessTokenValidity
+      && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes)
+      && !isEmpty(authorities) && !isEmpty(scopes)
     });
   }
 
@@ -172,18 +183,20 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         authorities: authorities,
         scopes: scopes
       }).then(
-        response => {
-          this.props.addFlashMessage({
-            type: 'success',
-            title: texts.client_added_title,
-            text: texts.client_added_text
-          });
+          response => {
+            this.props.addFlashMessage({
+              type: 'success',
+              title: texts.client_added_title,
+              text: texts.client_added_text
+            });
 
-          this.context.router.history.goBack();
-        }, error => this.setState({errors: {form: error.response.data.message}})
-      )
+            this.context.router.history.goBack();
+          },
+          error => this.setState({errors: {form: error.response.data.message}})
+      );
     } else {
-      this.setState({errors: {form: texts.errors.form_invalid}, isValid: false});
+      this.setState(
+          {errors: {form: texts.errors.form_invalid}, isValid: false});
     }
   }
 
@@ -195,156 +208,188 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     // TODO: How to properly use modal?
     return (
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>{this.state.id ? texts.update_title : texts.create_title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={this.onSubmit} horizontal>
-            <CollapsableAlert style='danger'
-                              title={this.state.id ? texts.errors.update_title : texts.errors.create_title}
-                              message={errors.form} collapse={!!errors.form}/>
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>{this.state.id ? texts.update_title
+                : texts.create_title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={this.onSubmit} horizontal>
+              <CollapsableAlert style='danger'
+                                title={this.state.id ? texts.errors.update_title
+                                    : texts.errors.create_title}
+                                message={errors.form} collapse={!!errors.form}/>
 
-            <FormGroup controlId='clientId' validationState={!!errors.clientId ? 'error' : null}>
-              <HelpBlock>{errors.clientId}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.client_id}
-              </Col>
-              <Col sm={6}>
-                <InputGroup>
-                  <FormControl name='clientId' type='text' value={this.state.clientId}
+              <FormGroup controlId='clientId'
+                         validationState={!!errors.clientId ? 'error' : null}>
+                <HelpBlock>{errors.clientId}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.client_id}
+                </Col>
+                <Col sm={6}>
+                  <InputGroup>
+                    <FormControl name='clientId' type='text'
+                                 value={this.state.clientId}
+                                 onChange={this.onChange} required/>
+                    <FormControl.Feedback/>
+                    <InputGroup.Addon className='clickable'
+                                      onClick={() => this.generateUUID(
+                                          'clientId')}>
+                      <Glyphicon glyph='repeat'/>
+                    </InputGroup.Addon>
+                  </InputGroup>
+                </Col>
+              </FormGroup>
+
+              <FormGroup controlId='secret'
+                         validationState={!!errors.secret ? 'error' : null}>
+                <HelpBlock>{errors.secret}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.secret}
+                </Col>
+                <Col sm={6}>
+                  <InputGroup>
+                    <FormControl name='secret' type='password'
+                                 value={this.state.secret}
+                                 onChange={this.onChange} required/>
+                    <FormControl.Feedback/>
+                    <InputGroup.Addon className='clickable'
+                                      onClick={() => this.generateUUID(
+                                          'secret')}>
+                      <Glyphicon glyph='repeat'/>
+                    </InputGroup.Addon>
+                  </InputGroup>
+                </Col>
+              </FormGroup>
+
+              <FormGroup controlId='accessTokenValidity'
+                         validationState={!!errors.accessTokenValidity ? 'error'
+                             : null}>
+                <HelpBlock>{errors.accessTokenValidity}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.access_token_validity}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='accessTokenValidity' type='number'
+                               value={this.state.accessTokenValidity}
                                onChange={this.onChange} required/>
                   <FormControl.Feedback/>
-                  <InputGroup.Addon className='clickable' onClick={() => this.generateUUID('clientId')}>
-                    <Glyphicon glyph='repeat'/>
-                  </InputGroup.Addon>
-                </InputGroup>
-              </Col>
-            </FormGroup>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='secret' validationState={!!errors.secret ? 'error' : null}>
-              <HelpBlock>{errors.secret}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.secret}
-              </Col>
-              <Col sm={6}>
-                <InputGroup>
-                  <FormControl name='secret' type='password' value={this.state.secret}
+              <FormGroup controlId='refreshTokenValidity'
+                         validationState={!!errors.refreshTokenValidity
+                             ? 'error' : null}>
+                <HelpBlock>{errors.refreshTokenValidity}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.refresh_token_validity}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='refreshTokenValidity' type='number'
+                               value={this.state.refreshTokenValidity}
                                onChange={this.onChange} required/>
                   <FormControl.Feedback/>
-                  <InputGroup.Addon className='clickable' onClick={() => this.generateUUID('secret')}>
-                    <Glyphicon glyph='repeat'/>
-                  </InputGroup.Addon>
-                </InputGroup>
-              </Col>
-            </FormGroup>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='accessTokenValidity'
-                       validationState={!!errors.accessTokenValidity ? 'error' : null}>
-              <HelpBlock>{errors.accessTokenValidity}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.access_token_validity}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='accessTokenValidity' type='number' value={this.state.accessTokenValidity}
-                             onChange={this.onChange} required/>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
+              <FormGroup controlId='redirectUri'
+                         validationState={!!errors.redirectUri ? 'error'
+                             : null}>
+                <HelpBlock>{errors.redirectUri}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.redirect_uri}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='redirectUri' type='text'
+                               value={this.state.redirectUri}
+                               onChange={this.onChange} required/>
+                  <FormControl.Feedback/>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='refreshTokenValidity'
-                       validationState={!!errors.refreshTokenValidity ? 'error' : null}>
-              <HelpBlock>{errors.refreshTokenValidity}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.refresh_token_validity}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='refreshTokenValidity' type='number' value={this.state.refreshTokenValidity}
-                             onChange={this.onChange} required/>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
+              <FormGroup controlId='grantTypes'
+                         validationState={!!errors.grantTypes ? 'error' : null}>
+                <HelpBlock>{errors.grantTypes}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.grant_types}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='grantTypes' onChange={this.onChange}
+                               componentClass='select' multiple required>
+                    {allGrantTypes.map((grantType) => {
+                      return (
+                          <option key={grantType.id}
+                                  value={grantType.id}>{grantType.name}</option>
+                      );
+                    })}
+                  </FormControl>
+                  <FormControl.Feedback/>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='redirectUri' validationState={!!errors.redirectUri ? 'error' : null}>
-              <HelpBlock>{errors.redirectUri}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.redirect_uri}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='redirectUri' type='text' value={this.state.redirectUri}
-                             onChange={this.onChange} required/>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
+              <FormGroup controlId='authorities'
+                         validationState={!!errors.authorities ? 'error'
+                             : null}>
+                <HelpBlock>{errors.authorities}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.authorities}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='authorities' onChange={this.onChange}
+                               componentClass='select' multiple required>
+                    {allAuthorities.map((authority) => {
+                      return (
+                          <option key={authority.id}
+                                  value={authority.id}>{authority.name}</option>
+                      );
+                    })}
+                  </FormControl>
+                  <FormControl.Feedback/>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='grantTypes' validationState={!!errors.grantTypes ? 'error' : null}>
-              <HelpBlock>{errors.grantTypes}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.grant_types}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='grantTypes' onChange={this.onChange} componentClass='select' multiple required>
-                  {allGrantTypes.map((grantType) => {
-                    return (
-                      <option key={grantType.id} value={grantType.id}>{grantType.name}</option>
-                    );
-                  })}
-                </FormControl>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
+              <FormGroup controlId='scopes'
+                         validationState={!!errors.scopes ? 'error' : null}>
+                <HelpBlock>{errors.scopes}</HelpBlock>
+                <Col componentClass={ControlLabel} sm={4}>
+                  {texts.scopes}
+                </Col>
+                <Col sm={6}>
+                  <FormControl name='scopes' onChange={this.onChange}
+                               componentClass='select' multiple required>
+                    {allScopes.map((scope) => {
+                      return (
+                          <option key={scope.id}
+                                  value={scope.id}>{scope.name}</option>
+                      );
+                    })}
+                  </FormControl>
+                  <FormControl.Feedback/>
+                </Col>
+              </FormGroup>
 
-            <FormGroup controlId='authorities' validationState={!!errors.authorities ? 'error' : null}>
-              <HelpBlock>{errors.authorities}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.authorities}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='authorities' onChange={this.onChange} componentClass='select' multiple required>
-                  {allAuthorities.map((authority) => {
-                    return (
-                      <option key={authority.id} value={authority.id}>{authority.name}</option>
-                    );
-                  })}
-                </FormControl>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
-
-            <FormGroup controlId='scopes' validationState={!!errors.scopes ? 'error' : null}>
-              <HelpBlock>{errors.scopes}</HelpBlock>
-              <Col componentClass={ControlLabel} sm={4}>
-                {texts.scopes}
-              </Col>
-              <Col sm={6}>
-                <FormControl name='scopes' onChange={this.onChange} componentClass='select' multiple required>
-                  {allScopes.map((scope) => {
-                    return (
-                      <option key={scope.id} value={scope.id}>{scope.name}</option>
-                    );
-                  })}
-                </FormControl>
-                <FormControl.Feedback/>
-              </Col>
-            </FormGroup>
-
-            <FormGroup className='link-group'>
-              <Col smOffset={6} sm={2}>
-                <Button bsStyle='danger' className='pull-right' onClick={this.context.router.history.goBack}>
-                  {texts.cancel_button_text}
-                </Button>
-              </Col>
-              <Col sm={2}>
-                <Button type='submit' bsStyle='primary' className='pull-right' disabled={!isValid || isLoading}
-                        onClick={isValid && !isLoading ? this.onSubmit : null}>
-                  {this.state.id && !isLoading ? texts.update_button_text :
-                    !this.state.id && !isLoading ? texts.create_button_text : texts.button_loading_text}
-                </Button>
-              </Col>
-            </FormGroup>
-          </Form>
-        </Modal.Body>
-      </Modal.Dialog>
+              <FormGroup className='link-group'>
+                <Col smOffset={6} sm={2}>
+                  <Button bsStyle='danger' className='pull-right'
+                          onClick={this.context.router.history.goBack}>
+                    {texts.cancel_button_text}
+                  </Button>
+                </Col>
+                <Col sm={2}>
+                  <Button type='submit' bsStyle='primary' className='pull-right'
+                          disabled={!isValid || isLoading}
+                          onClick={isValid && !isLoading ? this.onSubmit
+                              : null}>
+                    {this.state.id && !isLoading ? texts.update_button_text
+                        : !this.state.id && !isLoading
+                            ? texts.create_button_text
+                            : texts.button_loading_text}
+                  </Button>
+                </Col>
+              </FormGroup>
+            </Form>
+          </Modal.Body>
+        </Modal.Dialog>
     );
   }
 }
@@ -356,10 +401,10 @@ EditClientModal.propTypes = {
   addFlashMessage: PropTypes.func.isRequired,
   saveClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
-}
+};
 
 EditClientModal.contextTypes = {
   router: PropTypes.object.isRequired
-}
+};
 
 export default EditClientModal;
