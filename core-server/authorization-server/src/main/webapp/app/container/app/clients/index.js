@@ -10,7 +10,6 @@ import {connect} from 'react-redux';
 
 import {getClients} from '../../../state/selectors/client';
 import {getTexts} from '../../../state/selectors/language';
-import {requestClients} from '../../../state/queries/client';
 
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Row from 'react-bootstrap/lib/Row';
@@ -22,10 +21,6 @@ require('../../../styles/clients.css');
 require('bootstrap/dist/css/bootstrap.css');
 
 class Clients extends Component <Clients.propTypes> {
-  componentWillMount() {
-    requestClients();
-  }
-
   render() {
     const {clients, texts} = this.props;
 
