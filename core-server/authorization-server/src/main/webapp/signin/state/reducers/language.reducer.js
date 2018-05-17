@@ -2,7 +2,7 @@
 
 import {SET_LANGUAGE} from '../actions/language';
 
-const en = require('../../config/languages/en.json');
+const en = require('../../config/i18n/en.json');
 
 export type LanguageState = {
   name: string;
@@ -23,7 +23,7 @@ export default (state: LanguageState = initialState,
       try {
         // $FlowFixMe
         const language = require(
-            `../../config/languages/${action.payload}.json`);
+            `./signin/config/i18n`);
 
         return ({
           name: language.name,
