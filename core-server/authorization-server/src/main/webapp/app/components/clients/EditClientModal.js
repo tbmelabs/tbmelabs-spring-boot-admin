@@ -8,8 +8,6 @@ import {type grantTypeType} from '../../../common/types/grantType.type';
 import {type authorityType} from '../../../common/types/authority.type';
 import {type scopeType} from '../../../common/types/scope.type';
 
-import axios from 'axios';
-
 import uuidv4 from 'uuid/v4';
 import isEmpty from 'lodash/isEmpty';
 
@@ -75,11 +73,11 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       refreshTokenValidity: '',
       redirectUri: '',
       grantTypes: [],
-      allGrantTypes: [],
+      allGrantTypes: this.props.grantTypes,
       authorities: [],
-      allAuthorities: [],
+      allAuthorities: this.props.authorities,
       scopes: [],
-      allScopes: [],
+      allScopes: this.props.scopes,
       errors: {
         clientId: '',
         secret: '',
@@ -102,15 +100,13 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
-    axios.all([this.props.loadGrantTypes(), this.props.loadAuthorities(),
-      this.props.loadScopes()]).then(
-        axios.spread((grantTypes, authorities, scopes) => this.setState({
-          allGrantTypes: grantTypes.data.content,
-          allAuthorities: authorities.data.content,
-          allScopes: scopes.data.content
-        }))).catch(
-        error => this.setState({errors: {form: error.response.data.message}}));
+  static  getDerivedStateFromProps(nextProps: EditClientModal.propTypes,
+      prevState: EditClientModalState) {
+    return {
+      allAuthorities: nextProps.authorities,
+      allGrantTypes: nextProps.grantTypes,
+      allScopes: nextProps.scopes
+    };
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -204,9 +200,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     const {allGrantTypes, allAuthorities, allScopes, isValid, isLoading, errors} = this.state;
     const {texts} = this.props;
 
-    console.log('is-valid state: ', isValid);
-
-    // TODO: How to properly use modal?
     return (
         <Modal.Dialog>
           <Modal.Header>
@@ -395,9 +388,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 }
 
 EditClientModal.propTypes = {
-  loadGrantTypes: PropTypes.func.isRequired,
-  loadAuthorities: PropTypes.func.isRequired,
-  loadScopes: PropTypes.func.isRequired,
+  authorities: PropTypes.array.isRequired,
+  grantTypes: PropTypes.array.isRequired,
+  scopes: PropTypes.array.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   saveClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired

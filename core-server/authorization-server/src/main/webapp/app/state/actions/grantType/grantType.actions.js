@@ -13,6 +13,7 @@ import {type GrantTypeState} from '../../reducers/grantType.reducer';
 export function setClientGrantTypesAction(page: GrantTypeState): Action {
   return {
     type: SET_CLIENT_GRANT_TYPES,
+    payload: page
   };
 }
 
