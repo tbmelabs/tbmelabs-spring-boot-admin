@@ -11,7 +11,11 @@ import {CookiesProvider} from 'react-cookie';
 
 import Router from './Router';
 
+import configureResponseInterceptor from './utils/axios/configureResponseInterceptor';
+
 require('../common/styles/tbme-tv.css');
+
+configureResponseInterceptor();
 
 render(
     <Provider store={getStore()}>

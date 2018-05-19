@@ -3,12 +3,18 @@
 
 import React, {Component} from 'react';
 
+import {requestAuthentication} from "../../state/queries/authentication";
+
 import Navbar from './Navbar';
 import FlashMessageList from '../common/FlashMessageList';
 
 require('bootstrap/dist/css/bootstrap.css');
 
 class App extends Component<App.propTypes> {
+  componentWillMount() {
+    requestAuthentication();
+  }
+
   render() {
     return (
         <div>

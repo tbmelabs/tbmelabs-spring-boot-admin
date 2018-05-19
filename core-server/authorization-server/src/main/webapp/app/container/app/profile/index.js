@@ -8,12 +8,17 @@ import {connect} from 'react-redux';
 
 import {getTexts} from '../../../state/selectors/language';
 import {getProfile} from '../../../state/selectors/profile';
+import {requestProfile} from '../../../state/queries/profile';
 
 import AccountInformation from '../../../components/profile/AccountInformation';
 
 require('../../../styles/profile.css');
 
 class Profile extends Component<Profile.propTypes> {
+  componentWillMount() {
+    requestProfile();
+  }
+
   render() {
     const {profile, texts} = this.props;
 

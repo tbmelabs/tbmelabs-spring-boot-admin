@@ -1,6 +1,9 @@
 {
   "language": "English",
   "app": {
+    "invalid_request_alert_title": "Invalid request: ",
+    "server_not_responding_alert_title": "Server is not responding:",
+    "server_not_responding_alert_text": "Try to refresh the page to start another attempt!",
     "access_denied_alert_title": "Access denied:",
     "access_denied_alert_text": " You have insufficient permission to access this page!",
     "profile_fetch_failed_alert_title": "Error during loading profile:",

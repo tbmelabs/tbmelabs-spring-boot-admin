@@ -22,8 +22,7 @@ export default (state: LanguageState = initialState,
     case SET_LANGUAGE:
       try {
         // $FlowFixMe
-        const language = require(
-            `./authorize/config/i18n`);
+        const language = require(`../../config/i18n/${action.payload}.json`);
 
         return ({
           name: language.name,

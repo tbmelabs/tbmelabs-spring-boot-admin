@@ -11,7 +11,9 @@ import {REQUEST_CLIENTS, setClientsAction} from '../../actions/client';
 function* requestClients() {
   const response: AxiosResponse = yield axios.get(
       `${REST_API_BASE_PATH}/clients`);
-  yield put(setClientsAction(response.data));
+  if (response.status === 200) {
+    yield put(setClientsAction(response.data));
+  }
 }
 
 export function* requestClientsSaga(): Generator<any, void, any> {

@@ -6,15 +6,17 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
+import {signoutUser} from '../../state/queries/authentication';
+
 import Navigation from '../../components/Navigation';
 
 class Navbar extends Component<Navbar.propTypes> {
   render() {
-    const {profile, logout, texts} = this.props;
+    const {profile, texts} = this.props;
 
     return (
         <div>
-          <Navigation account={profile} texts={texts}/>
+          <Navigation account={profile} logout={signoutUser} texts={texts}/>
         </div>
     );
   }

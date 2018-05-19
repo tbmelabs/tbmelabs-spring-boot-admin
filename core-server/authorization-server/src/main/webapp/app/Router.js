@@ -4,12 +4,8 @@
 import React, {Component} from 'react';
 
 import {HashRouter, Route, Switch} from 'react-router-dom';
-import PreConditionalRoute from './utils/PreConditionalRoute';
 
 import Loadable from 'react-loadable';
-
-import {requestClients} from './state/queries/client';
-import {requestProfile} from './state/queries/profile';
 
 import accessWithAuthority from './utils/auth/accessWithAuthority';
 
@@ -49,18 +45,15 @@ class Router extends Component<Router.propTypes> {
         <HashRouter>
           <Switch>
             <AsyncApp>
-              <PreConditionalRoute path='/clients' onEnter={requestClients}
-                                   component={accessWithAuthority(AsyncClients,
-                                       SERVER_ADMIN)}/>
+              <Route path='/clients'
+                     component={accessWithAuthority(AsyncClients,
+                         SERVER_ADMIN)}/>
               <Route path='/clients/new'
                      component={accessWithAuthority(AsyncClientDialog,
                          SERVER_ADMIN)}/>
-              <PreConditionalRoute path='/profile' onEnter={requestProfile}
-                                   component={AsyncProfile}/>
-              <PreConditionalRoute path='/users'
-                                   onEnter={() => console.log('coming soon..')}
-                                   component={accessWithAuthority(AsyncUsers,
-                                       SERVER_SUPPORT)}/>
+              <Route path='/profile' component={AsyncProfile}/>
+              <Route path='/users' component={accessWithAuthority(AsyncUsers,
+                  SERVER_SUPPORT)}/>
             </AsyncApp>
           </Switch>
         </HashRouter>

@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 import {LinkContainer} from 'react-router-bootstrap';
 
-import logout from '../utils/auth/logout';
 import hasAuthority from '../utils/auth/hasAuthority';
 
 import {
@@ -22,11 +21,9 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-const LOGOUT_EVENT = 'LOGOUT';
-
 class Navigation extends Component<Navigation.propTypes> {
   render() {
-    const {account, texts} = this.props;
+    const {account, logout, texts} = this.props;
 
     return (
         <Navbar collapseOnSelect>
@@ -46,15 +43,6 @@ class Navigation extends Component<Navigation.propTypes> {
                   <LinkContainer to='users'>
                     <NavItem>{texts.users}</NavItem>
                   </LinkContainer> : null}
-              {/*<NavItem eventKey={1} href="#">Link</NavItem>*/}
-              {/*<NavItem eventKey={2} href="#">Link</NavItem>*/}
-              {/*<NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">*/}
-              {/*<MenuItem eventKey={3.1}>Action</MenuItem>*/}
-              {/*<MenuItem eventKey={3.2}>Another action</MenuItem>*/}
-              {/*<MenuItem eventKey={3.3}>Something else here</MenuItem>*/}
-              {/*<MenuItem divider/>*/}
-              {/*<MenuItem eventKey={3.3}>Separated link</MenuItem>*/}
-              {/*</NavDropdown>*/}
             </Nav>
             <Nav pullRight>
               <NavDropdown title={texts.account} id="account-dropdown">
@@ -72,6 +60,7 @@ class Navigation extends Component<Navigation.propTypes> {
 
 Navigation.propTypes = {
   account: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
 };
 
