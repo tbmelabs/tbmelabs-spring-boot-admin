@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -88,7 +89,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       
       .and()
         .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class)
-        .addFilterBefore(blacklistedIpFilter, OAuth2BearerTokenAuthenticationFilter.class);
+        .addFilterBefore(blacklistedIpFilter, UsernamePasswordAuthenticationFilter.class);
     // @formatter:on
   }
 }

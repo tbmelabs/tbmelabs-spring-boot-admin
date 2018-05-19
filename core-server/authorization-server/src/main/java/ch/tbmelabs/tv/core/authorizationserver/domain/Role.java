@@ -38,9 +38,6 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @Transient
   private static final long serialVersionUID = 1L;
 
-  @Transient
-  public static final String ROLE_PREFIX = "ROLE_";
-
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
@@ -66,6 +63,6 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
 
   @Override
   public String getAuthority() {
-    return ROLE_PREFIX + getName();
+    return getName();
   }
 }

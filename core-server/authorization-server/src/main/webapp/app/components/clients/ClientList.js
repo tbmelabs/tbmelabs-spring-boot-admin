@@ -14,8 +14,7 @@ require('bootstrap/dist/css/bootstrap.css');
 
 class ClientList extends Component<ClientList.propTypes> {
   render() {
-    const {clientPage, texts} = this.props;
-    const clients = clientPage.content;
+    const {clients, texts} = this.props;
 
     if (isEmpty(clients)) {
       return (
@@ -40,7 +39,7 @@ class ClientList extends Component<ClientList.propTypes> {
 }
 
 ClientList.propTypes = {
-  clientPage: PropTypes.object.isRequired,
+  clients: PropTypes.array.isRequired,
   texts: PropTypes.object.isRequired
 };
 

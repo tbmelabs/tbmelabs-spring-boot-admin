@@ -56,7 +56,8 @@
     "information": {
       "created": "Created at",
       "username": "Username",
-      "email": "E-Mail"
+      "email": "E-Mail",
+      "roles": "Roles"
     }
   }
 }

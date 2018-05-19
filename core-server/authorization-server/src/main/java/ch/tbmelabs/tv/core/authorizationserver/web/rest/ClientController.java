@@ -28,7 +28,7 @@ public class ClientController {
   private ClientMapper clientMapper;
 
   @PostMapping
-  public ClientDTO createClient(@RequestBody(required = true) ClientDTO clientDTO) {
+  public ClientDTO createClient(@RequestBody ClientDTO clientDTO) {
     if (clientDTO.getId() != null) {
       throw new IllegalArgumentException("You can only create a new client without an id!");
     }
@@ -42,7 +42,7 @@ public class ClientController {
   }
 
   @PutMapping
-  public ClientDTO updateClient(@RequestBody(required = true) ClientDTO clientDTO) {
+  public ClientDTO updateClient(@RequestBody ClientDTO clientDTO) {
     if (clientDTO.getId() == null || clientRepository.findOne(clientDTO.getId()) == null) {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
@@ -51,7 +51,7 @@ public class ClientController {
   }
 
   @DeleteMapping
-  public void deleteClient(@RequestBody(required = true) ClientDTO clientDTO) {
+  public void deleteClient(@RequestBody ClientDTO clientDTO) {
     if (clientDTO.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing client!");
     }

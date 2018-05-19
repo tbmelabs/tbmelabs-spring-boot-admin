@@ -33,7 +33,7 @@ public class UserController {
   }
 
   @PutMapping
-  public UserDTO updateUser(@RequestBody(required = true) UserDTO userDTO) {
+  public UserDTO updateUser(@RequestBody UserDTO userDTO) {
     if (userDTO.getId() == null) {
       throw new IllegalArgumentException("You can only update an existing user!");
     }
@@ -47,7 +47,7 @@ public class UserController {
   }
 
   @DeleteMapping
-  public void deleteUser(@RequestBody(required = true) UserDTO userDTO) {
+  public void deleteUser(@RequestBody UserDTO userDTO) {
     if (userDTO.getId() == null) {
       throw new IllegalArgumentException("You can only delete an existing user!");
     }
