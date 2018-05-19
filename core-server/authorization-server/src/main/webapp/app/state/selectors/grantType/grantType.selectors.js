@@ -1,8 +1,9 @@
 // @flow
 
 import {type ApplicationState} from '../../reducers';
-import type {GrantTypeState} from '../../reducers/grantType.reducer';
 
-export function getClientGrantTypes(state: ApplicationState): GrantTypeState {
-  return state.grantTypes;
+import {type grantTypeType} from '../../../../common/types/grantType.type';
+
+export function getClientGrantTypes(state: ApplicationState): grantTypeType[] {
+  return state.grantTypes.content;
 }

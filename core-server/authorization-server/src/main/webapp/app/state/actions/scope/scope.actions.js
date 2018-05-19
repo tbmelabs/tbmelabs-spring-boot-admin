@@ -8,12 +8,12 @@ import {
   SET_CLIENT_SCOPES
 } from './scope.types';
 
-import {type scopeType} from '../../../../common/types/scope.type';
+import type {ScopeState} from '../../reducers/scope.reducer';
 
-export function setClientScopesAction(scopes: scopeType[]): Action {
+export function setClientScopesAction(page: ScopeState): Action {
   return {
     type: SET_CLIENT_SCOPES,
-    payload: scopes
+    payload: page
   };
 }
 

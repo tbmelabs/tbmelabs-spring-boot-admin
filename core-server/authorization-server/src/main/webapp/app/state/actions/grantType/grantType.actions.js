@@ -8,12 +8,11 @@ import {
   SET_CLIENT_GRANT_TYPES
 } from './grantType.types';
 
-import {type grantTypeType} from '../../../../common/types/grantType.type';
+import {type GrantTypeState} from '../../reducers/grantType.reducer';
 
-export function setClientGrantTypesAction(grantTypes: grantTypeType[]): Action {
+export function setClientGrantTypesAction(page: GrantTypeState): Action {
   return {
     type: SET_CLIENT_GRANT_TYPES,
-    payload: grantTypes
   };
 }
 
