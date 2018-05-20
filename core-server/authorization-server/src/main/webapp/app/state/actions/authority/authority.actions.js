@@ -4,7 +4,6 @@ import {Action} from 'redux';
 
 import {
   REQUEST_CLIENT_AUTHORITIES,
-  REQUEST_CLIENT_AUTHORITIES_FAILED,
   SET_CLIENT_AUTHORITIES
 } from './authority.types';
 
@@ -20,11 +19,5 @@ export function setClientAuthoritiesAction(page: AuthorityState): Action {
 export function requestClientAuthoritiesAction(): Action {
   return {
     type: REQUEST_CLIENT_AUTHORITIES
-  };
-}
-
-export function requestClientAuthoritiesFailedAction(): Action {
-  return {
-    type: REQUEST_CLIENT_AUTHORITIES_FAILED
   };
 }

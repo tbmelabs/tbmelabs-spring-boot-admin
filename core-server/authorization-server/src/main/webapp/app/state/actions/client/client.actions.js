@@ -2,9 +2,11 @@
 
 import {Action} from 'redux';
 
-import {REQUEST_CLIENTS, SET_CLIENTS} from './client.types';
+import {REQUEST_CLIENTS, SAVE_CLIENT, SET_CLIENTS} from './client.types';
 
 import {type ClientState} from '../../reducers/client.reducer';
+
+import {type clientType} from '../../../../common/types/client.type';
 
 export function setClientsAction(page: ClientState): Action {
   return {
@@ -17,4 +19,11 @@ export function requestClientsAction(): Action {
   return {
     type: REQUEST_CLIENTS
   };
+}
+
+export function saveClientAction(client: clientType): Action {
+  return {
+    type: SAVE_CLIENT,
+    payload: client
+  }
 }

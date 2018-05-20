@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,8 +54,7 @@ public class GrantType extends NicelyDocumentedJDBCResource {
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
-      mappedBy = "clientGrantType")
+  @OneToMany(mappedBy = "clientGrantType")
   private Collection<ClientGrantTypeAssociation> clientsWithGrantTypes;
 
   public GrantType(String name) {

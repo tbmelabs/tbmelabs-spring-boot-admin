@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,9 +39,6 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   @Transient
   private static final long serialVersionUID = 1L;
 
-  @Transient
-  public static final String ROLE_PREFIX = "ROLE_";
-
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
@@ -59,8 +55,7 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
-      mappedBy = "clientAuthority")
+  @OneToMany(mappedBy = "clientAuthority")
   private Collection<ClientAuthorityAssociation> clientsWithAuthorities;
 
   public Authority(String name) {
@@ -69,6 +64,6 @@ public class Authority extends NicelyDocumentedJDBCResource implements GrantedAu
 
   @Override
   public String getAuthority() {
-    return ROLE_PREFIX + getName();
+    return getName();
   }
 }

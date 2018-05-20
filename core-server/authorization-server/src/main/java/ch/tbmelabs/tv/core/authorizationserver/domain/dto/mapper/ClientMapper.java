@@ -10,9 +10,11 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -23,6 +25,15 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   GrantTypeMapper grantTypeMapper = Mappers.getMapper(GrantTypeMapper.class);
   AuthorityMapper authorityMapper = Mappers.getMapper(AuthorityMapper.class);
   ScopeMapper scopeMapper = Mappers.getMapper(ScopeMapper.class);
+
+  @Override
+  @Mapping(target = "secret", ignore = true)
+  @Mapping(source = "redirectUri", target = "redirectUris")
+  ClientDTO toDto(Client entity);
+
+  @Override
+  @Mapping(source = "redirectUris", target = "redirectUri")
+  Client toEntity(ClientDTO dto);
 
   default String[] redirectUriToRedirectUris(String redirectUri) {
     return redirectUri.split(Client.REDIRECT_URI_SPLITTERATOR);
@@ -39,10 +50,10 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   }
 
   default Collection<ClientGrantTypeAssociation> grantTypesToGrantTypeAssociations(
-      Collection<GrantTypeDTO> grantTypes, @MappingTarget Client entity) {
+      Collection<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
     return grantTypes.stream().map(
-        grantType -> new ClientGrantTypeAssociation(entity, grantTypeMapper.toEntity(grantType)))
-        .collect(Collectors.toList());
+        grantType -> new ClientGrantTypeAssociation(client, grantTypeMapper.toEntity(grantType)))
+        .filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   default Collection<AuthorityDTO> authorityAssociationsToAuthorities(
@@ -52,10 +63,10 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   }
 
   default Collection<ClientAuthorityAssociation> authoritiesToAuthorityAssociations(
-      Collection<AuthorityDTO> authorities, @MappingTarget Client entity) {
+      Collection<AuthorityDTO> authorities, @MappingTarget Client client) {
     return authorities.stream().map(
-        authority -> new ClientAuthorityAssociation(entity, authorityMapper.toEntity(authority)))
-        .collect(Collectors.toList());
+        authority -> new ClientAuthorityAssociation(client, authorityMapper.toEntity(authority)))
+        .filter(Objects::nonNull).collect(Collectors.toList());
   }
 
   default Collection<ScopeDTO> scopeAssociationsToScopes(
@@ -65,9 +76,9 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   }
 
   default Collection<ClientScopeAssociation> scopesToScopeAssociations(Collection<ScopeDTO> scopes,
-      @MappingTarget Client entity) {
+      @MappingTarget Client client) {
     return scopes.stream()
-        .map(scope -> new ClientScopeAssociation(entity, scopeMapper.toEntity(scope)))
-        .collect(Collectors.toList());
+        .map(scope -> new ClientScopeAssociation(client, scopeMapper.toEntity(scope)))
+        .filter(Objects::nonNull).collect(Collectors.toList());
   }
 }

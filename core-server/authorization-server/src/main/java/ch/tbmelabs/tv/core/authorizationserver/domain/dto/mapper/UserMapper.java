@@ -7,6 +7,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -14,6 +15,11 @@ import org.mapstruct.factory.Mappers;
 public interface UserMapper extends EntityMapper<User, UserDTO> {
 
   RoleMapper roleMapper = Mappers.getMapper(RoleMapper.class);
+
+  @Override
+  @Mapping(target = "password", ignore = true)
+  @Mapping(target = "confirmation", ignore = true)
+  UserDTO toDto(User entity);
 
   default Collection<RoleDTO> associationsToRoles(Collection<UserRoleAssociation> roles) {
     return roles.stream().map(UserRoleAssociation::getUserRole).map(roleMapper::toDto)

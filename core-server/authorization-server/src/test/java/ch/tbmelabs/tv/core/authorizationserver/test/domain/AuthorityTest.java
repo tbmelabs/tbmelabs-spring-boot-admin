@@ -91,6 +91,6 @@ public class AuthorityTest {
   public void getAuthorityShouldReturnSecurityRole() {
     ReflectionTestUtils.setField(fixture, "name", TEST_AUTHORITY_NAME);
 
-    assertThat(fixture.getAuthority()).isEqualTo("ROLE_" + TEST_AUTHORITY_NAME);
+    assertThat(fixture.getAuthority()).isEqualTo(TEST_AUTHORITY_NAME);
   }
 }

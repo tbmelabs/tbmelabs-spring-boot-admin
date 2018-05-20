@@ -4,7 +4,6 @@ import {Action} from 'redux';
 
 import {
   REQUEST_CLIENT_SCOPES,
-  REQUEST_CLIENT_SCOPES_FAILED,
   SET_CLIENT_SCOPES
 } from './scope.types';
 
@@ -20,11 +19,5 @@ export function setClientScopesAction(page: ScopeState): Action {
 export function requestClientScopesAction(): Action {
   return {
     type: REQUEST_CLIENT_SCOPES
-  };
-}
-
-export function requestClientScopesFailedAction(): Action {
-  return {
-    type: REQUEST_CLIENT_SCOPES_FAILED
   };
 }

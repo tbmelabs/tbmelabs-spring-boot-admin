@@ -32,8 +32,8 @@ type EditClientModalState = {
   id?: number;
   clientId: string;
   secret: string;
-  accessTokenValidity: string;
-  refreshTokenValidity: string;
+  accessTokenValiditySeconds: string;
+  refreshTokenValiditySeconds: string;
   redirectUri: string;
   grantTypes: grantTypeType[];
   allGrantTypes: grantTypeType[];
@@ -44,8 +44,8 @@ type EditClientModalState = {
   errors: {
     clientId: string;
     secret: string;
-    accessTokenValidity: string;
-    refreshTokenValidity: string;
+    accessTokenValiditySeconds: string;
+    refreshTokenValiditySeconds: string;
     redirectUri: string;
     grantTypes: string;
     authorities: string;
@@ -69,8 +69,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.state = {
       clientId: '',
       secret: '',
-      accessTokenValidity: '',
-      refreshTokenValidity: '',
+      accessTokenValiditySeconds: '',
+      refreshTokenValiditySeconds: '',
       redirectUri: '',
       grantTypes: [],
       allGrantTypes: this.props.grantTypes,
@@ -81,8 +81,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       errors: {
         clientId: '',
         secret: '',
-        accessTokenValidity: '',
-        refreshTokenValidity: '',
+        accessTokenValiditySeconds: '',
+        refreshTokenValiditySeconds: '',
         redirectUri: '',
         grantTypes: '',
         authorities: '',
@@ -100,7 +100,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  static  getDerivedStateFromProps(nextProps: EditClientModal.propTypes,
+  static getDerivedStateFromProps(nextProps: EditClientModal.propTypes,
       prevState: EditClientModalState) {
     return {
       allAuthorities: nextProps.authorities,
@@ -150,14 +150,14 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   validateForm() {
-    const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
+    const {clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
 
     this.setState({
       isValid: isEmpty(errors.clientId) && isEmpty(errors.secret) && isEmpty(
-          errors.accessTokenValidity) && isEmpty(errors.refreshTokenValidity)
+          errors.accessTokenValiditySeconds) && isEmpty(errors.refreshTokenValiditySeconds)
       && isEmpty(errors.redirectUri)
-      && !!clientId && !!secret && !!accessTokenValidity
-      && !!refreshTokenValidity && !!redirectUri && !isEmpty(grantTypes)
+      && !!clientId && !!secret && !!accessTokenValiditySeconds
+      && !!refreshTokenValiditySeconds && !!redirectUri && !isEmpty(grantTypes)
       && !isEmpty(authorities) && !isEmpty(scopes)
     });
   }
@@ -165,31 +165,32 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    const {clientId, secret, accessTokenValidity, refreshTokenValidity, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
+    const {clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
     const {texts} = this.props;
 
     if (isValid) {
       this.props.saveClient({
         clientId: clientId,
         secret: secret,
-        accessTokenValidity: accessTokenValidity,
-        refreshTokenValidity: refreshTokenValidity,
-        redirectUri: redirectUri,
+        accessTokenValiditySeconds: accessTokenValiditySeconds,
+        refreshTokenValiditySeconds: refreshTokenValiditySeconds,
+        redirectUris: redirectUri.split(';'),
         grantTypes: grantTypes,
-        authorities: authorities,
+        grantedAuthorities: authorities,
         scopes: scopes
-      }).then(
-          response => {
-            this.props.addFlashMessage({
-              type: 'success',
-              title: texts.client_added_title,
-              text: texts.client_added_text
-            });
-
-            this.context.router.history.goBack();
-          },
-          error => this.setState({errors: {form: error.response.data.message}})
-      );
+      });
+      // .then(
+      //     response => {
+      //       this.props.addFlashMessage({
+      //         type: 'success',
+      //         title: texts.client_added_title,
+      //         text: texts.client_added_text
+      //       });
+      //
+      //       this.context.router.history.goBack();
+      //     },
+      //     error => this.setState({errors: {form: error.response.data.message}})
+      // );
     } else {
       this.setState(
           {errors: {form: texts.errors.form_invalid}, isValid: false});
@@ -255,31 +256,31 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 </Col>
               </FormGroup>
 
-              <FormGroup controlId='accessTokenValidity'
-                         validationState={!!errors.accessTokenValidity ? 'error'
+              <FormGroup controlId='accessTokenValiditySeconds'
+                         validationState={!!errors.accessTokenValiditySeconds ? 'error'
                              : null}>
-                <HelpBlock>{errors.accessTokenValidity}</HelpBlock>
+                <HelpBlock>{errors.accessTokenValiditySeconds}</HelpBlock>
                 <Col componentClass={ControlLabel} sm={4}>
                   {texts.access_token_validity}
                 </Col>
                 <Col sm={6}>
-                  <FormControl name='accessTokenValidity' type='number'
-                               value={this.state.accessTokenValidity}
+                  <FormControl name='accessTokenValiditySeconds' type='number'
+                               value={this.state.accessTokenValiditySeconds}
                                onChange={this.onChange} required/>
                   <FormControl.Feedback/>
                 </Col>
               </FormGroup>
 
-              <FormGroup controlId='refreshTokenValidity'
-                         validationState={!!errors.refreshTokenValidity
+              <FormGroup controlId='refreshTokenValiditySeconds'
+                         validationState={!!errors.refreshTokenValiditySeconds
                              ? 'error' : null}>
-                <HelpBlock>{errors.refreshTokenValidity}</HelpBlock>
+                <HelpBlock>{errors.refreshTokenValiditySeconds}</HelpBlock>
                 <Col componentClass={ControlLabel} sm={4}>
                   {texts.refresh_token_validity}
                 </Col>
                 <Col sm={6}>
-                  <FormControl name='refreshTokenValidity' type='number'
-                               value={this.state.refreshTokenValidity}
+                  <FormControl name='refreshTokenValiditySeconds' type='number'
+                               value={this.state.refreshTokenValiditySeconds}
                                onChange={this.onChange} required/>
                   <FormControl.Feedback/>
                 </Col>

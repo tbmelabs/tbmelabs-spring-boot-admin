@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +18,6 @@ public class AuthorityDTO extends AbstractBasicEntityDTO {
 
   public void setName(String name) {
     this.name = name;
-    this.authority = Authority.ROLE_PREFIX + name;
+    this.authority = name;
   }
 }

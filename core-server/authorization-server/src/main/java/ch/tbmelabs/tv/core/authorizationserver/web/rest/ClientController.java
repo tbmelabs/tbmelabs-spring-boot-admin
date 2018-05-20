@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,40 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientController {
 
   @Autowired
-  private ClientCRUDRepository clientRepository;
+  private ClientService clientService;
 
   @Autowired
   private ClientMapper clientMapper;
 
   @PostMapping
   public ClientDTO createClient(@RequestBody ClientDTO clientDTO) {
-    if (clientDTO.getId() != null) {
-      throw new IllegalArgumentException("You can only create a new client without an id!");
-    }
-
-    return clientMapper.toDto(clientRepository.save(clientMapper.toEntity(clientDTO)));
+    return clientMapper.toDto(clientService.save(clientDTO));
   }
 
   @GetMapping
   public Page<ClientDTO> getAllClients(Pageable pageable) {
-    return clientRepository.findAll(pageable).map(clientMapper::toDto);
+    return clientService.findAll(pageable);
   }
 
   @PutMapping
   public ClientDTO updateClient(@RequestBody ClientDTO clientDTO) {
-    if (clientDTO.getId() == null || clientRepository.findOne(clientDTO.getId()) == null) {
-      throw new IllegalArgumentException("You can only update an existing client!");
-    }
-
-    return clientMapper.toDto(clientRepository.save(clientMapper.toEntity(clientDTO)));
+    return clientMapper.toDto(clientService.update(clientDTO));
   }
 
   @DeleteMapping
   public void deleteClient(@RequestBody ClientDTO clientDTO) {
-    if (clientDTO.getId() == null) {
-      throw new IllegalArgumentException("You can only delete an existing client!");
-    }
-
-    clientRepository.delete(clientMapper.toEntity(clientDTO));
+    clientService.delete(clientDTO);
   }
 }

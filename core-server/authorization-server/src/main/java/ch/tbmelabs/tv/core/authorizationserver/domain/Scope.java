@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,8 +54,7 @@ public class Scope extends NicelyDocumentedJDBCResource {
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
-      mappedBy = "clientScopeId")
+  @OneToMany(mappedBy = "clientScopeId")
   private Collection<ClientScopeAssociation> clientsWithScopes;
 
   public Scope(String name) {
