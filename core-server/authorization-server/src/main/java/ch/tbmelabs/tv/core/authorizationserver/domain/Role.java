@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Collection;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,8 +52,7 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
 
   @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE},
-      mappedBy = "userRoleId")
+  @OneToMany(mappedBy = "userRoleId")
   private Collection<UserRoleAssociation> usersWithRoles;
 
   public Role(String authority) {

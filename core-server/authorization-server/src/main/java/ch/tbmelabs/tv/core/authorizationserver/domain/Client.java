@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -84,16 +85,16 @@ public class Client extends NicelyDocumentedJDBCResource {
 
   @JsonManagedReference("client_has_grant_types")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Collection<ClientGrantTypeAssociation> grantTypes;
 
   @JsonManagedReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Collection<ClientAuthorityAssociation> grantedAuthorities;
 
   @JsonManagedReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Collection<ClientScopeAssociation> scopes;
 }

@@ -10,7 +10,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.Mapper;
@@ -53,7 +52,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
       Collection<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
     return grantTypes.stream().map(
         grantType -> new ClientGrantTypeAssociation(client, grantTypeMapper.toEntity(grantType)))
-        .filter(Objects::nonNull).collect(Collectors.toList());
+        .collect(Collectors.toList());
   }
 
   default Collection<AuthorityDTO> authorityAssociationsToAuthorities(
@@ -66,7 +65,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
       Collection<AuthorityDTO> authorities, @MappingTarget Client client) {
     return authorities.stream().map(
         authority -> new ClientAuthorityAssociation(client, authorityMapper.toEntity(authority)))
-        .filter(Objects::nonNull).collect(Collectors.toList());
+        .collect(Collectors.toList());
   }
 
   default Collection<ScopeDTO> scopeAssociationsToScopes(
@@ -79,6 +78,6 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
       @MappingTarget Client client) {
     return scopes.stream()
         .map(scope -> new ClientScopeAssociation(client, scopeMapper.toEntity(scope)))
-        .filter(Objects::nonNull).collect(Collectors.toList());
+        .collect(Collectors.toList());
   }
 }

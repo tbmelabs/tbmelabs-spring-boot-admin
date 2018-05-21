@@ -85,12 +85,12 @@ public class User extends NicelyDocumentedJDBCResource {
   private Boolean isBlocked = false;
 
   @JsonBackReference
-  @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "user")
+  @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
   private EmailConfirmationToken emailConfirmationToken;
 
   @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user")
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
   private Collection<UserRoleAssociation> roles;
 
   @Override

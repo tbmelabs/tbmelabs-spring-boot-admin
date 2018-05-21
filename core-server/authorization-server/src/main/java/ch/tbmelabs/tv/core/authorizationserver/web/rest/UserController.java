@@ -1,9 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,36 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   @Autowired
-  private UserCRUDRepository userRepository;
+  private UserService userService;
 
   @Autowired
   private UserMapper userMapper;
 
   @GetMapping
   public Page<UserDTO> getAllUsers(Pageable pageable) {
-    return userRepository.findAll(pageable).map(userMapper::toDto);
+    return userService.findAll(pageable);
   }
 
   @PutMapping
   public UserDTO updateUser(@RequestBody UserDTO userDTO) {
-    if (userDTO.getId() == null) {
-      throw new IllegalArgumentException("You can only update an existing user!");
-    }
-
-    User updatedUser = userMapper.toEntity(userDTO);
-    if (updatedUser.getPassword() == null) {
-      updatedUser.setPassword(userRepository.findOne(updatedUser.getId()).getPassword());
-    }
-
-    return userMapper.toDto(userRepository.save(updatedUser));
+    return userMapper.toDto(userService.update(userDTO));
   }
 
   @DeleteMapping
   public void deleteUser(@RequestBody UserDTO userDTO) {
-    if (userDTO.getId() == null) {
-      throw new IllegalArgumentException("You can only delete an existing user!");
-    }
-
-    userRepository.delete(userMapper.toEntity(userDTO));
+    userService.delete(userDTO);
   }
 }
