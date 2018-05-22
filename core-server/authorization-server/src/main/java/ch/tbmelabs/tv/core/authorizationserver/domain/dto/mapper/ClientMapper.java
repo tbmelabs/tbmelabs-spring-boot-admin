@@ -9,7 +9,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
@@ -43,39 +42,39 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
     return Strings.join(Arrays.asList(redirectUris), Client.REDIRECT_URI_SPLITTERATOR.charAt(0));
   }
 
-  default Collection<GrantTypeDTO> grantTypeAssociationsToGrantTypes(
-      Collection<ClientGrantTypeAssociation> grantTypes) {
+  default Set<GrantTypeDTO> grantTypeAssociationsToGrantTypes(
+      Set<ClientGrantTypeAssociation> grantTypes) {
     return grantTypes.stream().map(ClientGrantTypeAssociation::getClientGrantType)
-        .map(grantTypeMapper::toDto).collect(Collectors.toList());
+        .map(grantTypeMapper::toDto).collect(Collectors.toSet());
   }
 
   default Set<ClientGrantTypeAssociation> grantTypesToGrantTypeAssociations(
-      Collection<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
+      Set<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
     return grantTypes.stream().map(
         grantType -> new ClientGrantTypeAssociation(client, grantTypeMapper.toEntity(grantType)))
         .collect(Collectors.toSet());
   }
 
-  default Collection<AuthorityDTO> authorityAssociationsToAuthorities(
-      Collection<ClientAuthorityAssociation> grantedAuthorities) {
+  default Set<AuthorityDTO> authorityAssociationsToAuthorities(
+      Set<ClientAuthorityAssociation> grantedAuthorities) {
     return grantedAuthorities.stream().map(ClientAuthorityAssociation::getClientAuthority)
-        .map(authorityMapper::toDto).collect(Collectors.toList());
+        .map(authorityMapper::toDto).collect(Collectors.toSet());
   }
 
   default Set<ClientAuthorityAssociation> authoritiesToAuthorityAssociations(
-      Collection<AuthorityDTO> authorities, @MappingTarget Client client) {
+      Set<AuthorityDTO> authorities, @MappingTarget Client client) {
     return authorities.stream().map(
         authority -> new ClientAuthorityAssociation(client, authorityMapper.toEntity(authority)))
         .collect(Collectors.toSet());
   }
 
-  default Collection<ScopeDTO> scopeAssociationsToScopes(
-      Collection<ClientScopeAssociation> scopes) {
+  default Set<ScopeDTO> scopeAssociationsToScopes(
+      Set<ClientScopeAssociation> scopes) {
     return scopes.stream().map(ClientScopeAssociation::getClientScope).map(scopeMapper::toDto)
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
-  default Set<ClientScopeAssociation> scopesToScopeAssociations(Collection<ScopeDTO> scopes,
+  default Set<ClientScopeAssociation> scopesToScopeAssociations(Set<ScopeDTO> scopes,
       @MappingTarget Client client) {
     return scopes.stream()
         .map(scope -> new ClientScopeAssociation(client, scopeMapper.toEntity(scope)))

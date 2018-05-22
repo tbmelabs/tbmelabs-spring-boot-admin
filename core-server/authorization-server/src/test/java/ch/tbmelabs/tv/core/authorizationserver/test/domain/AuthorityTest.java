@@ -9,8 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -78,8 +79,8 @@ public class AuthorityTest {
 
   @Test
   public void authorityShouldHaveClientsGetterAndSetter() {
-    List<ClientAuthorityAssociation> associations =
-        Collections.singletonList(Mockito.mock(ClientAuthorityAssociation.class));
+    Set<ClientAuthorityAssociation> associations = new HashSet<>(
+        Collections.singletonList(Mockito.mock(ClientAuthorityAssociation.class)));
 
     fixture.setClientsWithAuthorities(associations);
 

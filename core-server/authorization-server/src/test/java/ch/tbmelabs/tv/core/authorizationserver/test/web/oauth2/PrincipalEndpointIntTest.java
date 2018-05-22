@@ -15,6 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.json.JSONException;
@@ -62,7 +63,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
 
       Role newRole = new Role(RandomStringUtils.random(11));
       persistedUser.setRoles(userMapper.rolesToAssociations(
-          Collections.singletonList(roleMapper.toDto(roleRepository.save(newRole))),
+          new HashSet<>(Collections.singletonList(roleMapper.toDto(roleRepository.save(newRole)))),
           persistedUser));
 
       testUser = userRepository.save(persistedUser);

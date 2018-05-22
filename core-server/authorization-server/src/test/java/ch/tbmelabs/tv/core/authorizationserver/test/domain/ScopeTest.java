@@ -10,8 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -81,8 +82,8 @@ public class ScopeTest {
 
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
-    List<ClientScopeAssociation> associations =
-        Collections.singletonList(Mockito.mock(ClientScopeAssociation.class));
+    Set<ClientScopeAssociation> associations =
+        new HashSet<>(Collections.singletonList(Mockito.mock(ClientScopeAssociation.class)));
 
     fixture.setClientsWithScopes(associations);
 

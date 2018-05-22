@@ -15,6 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.Cl
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -156,8 +157,8 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantTypesGetterAndSetter() {
-    Set<ClientGrantTypeAssociation> grantTypes = new HashSet<ClientGrantTypeAssociation>();
-    grantTypes.add(new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE)));
+    Set<ClientGrantTypeAssociation> grantTypes = new HashSet<>(Collections.singletonList(
+        new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE))));
 
     fixture.setGrantTypes(grantTypes);
 
@@ -167,9 +168,8 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    Set<ClientAuthorityAssociation> grantedAuthorities = new HashSet<ClientAuthorityAssociation>();
-    grantedAuthorities
-        .add(new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY)));
+    Set<ClientAuthorityAssociation> grantedAuthorities = new HashSet<>(Collections.singletonList(
+        new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY))));
 
     fixture.setGrantedAuthorities(grantedAuthorities);
 
@@ -179,8 +179,8 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
-    Set<ClientScopeAssociation> scopes = new HashSet<ClientScopeAssociation>();
-    scopes.add(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
+    Set<ClientScopeAssociation> scopes = new HashSet<>(Collections
+        .singletonList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE))));
 
     fixture.setScopes(scopes);
 

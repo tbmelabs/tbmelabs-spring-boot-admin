@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -10,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
@@ -114,9 +116,9 @@ public class UserSignupService {
             "Unable to find default authority \"" + UserAuthority.USER + "\"!");
       }
 
-      newUser.setRoles(
-          userMapper.rolesToAssociations(
-              Collections.singletonList(roleMapper.toDto(userRole.get())), newUser));
+      newUser.setRoles(userMapper.rolesToAssociations(
+          new HashSet<RoleDTO>(Collections.singletonList(roleMapper.toDto(userRole.get()))),
+          newUser));
     }
 
     return newUser;

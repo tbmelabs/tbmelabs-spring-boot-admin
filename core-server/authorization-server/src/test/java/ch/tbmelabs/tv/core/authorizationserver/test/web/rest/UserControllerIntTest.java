@@ -15,7 +15,7 @@ import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationS
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
+import java.util.HashSet;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
     dto.setIsEnabled(user.getIsEnabled());
     dto.setIsBlocked(user.getIsBlocked());
 
-    dto.setRoles(new ArrayList<>());
+    dto.setRoles(new HashSet<>());
 
     return dto;
   }

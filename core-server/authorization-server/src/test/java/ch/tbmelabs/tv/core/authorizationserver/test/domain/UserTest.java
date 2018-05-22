@@ -13,9 +13,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -133,8 +134,8 @@ public class UserTest {
 
   @Test
   public void userShouldHaveRoleGetterAndSetter() {
-    Collection<UserRoleAssociation> roles =
-        Collections.singletonList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE)));
+    Set<UserRoleAssociation> roles = new HashSet<>(
+        Collections.singletonList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE))));
 
     fixture.setRoles(roles);
 

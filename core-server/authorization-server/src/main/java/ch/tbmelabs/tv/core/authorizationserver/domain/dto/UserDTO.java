@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import java.util.Collection;
+import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,5 @@ public class UserDTO extends AbstractBasicEntityDTO {
   private String email;
   private Boolean isEnabled = false;
   private Boolean isBlocked = false;
-  private Collection<RoleDTO> roles;
+  private Set<RoleDTO> roles;
 }

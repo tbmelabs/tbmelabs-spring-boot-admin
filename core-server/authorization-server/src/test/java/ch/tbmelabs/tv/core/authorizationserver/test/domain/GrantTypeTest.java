@@ -10,8 +10,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -83,8 +84,8 @@ public class GrantTypeTest {
 
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
-    List<ClientGrantTypeAssociation> associations =
-        Collections.singletonList(Mockito.mock(ClientGrantTypeAssociation.class));
+    Set<ClientGrantTypeAssociation> associations =
+        new HashSet<>(Collections.singletonList(Mockito.mock(ClientGrantTypeAssociation.class)));
 
     fixture.setClientsWithGrantTypes(associations);
 

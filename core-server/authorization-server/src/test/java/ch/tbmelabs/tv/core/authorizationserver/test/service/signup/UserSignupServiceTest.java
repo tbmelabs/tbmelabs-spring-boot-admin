@@ -77,7 +77,7 @@ public class UserSignupServiceTest {
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
         .findOneByName(UserAuthority.USER);
 
-    doCallRealMethod().when(mockUserMapper).rolesToAssociations(Mockito.anyCollection(),
+    doCallRealMethod().when(mockUserMapper).rolesToAssociations(Mockito.anySet(),
         Mockito.any(User.class));
 
     doAnswer((Answer<RoleDTO>) invocation -> {

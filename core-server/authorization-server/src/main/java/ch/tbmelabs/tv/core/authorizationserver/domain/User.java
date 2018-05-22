@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,7 +91,7 @@ public class User extends NicelyDocumentedJDBCResource {
   @OneToMany(mappedBy = "user")
   @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
-  private Collection<UserRoleAssociation> roles;
+  private Set<UserRoleAssociation> roles;
 
   @Override
   @PrePersist

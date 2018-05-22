@@ -4,7 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
-import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,14 +21,14 @@ public interface UserMapper extends EntityMapper<User, UserDTO> {
   @Mapping(target = "confirmation", ignore = true)
   UserDTO toDto(User entity);
 
-  default Collection<RoleDTO> associationsToRoles(Collection<UserRoleAssociation> roles) {
+  default Set<RoleDTO> associationsToRoles(Set<UserRoleAssociation> roles) {
     return roles.stream().map(UserRoleAssociation::getUserRole).map(roleMapper::toDto)
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
-  default Collection<UserRoleAssociation> rolesToAssociations(Collection<RoleDTO> roles,
+  default Set<UserRoleAssociation> rolesToAssociations(Set<RoleDTO> roles,
       @MappingTarget User entity) {
     return roles.stream().map(role -> new UserRoleAssociation(entity, roleMapper.toEntity(role)))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 }

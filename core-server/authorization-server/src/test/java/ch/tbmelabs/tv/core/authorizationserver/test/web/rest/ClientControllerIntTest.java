@@ -8,14 +8,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
+import java.util.HashSet;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,11 +54,11 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
     dto.setRefreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds());
     dto.setRedirectUris(client.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
 
-    dto.setGrantTypes(new ArrayList<>());
+    dto.setGrantTypes(new HashSet<GrantTypeDTO>());
 
-    dto.setGrantedAuthorities(new ArrayList<>());
+    dto.setGrantedAuthorities(new HashSet<AuthorityDTO>());
 
-    dto.setScopes(new ArrayList<>());
+    dto.setScopes(new HashSet<ScopeDTO>());
 
     return dto;
   }

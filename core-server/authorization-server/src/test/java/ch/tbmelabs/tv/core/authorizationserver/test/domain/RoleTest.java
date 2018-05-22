@@ -9,9 +9,10 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserR
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -57,8 +58,7 @@ public class RoleTest {
 
   @Test
   public void roleShouldHaveAllArgsConstructor() {
-    assertThat(new Role(TEST_ROLE_NAME)).hasFieldOrPropertyWithValue("name",
-        TEST_ROLE_NAME);
+    assertThat(new Role(TEST_ROLE_NAME)).hasFieldOrPropertyWithValue("name", TEST_ROLE_NAME);
   }
 
   @Test
@@ -83,8 +83,8 @@ public class RoleTest {
 
   @Test
   public void roleShouldHaveUserGetterAndSetter() {
-    List<UserRoleAssociation> associations = Arrays.asList(
-        Mockito.mock(UserRoleAssociation.class));
+    Set<UserRoleAssociation> associations =
+        new HashSet<>(Collections.singletonList(Mockito.mock(UserRoleAssociation.class)));
 
     fixture.setUsersWithRoles(associations);
 
