@@ -3,8 +3,10 @@ package ch.tbmelabs.tv.core.authorizationserver.service.domain;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientAuthorityAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientGrantTypeAssociationCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,13 @@ public class ClientService {
   private ClientCRUDRepository clientRepository;
 
   @Autowired
-  private GrantTypeCRUDRepository grantTypeRepository;
+  private ClientGrantTypeAssociationCRUDRepository clientGrantTypeRepository;
+
+  @Autowired
+  private ClientAuthorityAssociationCRUDRepository clientAuthorityRepository;
+
+  @Autowired
+  private ClientScopeAssociationCRUDRepository clientScopeRepository;
 
   @Transactional
   public Client save(ClientDTO clientDTO) {
@@ -32,13 +40,14 @@ public class ClientService {
     Client client = clientMapper.toEntity(clientDTO);
     client = clientRepository.save(client);
 
-    client.setGrantTypes(
-        clientMapper.grantTypesToGrantTypeAssociations(clientDTO.getGrantTypes(), client));
-    client.setGrantedAuthorities(
-        clientMapper.authoritiesToAuthorityAssociations(clientDTO.getGrantedAuthorities(), client));
-    client.setScopes(clientMapper.scopesToScopeAssociations(clientDTO.getScopes(), client));
+    clientMapper.grantTypesToGrantTypeAssociations(clientDTO.getGrantTypes(), client)
+        .forEach(clientGrantTypeRepository::save);
+    clientMapper.authoritiesToAuthorityAssociations(clientDTO.getGrantedAuthorities(), client)
+        .forEach(clientAuthorityRepository::save);
+    clientMapper.scopesToScopeAssociations(clientDTO.getScopes(), client)
+        .forEach(clientScopeRepository::save);
 
-    return clientRepository.save(client);
+    return client;
   }
 
   public Page<ClientDTO> findAll(Pageable pageable) {

@@ -3,10 +3,12 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,8 +19,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -26,7 +28,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "user_has_roles")
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(UserRoleAssociationId.class)
 public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
@@ -79,5 +80,35 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
   public Role getUserRole() {
     return this.userRole;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+      return false;
+    }
+
+    UserRoleAssociation other = (UserRoleAssociation) object;
+    if (other.getUser() == null || other.getUserRole() == null) {
+      return false;
+    }
+
+    return Objects.equals(this.getUser(), other.getUser())
+        && Objects.equals(this.getUserRole(), other.getUserRole());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getUser() == null || this.getUser().getId() == null
+        || this.getUserRole() == null || this.getUserRole().getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(getUser().getId())
+        .append(getUserRole().getId())
+        .build();
+    // @formatter:on
   }
 }

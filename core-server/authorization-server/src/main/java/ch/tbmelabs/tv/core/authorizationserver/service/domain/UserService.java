@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,9 @@ public class UserService {
   @Autowired
   private UserCRUDRepository userRepository;
 
+  @Autowired
+  private UserRoleAssociationCRUDRepository userRoleRepository;
+
   @Transactional
   public User save(UserDTO userDTO) {
     if (userDTO.getId() != null) {
@@ -28,7 +32,7 @@ public class UserService {
     User user = userMapper.toEntity(userDTO);
     user = userRepository.save(user);
 
-    user.setRoles(userMapper.rolesToAssociations(userDTO.getRoles(), user));
+    userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
 
     return userRepository.save(user);
   }

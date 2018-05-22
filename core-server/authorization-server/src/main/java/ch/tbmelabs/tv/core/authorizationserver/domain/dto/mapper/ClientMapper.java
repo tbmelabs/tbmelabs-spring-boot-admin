@@ -10,6 +10,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.logging.log4j.util.Strings;
 import org.mapstruct.Mapper;
@@ -48,11 +49,11 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
         .map(grantTypeMapper::toDto).collect(Collectors.toList());
   }
 
-  default Collection<ClientGrantTypeAssociation> grantTypesToGrantTypeAssociations(
+  default Set<ClientGrantTypeAssociation> grantTypesToGrantTypeAssociations(
       Collection<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
     return grantTypes.stream().map(
         grantType -> new ClientGrantTypeAssociation(client, grantTypeMapper.toEntity(grantType)))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
   default Collection<AuthorityDTO> authorityAssociationsToAuthorities(
@@ -61,11 +62,11 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
         .map(authorityMapper::toDto).collect(Collectors.toList());
   }
 
-  default Collection<ClientAuthorityAssociation> authoritiesToAuthorityAssociations(
+  default Set<ClientAuthorityAssociation> authoritiesToAuthorityAssociations(
       Collection<AuthorityDTO> authorities, @MappingTarget Client client) {
     return authorities.stream().map(
         authority -> new ClientAuthorityAssociation(client, authorityMapper.toEntity(authority)))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 
   default Collection<ScopeDTO> scopeAssociationsToScopes(
@@ -74,10 +75,10 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
         .collect(Collectors.toList());
   }
 
-  default Collection<ClientScopeAssociation> scopesToScopeAssociations(Collection<ScopeDTO> scopes,
+  default Set<ClientScopeAssociation> scopesToScopeAssociations(Collection<ScopeDTO> scopes,
       @MappingTarget Client client) {
     return scopes.stream()
         .map(scope -> new ClientScopeAssociation(client, scopeMapper.toEntity(scope)))
-        .collect(Collectors.toList());
+        .collect(Collectors.toSet());
   }
 }

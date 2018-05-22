@@ -3,10 +3,12 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthori
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,8 +19,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -26,7 +28,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_authorities")
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientAuthorityAssociationId.class)
 public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
@@ -79,5 +80,35 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
   public Authority getClientAuthority() {
     return this.clientAuthority;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+      return false;
+    }
+
+    ClientAuthorityAssociation other = (ClientAuthorityAssociation) object;
+    if (other.getClient() == null || other.getClientAuthority() == null) {
+      return false;
+    }
+
+    return Objects.equals(this.getClient(), other.getClient())
+        && Objects.equals(this.getClientAuthority(), other.getClientAuthority());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getClient() == null || this.getClient().getId() == null
+        || this.getClientAuthority() == null || this.getClientAuthority().getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(getClient().getId())
+        .append(getClientAuthority().getId())
+        .build();
+    // @formatter:on
   }
 }

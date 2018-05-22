@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -61,7 +60,7 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   @Length(max = 256)
   private String message;
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne
   @LazyCollection(LazyCollectionOption.FALSE)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;

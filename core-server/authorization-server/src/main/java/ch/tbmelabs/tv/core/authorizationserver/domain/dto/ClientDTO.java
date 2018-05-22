@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import java.util.Collection;
+import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class ClientDTO extends AbstractBasicEntityDTO {
   private Integer accessTokenValiditySeconds;
   private Integer refreshTokenValiditySeconds;
   private String[] redirectUris;
-  private Collection<GrantTypeDTO> grantTypes;
-  private Collection<AuthorityDTO> grantedAuthorities;
-  private Collection<ScopeDTO> scopes;
+  private Set<GrantTypeDTO> grantTypes;
+  private Set<AuthorityDTO> grantedAuthorities;
+  private Set<ScopeDTO> scopes;
 }

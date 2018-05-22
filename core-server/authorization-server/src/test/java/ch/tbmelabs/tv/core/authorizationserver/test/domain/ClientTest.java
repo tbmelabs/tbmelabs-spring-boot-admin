@@ -15,9 +15,9 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.Cl
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -156,8 +156,8 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantTypesGetterAndSetter() {
-    Collection<ClientGrantTypeAssociation> grantTypes = Collections.singletonList(
-        new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE)));
+    Set<ClientGrantTypeAssociation> grantTypes = new HashSet<ClientGrantTypeAssociation>();
+    grantTypes.add(new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE)));
 
     fixture.setGrantTypes(grantTypes);
 
@@ -167,8 +167,9 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveGrantedAuthoritiesGetterAndSetter() {
-    Collection<ClientAuthorityAssociation> grantedAuthorities = Collections.singletonList(
-        new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY)));
+    Set<ClientAuthorityAssociation> grantedAuthorities = new HashSet<ClientAuthorityAssociation>();
+    grantedAuthorities
+        .add(new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY)));
 
     fixture.setGrantedAuthorities(grantedAuthorities);
 
@@ -178,14 +179,12 @@ public class ClientTest {
 
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
-    Collection<ClientScopeAssociation> scopes =
-        Collections
-            .singletonList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
+    Set<ClientScopeAssociation> scopes = new HashSet<ClientScopeAssociation>();
+    scopes.add(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE)));
 
     fixture.setScopes(scopes);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("scopes", scopes);
     assertThat(fixture.getScopes()).isEqualTo(scopes);
-
   }
 }

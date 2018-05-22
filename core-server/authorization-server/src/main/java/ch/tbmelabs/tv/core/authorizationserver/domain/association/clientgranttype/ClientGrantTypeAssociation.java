@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,8 +18,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -26,7 +27,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_grant_types")
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientGrantTypeAssociationId.class)
 public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
@@ -79,5 +79,35 @@ public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
 
   public GrantType getClientGrantType() {
     return this.clientGrantType;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+      return false;
+    }
+
+    ClientGrantTypeAssociation other = (ClientGrantTypeAssociation) object;
+    if (other.getClient() == null || other.getClientGrantType() == null) {
+      return false;
+    }
+
+    return Objects.equals(this.getClient(), other.getClient())
+        && Objects.equals(this.getClientGrantType(), other.getClientGrantType());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getClient() == null || this.getClient().getId() == null
+        || this.getClientGrantType() == null || this.getClientGrantType().getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(getClient().getId())
+        .append(getClientGrantType().getId())
+        .build();
+    // @formatter:on
   }
 }
