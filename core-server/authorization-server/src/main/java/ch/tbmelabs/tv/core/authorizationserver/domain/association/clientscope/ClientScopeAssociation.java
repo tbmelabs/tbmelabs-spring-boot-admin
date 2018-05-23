@@ -3,11 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_scopes")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientScopeAssociationId.class)
 public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
 
@@ -84,7 +78,7 @@ public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
 
   @Override
   public boolean equals(Object object) {
-    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+    if (object == null || !(object instanceof ClientScopeAssociation)) {
       return false;
     }
 
@@ -106,8 +100,8 @@ public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
 
     // @formatter:off
     return new HashCodeBuilder()
-        .append(getClient().getId())
-        .append(getClientScope().getId())
+        .append(this.getClient().getId())
+        .append(this.getClientScope().getId())
         .build();
     // @formatter:on
   }

@@ -3,11 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthori
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_authorities")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientAuthorityAssociationId.class)
 public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
@@ -84,7 +78,7 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
   @Override
   public boolean equals(Object object) {
-    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+    if (object == null || !(object instanceof ClientAuthorityAssociation)) {
       return false;
     }
 
@@ -106,8 +100,8 @@ public class ClientAuthorityAssociation extends NicelyDocumentedJDBCResource {
 
     // @formatter:off
     return new HashCodeBuilder()
-        .append(getClient().getId())
-        .append(getClientAuthority().getId())
+        .append(this.getClient().getId())
+        .append(this.getClientAuthority().getId())
         .build();
     // @formatter:on
   }

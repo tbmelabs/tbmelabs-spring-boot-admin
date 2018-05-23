@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @MappedSuperclass
+@NoArgsConstructor
 public abstract class AbstractBasicEntityDTO {
 
   private Long id;

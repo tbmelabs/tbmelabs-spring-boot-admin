@@ -4,9 +4,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,9 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 @Table(name = "client_has_grant_types")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(ClientGrantTypeAssociationId.class)
 public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
 
@@ -105,8 +100,8 @@ public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
 
     // @formatter:off
     return new HashCodeBuilder()
-        .append(getClient().getId())
-        .append(getClientGrantType().getId())
+        .append(this.getClient().getId())
+        .append(this.getClientGrantType().getId())
         .build();
     // @formatter:on
   }

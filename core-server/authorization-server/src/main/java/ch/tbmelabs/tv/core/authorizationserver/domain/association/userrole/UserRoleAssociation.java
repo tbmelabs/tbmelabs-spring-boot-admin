@@ -3,11 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,9 +22,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 @Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 @Table(name = "user_has_roles")
-@JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(UserRoleAssociationId.class)
 public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
@@ -84,7 +78,7 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
   @Override
   public boolean equals(Object object) {
-    if (object == null || !(object instanceof ClientGrantTypeAssociation)) {
+    if (object == null || !(object instanceof UserRoleAssociation)) {
       return false;
     }
 
@@ -106,8 +100,8 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
     // @formatter:off
     return new HashCodeBuilder()
-        .append(getUser().getId())
-        .append(getUserRole().getId())
+        .append(this.getUser().getId())
+        .append(this.getUserRole().getId())
         .build();
     // @formatter:on
   }

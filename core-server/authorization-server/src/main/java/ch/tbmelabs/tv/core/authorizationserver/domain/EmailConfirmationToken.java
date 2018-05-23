@@ -1,8 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,13 +22,11 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
-@Table(name = "email_confirmation_tokens")
 @EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Table(name = "email_confirmation_tokens")
 public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
 
   @Transient

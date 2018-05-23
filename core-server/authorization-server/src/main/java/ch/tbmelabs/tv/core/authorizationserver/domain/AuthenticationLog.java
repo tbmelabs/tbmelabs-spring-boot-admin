@@ -1,8 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,13 +20,11 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity
 @Data
+@Entity
 @NoArgsConstructor
-@JsonInclude(Include.NON_NULL)
 @Table(name = "authentication_log")
 @EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthenticationLog extends NicelyDocumentedJDBCResource {
 
   @Transient
