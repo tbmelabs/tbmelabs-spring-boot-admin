@@ -20,6 +20,7 @@
     <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
     <org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
+    <org.apache.commons.lang3.version>3.7</org.apache.commons.lang3.version>
 
     <!-- Plugin configuration -->
     <org.flywaydb.flyway-maven-plugin.version>5.0.7</org.flywaydb.flyway-maven-plugin.version>
@@ -100,6 +101,13 @@
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${org.apache.commons.lang3.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
