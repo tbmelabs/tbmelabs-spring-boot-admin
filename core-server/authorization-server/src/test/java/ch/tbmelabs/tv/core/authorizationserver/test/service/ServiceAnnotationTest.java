@@ -9,7 +9,7 @@ import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 public class ServiceAnnotationTest {
 
-  private static final Integer EXPECTED_SERVICE_COUNT = 8;
+  private static final Integer EXPECTED_SERVICE_COUNT = 10;
 
   @Test
   public void packageShouldOnlyContainServices() {

@@ -12,9 +12,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -46,14 +43,9 @@ public class ClientTest {
 
   @Test
   public void clientShouldBeAnnotated() {
-    assertThat(Client.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Client.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Client.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("clients");
-    assertThat(Client.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(Client.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
   }
 
   @Test

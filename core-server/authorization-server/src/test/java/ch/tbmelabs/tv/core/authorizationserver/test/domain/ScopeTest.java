@@ -6,9 +6,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -35,14 +32,9 @@ public class ScopeTest {
 
   @Test
   public void scopeShouldBeAnnotated() {
-    assertThat(Scope.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Scope.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Scope.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("client_scopes");
-    assertThat(Scope.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(Scope.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
   }
 
   @Test

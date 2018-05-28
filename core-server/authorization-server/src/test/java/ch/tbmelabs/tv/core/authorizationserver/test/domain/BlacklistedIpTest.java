@@ -3,17 +3,14 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Spy;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class BlacklistedIpTest {
 
@@ -30,16 +27,10 @@ public class BlacklistedIpTest {
 
   @Test
   public void blacklistedIpShouldBeAnnotated() {
-    assertThat(BlacklistedIp.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(BlacklistedIp.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(BlacklistedIp.class.getDeclaredAnnotation(Table.class).name())
         .isEqualTo("blacklisted_ips");
-    assertThat(BlacklistedIp.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(
-        BlacklistedIp.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isNotNull().isTrue();
   }
 
   @Test

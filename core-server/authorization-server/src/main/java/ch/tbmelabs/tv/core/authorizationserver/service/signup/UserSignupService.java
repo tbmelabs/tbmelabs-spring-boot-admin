@@ -3,10 +3,11 @@ package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
@@ -40,65 +41,64 @@ public class UserSignupService {
   private RoleCRUDRepository roleRepository;
 
   @Autowired
-  private UserMapper userMapper;
-
-  @Autowired
   private RoleMapper roleMapper;
 
-  public boolean isUsernameUnique(User testUser) {
+  @Autowired
+  private UserService userService;
+
+  public boolean isUsernameUnique(UserDTO testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");
 
     return !userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent();
   }
 
-  public boolean doesUsernameMatchFormat(User testUser) {
+  public boolean doesUsernameMatchFormat(UserDTO testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" does match format");
 
     return testUser.getUsername().matches(USERNAME_REGEX);
   }
 
-  public boolean isEmailAddressUnique(User testUser) {
+  public boolean isEmailAddressUnique(UserDTO testUser) {
     LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" is unique");
 
     return !userRepository.findOneByEmailIgnoreCase(testUser.getEmail()).isPresent();
   }
 
-  public boolean isEmailAddress(User testUser) {
+  public boolean isEmailAddress(UserDTO testUser) {
     LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" does match format");
 
     return EmailValidator.getInstance().isValid(testUser.getEmail());
   }
 
-  public boolean doesPasswordMatchFormat(User testUser) {
+  public boolean doesPasswordMatchFormat(UserDTO testUser) {
     LOGGER.debug("Checking password format for new user");
 
     return testUser.getPassword().matches(PASSWORD_REGEX);
   }
 
-  public boolean doPasswordsMatch(User testUser) {
+  public boolean doPasswordsMatch(UserDTO testUser) {
     LOGGER.debug("Checking password match for new user");
 
     return testUser.getConfirmation().equals(testUser.getPassword());
   }
 
-  public User signUpNewUser(User newUser) {
-    if (!isUserValid(newUser)) {
+  public User signUpNewUser(UserDTO newUserDTO) {
+    if (!isUserValid(newUserDTO)) {
       throw new IllegalArgumentException("An error occured. Please check your details!");
     }
 
-    LOGGER.info("New user signed up! username: " + newUser.getUsername() + "; email: "
-        + newUser.getEmail());
+    newUserDTO = setDefaultRolesIfNonePresent(newUserDTO);
+    User persistedUser = userService.save(newUserDTO);
 
-    User persistedUser = userRepository.save(newUser);
-    setDefaultRolesIfNonePresent(newUser);
-    userRepository.save(persistedUser);
+    LOGGER.info("New user signed up! username: " + newUserDTO.getUsername() + "; email: "
+        + newUserDTO.getEmail());
 
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
     return persistedUser;
   }
 
-  private boolean isUserValid(User testUser) {
+  private boolean isUserValid(UserDTO testUser) {
     LOGGER.debug("Checking if user \"" + testUser + "\" is valid");
 
     return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser)
@@ -106,22 +106,21 @@ public class UserSignupService {
         && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
   }
 
-  private User setDefaultRolesIfNonePresent(User newUser) {
-    LOGGER.debug("Setting default roles to " + newUser.getUsername());
+  private UserDTO setDefaultRolesIfNonePresent(UserDTO newUserDTO) {
+    LOGGER.debug("Setting default roles for " + newUserDTO.getUsername());
 
-    if (newUser.getRoles() == null || newUser.getRoles().isEmpty()) {
+    if (newUserDTO.getRoles() == null || newUserDTO.getRoles().isEmpty()) {
       Optional<Role> userRole;
       if (!(userRole = roleRepository.findOneByName(UserAuthority.USER)).isPresent()) {
         throw new IllegalArgumentException(
             "Unable to find default authority \"" + UserAuthority.USER + "\"!");
       }
 
-      newUser.setRoles(userMapper.rolesToAssociations(
-          new HashSet<RoleDTO>(Collections.singletonList(roleMapper.toDto(userRole.get()))),
-          newUser));
+      newUserDTO.setRoles(
+          new HashSet<RoleDTO>(Collections.singletonList(roleMapper.toDto(userRole.get()))));
     }
 
-    return newUser;
+    return newUserDTO;
   }
 
   private User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {
@@ -134,9 +133,9 @@ public class UserSignupService {
       throw new IllegalArgumentException(
           "You cannot run a productive environment without any mail configuration!");
     } else {
-      persistedUser.setIsEnabled(true);
+      userRepository.updateUserSetIsEnabledTrue(persistedUser);
     }
 
-    return userRepository.save(persistedUser);
+    return persistedUser;
   }
 }

@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
@@ -18,6 +19,9 @@ public class EmailConfirmationTokenService {
 
   @Autowired
   private EmailConfirmationTokenCRUDRepository emailConfirmationTokenRepository;
+
+  @Autowired
+  private UserCRUDRepository userRepository;
 
   public String createUniqueEmailConfirmationToken(User user) {
     LOGGER.info("Creating unique confirmation token");
@@ -46,7 +50,7 @@ public class EmailConfirmationTokenService {
     }
 
     final User user = emailConfirmationToken.get().getUser();
-    user.setIsEnabled(true);
+    userRepository.updateUserSetIsEnabledTrue(user);
 
     // TODO: This is not affected?
     emailConfirmationTokenRepository.delete(emailConfirmationToken.get());

@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,13 @@ public class SignupController {
   private UserSignupService signupService;
 
   @PostMapping({"/do-signup"})
-  public User signup(@RequestBody User newUser) {
-    return signupService.signUpNewUser(newUser);
+  public User signup(@RequestBody UserDTO newUserDTO) {
+    return signupService.signUpNewUser(newUserDTO);
   }
 
   @PostMapping({"/is-username-unique"})
   public ResponseEntity<IllegalArgumentException> isUsernameUnique(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.isUsernameUnique(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("Username already exists!"));
@@ -34,7 +35,7 @@ public class SignupController {
 
   @PostMapping({"/does-username-match-format"})
   public ResponseEntity<IllegalArgumentException> doesUsernameMatchFormat(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.doesUsernameMatchFormat(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("Username does not match format!"));
@@ -45,7 +46,7 @@ public class SignupController {
 
   @PostMapping({"/is-email-unique"})
   public ResponseEntity<IllegalArgumentException> isEmailAddressUnique(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.isEmailAddressUnique(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("E-mail address already in use!"));
@@ -56,7 +57,7 @@ public class SignupController {
 
   @PostMapping({"/is-email"})
   public ResponseEntity<IllegalArgumentException> isEmailAddress(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.isEmailAddress(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("Not a valid e-mail address!"));
@@ -67,7 +68,7 @@ public class SignupController {
 
   @PostMapping({"/does-password-match-format"})
   public ResponseEntity<IllegalArgumentException> doesPasswordMatchFormat(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.doesPasswordMatchFormat(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("Password does not match format!"));
@@ -78,7 +79,7 @@ public class SignupController {
 
   @PostMapping({"/do-passwords-match"})
   public ResponseEntity<IllegalArgumentException> doPasswordsMatch(
-      @RequestBody User newUser) {
+      @RequestBody UserDTO newUser) {
     if (!signupService.doPasswordsMatch(newUser)) {
       return ResponseEntity.badRequest()
           .body(new IllegalArgumentException("Passwords do not match!"));

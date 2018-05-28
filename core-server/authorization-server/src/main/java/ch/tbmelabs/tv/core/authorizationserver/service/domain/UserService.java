@@ -34,7 +34,7 @@ public class UserService {
 
     userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
 
-    return userRepository.save(user);
+    return userRepository.findOne(user.getId());
   }
 
   public Page<UserDTO> findAll(Pageable pageable) {
@@ -46,7 +46,16 @@ public class UserService {
       throw new IllegalArgumentException("You can only update an existing User!");
     }
 
-    return save(userDTO);
+    User user = userMapper.toEntity(userDTO);
+    if (user.getPassword() == null || user.getPassword().isEmpty()) {
+      user.setPassword(userRepository.findOne(user.getId()).getPassword());
+    }
+    
+    user = userRepository.save(user);
+
+    userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
+
+    return userRepository.findOne(user.getId());
   }
 
   public void delete(UserDTO userDTO) {

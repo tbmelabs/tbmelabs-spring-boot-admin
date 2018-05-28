@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
@@ -38,15 +35,10 @@ public class ClientGrantTypeAssociationTest {
   @Test
   public void clientGrantTypeAssociationShouldBeAnnotated() {
     assertThat(ClientGrantTypeAssociation.class).hasAnnotation(Entity.class)
-        .hasAnnotation(Table.class).hasAnnotation(JsonInclude.class)
-        .hasAnnotation(JsonIgnoreProperties.class);
+        .hasAnnotation(Table.class);
 
     assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(Table.class).name())
         .isNotNull().isEqualTo("client_has_grant_types");
-    assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class)
-        .ignoreUnknown()).isTrue();
   }
 
   @Test

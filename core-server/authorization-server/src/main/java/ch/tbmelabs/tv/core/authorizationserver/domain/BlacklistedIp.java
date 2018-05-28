@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
@@ -19,8 +21,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "blacklisted_ips")
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BlacklistedIp extends NicelyDocumentedJDBCResource {
 
@@ -47,5 +49,30 @@ public class BlacklistedIp extends NicelyDocumentedJDBCResource {
   public BlacklistedIp(String startIp, String endIp) {
     setStartIp(startIp);
     setEndIp(endIp);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof BlacklistedIp)) {
+      return false;
+    }
+
+    BlacklistedIp other = (BlacklistedIp) object;
+    return Objects.equals(this.getId(), other.getId())
+        && Objects.equals(this.getStartIp(), other.getStartIp())
+        && Objects.equals(this.getEndIp(), other.getEndIp());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(this.getId())
+        .build();
+    // @formatter:on
   }
 }

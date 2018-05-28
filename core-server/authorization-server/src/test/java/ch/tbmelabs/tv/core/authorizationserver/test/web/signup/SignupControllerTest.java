@@ -6,6 +6,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
+import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupController;
 import java.lang.reflect.Method;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +19,6 @@ import org.mockito.Spy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupController;
 
 public class SignupControllerTest {
 
@@ -34,16 +34,17 @@ public class SignupControllerTest {
     initMocks(this);
 
     doReturn(true).when(userSignupServiceFixture)
-        .isUsernameUnique(ArgumentMatchers.any(User.class));
+        .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
+        .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .isEmailAddressUnique(ArgumentMatchers.any(User.class));
-    doReturn(true).when(userSignupServiceFixture).isEmailAddress(ArgumentMatchers.any(User.class));
+        .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
+        .isEmailAddress(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doPasswordsMatch(ArgumentMatchers.any(User.class));
+        .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
+    doReturn(true).when(userSignupServiceFixture)
+        .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
@@ -61,55 +62,57 @@ public class SignupControllerTest {
 
   @Test
   public void signupShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method signup = SignupController.class.getDeclaredMethod("signup", new Class<?>[]{User.class});
+    Method signup =
+        SignupController.class.getDeclaredMethod("signup", new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/do-signup");
   }
 
   @Test
   public void signupShouldCallServiceMethod() {
-    fixture.signup(new User());
+    fixture.signup(new UserDTO());
 
-    verify(userSignupServiceFixture, times(1)).signUpNewUser(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1)).signUpNewUser(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void isUsernameUniqueShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method signup =
-        SignupController.class.getDeclaredMethod("isUsernameUnique", new Class<?>[]{User.class});
+    Method signup = SignupController.class.getDeclaredMethod("isUsernameUnique",
+        new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-username-unique");
   }
 
   @Test
   public void isUsernameUniqueShouldCallServiceMethod() {
-    fixture.isUsernameUnique(new User());
+    fixture.isUsernameUnique(new UserDTO());
 
-    verify(userSignupServiceFixture, times(1)).isUsernameUnique(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1))
+        .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void doesUsernameMatchFormatShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesUsernameMatchFormat",
-        new Class<?>[]{User.class});
+        new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/does-username-match-format");
   }
 
   @Test
   public void doesUsernameMatchFormatShouldCallServiceMethod() {
-    fixture.doesUsernameMatchFormat(new User());
+    fixture.doesUsernameMatchFormat(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
+        .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void isEmailAddressUniqueShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isEmailAddressUnique",
-        new Class<?>[]{User.class});
+        new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-email-unique");
   }
@@ -117,56 +120,57 @@ public class SignupControllerTest {
   @Test
   public void isEmailAddressUniqueShouldCallServiceMethod()
       throws NoSuchMethodException, SecurityException {
-    fixture.isEmailAddressUnique(new User());
+    fixture.isEmailAddressUnique(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .isEmailAddressUnique(ArgumentMatchers.any(User.class));
+        .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void isEmailAddressShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("isEmailAddress", new Class<?>[]{User.class});
+        SignupController.class.getDeclaredMethod("isEmailAddress", new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/is-email");
   }
 
   @Test
   public void isEmailAddressShouldCallServiceMethod() {
-    fixture.isEmailAddress(new User());
+    fixture.isEmailAddress(new UserDTO());
 
-    verify(userSignupServiceFixture, times(1)).isEmailAddress(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1)).isEmailAddress(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void doesPasswordMatchFormatShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesPasswordMatchFormat",
-        new Class<?>[]{User.class});
+        new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/does-password-match-format");
   }
 
   @Test
   public void doesPasswordMatchFormatShouldCallServiceMethod() {
-    fixture.doesPasswordMatchFormat(new User());
+    fixture.doesPasswordMatchFormat(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
+        .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void doPasswordsMatchShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
-    Method signup =
-        SignupController.class.getDeclaredMethod("doPasswordsMatch", new Class<?>[]{User.class});
+    Method signup = SignupController.class.getDeclaredMethod("doPasswordsMatch",
+        new Class<?>[]{UserDTO.class});
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
         .containsExactly("/do-passwords-match");
   }
 
   @Test
   public void doPasswordsMatchShouldCallServiceMethod() {
-    fixture.doPasswordsMatch(new User());
+    fixture.doPasswordsMatch(new UserDTO());
 
-    verify(userSignupServiceFixture, times(1)).doPasswordsMatch(ArgumentMatchers.any(User.class));
+    verify(userSignupServiceFixture, times(1))
+        .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
   }
 }

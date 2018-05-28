@@ -6,9 +6,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -36,14 +33,9 @@ public class RoleTest {
 
   @Test
   public void roleShouldBeAnnotated() {
-    assertThat(Role.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Role.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Role.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("user_roles");
-    assertThat(Role.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(Role.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
   }
 
   @Test

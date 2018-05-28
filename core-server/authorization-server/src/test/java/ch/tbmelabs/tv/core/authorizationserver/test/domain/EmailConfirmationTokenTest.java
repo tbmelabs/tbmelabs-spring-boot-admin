@@ -3,6 +3,9 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
+import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -13,12 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 
 public class EmailConfirmationTokenTest {
 
@@ -32,16 +29,10 @@ public class EmailConfirmationTokenTest {
 
   @Test
   public void emailConfirmationTokenShouldBeAnnotated() {
-    assertThat(EmailConfirmationToken.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(EmailConfirmationToken.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
         .isEqualTo("email_confirmation_tokens");
-    assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(JsonIgnoreProperties.class)
-        .ignoreUnknown()).isTrue();
-
   }
 
   @Test

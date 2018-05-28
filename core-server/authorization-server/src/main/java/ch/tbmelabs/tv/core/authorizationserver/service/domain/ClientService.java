@@ -59,7 +59,17 @@ public class ClientService {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 
-    return save(clientDTO);
+    Client client = clientMapper.toEntity(clientDTO);
+    client = clientRepository.save(client);
+
+    clientMapper.grantTypesToGrantTypeAssociations(clientDTO.getGrantTypes(), client)
+        .forEach(clientGrantTypeRepository::save);
+    clientMapper.authoritiesToAuthorityAssociations(clientDTO.getGrantedAuthorities(), client)
+        .forEach(clientAuthorityRepository::save);
+    clientMapper.scopesToScopeAssociations(clientDTO.getScopes(), client)
+        .forEach(clientScopeRepository::save);
+
+    return client;
   }
 
   public void delete(ClientDTO clientDTO) {

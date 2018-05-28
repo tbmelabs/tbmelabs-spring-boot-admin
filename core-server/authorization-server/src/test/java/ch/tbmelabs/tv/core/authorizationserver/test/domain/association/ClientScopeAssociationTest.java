@@ -11,9 +11,6 @@ import javax.persistence.Table;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
@@ -37,15 +34,10 @@ public class ClientScopeAssociationTest {
 
   @Test
   public void clientScopeAssociationShouldBeAnnotated() {
-    assertThat(ClientScopeAssociation.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(ClientScopeAssociation.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
         .isEqualTo("client_has_scopes");
-    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isNotNull().isEqualTo(Include.NON_NULL);
-    assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(JsonIgnoreProperties.class)
-        .ignoreUnknown()).isTrue();
   }
 
   @Test

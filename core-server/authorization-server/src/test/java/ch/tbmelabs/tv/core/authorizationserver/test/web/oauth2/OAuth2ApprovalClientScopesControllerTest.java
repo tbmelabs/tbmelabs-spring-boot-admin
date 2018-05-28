@@ -12,6 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAsso
 import ch.tbmelabs.tv.core.authorizationserver.web.oauth2.OAuth2ApprovalClientScopesController;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -48,8 +49,8 @@ public class OAuth2ApprovalClientScopesControllerTest {
 
     doReturn(Optional.of(new Client())).when(clientRepositoryFixture)
         .findOneByClientId(ArgumentMatchers.anyString());
-    doReturn(Collections.singletonList(mockAssociation)).when(clientScopeAssociationRepository)
-        .findAllByClient(ArgumentMatchers.any(Client.class));
+    doReturn(new HashSet<>(Collections.singletonList(mockAssociation)))
+        .when(clientScopeAssociationRepository).findAllByClient(ArgumentMatchers.any(Client.class));
   }
 
   @Test

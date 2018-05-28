@@ -5,9 +5,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -35,15 +32,10 @@ public class AuthorityTest {
 
   @Test
   public void roleShouldBeAnnotated() {
-    assertThat(Authority.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(Authority.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Authority.class.getDeclaredAnnotation(Table.class).name())
         .isEqualTo("client_authorities");
-    assertThat(Authority.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(Authority.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
   }
 
   @Test

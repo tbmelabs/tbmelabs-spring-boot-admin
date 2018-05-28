@@ -10,9 +10,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResour
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
@@ -44,14 +41,9 @@ public class UserTest {
 
   @Test
   public void userShouldBeAnnotated() {
-    assertThat(User.class).hasAnnotation(Entity.class).hasAnnotation(Table.class)
-        .hasAnnotation(JsonInclude.class).hasAnnotation(JsonIgnoreProperties.class);
+    assertThat(User.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(User.class.getDeclaredAnnotation(Table.class).name()).isEqualTo("users");
-    assertThat(User.class.getDeclaredAnnotation(JsonInclude.class).value())
-        .isEqualTo(Include.NON_NULL);
-    assertThat(User.class.getDeclaredAnnotation(JsonIgnoreProperties.class).ignoreUnknown())
-        .isTrue();
   }
 
   @Test

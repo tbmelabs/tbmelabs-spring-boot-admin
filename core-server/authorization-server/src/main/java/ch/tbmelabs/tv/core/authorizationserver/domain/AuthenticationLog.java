@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -23,8 +25,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "authentication_log")
-@EqualsAndHashCode(callSuper = true)
 public class AuthenticationLog extends NicelyDocumentedJDBCResource {
 
   @Transient
@@ -44,12 +46,12 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
   private Long id;
 
   @NotNull
-  @Column(columnDefinition = "varchar(3)")
+  @Column(columnDefinition = "varchar(3)", updatable = false)
   private AUTHENTICATION_STATE state;
 
   @NotEmpty
   @Length(max = 45)
-  @Column(columnDefinition = "bpchar(45)")
+  @Column(columnDefinition = "bpchar(45)", updatable = false)
   private String ip;
 
   @Length(max = 256)
@@ -65,5 +67,28 @@ public class AuthenticationLog extends NicelyDocumentedJDBCResource {
     setIp(ip);
     setMessage(message);
     setUser(user);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof AuthenticationLog)) {
+      return false;
+    }
+
+    AuthenticationLog other = (AuthenticationLog) object;
+    return Objects.equals(this.getId(), other.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(this.getId())
+        .build();
+    // @formatter:on
   }
 }

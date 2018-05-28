@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttyp
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -26,8 +28,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "client_grant_types")
-@EqualsAndHashCode(callSuper = true)
 public class GrantType extends NicelyDocumentedJDBCResource {
 
   @Transient
@@ -54,5 +56,29 @@ public class GrantType extends NicelyDocumentedJDBCResource {
 
   public GrantType(String name) {
     setName(name);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof GrantType)) {
+      return false;
+    }
+
+    GrantType other = (GrantType) object;
+    return Objects.equals(this.getId(), other.getId())
+        && Objects.equals(this.getName(), other.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(this.getId())
+        .build();
+    // @formatter:on
   }
 }

@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -26,8 +28,8 @@ import org.springframework.security.core.GrantedAuthority;
 @Data
 @Entity
 @NoArgsConstructor
+@EqualsAndHashCode
 @Table(name = "user_roles")
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthority {
 
@@ -59,5 +61,29 @@ public class Role extends NicelyDocumentedJDBCResource implements GrantedAuthori
   @Override
   public String getAuthority() {
     return getName();
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof Role)) {
+      return false;
+    }
+
+    Role other = (Role) object;
+    return Objects.equals(this.getId(), other.getId())
+        && Objects.equals(this.getName(), other.getName());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(this.getId())
+        .build();
+    // @formatter:on
   }
 }

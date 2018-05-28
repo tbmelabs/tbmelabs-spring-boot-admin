@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,13 +9,13 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Random;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -36,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserControllerTest {
 
   @Mock
-  private UserCRUDRepository mockUserRepository;
+  private UserService mockUserService;
 
   @Mock
   private UserMapper mockUserMapper;
@@ -45,14 +44,13 @@ public class UserControllerTest {
   @InjectMocks
   private UserController fixture;
 
-  private User testUser;
   private UserDTO testUserDTO;
 
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
 
-    testUser = new User();
+    User testUser = UserDTOTest.createTestUser();
     testUserDTO = new UserDTO();
     // testUserDTO.setId(testUser.getId());
     testUserDTO.setCreated(testUser.getCreated());
@@ -63,8 +61,7 @@ public class UserControllerTest {
     testUserDTO.setIsBlocked(testUser.getIsBlocked());
     // TODO: Associations
 
-    doReturn(testUser).when(mockUserRepository).findOne(ArgumentMatchers.anyLong());
-    doReturn(new PageImpl<>(Collections.singletonList(testUser))).when(mockUserRepository)
+    doReturn(new PageImpl<>(Collections.singletonList(testUserDTO))).when(mockUserService)
         .findAll(ArgumentMatchers.any(Pageable.class));
 
     doReturn(testUserDTO).when(mockUserMapper).toDto(ArgumentMatchers.any(User.class));
@@ -97,7 +94,8 @@ public class UserControllerTest {
   public void getAllUsersShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllUsers(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
         .containsExactly(testUserDTO);
-    verify(mockUserRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
+
+    verify(mockUserService, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 
   @Test
@@ -109,23 +107,11 @@ public class UserControllerTest {
 
   @Test
   public void updateUserShouldPersistMappedDTO() {
-    testUser.setPassword(RandomStringUtils.random(60));
     testUserDTO.setId(new Random().nextLong());
 
-    try {
-      fixture.updateUser(testUserDTO);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    fixture.updateUser(testUserDTO);
 
-    verify(mockUserRepository, times(1)).save(testUser);
-  }
-
-  @Test
-  public void updateUserShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.updateUser(testUserDTO))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only update an existing user!");
+    verify(mockUserService, times(1)).update(testUserDTO);
   }
 
   @Test
@@ -141,13 +127,6 @@ public class UserControllerTest {
 
     fixture.deleteUser(testUserDTO);
 
-    verify(mockUserRepository, times(1)).delete(testUser);
-  }
-
-  @Test
-  public void deleteUserShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.deleteUser(testUserDTO))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only delete an existing user!");
+    verify(mockUserService, times(1)).delete(testUserDTO);
   }
 }

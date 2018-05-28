@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
@@ -25,7 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @Table(name = "email_confirmation_tokens")
 public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
 
@@ -43,10 +45,11 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
 
   @NotEmpty
   @Length(min = 36, max = 36)
-  @Column(columnDefinition = "bpchar(36)", unique = true)
+  @Column(columnDefinition = "bpchar(36)", unique = true, updatable = false)
   private String tokenString;
 
   @NotNull
+  @Column(updatable = false)
   private Date expirationDate;
 
   @JsonManagedReference
@@ -64,5 +67,28 @@ public class EmailConfirmationToken extends NicelyDocumentedJDBCResource {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.DATE, 1);
     return calendar.getTime();
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (object == null || !(object instanceof EmailConfirmationToken)) {
+      return false;
+    }
+
+    EmailConfirmationToken other = (EmailConfirmationToken) object;
+    return Objects.equals(this.getId(), other.getId());
+  }
+
+  @Override
+  public int hashCode() {
+    if (this.getId() == null) {
+      return super.hashCode();
+    }
+
+    // @formatter:off
+    return new HashCodeBuilder()
+        .append(this.getId())
+        .build();
+    // @formatter:on
   }
 }

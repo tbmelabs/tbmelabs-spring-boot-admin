@@ -5,6 +5,10 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -14,10 +18,6 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 
 public class UserSignupServiceValidationTest {
 
@@ -31,7 +31,7 @@ public class UserSignupServiceValidationTest {
   @InjectMocks
   private UserSignupService fixture;
 
-  private static final User existingUser = new User();
+  private static final UserDTO existingUser = new UserDTO();
 
   @BeforeClass
   public static void beforeClassSetUp() {
@@ -59,17 +59,17 @@ public class UserSignupServiceValidationTest {
       return Optional.empty();
     }).when(userRepository).findOneByEmailIgnoreCase(ArgumentMatchers.anyString());
 
-    doCallRealMethod().when(fixture).isUsernameUnique(ArgumentMatchers.any(User.class));
-    doCallRealMethod().when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(User.class));
-    doCallRealMethod().when(fixture).isEmailAddressUnique(ArgumentMatchers.any(User.class));
-    doCallRealMethod().when(fixture).isEmailAddress(ArgumentMatchers.any(User.class));
-    doCallRealMethod().when(fixture).doesPasswordMatchFormat(ArgumentMatchers.any(User.class));
-    doCallRealMethod().when(fixture).doPasswordsMatch(ArgumentMatchers.any(User.class));
+    doCallRealMethod().when(fixture).isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
+    doCallRealMethod().when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
+    doCallRealMethod().when(fixture).isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
+    doCallRealMethod().when(fixture).isEmailAddress(ArgumentMatchers.any(UserDTO.class));
+    doCallRealMethod().when(fixture).doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
+    doCallRealMethod().when(fixture).doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void userSignupServiceShouldInvalidateExistingUsername() {
-    final User unexistingUser = new User();
+    final UserDTO unexistingUser = new UserDTO();
     unexistingUser.setUsername(RandomStringUtils.random(11));
 
     assertThat(fixture.isUsernameUnique(existingUser)).isFalse();
@@ -78,10 +78,10 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingUsername() {
-    final User invalidUser = new User();
+    final UserDTO invalidUser = new UserDTO();
     invalidUser.setUsername(RandomStringUtils.randomAscii(10) + "$");
 
-    final User validUser = new User();
+    final UserDTO validUser = new UserDTO();
     validUser.setUsername(RandomStringUtils.randomAlphabetic(11));
 
     assertThat(fixture.doesUsernameMatchFormat(invalidUser)).isFalse();
@@ -90,7 +90,7 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateExistingEmail() {
-    User unexistingUser = new User();
+    UserDTO unexistingUser = new UserDTO();
     unexistingUser.setEmail(RandomStringUtils.random(11));
 
     assertThat(fixture.isEmailAddressUnique(existingUser)).isFalse();
@@ -99,10 +99,10 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingEmail() {
-    User invalidUser = new User();
+    UserDTO invalidUser = new UserDTO();
     invalidUser.setEmail(RandomStringUtils.random(11));
 
-    User validUser = new User();
+    UserDTO validUser = new UserDTO();
     validUser.setEmail("valid.email@tbme.tv");
 
     assertThat(fixture.isEmailAddress(invalidUser)).isFalse();
@@ -111,10 +111,10 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidateNotMatchingPassword() {
-    User invalidUser = new User();
+    UserDTO invalidUser = new UserDTO();
     invalidUser.setPassword(RandomStringUtils.random(11));
 
-    User validUser = new User();
+    UserDTO validUser = new UserDTO();
     validUser.setPassword("V@l1dP@$$w0rd");
 
     assertThat(fixture.doesPasswordMatchFormat(invalidUser)).isFalse();
@@ -123,11 +123,11 @@ public class UserSignupServiceValidationTest {
 
   @Test
   public void userSignupServiceShouldInvalidatePasswordAndConfirmationIfTheyDontMatch() {
-    User invalidUser = new User();
+    UserDTO invalidUser = new UserDTO();
     invalidUser.setPassword("APassword$99");
     invalidUser.setConfirmation("NotQuiteAPassword$99");
 
-    User validUser = new User();
+    UserDTO validUser = new UserDTO();
     validUser.setPassword("V@l1dP@$$w0rd");
     validUser.setConfirmation(validUser.getPassword());
 

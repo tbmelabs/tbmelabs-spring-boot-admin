@@ -5,15 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -26,6 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
 public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -37,13 +38,13 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   private MockMvc mockMvc;
 
   @Autowired
-  private RoleCRUDRepository roleRepository;
-
-  @Autowired
   private UserCRUDRepository userRepository;
 
   @Autowired
-  private UserMapper userMapper;
+  private RoleCRUDRepository roleRepository;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   private RoleMapper roleMapper;
@@ -54,19 +55,14 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   public void beforeTestSetUp() {
     if ((testUser = userRepository.findOneByUsernameIgnoreCase("PrincipalEndpointIntTestUser")
         .orElse(null)) == null) {
-      User newUser = new User();
+      UserDTO newUser = new UserDTO();
       newUser.setUsername("PrincipalEndpointIntTestUser");
       newUser.setEmail(newUser.getUsername() + "@tbme.tv");
       newUser.setPassword(RandomStringUtils.random(11));
+      newUser.setRoles(new HashSet<RoleDTO>(Collections.singletonList(
+          roleMapper.toDto(roleRepository.save(new Role(RandomStringUtils.random(11)))))));
 
-      User persistedUser = userRepository.save(newUser);
-
-      Role newRole = new Role(RandomStringUtils.random(11));
-      persistedUser.setRoles(userMapper.rolesToAssociations(
-          new HashSet<>(Collections.singletonList(roleMapper.toDto(roleRepository.save(newRole)))),
-          persistedUser));
-
-      testUser = userRepository.save(persistedUser);
+      testUser = userService.save(newUser);
     }
   }
 

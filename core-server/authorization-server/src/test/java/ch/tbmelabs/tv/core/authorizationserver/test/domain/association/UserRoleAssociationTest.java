@@ -4,15 +4,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import java.util.Random;
-import javax.persistence.IdClass;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociationId;
+import java.util.Random;
+import javax.persistence.Entity;
+import javax.persistence.IdClass;
+import javax.persistence.Table;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
 
 public class UserRoleAssociationTest {
 
@@ -28,6 +30,14 @@ public class UserRoleAssociationTest {
 
     doReturn(new Random().nextLong()).when(userFixture).getId();
     doReturn(new Random().nextLong()).when(roleFixture).getId();
+  }
+
+  @Test
+  public void userRoleAssociationShouldBeAnnotated() {
+    assertThat(UserRoleAssociation.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
+
+    assertThat(UserRoleAssociation.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
+        .isEqualTo("user_has_roles");
   }
 
   @Test

@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,7 +9,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
@@ -37,7 +36,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientControllerTest {
 
   @Mock
-  private ClientCRUDRepository mockClientRepository;
+  private ClientService mockClientService;
 
   @Mock
   private ClientMapper mockClientMapper;
@@ -46,14 +45,13 @@ public class ClientControllerTest {
   @InjectMocks
   private ClientController fixture;
 
-  private Client testClient;
   private ClientDTO testClientDTO;
 
   @Before
   public void beforeTestSetUp() {
     initMocks(this);
 
-    testClient = ClientDTOTest.createTestClient();
+    Client testClient = ClientDTOTest.createTestClient();
     testClientDTO = new ClientDTO();
     // testClientDTO.setId(testClient.getId());
     testClientDTO.setCreated(testClient.getCreated());
@@ -65,9 +63,8 @@ public class ClientControllerTest {
         .setRedirectUris(testClient.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
     // TODO: Associations
 
-    doReturn(testClient).when(mockClientRepository).findOne(ArgumentMatchers.anyLong());
-    doReturn(new PageImpl<>(Collections.singletonList(testClient))).when(mockClientRepository)
-        .findAll(ArgumentMatchers.any(Pageable.class));
+    doReturn(new PageImpl<ClientDTO>(Collections.singletonList(testClientDTO)))
+        .when(mockClientService).findAll(Mockito.any(Pageable.class));
 
     doReturn(testClientDTO).when(mockClientMapper).toDto(ArgumentMatchers.any(Client.class));
     doReturn(testClient).when(mockClientMapper).toEntity(ArgumentMatchers.any(ClientDTO.class));
@@ -99,16 +96,7 @@ public class ClientControllerTest {
   public void createClientShouldPersistMappedDTO() {
     fixture.createClient(testClientDTO);
 
-    verify(mockClientRepository, times(1)).save(testClient);
-  }
-
-  @Test
-  public void createClientsShouldThrowErrorIfClientHasAlreadyAnId() {
-    testClientDTO.setId(new Random().nextLong());
-
-    assertThatThrownBy(() -> fixture.createClient(testClientDTO))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only create a new client without an id!");
+    verify(mockClientService, times(1)).save(testClientDTO);
   }
 
   @Test
@@ -122,7 +110,8 @@ public class ClientControllerTest {
   public void getAllClientsShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllClients(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
         .containsExactly(testClientDTO);
-    verify(mockClientRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
+
+    verify(mockClientService, times(1)).findAll(Mockito.any(Pageable.class));
   }
 
   @Test
@@ -138,14 +127,7 @@ public class ClientControllerTest {
 
     fixture.updateClient(testClientDTO);
 
-    verify(mockClientRepository, times(1)).save(testClient);
-  }
-
-  @Test
-  public void updateClientShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.updateClient(testClientDTO))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only update an existing client!");
+    verify(mockClientService, times(1)).update(testClientDTO);
   }
 
   @Test
@@ -161,13 +143,6 @@ public class ClientControllerTest {
 
     fixture.deleteClient(testClientDTO);
 
-    verify(mockClientRepository, times(1)).delete(testClient);
-  }
-
-  @Test
-  public void deleteClientShouldThrowErrorIfClientHasNoId() {
-    assertThatThrownBy(() -> fixture.deleteClient(testClientDTO))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("You can only delete an existing client!");
+    verify(mockClientService, times(1)).delete(testClientDTO);
   }
 }

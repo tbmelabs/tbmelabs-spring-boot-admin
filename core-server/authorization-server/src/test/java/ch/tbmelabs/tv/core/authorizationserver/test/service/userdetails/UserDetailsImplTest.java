@@ -4,13 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
+import java.util.ArrayList;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 
 public class UserDetailsImplTest {
 
@@ -50,6 +51,6 @@ public class UserDetailsImplTest {
     assertThat(fixture.isAccountNonLocked()).isEqualTo(!mockUser.getIsBlocked());
     assertThat(fixture.isAccountNonExpired()).isTrue();
     assertThat(fixture.isCredentialsNonExpired()).isTrue();
-    assertThat(fixture.getAuthorities()).isEqualTo(mockUser.getRoles());
+    assertThat(fixture.getAuthorities()).isEqualTo(new ArrayList<>(mockUser.getRoles()));
   }
 }
