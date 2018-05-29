@@ -26,7 +26,7 @@ module.exports = {
   output: {
     path: BUILD_DIR,
     filename: '[name].bundle.js',
-    chunkFilename: '[hash].js'
+    chunkFilename: '[chunkhash].js'
   },
   module: {
     rules: [
@@ -85,11 +85,6 @@ module.exports = {
     }
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(ENV)
-      }
-    }),
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       chunks: ['app'],

@@ -20,7 +20,7 @@ module.exports = {
   output: {
     path: BUILD_DIR,
     filename: '[name].bundle.js',
-    chunkFilename: '[hash].js'
+    chunkFilename: '[chunkhash].js'
   },
   module: {
     rules: [
@@ -59,7 +59,21 @@ module.exports = {
     ]
   },
   mode: JSON.stringify(ENV),
-  plugins: [
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          chunks: 'initial',
+          minChunks: 2,
+        },
+        vendor: {
+          test: NODE_DIR,
+          chunks: 'all',
+          name: 'vendor'
+        }
+      }
+    }
+  }, plugins: [
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       filename: '../index.html',
