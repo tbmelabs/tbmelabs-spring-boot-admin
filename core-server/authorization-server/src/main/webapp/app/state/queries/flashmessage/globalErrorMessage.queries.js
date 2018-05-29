@@ -13,7 +13,7 @@ export function addInvalidRequestFlashMessage(error: string) {
     title: texts.invalid_request_alert_title,
     text: error
   });
-};
+}
 
 export function addInsufficientPermissionFlashMessage() {
   const texts = getTexts(getStore().getState()).app;
@@ -23,7 +23,7 @@ export function addInsufficientPermissionFlashMessage() {
     title: texts.access_denied_alert_title,
     text: texts.access_denied_alert_text
   });
-};
+}
 
 export function addServerNotRespondingFlashMessage() {
   const texts = getTexts(getStore().getState()).app;
@@ -33,4 +33,4 @@ export function addServerNotRespondingFlashMessage() {
     title: texts.server_not_responding_alert_title,
     text: texts.server_not_responding_alert_text
   });
-};
+}

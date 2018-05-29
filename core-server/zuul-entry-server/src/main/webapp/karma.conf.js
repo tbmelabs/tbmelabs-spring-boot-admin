@@ -7,6 +7,7 @@ const TEST_DIR = path.resolve(__dirname, '__tests__');
 
 process.env.CHROMIUM_BIN = require('puppeteer').executablePath();
 
+const ENV = 'development';
 const WATCH = process.argv.indexOf('--watch') > -1;
 
 module.exports = (config) => {
@@ -51,8 +52,12 @@ module.exports = (config) => {
         html: '../../../target/test-results/coverage'
       }
     },
-    reporters: ['progress', 'mocha', 'coverage-istanbul',
-      'karma-remap-istanbul'],
+    reporters: [
+      'progress',
+      'mocha',
+      'coverage-istanbul',
+      'karma-remap-istanbul'
+    ],
     singleRun: !WATCH,
     webpack: {
       devtool: 'inline-source-map',
@@ -63,6 +68,7 @@ module.exports = (config) => {
             test: /\.js$/,
             options: {
               plugins: [
+                'babel-plugin-syntax-dynamic-import',
                 'transform-flow-strip-types',
                 'transform-object-rest-spread'
               ],
@@ -101,7 +107,8 @@ module.exports = (config) => {
             }
           }
         ]
-      }
+      },
+      mode: ENV
     }
   });
 };

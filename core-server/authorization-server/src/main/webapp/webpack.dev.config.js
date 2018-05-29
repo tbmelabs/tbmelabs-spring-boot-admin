@@ -66,7 +66,7 @@ module.exports = {
       }
     ]
   },
-  mode: JSON.stringify(ENV),
+  mode: ENV,
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1

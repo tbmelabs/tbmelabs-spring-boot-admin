@@ -56,22 +56,7 @@ module.exports = {
       }
     ]
   },
-  mode: JSON.stringify(ENV),
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          chunks: 'initial',
-          minChunks: 2,
-        },
-        vendor: {
-          test: NODE_DIR,
-          chunks: 'all',
-          name: 'vendor'
-        }
-      }
-    }
-  },
+  mode: ENV,
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1

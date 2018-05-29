@@ -68,7 +68,7 @@ module.exports = {
       }
     ]
   },
-  mode: JSON.stringify(ENV),
+  mode: ENV,
   optimization: {
     splitChunks: {
       cacheGroups: {

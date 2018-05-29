@@ -58,7 +58,7 @@ module.exports = {
       }
     ]
   },
-  mode: JSON.stringify(ENV),
+  mode: ENV,
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -73,7 +73,8 @@ module.exports = {
         }
       }
     }
-  }, plugins: [
+  },
+  plugins: [
     new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       filename: '../index.html',
