@@ -11,7 +11,7 @@ describe('FlashMessage', () => {
   const testMessage = Math.random().toString(36).substring(7);
 
   it('renders without problems', () => {
-    var flashMessage = shallow(
+    const flashMessage = shallow(
         <FlashMessage message={testMessage}
                       deleteFlashMessage={() => 'delete'}/>
     );

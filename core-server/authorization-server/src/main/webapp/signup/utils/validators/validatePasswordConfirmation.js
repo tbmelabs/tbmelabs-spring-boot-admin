@@ -5,12 +5,12 @@ import axios, {CancelToken} from 'axios';
 
 import {type userType} from '../../../common/types/user.type';
 
-var cancelConfirmation;
+let cancelConfirmation;
 
 export default (password: string, confirmation: string, errors: userType,
     callback: (errors: userType) => void) => {
-  if (password == undefined || password == '' || confirmation == undefined
-      || confirmation == '') {
+  if (password === undefined || password === '' || confirmation === undefined
+      || confirmation === '') {
     delete errors.confirmation;
     return;
   }

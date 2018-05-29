@@ -6,8 +6,6 @@ import authentication, {type AuthenticationState} from './authentication.reducer
 import flashMessages, {type FlashMessageState} from './flashMessage.reducer';
 import language, {type LanguageState} from "./language.reducer";
 
-'./language.reducer';
-
 export type ApplicationState = {
   authentication: AuthenticationState,
   flashMessages: FlashMessageState,

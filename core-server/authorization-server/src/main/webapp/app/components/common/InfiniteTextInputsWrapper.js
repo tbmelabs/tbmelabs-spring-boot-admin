@@ -42,8 +42,7 @@ class InfiniteTextInputsWrapper extends Component<InfiniteTextInputsWrapper.prop
   }
 
   onFocus(event: SyntheticInputEvent<HTMLInputElement>) {
-    const index = this.extractIndex(event.target.name);
-    lastFocused = index;
+    lastFocused = this.extractIndex(event.target.name);
 
     let tmpValue = event.target.value;
     event.target.value = '';

@@ -5,11 +5,11 @@ import axios, {CancelToken} from 'axios';
 
 import {type userType} from '../../../common/types/user.type';
 
-var cancelUsername;
+let cancelUsername;
 
 export default (username: string, errors: userType,
     callback: (errors: userType) => void) => {
-  if (username == undefined || username == '') {
+  if (username === undefined || username === '') {
     delete errors.username;
     return;
   }

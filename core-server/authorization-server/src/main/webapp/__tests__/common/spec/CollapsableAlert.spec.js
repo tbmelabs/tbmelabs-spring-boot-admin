@@ -14,7 +14,7 @@ describe('CollapsableAlert', () => {
   const STYLE_WARNING = 'warning';
 
   it('renders success-message without problems', () => {
-    var collapsableAlert = shallow(
+    const collapsableAlert = shallow(
         <CollapsableAlert collapse={false} style={STYLE_SUCCESS}/>
     );
 
@@ -22,7 +22,7 @@ describe('CollapsableAlert', () => {
   });
 
   it('renders info-message without problems', () => {
-    var collapsableAlert = shallow(
+    const collapsableAlert = shallow(
         <CollapsableAlert collapse={false} style={STYLE_INFO}/>
     );
 
@@ -30,7 +30,7 @@ describe('CollapsableAlert', () => {
   });
 
   it('renders danger-message without problems', () => {
-    var collapsableAlert = shallow(
+    const collapsableAlert = shallow(
         <CollapsableAlert collapse={false} style={STYLE_DANGER}/>
     );
 
@@ -38,7 +38,7 @@ describe('CollapsableAlert', () => {
   });
 
   it('renders warning-message without problems', () => {
-    var collapsableAlert = shallow(
+    const collapsableAlert = shallow(
         <CollapsableAlert collapse={false} style={STYLE_WARNING}/>
     );
 
