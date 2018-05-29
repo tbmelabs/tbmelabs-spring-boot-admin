@@ -18,11 +18,6 @@ class AccountInformation extends Component<AccountInformation.propTypes> {
     const {account, texts} = this.props;
     const createdDate = new Date(account.created).toDateString();
 
-    if (account.roles) {
-      console.log('got roles: ',
-          account.roles.flatMap((role: roleType) => role.name).join(', '));
-    }
-
     return (
         <div>
           <PageHeader>{texts.title}</PageHeader>

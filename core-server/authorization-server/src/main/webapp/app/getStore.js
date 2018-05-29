@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 
 import reducers from './state/reducers';
 
-import logger from 'redux-logger';
+import getLoggerMiddleware from './state/middlewares/getLoggerMiddleware';
+import getSagaMiddleware from './state/middlewares/getSagaMiddleware';
 
-import createSagaMiddleware from 'redux-saga';
 import sagas from './state/sagas';
 
 const middlewares = [];
@@ -17,11 +17,10 @@ const environment = process.env.NODE_ENV;
 middlewares.push(thunk);
 
 if (environment === 'development') {
-  middlewares.push(logger);
+  middlewares.push(getLoggerMiddleware());
 }
 
-const sagaMiddleware = createSagaMiddleware();
-middlewares.push(sagaMiddleware);
+middlewares.push(getSagaMiddleware());
 
 const store = createStore(
     reducers,
@@ -31,7 +30,7 @@ const store = createStore(
     )
 );
 
-sagas.forEach(saga => sagaMiddleware.run(saga));
+sagas.forEach(saga => getSagaMiddleware().run(saga));
 
 export default () => {
   return store;

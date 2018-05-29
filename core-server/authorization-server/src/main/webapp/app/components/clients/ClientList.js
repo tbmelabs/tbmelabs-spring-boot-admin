@@ -23,6 +23,8 @@ class ClientList extends Component<ClientList.propTypes> {
                             message={texts.errors.no_clients_alert_text}/>
       );
     } else {
+      console.log('clients: ', clients);
+
       return (
           <div>
             <Table hover responsive>

@@ -4,6 +4,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {addSaga, removeSaga} from '../../state/SagaManager';
+import {SAVE_CLIENT_SUCCEED} from '../../state/actions/client';
+
 import {type grantTypeType} from '../../../common/types/grantType.type';
 import {type authorityType} from '../../../common/types/authority.type';
 import {type scopeType} from '../../../common/types/scope.type';
@@ -54,6 +57,7 @@ type EditClientModalState = {
   };
   isValid: boolean;
   isLoading: boolean;
+  closeSagaId: string;
 }
 
 class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
@@ -63,8 +67,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   validateForm: () => void;
   onSubmit: () => void;
 
-  constructor(props: EditClientModal.propTypes) {
-    super(props);
+  constructor(props: EditClientModal.propTypes, context: any) {
+    super(props, context);
 
     this.state = {
       clientId: '',
@@ -90,7 +94,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         form: ''
       },
       isValid: false,
-      isLoading: false
+      isLoading: false,
+      closeSagaId: addSaga(SAVE_CLIENT_SUCCEED,
+          context.router.history.goBack)
     };
 
     this.onChange = this.onChange.bind(this);
@@ -107,6 +113,10 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       allGrantTypes: nextProps.grantTypes,
       allScopes: nextProps.scopes
     };
+  }
+
+  componentWillUnmount() {
+    removeSaga(this.state.closeSagaId);
   }
 
   onChange(event: SyntheticInputEvent<HTMLInputElement>) {
@@ -154,7 +164,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     this.setState({
       isValid: isEmpty(errors.clientId) && isEmpty(errors.secret) && isEmpty(
-          errors.accessTokenValiditySeconds) && isEmpty(errors.refreshTokenValiditySeconds)
+          errors.accessTokenValiditySeconds) && isEmpty(
+          errors.refreshTokenValiditySeconds)
       && isEmpty(errors.redirectUri)
       && !!clientId && !!secret && !!accessTokenValiditySeconds
       && !!refreshTokenValiditySeconds && !!redirectUri && !isEmpty(grantTypes)
@@ -257,7 +268,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
               </FormGroup>
 
               <FormGroup controlId='accessTokenValiditySeconds'
-                         validationState={!!errors.accessTokenValiditySeconds ? 'error'
+                         validationState={!!errors.accessTokenValiditySeconds
+                             ? 'error'
                              : null}>
                 <HelpBlock>{errors.accessTokenValiditySeconds}</HelpBlock>
                 <Col componentClass={ControlLabel} sm={4}>
