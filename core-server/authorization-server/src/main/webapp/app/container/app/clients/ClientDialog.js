@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 
 import {connect} from 'react-redux';
 
+import {type clientType} from '../../../../common/types/client.type';
+
 import {getClientAuthorities} from '../../../state/selectors/authority';
 import {getClientGrantTypes} from '../../../state/selectors/grantType';
 import {getClientScopes} from '../../../state/selectors/scope';
@@ -14,15 +16,33 @@ import {requestClientAuthorities} from '../../../state/queries/authority';
 import {requestClientGrantTypes} from '../../../state/queries/grantType';
 import {requestClientScopes} from '../../../state/queries/scope';
 import {addFlashMessage} from '../../../state/queries/flashmessage';
-import {requestClient, saveClient} from '../../../state/queries/client';
+import {
+  requestClient,
+  saveClient,
+  updateClient
+} from '../../../state/queries/client';
 
-import EditClientModal from '../../../components/clients/EditClientModal';
+import NewClientModal from '../../../components/clients/NewClientModal';
+import EditClientModal from "../../../components/clients/EditClientModal";
 
-class ClientDialog extends Component<ClientDialog.propTypes> {
+type ClientDialogState = {
+  existingClient: { ...clientType };
+}
+
+class ClientDialog extends Component<ClientDialog.propTypes, ClientDialogState> {
+  constructor(props: ClientDialog.propTypes) {
+    super(props);
+
+    this.state = {
+      existingClient: {}
+    };
+  }
+
   componentWillMount() {
     const {clientId} = this.props.match.params;
     if (clientId) {
-      requestClient(clientId);
+      this.setState({requestClient: true}, () => requestClient(clientId).then(
+          response => this.setState({existingClient: response})));
     }
 
     requestClientAuthorities();
@@ -31,14 +51,27 @@ class ClientDialog extends Component<ClientDialog.propTypes> {
   }
 
   render() {
+    const {existingClient} = this.state;
     const {authorities, grantTypes, scopes, texts} = this.props;
+    const {clientId} = this.props.match.params;
+
+    if (!clientId) {
+      return (
+          <NewClientModal grantTypes={grantTypes}
+                          authorities={authorities}
+                          scopes={scopes}
+                          addFlashMessage={addFlashMessage}
+                          saveClient={saveClient} texts={texts}/>
+      );
+    }
 
     return (
-        <EditClientModal grantTypes={grantTypes}
+        <EditClientModal existingClient={existingClient}
+                         grantTypes={grantTypes}
                          authorities={authorities}
                          scopes={scopes}
                          addFlashMessage={addFlashMessage}
-                         saveClient={saveClient} texts={texts}/>
+                         updateClient={updateClient} texts={texts}/>
     );
   }
 }

@@ -4,8 +4,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthorit
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -57,7 +55,6 @@ public class Client extends NicelyDocumentedJDBCResource {
 
   @Length(max = 36, min = 36)
   @Column(columnDefinition = "bpchar(36)")
-  @JsonProperty(access = Access.WRITE_ONLY)
   private String secret;
 
   @NotNull

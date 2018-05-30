@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {type roleType} from "../../../common/types/role.type";
+import {type roleType} from '../../../common/types/role.type';
 
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Grid from 'react-bootstrap/lib/Grid';

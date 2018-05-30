@@ -3,8 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class ClientDTO extends AbstractBasicEntityDTO {
 
   private String clientId;
-  @JsonProperty(access = Access.WRITE_ONLY)
   private String secret;
   private Boolean isSecretRequired = true;
   private Boolean isAutoApprove = false;

@@ -5,11 +5,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {addSaga, removeSaga} from '../../state/SagaManager';
-import {UPDATE_CLIENT_SUCCEED} from '../../state/actions/client';
+import {SAVE_CLIENT_SUCCEED} from '../../state/actions/client';
 
 import {type grantTypeType} from '../../../common/types/grantType.type';
 import {type authorityType} from '../../../common/types/authority.type';
 import {type scopeType} from '../../../common/types/scope.type';
+
+import uuidv4 from 'uuid/v4';
 import isEmpty from 'lodash/isEmpty';
 
 import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
@@ -19,7 +21,9 @@ import Form from 'react-bootstrap/lib/Form';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import InputGroup from 'react-bootstrap/lib/InputGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import Button from 'react-bootstrap/lib/Button';
 
@@ -27,10 +31,10 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-type EditClientModalState = {
+type NewClientModalState = {
   id?: number;
   clientId: string;
-  secret?: string;
+  secret: string;
   accessTokenValiditySeconds: string;
   refreshTokenValiditySeconds: string;
   redirectUri: string;
@@ -53,17 +57,16 @@ type EditClientModalState = {
   closeSagaId: string;
 }
 
-class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
+class NewClientModal extends Component<NewClientModal.propTypes, NewClientModalState> {
   onChange: () => void;
   handleMultipleSelected: (eventTarget: HTMLElement) => void;
+  generateUUID: (target: string) => void;
   validateForm: () => void;
   onSubmit: () => void;
 
-  constructor(props: EditClientModal.propTypes,
-      context: EditClientModal.contextTypes) {
+  constructor(props: NewClientModal.propTypes,
+      context: NewClientModal.contextTypes) {
     super(props, context);
-
-    const {existingClient} = props;
 
     this.state = {
       clientId: '',
@@ -87,33 +90,19 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       },
       isValid: false,
       isLoading: false,
-      closeSagaId: addSaga(UPDATE_CLIENT_SUCCEED,
+      closeSagaId: addSaga(SAVE_CLIENT_SUCCEED,
           context.router.history.goBack)
     };
 
     this.onChange = this.onChange.bind(this);
     this.handleMultipleSelected = this.handleMultipleSelected.bind(this);
+    this.generateUUID = this.generateUUID.bind(this);
     this.validateForm = this.validateForm.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const {id} = this.state;
-    const {existingClient} = nextProps;
-
-    if (existingClient.id && !id) {
-      this.setState({
-        id: existingClient.id,
-        clientId: existingClient.clientId,
-        secret: existingClient.secret,
-        accessTokenValiditySeconds: existingClient.accessTokenValiditySeconds,
-        refreshTokenValiditySeconds: existingClient.refreshTokenValiditySeconds,
-        redirectUri: existingClient.redirectUris,
-        grantTypes: existingClient.grantTypes,
-        authorities: existingClient.authorities,
-        scopes: existingClient.scopes,
-      });
-    }
+  componentWillMount() {
+    console.log('initial state: ', this.state);
   }
 
   componentWillUnmount() {
@@ -156,6 +145,10 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     }
   }
 
+  generateUUID(target: string) {
+    this.setState({[target]: uuidv4()});
+  }
+
   validateForm() {
     const {clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, errors} = this.state;
 
@@ -177,7 +170,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     const {texts} = this.props;
 
     if (isValid) {
-      this.props.updateClient({
+      this.props.saveClient({
         clientId: clientId,
         secret: secret,
         accessTokenValiditySeconds: accessTokenValiditySeconds,
@@ -194,22 +187,18 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   render() {
-    const {id, isValid, isLoading, errors} = this.state;
+    const {isValid, isLoading, errors} = this.state;
     const {grantTypes, authorities, scopes, texts} = this.props;
-
-    if (!id) {
-      return null;
-    }
 
     return (
         <Modal.Dialog>
           <Modal.Header>
-            <Modal.Title>{texts.modal.update_title}</Modal.Title>
+            <Modal.Title>{texts.modal.create_title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={this.onSubmit} horizontal>
               <CollapsableAlert style='danger'
-                                title={texts.modal.errors.update_title}
+                                title={texts.modal.errors.create_title}
                                 message={errors.form} collapse={!!errors.form}/>
 
               <FormGroup controlId='clientId'
@@ -219,10 +208,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                   {texts.client_id}
                 </Col>
                 <Col sm={6}>
-                  <FormControl name='clientId' type='text'
-                               value={this.state.clientId}
-                               onChange={this.onChange} required/>
-                  <FormControl.Feedback/>
+                  <InputGroup>
+                    <FormControl name='clientId' type='text'
+                                 value={this.state.clientId}
+                                 onChange={this.onChange} required/>
+                    <FormControl.Feedback/>
+                    <InputGroup.Addon className='clickable'
+                                      onClick={() => this.generateUUID(
+                                          'clientId')}>
+                      <Glyphicon glyph='repeat'/>
+                    </InputGroup.Addon>
+                  </InputGroup>
                 </Col>
               </FormGroup>
 
@@ -233,10 +229,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                   {texts.secret}
                 </Col>
                 <Col sm={6}>
-                  <FormControl name='secret' type='password'
-                               value={this.state.secret}
-                               onChange={this.onChange} required/>
-                  <FormControl.Feedback/>
+                  <InputGroup>
+                    <FormControl name='secret' type='password'
+                                 value={this.state.secret}
+                                 onChange={this.onChange} required/>
+                    <FormControl.Feedback/>
+                    <InputGroup.Addon className='clickable'
+                                      onClick={() => this.generateUUID(
+                                          'secret')}>
+                      <Glyphicon glyph='repeat'/>
+                    </InputGroup.Addon>
+                  </InputGroup>
                 </Col>
               </FormGroup>
 
@@ -368,7 +371,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                           disabled={!isValid || isLoading}
                           onClick={isValid && !isLoading ? this.onSubmit
                               : null}>
-                    {!isLoading ? texts.modal.update_button_text
+                    {!isLoading ? texts.modal.create_button_text
                         : texts.modal.button_loading_text}
                   </Button>
                 </Col>
@@ -380,18 +383,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 }
 
-EditClientModal.propTypes = {
-  existingClient: PropTypes.object.isRequired,
+NewClientModal.propTypes = {
   grantTypes: PropTypes.array.isRequired,
   authorities: PropTypes.array.isRequired,
   scopes: PropTypes.array.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
-  updateClient: PropTypes.func.isRequired,
+  saveClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
 };
 
-EditClientModal.contextTypes = {
+NewClientModal.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default EditClientModal;
+export default NewClientModal;
