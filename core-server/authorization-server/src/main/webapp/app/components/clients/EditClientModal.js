@@ -67,7 +67,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   validateForm: () => void;
   onSubmit: () => void;
 
-  constructor(props: EditClientModal.propTypes, context: any) {
+  constructor(props: EditClientModal.propTypes,
+      context: EditClientModal.contextTypes) {
     super(props, context);
 
     this.state = {
