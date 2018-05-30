@@ -14,12 +14,17 @@ import {requestClientAuthorities} from '../../../state/queries/authority';
 import {requestClientGrantTypes} from '../../../state/queries/grantType';
 import {requestClientScopes} from '../../../state/queries/scope';
 import {addFlashMessage} from '../../../state/queries/flashmessage';
-import {saveClient} from '../../../state/queries/client';
+import {requestClient, saveClient} from '../../../state/queries/client';
 
 import EditClientModal from '../../../components/clients/EditClientModal';
 
 class ClientDialog extends Component<ClientDialog.propTypes> {
   componentWillMount() {
+    const {clientId} = this.props.match.params;
+    if (clientId) {
+      requestClient(clientId);
+    }
+
     requestClientAuthorities();
     requestClientGrantTypes();
     requestClientScopes();
@@ -29,8 +34,8 @@ class ClientDialog extends Component<ClientDialog.propTypes> {
     const {authorities, grantTypes, scopes, texts} = this.props;
 
     return (
-        <EditClientModal authorities={authorities}
-                         grantTypes={grantTypes}
+        <EditClientModal grantTypes={grantTypes}
+                         authorities={authorities}
                          scopes={scopes}
                          addFlashMessage={addFlashMessage}
                          saveClient={saveClient} texts={texts}/>

@@ -13,11 +13,11 @@ import {addFlashMessage} from '../../state/queries/flashmessage';
 
 // TODO: ComposedComponent cannot be "Component" because of missing 1-2 type arguments
 export default (ComposedComponent: any, authority: string) => {
-  class AccessWithAuthority extends Component<AccessWithAuthority.propTypes> {
+  class AccessWithAuthority extends Component<AccessWithAuthority.propTypes, AccessWithAuthority.contextTypes> {
     displayWarningMessage: (props: AccessWithAuthority.propTypes) => void;
 
-    constructor(props) {
-      super(props);
+    constructor(props, context) {
+      super(props, context);
 
       this.displayWarningMessage = this.displayWarningMessage.bind(this);
     }

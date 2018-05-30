@@ -37,44 +37,49 @@ class ClientList extends Component<ClientList.propTypes> {
           <div>
             <Table hover responsive>
               <thead>
-              <th>{texts.id}</th>
-              <th>{texts.created}</th>
-              <th>{texts.last_updated}</th>
-              <th>{texts.client_id}</th>
-              <th>{texts.redirect_uri}</th>
-              <th>{texts.grant_types}</th>
-              <th>{texts.authorities}</th>
-              <th>{texts.scopes}</th>
-              <th></th>
+              <tr>
+                <th>{texts.id}</th>
+                <th>{texts.created}</th>
+                <th>{texts.last_updated}</th>
+                <th>{texts.client_id}</th>
+                <th>{texts.redirect_uri}</th>
+                <th>{texts.grant_types}</th>
+                <th>{texts.authorities}</th>
+                <th>{texts.scopes}</th>
+                <th></th>
+              </tr>
               </thead>
               <tbody>
               {
-                clients.map((client: clientType) =>
-                    <tr key={`client-${client.id}`}>
-                      <td>{client.id}</td>
-                      <td>{client.created}</td>
-                      <td>{client.lastUpdated}</td>
-                      <td>{client.clientId}</td>
-                      <td>{client.redirectUris
-                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
-                      <td>{client.grantTypes
-                      .flatMap((grantType: grantTypeType) => grantType.name)
-                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
-                      <td>{client.grantedAuthorities
-                      .flatMap((authority: authorityType) => authority.name)
-                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
-                      <td>{client.scopes
-                      .flatMap((scope: scopeType) => scope.name)
-                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
-                      <td>
-                        <Link to={`/clients/${client.id}`}>
-                          <Glyphicon glyph='zoom-in'/>
-                        </Link>
-                        <Link to={`/clients/${client.id}/edit`}>
-                          <Glyphicon glyph='pencil'/>
-                        </Link>
-                      </td>
-                    </tr>
+                clients.map((client: clientType) => {
+                      const id = JSON.stringify(client.id);
+
+                      return (<tr key={`client-${id}`}>
+                        <td>{client.id}</td>
+                        <td>{client.created}</td>
+                        <td>{client.lastUpdated}</td>
+                        <td>{client.clientId}</td>
+                        <td>{client.redirectUris
+                        .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                        <td>{client.grantTypes
+                        .map((grantType: grantTypeType) => grantType.name)
+                        .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                        <td>{client.grantedAuthorities
+                        .map((authority: authorityType) => authority.name)
+                        .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                        <td>{client.scopes
+                        .map((scope: scopeType) => scope.name)
+                        .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                        <td>
+                          <Link to={`/clients/${id}`}>
+                            <Glyphicon glyph='zoom-in'/>
+                          </Link>
+                          <Link to={`/clients/${id}/edit`}>
+                            <Glyphicon glyph='pencil'/>
+                          </Link>
+                        </td>
+                      </tr>);
+                    }
                 )
               }
               </tbody>

@@ -51,6 +51,9 @@ class Router extends Component<Router.propTypes> {
               <Route path='/clients/new'
                      component={accessWithAuthority(AsyncClientDialog,
                          SERVER_ADMIN)}/>
+              <Route path='/clients/:clientId/edit'
+                     component={accessWithAuthority(AsyncClientDialog,
+                         SERVER_ADMIN)}/>
               <Route path='/profile' component={AsyncProfile}/>
               <Route path='/users' component={accessWithAuthority(AsyncUsers,
                   SERVER_SUPPORT)}/>

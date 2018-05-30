@@ -39,11 +39,8 @@ type EditClientModalState = {
   refreshTokenValiditySeconds: string;
   redirectUri: string;
   grantTypes: grantTypeType[];
-  allGrantTypes: grantTypeType[];
   authorities: authorityType[];
-  allAuthorities: authorityType[];
   scopes: scopeType[];
-  allScopes: scopeType[];
   errors: {
     clientId: string;
     secret: string;
@@ -78,11 +75,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       refreshTokenValiditySeconds: '',
       redirectUri: '',
       grantTypes: [],
-      allGrantTypes: this.props.grantTypes,
       authorities: [],
-      allAuthorities: this.props.authorities,
       scopes: [],
-      allScopes: this.props.scopes,
       errors: {
         clientId: '',
         secret: '',
@@ -107,15 +101,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps: EditClientModal.propTypes,
-      prevState: EditClientModalState) {
-    return {
-      allAuthorities: nextProps.authorities,
-      allGrantTypes: nextProps.grantTypes,
-      allScopes: nextProps.scopes
-    };
-  }
-
   componentWillUnmount() {
     removeSaga(this.state.closeSagaId);
   }
@@ -130,25 +115,25 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   handleMultipleSelected(eventTarget: { name: string, selectedOptions: string[] }) {
-    const {allGrantTypes, allAuthorities, allScopes} = this.state;
+    const {grantTypes, authorities, scopes} = this.props;
 
     switch (eventTarget.name) {
       case 'grantTypes':
-        extractMultiSelectedOptions(eventTarget, allGrantTypes,
+        extractMultiSelectedOptions(eventTarget, grantTypes,
             (selectedGrantTypes) => {
               this.setState({grantTypes: selectedGrantTypes},
                   this.validateForm);
             });
         break;
       case 'authorities':
-        extractMultiSelectedOptions(eventTarget, allAuthorities,
+        extractMultiSelectedOptions(eventTarget, authorities,
             (selectedAuthorities) => {
               this.setState({authorities: selectedAuthorities},
                   this.validateForm);
             });
         break;
       case 'scopes':
-        extractMultiSelectedOptions(eventTarget, allScopes,
+        extractMultiSelectedOptions(eventTarget, scopes,
             (selectedScopes) => {
               this.setState({scopes: selectedScopes}, this.validateForm);
             });
@@ -198,8 +183,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 
   render() {
-    const {allGrantTypes, allAuthorities, allScopes, isValid, isLoading, errors} = this.state;
-    const {texts} = this.props;
+    const {isValid, isLoading, errors} = this.state;
+    const {grantTypes, authorities, scopes, texts} = this.props;
 
     return (
         <Modal.Dialog>
@@ -210,7 +195,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
           <Modal.Body>
             <Form onSubmit={this.onSubmit} horizontal>
               <CollapsableAlert style='danger'
-                                title={this.state.id ? texts.modal.errors.update_title
+                                title={this.state.id
+                                    ? texts.modal.errors.update_title
                                     : texts.modal.errors.create_title}
                                 message={errors.form} collapse={!!errors.form}/>
 
@@ -311,7 +297,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='grantTypes' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    {allGrantTypes.map((grantType) => {
+                    {grantTypes.map((grantType) => {
                       return (
                           <option key={grantType.id}
                                   value={grantType.id}>{grantType.name}</option>
@@ -332,7 +318,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='authorities' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    {allAuthorities.map((authority) => {
+                    {authorities.map((authority) => {
                       return (
                           <option key={authority.id}
                                   value={authority.id}>{authority.name}</option>
@@ -352,7 +338,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='scopes' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    {allScopes.map((scope) => {
+                    {scopes.map((scope) => {
                       return (
                           <option key={scope.id}
                                   value={scope.id}>{scope.name}</option>
@@ -375,7 +361,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                           disabled={!isValid || isLoading}
                           onClick={isValid && !isLoading ? this.onSubmit
                               : null}>
-                    {this.state.id && !isLoading ? texts.modal.update_button_text
+                    {this.state.id && !isLoading
+                        ? texts.modal.update_button_text
                         : !this.state.id && !isLoading
                             ? texts.modal.create_button_text
                             : texts.modal.button_loading_text}
@@ -390,8 +377,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 }
 
 EditClientModal.propTypes = {
-  authorities: PropTypes.array.isRequired,
   grantTypes: PropTypes.array.isRequired,
+  authorities: PropTypes.array.isRequired,
   scopes: PropTypes.array.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   saveClient: PropTypes.func.isRequired,
