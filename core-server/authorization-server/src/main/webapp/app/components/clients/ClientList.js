@@ -23,16 +23,38 @@ class ClientList extends Component<ClientList.propTypes> {
                             message={texts.errors.no_clients_alert_text}/>
       );
     } else {
-      console.log('clients: ', clients);
-
       return (
           <div>
             <Table hover responsive>
               <thead>
               {
-                Object.keys(clients[0]).forEach(key => <th>key</th>)
+                Object.keys(clients[0]).map(
+                    (key, iterator) => <th
+                        key={`client-list-heading-${iterator}`}>{key}</th>)
               }
               </thead>
+              <tbody>
+              {
+                clients.map(
+                    (client, iterator) => <tr key={`client-${iterator}`}>
+                      {
+                        Object.keys(client).map((key) =>
+                            <td
+                                key={`client-${iterator}-${key}`}>
+                              {
+                                client[key] instanceof Array
+                                    ? client[key].flatMap(
+                                    (comp) => comp.name ? comp.name
+                                        : comp).join(', ')
+                                    : client[key].toString()
+                              }
+                            </td>
+                        )
+                      }
+                    </tr>
+                )
+              }
+              </tbody>
             </Table>
           </div>
       );
