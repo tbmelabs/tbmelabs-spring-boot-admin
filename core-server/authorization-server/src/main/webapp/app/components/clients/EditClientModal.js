@@ -97,7 +97,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: EditClientModal.propTypes) {
     const {id} = this.state;
     const {existingClient} = nextProps;
 

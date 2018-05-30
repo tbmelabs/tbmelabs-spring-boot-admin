@@ -59,14 +59,14 @@ function* updateClient(action: { type: string, payload: clientType }) {
   }
 }
 
-export function* updateClientSaga() {
+export function* updateClientSaga(): Generator<any, void, any> {
   yield takeEvery(UPDATE_CLIENT, updateClient);
 }
 
-function updateClientSucceed() {
+function* updateClientSucceed() {
   yield put(requestClientsAction());
 }
 
-export function* updateClientSucceedSaga() {
+export function* updateClientSucceedSaga(): Generator<any, void, any> {
   yield takeEvery(UPDATE_CLIENT_SUCCEED, updateClientSucceed);
 }
