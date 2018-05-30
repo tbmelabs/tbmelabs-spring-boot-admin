@@ -6,7 +6,11 @@ import {type clientType} from '../../../../common/types/client.type';
 
 import {getClients} from '../../selectors/client';
 
-import {requestClientsAction, saveClientAction} from '../../actions/client';
+import {
+  requestClientsAction,
+  saveClientAction,
+  updateClientAction
+} from '../../actions/client';
 
 import getOneClient from '../../../utils/client/getOneClient';
 
@@ -30,6 +34,5 @@ export function saveClient(client: clientType) {
 }
 
 export function updateClient(client: clientType) {
-  console.log('update client: ', client);
-  // TODO
+  getStore().dispatch(updateClientAction(client));
 }
