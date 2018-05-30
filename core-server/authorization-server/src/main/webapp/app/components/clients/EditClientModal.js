@@ -191,21 +191,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         grantedAuthorities: authorities,
         scopes: scopes
       });
-      // .then(
-      //     response => {
-      //       this.props.addFlashMessage({
-      //         type: 'success',
-      //         title: texts.client_added_title,
-      //         text: texts.client_added_text
-      //       });
-      //
-      //       this.context.router.history.goBack();
-      //     },
-      //     error => this.setState({errors: {form: error.response.data.message}})
-      // );
     } else {
       this.setState(
-          {errors: {form: texts.errors.form_invalid}, isValid: false});
+          {errors: {form: texts.modal.errors.form_invalid}, isValid: false});
     }
   }
 
@@ -216,14 +204,14 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     return (
         <Modal.Dialog>
           <Modal.Header>
-            <Modal.Title>{this.state.id ? texts.update_title
-                : texts.create_title}</Modal.Title>
+            <Modal.Title>{this.state.id ? texts.modal.update_title
+                : texts.modal.create_title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form onSubmit={this.onSubmit} horizontal>
               <CollapsableAlert style='danger'
-                                title={this.state.id ? texts.errors.update_title
-                                    : texts.errors.create_title}
+                                title={this.state.id ? texts.modal.errors.update_title
+                                    : texts.modal.errors.create_title}
                                 message={errors.form} collapse={!!errors.form}/>
 
               <FormGroup controlId='clientId'
@@ -379,7 +367,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col smOffset={6} sm={2}>
                   <Button bsStyle='danger' className='pull-right'
                           onClick={this.context.router.history.goBack}>
-                    {texts.cancel_button_text}
+                    {texts.modal.cancel_button_text}
                   </Button>
                 </Col>
                 <Col sm={2}>
@@ -387,10 +375,10 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                           disabled={!isValid || isLoading}
                           onClick={isValid && !isLoading ? this.onSubmit
                               : null}>
-                    {this.state.id && !isLoading ? texts.update_button_text
+                    {this.state.id && !isLoading ? texts.modal.update_button_text
                         : !this.state.id && !isLoading
-                            ? texts.create_button_text
-                            : texts.button_loading_text}
+                            ? texts.modal.create_button_text
+                            : texts.modal.button_loading_text}
                   </Button>
                 </Col>
               </FormGroup>

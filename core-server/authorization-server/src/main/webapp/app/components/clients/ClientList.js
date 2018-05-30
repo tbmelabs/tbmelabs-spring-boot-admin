@@ -4,9 +4,19 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Link} from 'react-router-dom';
+
 import isEmpty from 'lodash/isEmpty';
 
+import {ENTITY_ARRAY_JOIN_SEPARATOR} from '../../config';
+
+import {type clientType} from '../../../common/types/client.type';
+import {type grantTypeType} from '../../../common/types/grantType.type';
+import {type authorityType} from '../../../common/types/authority.type';
+import {type scopeType} from '../../../common/types/scope.type';
+
 import Table from 'react-bootstrap/lib/Table';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 import CollapsableAlert from '../../../common/components/CollapsableAlert';
 
@@ -27,30 +37,43 @@ class ClientList extends Component<ClientList.propTypes> {
           <div>
             <Table hover responsive>
               <thead>
-              {
-                Object.keys(clients[0]).map(
-                    (key, iterator) => <th
-                        key={`client-list-heading-${iterator}`}>{key}</th>)
-              }
+              <th>{texts.id}</th>
+              <th>{texts.created}</th>
+              <th>{texts.last_updated}</th>
+              <th>{texts.client_id}</th>
+              <th>{texts.redirect_uri}</th>
+              <th>{texts.grant_types}</th>
+              <th>{texts.authorities}</th>
+              <th>{texts.scopes}</th>
+              <th></th>
               </thead>
               <tbody>
               {
-                clients.map(
-                    (client, iterator) => <tr key={`client-${iterator}`}>
-                      {
-                        Object.keys(client).map((key) =>
-                            <td
-                                key={`client-${iterator}-${key}`}>
-                              {
-                                client[key] instanceof Array
-                                    ? client[key].flatMap(
-                                    (comp) => comp.name ? comp.name
-                                        : comp).join(', ')
-                                    : client[key].toString()
-                              }
-                            </td>
-                        )
-                      }
+                clients.map((client: clientType) =>
+                    <tr key={`client-${client.id}`}>
+                      <td>{client.id}</td>
+                      <td>{client.created}</td>
+                      <td>{client.lastUpdated}</td>
+                      <td>{client.clientId}</td>
+                      <td>{client.redirectUris
+                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                      <td>{client.grantTypes
+                      .flatMap((grantType: grantTypeType) => grantType.name)
+                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                      <td>{client.grantedAuthorities
+                      .flatMap((authority: authorityType) => authority.name)
+                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                      <td>{client.scopes
+                      .flatMap((scope: scopeType) => scope.name)
+                      .join(ENTITY_ARRAY_JOIN_SEPARATOR)}</td>
+                      <td>
+                        <Link to={`/clients/${client.id}`}>
+                          <Glyphicon glyph='zoom-in'/>
+                        </Link>
+                        <Link to={`/clients/${client.id}/edit`}>
+                          <Glyphicon glyph='pencil'/>
+                        </Link>
+                      </td>
                     </tr>
                 )
               }

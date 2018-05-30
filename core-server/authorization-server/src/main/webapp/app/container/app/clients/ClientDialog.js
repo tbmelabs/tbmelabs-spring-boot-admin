@@ -33,7 +33,7 @@ class ClientDialog extends Component<ClientDialog.propTypes> {
                          grantTypes={grantTypes}
                          scopes={scopes}
                          addFlashMessage={addFlashMessage}
-                         saveClient={saveClient} texts={texts.modal}/>
+                         saveClient={saveClient} texts={texts}/>
     );
   }
 }
