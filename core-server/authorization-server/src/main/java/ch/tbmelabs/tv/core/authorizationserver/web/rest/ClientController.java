@@ -4,12 +4,15 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,6 +38,17 @@ public class ClientController {
   @GetMapping
   public Page<ClientDTO> getAllClients(Pageable pageable) {
     return clientService.findAll(pageable);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<ClientDTO> getOneClient(@PathVariable Long id) {
+    Optional<ClientDTO> optionalClient = clientService.findOne(id).map(clientMapper::toDto);
+
+    if (!optionalClient.isPresent()) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(optionalClient.get());
   }
 
   @PutMapping

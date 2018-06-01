@@ -7,6 +7,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientAuthority
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientGrantTypeAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,6 +53,10 @@ public class ClientService {
 
   public Page<ClientDTO> findAll(Pageable pageable) {
     return clientRepository.findAll(pageable).map(clientMapper::toDto);
+  }
+
+  public Optional<Client> findOne(Long id) {
+    return Optional.ofNullable(clientRepository.findOne(id));
   }
 
   public Client update(ClientDTO clientDTO) {

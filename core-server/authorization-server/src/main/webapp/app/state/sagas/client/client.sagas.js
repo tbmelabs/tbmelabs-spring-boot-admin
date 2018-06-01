@@ -12,7 +12,9 @@ import {
   SAVE_CLIENT,
   SAVE_CLIENT_SUCCEED,
   saveClientSucceedAction,
-  setClientsAction
+  setClientsAction,
+  UPDATE_CLIENT,
+  UPDATE_CLIENT_SUCCEED
 } from '../../actions/client';
 
 import type {clientType} from '../../../../common/types/client.type';
@@ -47,4 +49,24 @@ function* saveClientSucceed() {
 
 export function* saveClientSucceedSaga(): Generator<any, void, any> {
   yield takeEvery(SAVE_CLIENT_SUCCEED, saveClientSucceed);
+}
+
+function* updateClient(action: { type: string, payload: clientType }) {
+  const response: AxiosResponse = yield axios.put(
+      `${REST_API_BASE_PATH}/clients`, action.payload);
+  if (response.status === 200) {
+    yield put(saveClientSucceedAction());
+  }
+}
+
+export function* updateClientSaga(): Generator<any, void, any> {
+  yield takeEvery(UPDATE_CLIENT, updateClient);
+}
+
+function* updateClientSucceed() {
+  yield put(requestClientsAction());
+}
+
+export function* updateClientSucceedSaga(): Generator<any, void, any> {
+  yield takeEvery(UPDATE_CLIENT_SUCCEED, updateClientSucceed);
 }

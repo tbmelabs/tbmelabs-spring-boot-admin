@@ -9,6 +9,7 @@ export type clientType = {
   created?: number;
   lastUpdated?: number;
   clientId: string;
+  secret: string;
   isSecretRequired: boolean;
   isAutoApprove: boolean;
   accessTokenValiditySeconds: number;

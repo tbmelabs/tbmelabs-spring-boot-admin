@@ -26,7 +26,6 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   ScopeMapper scopeMapper = Mappers.getMapper(ScopeMapper.class);
 
   @Override
-  @Mapping(target = "secret", ignore = true)
   @Mapping(source = "redirectUri", target = "redirectUris")
   ClientDTO toDto(Client entity);
 
