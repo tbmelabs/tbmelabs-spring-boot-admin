@@ -14,7 +14,8 @@ import {
   saveClientSucceedAction,
   setClientsAction,
   UPDATE_CLIENT,
-  UPDATE_CLIENT_SUCCEED
+  UPDATE_CLIENT_SUCCEED,
+  updateClientSucceedAction
 } from '../../actions/client';
 
 import type {clientType} from '../../../../common/types/client.type';
@@ -55,7 +56,7 @@ function* updateClient(action: { type: string, payload: clientType }) {
   const response: AxiosResponse = yield axios.put(
       `${REST_API_BASE_PATH}/clients`, action.payload);
   if (response.status === 200) {
-    yield put(saveClientSucceedAction());
+    yield put(updateClientSucceedAction());
   }
 }
 

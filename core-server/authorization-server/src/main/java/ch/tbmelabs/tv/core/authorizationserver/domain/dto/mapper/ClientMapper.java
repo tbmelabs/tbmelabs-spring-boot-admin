@@ -33,6 +33,8 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   @Mapping(source = "redirectUris", target = "redirectUri")
   Client toEntity(ClientDTO dto);
 
+  Client updateClientFromClient(Client updated, @MappingTarget Client existing);
+
   default String[] redirectUriToRedirectUris(String redirectUri) {
     return redirectUri.split(Client.REDIRECT_URI_SPLITTERATOR);
   }
@@ -67,8 +69,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
         .collect(Collectors.toSet());
   }
 
-  default Set<ScopeDTO> scopeAssociationsToScopes(
-      Set<ClientScopeAssociation> scopes) {
+  default Set<ScopeDTO> scopeAssociationsToScopes(Set<ClientScopeAssociation> scopes) {
     return scopes.stream().map(ClientScopeAssociation::getClientScope).map(scopeMapper::toDto)
         .collect(Collectors.toSet());
   }

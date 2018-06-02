@@ -32,7 +32,6 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 require('bootstrap/dist/css/bootstrap.css');
 
 type NewClientModalState = {
-  id?: number;
   clientId: string;
   secret: string;
   accessTokenValiditySeconds: string;

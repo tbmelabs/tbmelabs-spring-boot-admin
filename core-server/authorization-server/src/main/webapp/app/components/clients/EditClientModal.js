@@ -12,7 +12,8 @@ import {type authorityType} from '../../../common/types/authority.type';
 import {type scopeType} from '../../../common/types/scope.type';
 import isEmpty from 'lodash/isEmpty';
 
-import extractMultiSelectedOptions from '../../utils/form/extractMultiSelectedOptions';
+import extractMultiSelectedOptions
+  from '../../utils/form/extractMultiSelectedOptions';
 
 import Modal from 'react-bootstrap/lib/Modal';
 import Form from 'react-bootstrap/lib/Form';
@@ -28,7 +29,7 @@ import CollapsableAlert from '../../../common/components/CollapsableAlert';
 require('bootstrap/dist/css/bootstrap.css');
 
 type EditClientModalState = {
-  id?: number;
+  id: number;
   clientId: string;
   secret?: string;
   accessTokenValiditySeconds: string;
@@ -66,14 +67,15 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     const {existingClient} = props;
 
     this.state = {
+      id: 0,
       clientId: '',
       secret: '',
       accessTokenValiditySeconds: '',
       refreshTokenValiditySeconds: '',
       redirectUri: '',
-      grantTypes: [],
-      authorities: [],
-      scopes: [],
+      grantTypes: [''],
+      authorities: [''],
+      scopes: [''],
       errors: {
         clientId: '',
         secret: '',
@@ -108,11 +110,11 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         secret: existingClient.secret,
         accessTokenValiditySeconds: existingClient.accessTokenValiditySeconds,
         refreshTokenValiditySeconds: existingClient.refreshTokenValiditySeconds,
-        redirectUri: existingClient.redirectUris,
+        redirectUri: existingClient.redirectUris.join(';'),
         grantTypes: existingClient.grantTypes,
-        authorities: existingClient.authorities,
+        authorities: existingClient.grantedAuthorities,
         scopes: existingClient.scopes,
-      });
+      }, () => console.log('new state: ', this.state));
     }
   }
 
@@ -173,11 +175,24 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    const {clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
+    const {id, clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
     const {texts} = this.props;
+
+    console.log({
+      id: id,
+      clientId: clientId,
+      secret: secret,
+      accessTokenValiditySeconds: accessTokenValiditySeconds,
+      refreshTokenValiditySeconds: refreshTokenValiditySeconds,
+      redirectUris: redirectUri.split(';'),
+      grantTypes: grantTypes,
+      grantedAuthorities: authorities,
+      scopes: scopes
+    });
 
     if (isValid) {
       this.props.updateClient({
+        id: id,
         clientId: clientId,
         secret: secret,
         accessTokenValiditySeconds: accessTokenValiditySeconds,
@@ -295,14 +310,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='grantTypes' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    <option value="" selected disabled hidden></option>
+                    <option value='' disabled hidden></option>
                     {
-                      grantTypes.map((grantType) => {
-                        return (
-                            <option key={grantType.id}
-                                    value={grantType.id}>{grantType.name}</option>
-                        );
-                      })
+                      grantTypes.map(
+                          (grantType: grantTypeType) => this.state.grantTypes
+                          .map((grantType: grantTypeType) => grantType.id)
+                          .indexOf(grantType.id) !== -1 ?
+                              <option key={grantType.id} value={grantType.id}
+                                      selected>{grantType.name}</option> :
+                              <option key={grantType.id}
+                                      value={grantType.id}>{grantType.name}</option>
+                      )
                     }
                   </FormControl>
                   <FormControl.Feedback/>
@@ -319,14 +337,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='authorities' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    <option value="" selected disabled hidden></option>
+                    <option value='' disabled hidden></option>
                     {
-                      authorities.map((authority) => {
-                        return (
-                            <option key={authority.id}
-                                    value={authority.id}>{authority.name}</option>
-                        );
-                      })
+                      authorities.map(
+                          (authority: authorityType) => this.state.authorities
+                          .map((authority: authorityType) => authority.id)
+                          .indexOf(authority.id) !== -1 ?
+                              <option key={authority.id} value={authority.id}
+                                      selected>{authority.name}</option> :
+                              <option key={authority.id}
+                                      value={authority.id}>{authority.name}</option>
+                      )
                     }
                   </FormControl>
                   <FormControl.Feedback/>
@@ -342,14 +363,17 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                 <Col sm={6}>
                   <FormControl name='scopes' onChange={this.onChange}
                                componentClass='select' multiple required>
-                    <option value="" selected disabled hidden></option>
+                    <option value='' disabled hidden></option>
                     {
-                      scopes.map((scope) => {
-                        return (
-                            <option key={scope.id}
-                                    value={scope.id}>{scope.name}</option>
-                        );
-                      })
+                      scopes.map((scope) =>
+                          this.state.scopes
+                          .map((scope: scopeType) => scope.id)
+                          .indexOf(scope.id) !== -1 ?
+                              <option key={scope.id} value={scope.id}
+                                      selected>{scope.name}</option> :
+                              <option key={scope.id}
+                                      value={scope.id}>{scope.name}</option>
+                      )
                     }
                   </FormControl>
                   <FormControl.Feedback/>
