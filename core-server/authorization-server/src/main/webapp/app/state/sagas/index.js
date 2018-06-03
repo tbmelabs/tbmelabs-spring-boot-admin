@@ -3,6 +3,8 @@
 import {signoutUserSaga} from './authentication';
 import {requestClientAuthoritiesSaga} from './authority';
 import {
+  deleteClientSaga,
+  deleteClientSucceedSaga,
   requestClientsSaga,
   saveClientSaga,
   saveClientSucceedSaga,
@@ -15,5 +17,5 @@ import {requestClientScopesSaga} from './scope';
 
 export default [signoutUserSaga, requestClientAuthoritiesSaga,
   requestClientsSaga, saveClientSaga, saveClientSucceedSaga, updateClientSaga,
-  updateClientSucceedSaga, requestClientGrantTypesSaga, requestProfileSaga,
-  requestClientScopesSaga];
+  updateClientSucceedSaga, deleteClientSaga, deleteClientSucceedSaga,
+  requestClientGrantTypesSaga, requestProfileSaga, requestClientScopesSaga];

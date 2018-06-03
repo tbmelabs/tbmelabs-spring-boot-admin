@@ -4,9 +4,16 @@ import {put, takeEvery} from 'redux-saga/effects';
 
 import axios, {AxiosResponse} from 'axios';
 
+import getStore from '../../../getStore';
+
 import {REST_API_BASE_PATH} from '../../../config';
 
+import {type clientType} from '../../../../common/types/client.type';
+
+import {getClients} from '../../selectors/client';
 import {
+  DELETE_CLIENT,
+  DELETE_CLIENT_SUCCEED,
   REQUEST_CLIENTS,
   requestClientsAction,
   SAVE_CLIENT,
@@ -17,8 +24,7 @@ import {
   UPDATE_CLIENT_SUCCEED,
   updateClientSucceedAction
 } from '../../actions/client';
-
-import type {clientType} from '../../../../common/types/client.type';
+import {addFlashMessageAction} from '../../actions/flashmessage';
 
 function* requestClients() {
   const response: AxiosResponse = yield axios.get(
@@ -45,6 +51,14 @@ export function* saveClientSaga(): Generator<any, void, any> {
 }
 
 function* saveClientSucceed() {
+  const texts = getClients(getStore().getState());
+
+  yield put(addFlashMessageAction({
+    type: 'success',
+    title: texts.modal.client_action_success_title,
+    text: texts.modal.client_added_text
+  }));
+
   yield put(requestClientsAction());
 }
 
@@ -65,9 +79,41 @@ export function* updateClientSaga(): Generator<any, void, any> {
 }
 
 function* updateClientSucceed() {
+  const texts = getClients(getStore().getState());
+
+  yield put(addFlashMessageAction({
+    type: 'success',
+    title: texts.modal.client_action_success_title,
+    text: texts.modal.client_updated_text
+  }));
+
   yield put(requestClientsAction());
 }
 
 export function* updateClientSucceedSaga(): Generator<any, void, any> {
   yield takeEvery(UPDATE_CLIENT_SUCCEED, updateClientSucceed);
+}
+
+function* deleteClient(action: { type: string, payload: clientType }) {
+
+}
+
+export function* deleteClientSaga(): Generator<any, void, any> {
+  yield takeEvery(DELETE_CLIENT, deleteClient);
+}
+
+export function* deleteClientSucceed() {
+  const texts = getClients(getStore().getState());
+
+  yield put(addFlashMessageAction({
+    type: 'success',
+    title: texts.modal.client_action_success_title,
+    text: texts.modal.client_deleted_text
+  }));
+
+  yield put(requestClientsAction());
+}
+
+export function* deleteClientSucceedSaga(): Generator<any, void, any> {
+  yield takeEvery(DELETE_CLIENT_SUCCEED, deleteClient);
 }

@@ -100,10 +100,6 @@ class NewClientModal extends Component<NewClientModal.propTypes, NewClientModalS
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillMount() {
-    console.log('initial state: ', this.state);
-  }
-
   componentWillUnmount() {
     removeSaga(this.state.closeSagaId);
   }

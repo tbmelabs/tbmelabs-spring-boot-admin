@@ -3,6 +3,8 @@
 import {Action} from 'redux';
 
 import {
+  DELETE_CLIENT,
+  DELETE_CLIENT_SUCCEED,
   REQUEST_CLIENTS,
   SAVE_CLIENT,
   SAVE_CLIENT_SUCCEED,
@@ -51,5 +53,17 @@ export function updateClientAction(client: clientType): Action {
 export function updateClientSucceedAction(): Action {
   return {
     type: UPDATE_CLIENT_SUCCEED
+  }
+}
+
+export function deleteClientAction(): Action {
+  return {
+    type: DELETE_CLIENT
+  }
+}
+
+export function deleteClientSucceedAction(): Action {
+  return {
+    type: DELETE_CLIENT_SUCCEED
   }
 }

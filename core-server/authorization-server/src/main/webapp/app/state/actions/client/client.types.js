@@ -6,3 +6,5 @@ export const SAVE_CLIENT: string = '[Clients] Save';
 export const SAVE_CLIENT_SUCCEED: string = '[Clients] Save succeed';
 export const UPDATE_CLIENT: string = '[Clients] Update';
 export const UPDATE_CLIENT_SUCCEED: string = '[Clients] Update succeed';
+export const DELETE_CLIENT: string = '[Clients] Delete';
+export const DELETE_CLIENT_SUCCEED: string = '[Clients] Delete succeed';

@@ -41,8 +41,8 @@ class ClientDialog extends Component<ClientDialog.propTypes, ClientDialogState> 
   componentWillMount() {
     const {clientId} = this.props.match.params;
     if (clientId) {
-      this.setState({requestClient: true}, () => requestClient(clientId).then(
-          response => this.setState({existingClient: response})));
+      requestClient(clientId).then(
+          response => this.setState({existingClient: response}));
     }
 
     requestClientAuthorities();

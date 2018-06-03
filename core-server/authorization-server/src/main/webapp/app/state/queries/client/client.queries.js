@@ -7,6 +7,7 @@ import {type clientType} from '../../../../common/types/client.type';
 import {getClients} from '../../selectors/client';
 
 import {
+  deleteClientAction,
   requestClientsAction,
   saveClientAction,
   updateClientAction
@@ -35,4 +36,8 @@ export function saveClient(client: clientType) {
 
 export function updateClient(client: clientType) {
   getStore().dispatch(updateClientAction(client));
+}
+
+export function deleteClient(client: clientType) {
+  getStore().dispatch(deleteClientAction(client));
 }

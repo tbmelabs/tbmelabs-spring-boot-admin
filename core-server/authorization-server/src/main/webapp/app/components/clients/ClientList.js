@@ -77,6 +77,9 @@ class ClientList extends Component<ClientList.propTypes> {
                           <Link to={`/clients/${id}/edit`}>
                             <Glyphicon glyph='pencil'/>
                           </Link>
+                          <Link to={`/clients/${id}/delete`}>
+                            <Glyphicon glyph='trash'/>
+                          </Link>
                         </td>
                       </tr>);
                     }

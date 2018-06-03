@@ -29,6 +29,11 @@ const AsyncClientDialog = Loadable({
   loading: () => <div>Loading...</div>
 });
 
+const AsyncClientDeleteDialog = Loadable({
+  loader: () => import ('./container/app/clients/ClientDeleteDialog'),
+  loading: () => <div>Loading...</div>
+})
+
 const AsyncProfile = Loadable({
   loader: () => import('./container/app/profile'),
   loading: () => <div>Loading...</div>
@@ -53,6 +58,9 @@ class Router extends Component<Router.propTypes> {
                          SERVER_ADMIN)}/>
               <Route path='/clients/:clientId/edit'
                      component={accessWithAuthority(AsyncClientDialog,
+                         SERVER_ADMIN)}/>
+              <Route path='/clients/:clientId/delete'
+                     component={accessWithAuthority(AsyncClientDeleteDialog,
                          SERVER_ADMIN)}/>
               <Route path='/profile' component={AsyncProfile}/>
               <Route path='/users' component={accessWithAuthority(AsyncUsers,

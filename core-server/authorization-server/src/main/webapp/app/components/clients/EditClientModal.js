@@ -73,9 +73,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       accessTokenValiditySeconds: '',
       refreshTokenValiditySeconds: '',
       redirectUri: '',
-      grantTypes: [''],
-      authorities: [''],
-      scopes: [''],
+      grantTypes: [],
+      authorities: [],
+      scopes: [],
       errors: {
         clientId: '',
         secret: '',
@@ -114,7 +114,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
         grantTypes: existingClient.grantTypes,
         authorities: existingClient.grantedAuthorities,
         scopes: existingClient.scopes,
-      }, () => console.log('new state: ', this.state));
+      });
     }
   }
 
@@ -177,18 +177,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     const {id, clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
     const {texts} = this.props;
-
-    console.log({
-      id: id,
-      clientId: clientId,
-      secret: secret,
-      accessTokenValiditySeconds: accessTokenValiditySeconds,
-      refreshTokenValiditySeconds: refreshTokenValiditySeconds,
-      redirectUris: redirectUri.split(';'),
-      grantTypes: grantTypes,
-      grantedAuthorities: authorities,
-      scopes: scopes
-    });
 
     if (isValid) {
       this.props.updateClient({

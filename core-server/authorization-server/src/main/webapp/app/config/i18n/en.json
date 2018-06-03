@@ -28,12 +28,17 @@
     "modal": {
       "create_title": "Create Client",
       "update_title": "Update Client",
+      "delete_title": "Delete Client",
+      "delete_text": "Are you sure you want to delete Client ",
       "create_button_text": "Save",
       "update_button_text": "Update",
+      "delete_button_text": "Delete",
       "cancel_button_text": "Cancel",
       "button_loading_text": "Loading...",
-      "client_added_title": "Success:",
+      "client_action_success_title": "Success:",
       "client_added_text": " New client added!",
+      "client_updated_text": " Client updated!",
+      "client_deleted_text": " Client deleted!",
       "errors": {
         "create_title": "Failed to create new client: ",
         "update_title": "Failed to update client: ",
