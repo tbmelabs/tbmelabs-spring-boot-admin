@@ -5,6 +5,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,10 @@ public class UserService {
     return userRepository.findAll(pageable).map(userMapper::toDto);
   }
 
+  public Optional<User> findOneById(Long id) {
+    return Optional.ofNullable(userRepository.findOne(id));
+  }
+
   public User update(UserDTO userDTO) {
     if (userDTO.getId() == null || userRepository.findOne(userDTO.getId()) == null) {
       throw new IllegalArgumentException("You can only update an existing User!");
@@ -50,7 +55,7 @@ public class UserService {
     if (user.getPassword() == null || user.getPassword().isEmpty()) {
       user.setPassword(userRepository.findOne(user.getId()).getPassword());
     }
-    
+
     user = userRepository.save(user);
 
     userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
@@ -58,11 +63,7 @@ public class UserService {
     return userRepository.findOne(user.getId());
   }
 
-  public void delete(UserDTO userDTO) {
-    if (userDTO.getId() == null) {
-      throw new IllegalArgumentException("You can only delete an existing User!");
-    }
-
-    userRepository.delete(userMapper.toEntity(userDTO));
+  public void delete(Long id) {
+    userRepository.delete(id);
   }
 }

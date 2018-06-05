@@ -128,8 +128,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc
-        .perform(delete(clientsEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+        .perform(delete(clientsEndpoint + "/" + testClientDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
@@ -138,8 +137,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void deleteClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc
-        .perform(delete(clientsEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+        .perform(delete(clientsEndpoint + "/" + testClientDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }

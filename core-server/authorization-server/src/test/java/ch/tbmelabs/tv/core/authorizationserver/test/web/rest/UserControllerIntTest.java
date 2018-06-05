@@ -118,8 +118,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
     testUserDTO = userMapper.toDto(userRepository.save(newUser));
 
     mockMvc
-        .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testUserDTO)))
+        .perform(delete(usersEndpoint + "/" + testUserDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
@@ -127,8 +126,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
   public void deleteUserEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
-        .perform(delete(usersEndpoint).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testUserDTO)))
+        .perform(delete(usersEndpoint + "/" + testUserDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }

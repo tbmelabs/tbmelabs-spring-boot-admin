@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {addSaga, removeSaga} from '../../state/SagaManager';
-import {UPDATE_CLIENT_SUCCEED} from '../../state/actions/client';
+import {DELETE_CLIENT_SUCCEED} from '../../state/actions/client';
 
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
@@ -14,14 +14,6 @@ require('bootstrap/dist/css/bootstrap.css');
 
 type EditClientModalState = {
   id: number;
-  // clientId: string;
-  // secret?: string;
-  // accessTokenValiditySeconds: string;
-  // refreshTokenValiditySeconds: string;
-  // redirectUri: string;
-  // grantTypes: grantTypeType[];
-  // authorities: authorityType[];
-  // scopes: scopeType[];
   closeSagaId: string;
 }
 
@@ -36,15 +28,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     this.state = {
       id: 0,
-      // clientId: '',
-      // secret: '',
-      // accessTokenValiditySeconds: '',
-      // refreshTokenValiditySeconds: '',
-      // redirectUri: '',
-      // grantTypes: [],
-      // authorities: [],
-      // scopes: [],
-      closeSagaId: addSaga(UPDATE_CLIENT_SUCCEED,
+      closeSagaId: addSaga(DELETE_CLIENT_SUCCEED,
           context.router.history.goBack)
     };
 
@@ -57,15 +41,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
 
     if (existingClient.id && !id) {
       this.setState({
-        id: existingClient.id,
-        // clientId: existingClient.clientId,
-        // secret: existingClient.secret,
-        // accessTokenValiditySeconds: existingClient.accessTokenValiditySeconds,
-        // refreshTokenValiditySeconds: existingClient.refreshTokenValiditySeconds,
-        // redirectUri: existingClient.redirectUris.join(';'),
-        // grantTypes: existingClient.grantTypes,
-        // authorities: existingClient.grantedAuthorities,
-        // scopes: existingClient.scopes,
+        id: existingClient.id
       });
     }
   }
@@ -77,19 +53,9 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   onSubmit(event: SyntheticInputEvent<HTMLInputElement>) {
     event.preventDefault();
 
-    const {id, clientId, secret, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes, isValid} = this.state;
+    const {id} = this.state;
 
-    this.props.deleteClient({
-      id: id,
-      // clientId: clientId,
-      // secret: secret,
-      // accessTokenValiditySeconds: accessTokenValiditySeconds,
-      // refreshTokenValiditySeconds: refreshTokenValiditySeconds,
-      // redirectUris: redirectUri.split(';'),
-      // grantTypes: grantTypes,
-      // grantedAuthorities: authorities,
-      // scopes: scopes
-    });
+    this.props.deleteClient(id);
   }
 
   render() {
@@ -111,7 +77,8 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
           <Modal.Footer>
             <Button bsStyle='danger'
                     onClick={this.context.router.history.goBack}>{texts.modal.cancel_button_text}</Button>
-            <Button bsStyle='primary' onClick={this.onSubmit}>{texts.modal.delete_button_text}</Button>
+            <Button bsStyle='primary'
+                    onClick={this.onSubmit}>{texts.modal.delete_button_text}</Button>
           </Modal.Footer>
         </Modal.Dialog>
     );

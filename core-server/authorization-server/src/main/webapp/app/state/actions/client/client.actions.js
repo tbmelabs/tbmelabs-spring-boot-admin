@@ -47,23 +47,24 @@ export function updateClientAction(client: clientType): Action {
   return {
     type: UPDATE_CLIENT,
     payload: client
-  }
+  };
 }
 
 export function updateClientSucceedAction(): Action {
   return {
     type: UPDATE_CLIENT_SUCCEED
-  }
+  };
 }
 
-export function deleteClientAction(): Action {
+export function deleteClientAction(id: number): Action {
   return {
-    type: DELETE_CLIENT
-  }
+    type: DELETE_CLIENT,
+    payload: id
+  };
 }
 
 export function deleteClientSucceedAction(): Action {
   return {
     type: DELETE_CLIENT_SUCCEED
-  }
+  };
 }

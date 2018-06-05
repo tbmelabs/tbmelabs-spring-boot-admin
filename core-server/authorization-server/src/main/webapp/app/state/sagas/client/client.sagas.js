@@ -9,11 +9,10 @@ import getStore from '../../../getStore';
 import {REST_API_BASE_PATH} from '../../../config';
 
 import {type clientType} from '../../../../common/types/client.type';
-
-import {getClients} from '../../selectors/client';
 import {
   DELETE_CLIENT,
   DELETE_CLIENT_SUCCEED,
+  deleteClientSucceedAction,
   REQUEST_CLIENTS,
   requestClientsAction,
   SAVE_CLIENT,
@@ -25,6 +24,7 @@ import {
   updateClientSucceedAction
 } from '../../actions/client';
 import {addFlashMessageAction} from '../../actions/flashmessage';
+import {getTexts} from '../../selectors/language';
 
 function* requestClients() {
   const response: AxiosResponse = yield axios.get(
@@ -51,12 +51,12 @@ export function* saveClientSaga(): Generator<any, void, any> {
 }
 
 function* saveClientSucceed() {
-  const texts = getClients(getStore().getState());
+  const texts = getTexts(getStore().getState()).clients.modal;
 
   yield put(addFlashMessageAction({
     type: 'success',
-    title: texts.modal.client_action_success_title,
-    text: texts.modal.client_added_text
+    title: texts.client_action_success_title,
+    text: texts.client_added_text
   }));
 
   yield put(requestClientsAction());
@@ -79,12 +79,12 @@ export function* updateClientSaga(): Generator<any, void, any> {
 }
 
 function* updateClientSucceed() {
-  const texts = getClients(getStore().getState());
+  const texts = getTexts(getStore().getState()).clients.modal;
 
   yield put(addFlashMessageAction({
     type: 'success',
-    title: texts.modal.client_action_success_title,
-    text: texts.modal.client_updated_text
+    title: texts.client_action_success_title,
+    text: texts.client_updated_text
   }));
 
   yield put(requestClientsAction());
@@ -94,26 +94,30 @@ export function* updateClientSucceedSaga(): Generator<any, void, any> {
   yield takeEvery(UPDATE_CLIENT_SUCCEED, updateClientSucceed);
 }
 
-function* deleteClient(action: { type: string, payload: clientType }) {
-
+function* deleteClient(action: { type: string, payload: number }) {
+  const response: AxiosResponse = yield axios.delete(
+      `${REST_API_BASE_PATH}/clients/${action.payload}`);
+  if (response.status === 200) {
+    yield put(deleteClientSucceedAction());
+  }
 }
 
 export function* deleteClientSaga(): Generator<any, void, any> {
   yield takeEvery(DELETE_CLIENT, deleteClient);
 }
 
-export function* deleteClientSucceed() {
-  const texts = getClients(getStore().getState());
+function* deleteClientSucceed() {
+  const texts = getTexts(getStore().getState()).clients.modal;
 
   yield put(addFlashMessageAction({
     type: 'success',
-    title: texts.modal.client_action_success_title,
-    text: texts.modal.client_deleted_text
+    title: texts.client_action_success_title,
+    text: texts.client_deleted_text
   }));
 
   yield put(requestClientsAction());
 }
 
 export function* deleteClientSucceedSaga(): Generator<any, void, any> {
-  yield takeEvery(DELETE_CLIENT_SUCCEED, deleteClient);
+  yield takeEvery(DELETE_CLIENT_SUCCEED, deleteClientSucceed);
 }

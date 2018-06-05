@@ -119,11 +119,7 @@ public class ClientService {
     return client;
   }
 
-  public void delete(ClientDTO clientDTO) {
-    if (clientDTO.getId() == null) {
-      throw new IllegalArgumentException("You can only delete an existing client!");
-    }
-
-    clientRepository.delete(clientMapper.toEntity(clientDTO));
+  public void delete(Long id) {
+    clientRepository.delete(id);
   }
 }

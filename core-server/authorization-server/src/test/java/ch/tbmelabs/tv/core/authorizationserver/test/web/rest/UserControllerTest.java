@@ -125,8 +125,8 @@ public class UserControllerTest {
   public void deleteUserShouldDeleteMappedDTO() {
     testUserDTO.setId(new Random().nextLong());
 
-    fixture.deleteUser(testUserDTO);
+    fixture.deleteUser(testUserDTO.getId());
 
-    verify(mockUserService, times(1)).delete(testUserDTO);
+    verify(mockUserService, times(1)).delete(testUserDTO.getId());
   }
 }

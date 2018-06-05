@@ -56,8 +56,8 @@ public class ClientController {
     return clientMapper.toDto(clientService.update(clientDTO));
   }
 
-  @DeleteMapping
-  public void deleteClient(@RequestBody ClientDTO clientDTO) {
-    clientService.delete(clientDTO);
+  @DeleteMapping("/{id}")
+  public void deleteClient(@PathVariable Long id) {
+    clientService.delete(id);
   }
 }

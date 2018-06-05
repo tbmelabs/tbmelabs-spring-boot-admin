@@ -141,8 +141,8 @@ public class ClientControllerTest {
   public void deleteClientShouldDeleteMappedDTO() {
     testClientDTO.setId(new Random().nextLong());
 
-    fixture.deleteClient(testClientDTO);
+    fixture.deleteClient(testClientDTO.getId());
 
-    verify(mockClientService, times(1)).delete(testClientDTO);
+    verify(mockClientService, times(1)).delete(testClientDTO.getId());
   }
 }
