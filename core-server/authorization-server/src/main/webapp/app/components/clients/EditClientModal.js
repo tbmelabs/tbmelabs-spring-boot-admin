@@ -64,8 +64,6 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
       context: EditClientModal.contextTypes) {
     super(props, context);
 
-    const {existingClient} = props;
-
     this.state = {
       id: 0,
       clientId: '',

@@ -12,7 +12,7 @@ import {getTexts} from '../../../state/selectors/language';
 import {deleteClient, requestClient} from '../../../state/queries/client';
 import {addFlashMessage} from '../../../state/queries/flashmessage';
 
-import DeleteClientModal from '../../../components/clients/DeleteClientModal';
+import DeleteClientDialog from '../../../components/clients/DeleteClientDialog';
 
 type ClientDeleteDialogState = {
   existingClient: clientType
@@ -40,9 +40,9 @@ class ClientDeleteDialog extends Component<ClientDeleteDialog.propTypes, ClientD
     const {texts} = this.props;
 
     return (
-        <DeleteClientModal existingClient={existingClient}
-                           addFlashMessage={addFlashMessage}
-                           deleteClient={deleteClient} texts={texts}/>
+        <DeleteClientDialog existingClient={existingClient}
+                            addFlashMessage={addFlashMessage}
+                            deleteClient={deleteClient} texts={texts}/>
     );
   }
 }

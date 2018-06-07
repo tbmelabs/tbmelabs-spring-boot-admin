@@ -12,16 +12,16 @@ import Button from 'react-bootstrap/lib/Button';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-type EditClientModalState = {
+type DeleteClientDialogState = {
   id: number;
   closeSagaId: string;
 }
 
-class EditClientModal extends Component<EditClientModal.propTypes, EditClientModalState> {
+class DeleteClientDialog extends Component<DeleteClientDialog.propTypes, DeleteClientDialogState> {
   onSubmit: () => void;
 
-  constructor(props: EditClientModal.propTypes,
-      context: EditClientModal.contextTypes) {
+  constructor(props: DeleteClientDialog.propTypes,
+      context: DeleteClientDialog.contextTypes) {
     super(props, context);
 
     const {existingClient} = props;
@@ -35,7 +35,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentWillReceiveProps(nextProps: EditClientModal.propTypes) {
+  componentWillReceiveProps(nextProps: DeleteClientDialog.propTypes) {
     const {id} = this.state;
     const {existingClient} = nextProps;
 
@@ -85,15 +85,15 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
   }
 }
 
-EditClientModal.propTypes = {
+DeleteClientDialog.propTypes = {
   existingClient: PropTypes.object.isRequired,
   addFlashMessage: PropTypes.func.isRequired,
   deleteClient: PropTypes.func.isRequired,
   texts: PropTypes.object.isRequired
 };
 
-EditClientModal.contextTypes = {
+DeleteClientDialog.contextTypes = {
   router: PropTypes.object.isRequired
 };
 
-export default EditClientModal;
+export default DeleteClientDialog;

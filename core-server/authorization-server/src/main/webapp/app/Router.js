@@ -24,8 +24,13 @@ const AsyncClients = Loadable({
   loading: () => <div>Loading...</div>
 });
 
-const AsyncClientDialog = Loadable({
-  loader: () => import ('./container/app/clients/ClientDialog'),
+const AsyncClientDetailsModal = Loadable({
+  loader:()=>import('./container/app/clients/ClientDetailsModal'),
+  loading: () => <div>Loading...</div>
+});
+
+const AsyncClientEditModal = Loadable({
+  loader: () => import ('./container/app/clients/ClientEditModal'),
   loading: () => <div>Loading...</div>
 });
 
@@ -54,10 +59,13 @@ class Router extends Component<Router.propTypes> {
                      component={accessWithAuthority(AsyncClients,
                          SERVER_ADMIN)}/>
               <Route path='/clients/new'
-                     component={accessWithAuthority(AsyncClientDialog,
+                     component={accessWithAuthority(AsyncClientEditModal,
+                         SERVER_ADMIN)}/>
+              <Route path='/clients/:clientId'
+                     component={accessWithAuthority(AsyncClientDetailsModal,
                          SERVER_ADMIN)}/>
               <Route path='/clients/:clientId/edit'
-                     component={accessWithAuthority(AsyncClientDialog,
+                     component={accessWithAuthority(AsyncClientEditModal,
                          SERVER_ADMIN)}/>
               <Route path='/clients/:clientId/delete'
                      component={accessWithAuthority(AsyncClientDeleteDialog,

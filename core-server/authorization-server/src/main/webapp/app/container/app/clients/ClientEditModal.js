@@ -25,12 +25,12 @@ import {
 import NewClientModal from '../../../components/clients/NewClientModal';
 import EditClientModal from "../../../components/clients/EditClientModal";
 
-type ClientDialogState = {
+type ClientEditModalState = {
   existingClient: { ...clientType };
 }
 
-class ClientDialog extends Component<ClientDialog.propTypes, ClientDialogState> {
-  constructor(props: ClientDialog.propTypes) {
+class ClientEditModal extends Component<ClientEditModal.propTypes, ClientEditModalState> {
+  constructor(props: ClientEditModal.propTypes) {
     super(props);
 
     this.state = {
@@ -76,7 +76,7 @@ class ClientDialog extends Component<ClientDialog.propTypes, ClientDialogState> 
   }
 }
 
-ClientDialog.propTypes = {
+ClientEditModal.propTypes = {
   authorities: PropTypes.array.isRequired,
   grantTypes: PropTypes.array.isRequired,
   scopes: PropTypes.array.isRequired,
@@ -92,4 +92,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ClientDialog);
+export default connect(mapStateToProps)(ClientEditModal);
