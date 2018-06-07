@@ -19,7 +19,7 @@ import Button from 'react-bootstrap/lib/Button';
 require('bootstrap/dist/css/bootstrap.css');
 
 type  ClientDetailsModalState = {
-  ...clientType
+  client: clientType;
 }
 
 class ClientDetailsModal extends Component <ClientDetailsModal.propTypes, ClientDetailsModalState> {
@@ -28,104 +28,98 @@ class ClientDetailsModal extends Component <ClientDetailsModal.propTypes, Client
     super(props, context);
 
     this.state = {
-      id: 0,
-      created: 0,
-      lastUpdated: 0,
-      clientId: '',
-      secret: '',
-      isSecretRequired: false,
-      isAutoApprove: false,
-      accessTokenValiditySeconds: 0,
-      refreshTokenValiditySeconds: 0,
-      redirectUris: [],
-      grantTypes: [],
-      grantedAuthorities: [],
-      scopes: [],
+      client: (({}: any): clientType)
     };
   }
 
-  componentWillReceiveProps(nextProps: EditClientModal.propTypes) {
-    const {id} = this.state;
+  componentWillReceiveProps(nextProps: ClientDetailsModal.propTypes) {
+    const {client} = this.state;
     const {existingClient} = nextProps;
 
-    if (existingClient.id && !id) {
+    if (existingClient.id && !client.id) {
       this.setState({
-        id: existingClient.id,
-        created: existingClient.created,
-        lastUpdated: existingClient.lastUpdated,
-        clientId: existingClient.clientId,
-        isSecretRequired: existingClient.isSecretRequired,
-        isAutoApprove: existingClient.isAutoApprove,
-        accessTokenValiditySeconds: existingClient.accessTokenValiditySeconds,
-        refreshTokenValiditySeconds: existingClient.refreshTokenValiditySeconds,
-        redirectUri: existingClient.redirectUris.join(';'),
-        grantTypes: existingClient.grantTypes,
-        authorities: existingClient.grantedAuthorities,
-        scopes: existingClient.scopes,
+        client: {
+          id: existingClient.id,
+          created: existingClient.created,
+          lastUpdated: existingClient.lastUpdated,
+          clientId: existingClient.clientId,
+          isSecretRequired: existingClient.isSecretRequired,
+          isAutoApprove: existingClient.isAutoApprove,
+          accessTokenValiditySeconds: existingClient.accessTokenValiditySeconds,
+          refreshTokenValiditySeconds: existingClient.refreshTokenValiditySeconds,
+          redirectUris: existingClient.redirectUris,
+          grantTypes: existingClient.grantTypes,
+          grantedAuthorities: existingClient.grantedAuthorities,
+          scopes: existingClient.scopes,
+        }
       });
     }
   }
 
   render() {
-    const {id, created, lastUpdated, clientId, isSecretRequired, isAutoApprove, accessTokenValiditySeconds, refreshTokenValiditySeconds, redirectUri, grantTypes, authorities, scopes} = this.state;
+    const {client} = this.state;
     const {texts} = this.props;
 
-    if (!id) {
+    if (!client.id) {
       return null;
     }
 
     return (
         <Modal.Dialog>
           <Modal.Header>
-            <Modal.Title>{`${texts.client} ${id}`}</Modal.Title>
+            <Modal.Title>{`${texts.client} ${client.id}`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Grid>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.created}</Col>
-                <Col sm={4}>{new Date(created).toDateString()}</Col>
+                <Col sm={4}>{new Date(
+                    ((client.created: any): number)).toDateString()}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.last_updated}</Col>
-                <Col sm={4}>{new Date(lastUpdated).toDateString()}</Col>
+                <Col sm={4}>{new Date(
+                    ((client.lastUpdated: any): number)).toDateString()}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.client_id}</Col>
-                <Col sm={4}>{clientId}</Col>
+                <Col sm={4}>{client.clientId}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.is_secret_required}</Col>
-                <Col sm={4}>{isSecretRequired}</Col>
+                <Col sm={4}>{client.isSecretRequired}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.is_auto_approve}</Col>
-                <Col sm={4}>{isAutoApprove}</Col>
+                <Col sm={4}>{client.isAutoApprove}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.access_token_validity}</Col>
-                <Col sm={4}>{accessTokenValiditySeconds}</Col>
+                <Col sm={4}>{client.accessTokenValiditySeconds}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.refresh_token_validity}</Col>
-                <Col sm={4}>{refreshTokenValiditySeconds}</Col>
+                <Col sm={4}>{client.refreshTokenValiditySeconds}</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.redirect_uri}</Col>
-                <Col sm={4}>{redirectUri}</Col>
+                <Col sm={4}>{
+                  client.redirectUris.join(';')
+                }</Col>
               </Row>
               <Row>
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.grant_types}</Col>
                 <Col sm={4}>{
-                  grantTypes
+                  client.grantTypes
                   .map((grantType: grantTypeType) => grantType.name)
                   .join(', ')
                 }</Col>
@@ -134,8 +128,9 @@ class ClientDetailsModal extends Component <ClientDetailsModal.propTypes, Client
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.authorities}</Col>
                 <Col sm={4}>{
-                  authorities
-                  .map((authority: authorityType) => authority.name)
+                  client.grantedAuthorities
+                  .map(
+                      (grantedAuthority: authorityType) => grantedAuthority.name)
                   .join(', ')
                 }</Col>
               </Row>
@@ -143,7 +138,7 @@ class ClientDetailsModal extends Component <ClientDetailsModal.propTypes, Client
                 <Col className='text-heavy' sm={4}
                      smOffset={2}>{texts.scopes}</Col>
                 <Col sm={4}>{
-                  scopes
+                  client.scopes
                   .map((scope: scopeType) => scope.name)
                   .join(', ')
                 }</Col>
@@ -153,7 +148,7 @@ class ClientDetailsModal extends Component <ClientDetailsModal.propTypes, Client
           <Modal.Footer>
             <Button bsStyle='danger'
                     onClick={this.context.router.history.goBack}>{texts.modal.back_button_text}</Button>
-            <Link to={`/clients/${id}/edit`}>
+            <Link to={`/clients/${((client.id: any): number)}/edit`}>
               <Button bsStyle='primary'>{texts.modal.edit_button_text}</Button>
             </Link>
           </Modal.Footer>

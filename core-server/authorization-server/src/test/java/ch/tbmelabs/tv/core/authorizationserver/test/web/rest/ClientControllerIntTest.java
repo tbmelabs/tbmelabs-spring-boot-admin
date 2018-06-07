@@ -136,6 +136,8 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
   @WithMockUser(username = "ClientControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void deleteClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
+    testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
+
     mockMvc
         .perform(delete(clientsEndpoint + "/" + testClientDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));

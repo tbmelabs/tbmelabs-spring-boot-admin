@@ -21,7 +21,7 @@ class ClientDetailsContainer extends Component<ClientDetailsContainer.propTypes,
     super(props);
 
     this.state = {
-      existingClient: {}
+      existingClient: (({}: any): clientType)
     };
   }
 
