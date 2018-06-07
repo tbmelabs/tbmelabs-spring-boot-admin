@@ -11,8 +11,6 @@ import {CookiesProvider} from 'react-cookie';
 
 import Router from './Router';
 
-require('./styles/tbme-tv.css');
-
 render(
     <Provider store={getStore()}>
       <CookiesProvider>

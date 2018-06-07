@@ -4,6 +4,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
+const imageminLoader = require('imagemin-webpack').imageminLoader;
+const imageminMozjpeg = require('imagemin-mozjpeg');
+
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
@@ -13,10 +16,9 @@ const APP_DIR = path.resolve(__dirname, 'app');
 const ENV = 'production';
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    APP_DIR
-  ],
+  entry: {
+    app: ['babel-polyfill', APP_DIR]
+  },
   output: {
     path: BUILD_DIR,
     filename: '[name].bundle.js',
@@ -50,8 +52,22 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }, {
-        test: /\.(jpe?g|png|svg|ai)$/,
-        loader: 'file-loader?publicPath=public/'
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader?publicPath=public/'
+          }, {
+            loader: imageminLoader,
+            options: {
+              bail: false,
+              imageminOptions: {
+                plugins: [
+                  imageminMozjpeg()
+                ]
+              }
+            }
+          }
+        ]
       }, {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'url-loader?limit=100000'
@@ -65,20 +81,20 @@ module.exports = {
         commons: {
           chunks: 'initial',
           minChunks: 2,
-        },
-        vendor: {
-          test: NODE_DIR,
-          chunks: 'all',
-          name: 'vendor'
         }
       }
     }
   },
   plugins: [
     new UglifyJSPlugin(),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
     new HtmlWebpackPlugin({
-      filename: '../index.html',
-      template: 'templates/index.template.ejs'
+      chunks: ['app'],
+      filename: '../app.html',
+      template: 'templates/app.template.ejs'
     })
   ]
 };

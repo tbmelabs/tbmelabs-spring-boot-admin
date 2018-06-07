@@ -38,6 +38,6 @@ export function updateClient(client: clientType) {
   getStore().dispatch(updateClientAction(client));
 }
 
-export function deleteClient(client: clientType) {
-  getStore().dispatch(deleteClientAction(((client.id: any): number)));
+export function deleteClient(id: number) {
+  getStore().dispatch(deleteClientAction(id));
 }

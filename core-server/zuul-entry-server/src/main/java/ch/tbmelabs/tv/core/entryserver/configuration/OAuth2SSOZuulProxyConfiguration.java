@@ -29,18 +29,14 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-
-      .csrf().disable()
-      
+     
       .authorizeRequests()
         .antMatchers("/", "/favicon.ico").permitAll()
-        .antMatchers("/authenticated").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
         .anyRequest().authenticated()
       
       .and().logout()
-         .logoutSuccessUrl("/")
-        .permitAll();
+        .logoutSuccessUrl("/");
     // @formatter:on
   }
 }

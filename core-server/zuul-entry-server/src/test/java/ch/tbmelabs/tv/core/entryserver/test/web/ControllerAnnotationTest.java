@@ -13,7 +13,7 @@ import ch.tbmelabs.tv.core.entryserver.Application;
 
 public class ControllerAnnotationTest {
 
-  private static final Integer EXPECTED_CONTROLLER_COUNT = 1;
+  private static final Integer EXPECTED_CONTROLLER_COUNT = 0;
 
   private static Set<Class<?>> allControllers = new HashSet<>();
   private static Set<Class<?>> annotatedControllers = new HashSet<>();

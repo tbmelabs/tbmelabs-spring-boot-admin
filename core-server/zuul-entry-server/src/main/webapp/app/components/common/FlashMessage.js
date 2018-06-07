@@ -10,8 +10,6 @@ import Button from 'react-bootstrap/lib/Button';
 
 import CollapsableAlert from './CollapsableAlert';
 
-require('bootstrap/dist/css/bootstrap.css');
-
 type FlashMessageState = {
   collapse: boolean
 };

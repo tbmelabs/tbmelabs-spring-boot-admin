@@ -12,10 +12,9 @@ const APP_DIR = path.resolve(__dirname, 'app');
 const ENV = 'development';
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    APP_DIR
-  ],
+  entry: {
+    app: ['babel-polyfill', APP_DIR]
+  },
   output: {
     path: BUILD_DIR,
     filename: '[name].js'
@@ -48,7 +47,7 @@ module.exports = {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }, {
-        test: /\.(jpe?g|png|svg|ai)$/,
+        test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader?publicPath=public/'
       }, {
         test: /\.(woff|woff2|eot|ttf)$/,
@@ -61,9 +60,14 @@ module.exports = {
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     }),
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery'
+    }),
     new HtmlWebpackPlugin({
-      filename: '../index.html',
-      template: 'templates/index.template.ejs'
+      chunks: ['app'],
+      filename: '../app.html',
+      template: 'templates/app.template.ejs'
     })
   ]
 };

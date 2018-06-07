@@ -61,7 +61,7 @@ class Router extends Component<Router.propTypes> {
               <Route path='/clients/new'
                      component={accessWithAuthority(AsyncClientEditModal,
                          SERVER_ADMIN)}/>
-              <Route path='/clients/:clientId'
+              <Route exact path='/clients/:clientId'
                      component={accessWithAuthority(AsyncClientDetailsModal,
                          SERVER_ADMIN)}/>
               <Route path='/clients/:clientId/edit'

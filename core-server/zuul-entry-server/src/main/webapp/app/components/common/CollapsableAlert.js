@@ -7,8 +7,6 @@ import PropTypes from 'prop-types';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Alert from 'react-bootstrap/lib/Alert';
 
-require('bootstrap/dist/css/bootstrap.css');
-
 class CollapsableAlert extends Component<CollapsableAlert.propTypes> {
   render() {
     return (
