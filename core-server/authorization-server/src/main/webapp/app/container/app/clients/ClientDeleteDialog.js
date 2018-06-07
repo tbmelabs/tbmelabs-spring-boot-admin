@@ -15,11 +15,11 @@ import {addFlashMessage} from '../../../state/queries/flashmessage';
 import DeleteClientModal from '../../../components/clients/DeleteClientModal';
 
 type ClientDeleteDialogState = {
-  existingClient: clientType
+  existingClient: { ...clientType };
 }
 
 class ClientDeleteDialog extends Component<ClientDeleteDialog.propTypes, ClientDeleteDialogState> {
-  constructor(props: ClientDialog.propTypes) {
+  constructor(props: ClientDeleteDialog.propTypes) {
     super(props);
 
     this.state = {

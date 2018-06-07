@@ -39,5 +39,5 @@ export function updateClient(client: clientType) {
 }
 
 export function deleteClient(client: clientType) {
-  getStore().dispatch(deleteClientAction(client));
+  getStore().dispatch(deleteClientAction(((client.id: any): number)));
 }
