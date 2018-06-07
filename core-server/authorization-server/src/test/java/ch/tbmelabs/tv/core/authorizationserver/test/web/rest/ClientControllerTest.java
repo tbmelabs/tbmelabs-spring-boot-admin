@@ -133,8 +133,9 @@ public class ClientControllerTest {
   @Test
   public void deleteClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ClientController.class.getDeclaredMethod("deleteClient", new Class<?>[]{ClientDTO.class});
-    assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
+        ClientController.class.getDeclaredMethod("deleteClient", new Class<?>[]{Long.class});
+    assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
+        .isEqualTo(new String[]{"/{id}"});
   }
 
   @Test

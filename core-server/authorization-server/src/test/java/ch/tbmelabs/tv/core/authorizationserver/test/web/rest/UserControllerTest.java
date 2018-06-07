@@ -117,8 +117,9 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{UserDTO.class});
-    assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value()).isEmpty();
+        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{Long.class});
+    assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
+        .isEqualTo(new String[]{"/{id}"});
   }
 
   @Test
