@@ -25,12 +25,12 @@ import {
 import NewClientModal from '../../../components/clients/NewClientModal';
 import EditClientModal from "../../../components/clients/EditClientModal";
 
-type ClientEditModalState = {
+type EditClientContainerState = {
   existingClient: { ...clientType };
 }
 
-class ClientEditModal extends Component<ClientEditModal.propTypes, ClientEditModalState> {
-  constructor(props: ClientEditModal.propTypes) {
+class EditClientContainer extends Component<EditClientContainer.propTypes, EditClientContainerState> {
+  constructor(props: EditClientContainer.propTypes) {
     super(props);
 
     this.state = {
@@ -76,7 +76,7 @@ class ClientEditModal extends Component<ClientEditModal.propTypes, ClientEditMod
   }
 }
 
-ClientEditModal.propTypes = {
+EditClientContainer.propTypes = {
   authorities: PropTypes.array.isRequired,
   grantTypes: PropTypes.array.isRequired,
   scopes: PropTypes.array.isRequired,
@@ -92,4 +92,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ClientEditModal);
+export default connect(mapStateToProps)(EditClientContainer);

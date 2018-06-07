@@ -10,6 +10,7 @@
     "profile_fetch_failed_alert_text": " Please try again later!"
   },
   "clients": {
+    "client": "Client",
     "title": "Client Management",
     "id": "ID",
     "created": "Created",
@@ -30,9 +31,10 @@
       "update_title": "Update Client",
       "delete_title": "Delete Client",
       "delete_text": "Are you sure you want to delete Client ",
-      "create_button_text": "Save",
-      "update_button_text": "Update",
+      "save_button_text": "Save",
+      "edit_button_text": "Edit",
       "delete_button_text": "Delete",
+      "back_button_text": "Back",
       "cancel_button_text": "Cancel",
       "button_loading_text": "Loading...",
       "client_action_success_title": "Success:",

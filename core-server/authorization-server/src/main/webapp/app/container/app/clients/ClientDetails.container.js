@@ -1,5 +1,4 @@
 // @flow
-'use strict';
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
@@ -9,17 +8,16 @@ import {connect} from 'react-redux';
 import {type clientType} from '../../../../common/types/client.type';
 
 import {getTexts} from '../../../state/selectors/language';
-import {deleteClient, requestClient} from '../../../state/queries/client';
-import {addFlashMessage} from '../../../state/queries/flashmessage';
+import {requestClient} from '../../../state/queries/client';
 
-import DeleteClientDialog from '../../../components/clients/DeleteClientDialog';
+import ClientDetailsModal from '../../../components/clients/ClientDetailsModal';
 
-type ClientDeleteDialogState = {
-  existingClient: { ...clientType };
+type ClientDetailsContainerState = {
+  existingClient: clientType
 }
 
-class ClientDeleteDialog extends Component<ClientDeleteDialog.propTypes, ClientDeleteDialogState> {
-  constructor(props: ClientDeleteDialog.propTypes) {
+class ClientDetailsContainer extends Component<ClientDetailsContainer.propTypes, ClientDetailsContainerState> {
+  constructor(props: ClientDetailsContainer.propTypes) {
     super(props);
 
     this.state = {
@@ -40,14 +38,12 @@ class ClientDeleteDialog extends Component<ClientDeleteDialog.propTypes, ClientD
     const {texts} = this.props;
 
     return (
-        <DeleteClientDialog existingClient={existingClient}
-                            addFlashMessage={addFlashMessage}
-                            deleteClient={deleteClient} texts={texts}/>
+        <ClientDetailsModal existingClient={existingClient} texts={texts}/>
     );
   }
 }
 
-ClientDeleteDialog.propTypes = {
+ClientDetailsContainer.propTypes = {
   texts: PropTypes.object.isRequired
 };
 
@@ -57,4 +53,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ClientDeleteDialog);
+export default connect(mapStateToProps)(ClientDetailsContainer);

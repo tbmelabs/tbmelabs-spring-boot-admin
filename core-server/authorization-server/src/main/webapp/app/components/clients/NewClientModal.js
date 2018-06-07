@@ -366,7 +366,7 @@ class NewClientModal extends Component<NewClientModal.propTypes, NewClientModalS
                           disabled={!isValid || isLoading}
                           onClick={isValid && !isLoading ? this.onSubmit
                               : null}>
-                    {!isLoading ? texts.modal.create_button_text
+                    {!isLoading ? texts.modal.save_button_text
                         : texts.modal.button_loading_text}
                   </Button>
                 </Col>

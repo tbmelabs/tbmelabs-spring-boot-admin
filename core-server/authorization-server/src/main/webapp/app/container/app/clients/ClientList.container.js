@@ -21,7 +21,7 @@ import ClientList from '../../../components/clients/ClientList';
 require('../../../styles/clients.css');
 require('bootstrap/dist/css/bootstrap.css');
 
-class Clients extends Component <Clients.propTypes> {
+class ClientListContainer extends Component <ClientListContainer.propTypes> {
   componentWillMount() {
     requestClients();
   }
@@ -48,7 +48,7 @@ class Clients extends Component <Clients.propTypes> {
   }
 }
 
-Clients.propTypes = {
+ClientListContainer.propTypes = {
   clients: PropTypes.array.isRequired,
   texts: PropTypes.object.isRequired
 };
@@ -60,4 +60,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Clients);
+export default connect(mapStateToProps)(ClientListContainer);

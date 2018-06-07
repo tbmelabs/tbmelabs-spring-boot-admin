@@ -10,6 +10,7 @@ import {UPDATE_CLIENT_SUCCEED} from '../../state/actions/client';
 import {type grantTypeType} from '../../../common/types/grantType.type';
 import {type authorityType} from '../../../common/types/authority.type';
 import {type scopeType} from '../../../common/types/scope.type';
+
 import isEmpty from 'lodash/isEmpty';
 
 import extractMultiSelectedOptions
@@ -378,7 +379,7 @@ class EditClientModal extends Component<EditClientModal.propTypes, EditClientMod
                           disabled={!isValid || isLoading}
                           onClick={isValid && !isLoading ? this.onSubmit
                               : null}>
-                    {!isLoading ? texts.modal.update_button_text
+                    {!isLoading ? texts.modal.save_button_text
                         : texts.modal.button_loading_text}
                   </Button>
                 </Col>

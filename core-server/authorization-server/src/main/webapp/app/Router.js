@@ -20,22 +20,22 @@ const AsyncApp = Loadable({
 });
 
 const AsyncClients = Loadable({
-  loader: () => import('./container/app/clients'),
+  loader: () => import('./container/app/clients/ClientList.container'),
   loading: () => <div>Loading...</div>
 });
 
 const AsyncClientDetailsModal = Loadable({
-  loader:()=>import('./container/app/clients/ClientDetailsModal'),
+  loader:()=>import('./container/app/clients/ClientDetails.container'),
   loading: () => <div>Loading...</div>
 });
 
 const AsyncClientEditModal = Loadable({
-  loader: () => import ('./container/app/clients/ClientEditModal'),
+  loader: () => import ('./container/app/clients/EditClient.container'),
   loading: () => <div>Loading...</div>
 });
 
 const AsyncClientDeleteDialog = Loadable({
-  loader: () => import ('./container/app/clients/ClientDeleteDialog'),
+  loader: () => import ('./container/app/clients/DeleteClient.container'),
   loading: () => <div>Loading...</div>
 })
 
