@@ -18,8 +18,7 @@ public class WebMVCConfiguration extends WebMvcConfigurerAdapter {
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("landing-page");
-    registry.addViewController("/desktop").setViewName("app");
+    registry.addViewController("/").setViewName("index");
 
     registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
   }

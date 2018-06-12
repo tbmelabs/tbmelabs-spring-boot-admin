@@ -55,7 +55,6 @@ dockerfile.local
 # NPM
 node_modules/
 public/
-**/*.html
 
 # Karma
 coverage/
