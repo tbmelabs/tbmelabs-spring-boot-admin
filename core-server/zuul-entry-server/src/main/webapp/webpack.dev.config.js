@@ -11,7 +11,11 @@ const ENV = 'development';
 
 module.exports = {
   entry: {
-    app: APP_DIR
+    app: [
+      `${APP_DIR}/styles/tbme-tv.css`,
+      'bootstrap/dist/css/bootstrap.min.css',
+      'popper.js/dist/popper.js'
+    ]
   },
   output: {
     path: BUILD_DIR,
