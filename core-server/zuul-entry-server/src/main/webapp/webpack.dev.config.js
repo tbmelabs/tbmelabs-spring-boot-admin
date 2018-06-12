@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const BUILD_DIR = path.resolve(__dirname, 'public');
 const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
@@ -11,11 +13,7 @@ const ENV = 'development';
 
 module.exports = {
   entry: {
-    app: [
-      `${APP_DIR}/styles/tbme-tv.css`,
-      'bootstrap/dist/css/bootstrap.min.css',
-      'popper.js/dist/popper.js'
-    ]
+    app: ['babel-polyfill', APP_DIR]
   },
   output: {
     path: BUILD_DIR,
@@ -24,6 +22,28 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: [
+          NODE_DIR,
+          TEST_DIR
+        ],
+        include: [
+          APP_DIR
+        ],
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            'babel-plugin-syntax-dynamic-import',
+            'transform-flow-strip-types',
+            'transform-object-rest-spread'
+          ],
+          presets: [
+            'env',
+            'react',
+            'flow'
+          ]
+        }
+      }, {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }, {
@@ -43,6 +63,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['app'],
+      filename: '../index.html',
+      template: 'templates/app.template.ejs'
     })
   ]
 };

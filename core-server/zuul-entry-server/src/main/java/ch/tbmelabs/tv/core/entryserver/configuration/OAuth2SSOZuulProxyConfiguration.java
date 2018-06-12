@@ -33,6 +33,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
       .authorizeRequests()
         .antMatchers("/", "/favicon.ico").permitAll()
         .antMatchers("/public/**").permitAll()
+        .antMatchers("/authenticated").permitAll()
         .anyRequest().authenticated()
 
       .and().logout()

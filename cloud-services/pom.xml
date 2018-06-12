@@ -16,6 +16,7 @@
   </properties>
 
   <modules>
+    <module>desktop-ui</module>
   </modules>
 
   <dependencies>

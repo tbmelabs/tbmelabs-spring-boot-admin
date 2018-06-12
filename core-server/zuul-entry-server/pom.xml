@@ -41,18 +41,6 @@
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4 -->
-    <dependency>
-      <groupId>org.thymeleaf.extras</groupId>
-      <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>constants</artifactId>
@@ -75,7 +63,10 @@
           <exclude>.*</exclude>
           <exclude>__tests__/**</exclude>
           <exclude>app/**</exclude>
+          <!-- TODO: Remove as soon as react-bootstrap components are removed -->
+          <exclude>deprecated/**</exclude>
           <exclude>node_modules/**</exclude>
+          <exclude>templates/**</exclude>
           <exclude>*.json</exclude>
           <exclude>*.js</exclude>
         </excludes>

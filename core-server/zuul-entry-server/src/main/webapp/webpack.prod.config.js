@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const imageminLoader = require('imagemin-webpack').imageminLoader;
@@ -16,20 +17,38 @@ const ENV = 'production';
 
 module.exports = {
   entry: {
-    app: [
-      `${APP_DIR}/styles/tbme-tv.css`,
-      'bootstrap/dist/css/bootstrap.min.css',
-      'popper.js/dist/popper.js'
-    ]
+    app: ['babel-polyfill', APP_DIR]
   },
   output: {
     path: BUILD_DIR,
-    filename: '[name].js',
+    filename: '[name].bundle.js',
     chunkFilename: '[chunkhash].js'
   },
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: [
+          NODE_DIR,
+          TEST_DIR
+        ],
+        include: [
+          APP_DIR
+        ],
+        loader: 'babel-loader',
+        options: {
+          plugins: [
+            'babel-plugin-syntax-dynamic-import',
+            'transform-flow-strip-types',
+            'transform-object-rest-spread'
+          ],
+          presets: [
+            'env',
+            'react',
+            'flow'
+          ]
+        }
+      }, {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
       }, {
@@ -71,6 +90,11 @@ module.exports = {
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['app'],
+      filename: '../index.html',
+      template: 'templates/app.template.ejs'
     })
   ]
 };
