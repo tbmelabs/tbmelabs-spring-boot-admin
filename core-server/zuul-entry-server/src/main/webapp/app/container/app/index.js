@@ -36,7 +36,8 @@ class App extends Component<App.propTypes> {
               {
                 isAuthenticated ?
                     <StartApplicationButton launchApplication={() => {
-                    }} texts={texts}/> :
+                    }} texts={texts}/>
+                    :
                     <SigninButton signinUser={signinUser} texts={texts}/>
               }
             </div>

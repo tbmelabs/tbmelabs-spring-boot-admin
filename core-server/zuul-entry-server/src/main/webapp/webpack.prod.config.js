@@ -20,9 +20,10 @@ module.exports = {
     app: ['babel-polyfill', APP_DIR]
   },
   output: {
-    path: BUILD_DIR,
+    chunkFilename: '[chunkhash].js',
     filename: '[name].bundle.js',
-    chunkFilename: '[chunkhash].js'
+    path: BUILD_DIR,
+    publicPath: 'public/'
   },
   module: {
     rules: [
