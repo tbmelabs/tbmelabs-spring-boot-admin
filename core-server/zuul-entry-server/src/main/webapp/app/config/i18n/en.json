@@ -1,7 +1,8 @@
 {
   "language": "English",
-  "navbar": {
-    "login": "Login",
-    "logout": "Logout"
+  "app": {
+    "title": "TBME TV",
+    "signin": "Signin",
+    "launch": "Launch Application"
   }
 }

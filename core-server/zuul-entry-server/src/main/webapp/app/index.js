@@ -9,9 +9,6 @@ import getStore from './getStore';
 
 import Router from './Router';
 
-require('./styles/tbme-tv.css');
-require('bootstrap/dist/css/bootstrap.min.css');
-
 render(
     <Provider store={getStore()}>
         <Router/>
