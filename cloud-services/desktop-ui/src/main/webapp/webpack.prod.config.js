@@ -20,9 +20,10 @@ module.exports = {
     app: ['babel-polyfill', APP_DIR]
   },
   output: {
-    path: BUILD_DIR,
+    chunkFilename: '[chunkhash].js',
     filename: '[name].bundle.js',
-    chunkFilename: '[chunkhash].js'
+    path: BUILD_DIR,
+    publicPath: 'public/'
   },
   module: {
     rules: [
@@ -93,7 +94,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       chunks: ['app'],
-      filename: '../app.html',
+      filename: '../index.html',
       template: 'templates/app.template.ejs'
     })
   ]

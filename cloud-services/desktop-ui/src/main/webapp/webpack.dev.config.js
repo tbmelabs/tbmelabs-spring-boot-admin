@@ -66,7 +66,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       chunks: ['app'],
-      filename: '../app.html',
+      filename: '../index.html',
       template: 'templates/app.template.ejs'
     })
   ]

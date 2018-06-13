@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.tbmelabs.tv</groupId>
-  <artifactId>cloud-services</artifactId>
+  <artifactId>services</artifactId>
   <packaging>pom</packaging>
 
   <parent>
@@ -12,6 +13,8 @@
   </parent>
 
   <properties>
+    <!-- Dependency configuration -->
+    <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <org.reflections.reflections.version>0.9.10</org.reflections.reflections.version>
   </properties>
 
@@ -51,12 +54,30 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
       <version>${org.reflections.reflections.version}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.tbmelabs.tv.shared</groupId>
+      <artifactId>constants</artifactId>
+      <version>${ch.tbmelabs.tv.shared.constants.version}</version>
     </dependency>
   </dependencies>
 

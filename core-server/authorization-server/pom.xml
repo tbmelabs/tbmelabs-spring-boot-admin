@@ -17,7 +17,6 @@
     <flyway.password>auth_test_user_password</flyway.password>
 
     <!-- Dependency configuration -->
-    <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
     <org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
     <org.apache.commons.lang3.version>3.7</org.apache.commons.lang3.version>
@@ -115,12 +114,6 @@
       <groupId>commons-validator</groupId>
       <artifactId>commons-validator</artifactId>
       <version>${commons-validator.commons-validator.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.tbmelabs.tv.shared</groupId>
-      <artifactId>constants</artifactId>
-      <version>${ch.tbmelabs.tv.shared.constants.version}</version>
     </dependency>
   </dependencies>
 

@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.tbmelabs.tv</groupId>
@@ -8,6 +9,7 @@
   <properties>
     <!-- Dependency configuration -->
     <ch.tbmelabs.tv.shared.centralized_logging_with_elk_stack.version>1.0.0</ch.tbmelabs.tv.shared.centralized_logging_with_elk_stack.version>
+    <ch.tbmelabs.tv.shared.constants.version>1.0.0</ch.tbmelabs.tv.shared.constants.version>
     <org.reflections.reflections.version>0.9.10</org.reflections.reflections.version>
   </properties>
 
@@ -68,6 +70,12 @@
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>centralized_logging_with_elk_stack</artifactId>
       <version>${ch.tbmelabs.tv.shared.centralized_logging_with_elk_stack.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.tbmelabs.tv.shared</groupId>
+      <artifactId>constants</artifactId>
+      <version>${ch.tbmelabs.tv.shared.constants.version}</version>
     </dependency>
   </dependencies>
 
