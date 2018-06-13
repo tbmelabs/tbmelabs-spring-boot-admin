@@ -31,7 +31,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "clients")
-public class Client extends NicelyDocumentedJDBCResource {
+public class Client extends AuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class Client extends NicelyDocumentedJDBCResource {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "clients_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")

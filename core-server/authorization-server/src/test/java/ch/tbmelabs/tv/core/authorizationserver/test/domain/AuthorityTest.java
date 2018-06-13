@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import java.util.Collections;
@@ -31,11 +32,16 @@ public class AuthorityTest {
   }
 
   @Test
-  public void roleShouldBeAnnotated() {
+  public void authorityShouldBeAnnotated() {
     assertThat(Authority.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Authority.class.getDeclaredAnnotation(Table.class).name())
         .isEqualTo("client_authorities");
+  }
+
+  @Test
+  public void authorityShouldExtendNicelyDocumentedJDBCResource() {
+    assertThat(AuditingEntity.class).isAssignableFrom(Authority.class);
   }
 
   @Test

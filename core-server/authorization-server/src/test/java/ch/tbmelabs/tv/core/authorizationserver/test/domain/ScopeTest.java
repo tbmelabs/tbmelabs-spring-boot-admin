@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class ScopeTest {
 
   @Test
   public void scopeShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(NicelyDocumentedJDBCResource.class).isAssignableFrom(Scope.class);
+    assertThat(AuditingEntity.class).isAssignableFrom(Scope.class);
   }
 
   @Test

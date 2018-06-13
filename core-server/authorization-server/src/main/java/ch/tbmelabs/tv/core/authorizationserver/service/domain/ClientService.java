@@ -65,12 +65,15 @@ public class ClientService {
 
   @Transactional
   public Client update(ClientDTO clientDTO) {
-    if (clientDTO.getId() == null || clientRepository.findOne(clientDTO.getId()) == null) {
+    Client existing;
+    if (clientDTO.getId() == null
+        || (existing = clientRepository.findOne(clientDTO.getId())) == null) {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 
-    final Client client = clientRepository.save(clientMapper.updateClientFromClient(
-        clientRepository.findOne(clientDTO.getId()), clientMapper.toEntity(clientDTO)));
+    final Client clientFromDTO = clientMapper.updateClientFromClientDto(clientDTO, existing);
+    
+    final Client client = clientRepository.save(clientMapper.updateClientFromClientDto(clientDTO, existing));
 
     Set<ClientGrantTypeAssociation> existingGrantTypes =
         clientGrantTypeRepository.findAllByClient(client);
@@ -82,9 +85,8 @@ public class ClientService {
             grantType -> grantType.getClientGrantType().equals(newGrantType.getClientGrantType())))
         .forEach(clientGrantTypeRepository::save);
     // Remove deleted by none match of existing in new
-    existingGrantTypes.stream()
-        .filter(grantType -> newGrantTypes.stream().noneMatch(
-            newGrantType -> newGrantType.getClientGrantType().equals(grantType.getClientGrantType())))
+    existingGrantTypes.stream().filter(grantType -> newGrantTypes.stream().noneMatch(
+        newGrantType -> newGrantType.getClientGrantType().equals(grantType.getClientGrantType())))
         .forEach(clientGrantTypeRepository::delete);
 
     Set<ClientAuthorityAssociation> existingAuthorities =
@@ -97,9 +99,8 @@ public class ClientService {
             authority -> authority.getClientAuthority().equals(newAuthority.getClientAuthority())))
         .forEach(clientAuthorityRepository::save);
     // Remove deleted by none match of existing in new
-    existingAuthorities.stream()
-        .filter(authority -> newAuthorities.stream().noneMatch(
-            newAuthority -> newAuthority.getClientAuthority().equals(authority.getClientAuthority())))
+    existingAuthorities.stream().filter(authority -> newAuthorities.stream().noneMatch(
+        newAuthority -> newAuthority.getClientAuthority().equals(authority.getClientAuthority())))
         .forEach(clientAuthorityRepository::delete);
 
     Set<ClientScopeAssociation> existingScopes = clientScopeRepository.findAllByClient(client);
@@ -107,13 +108,13 @@ public class ClientService {
         clientMapper.scopesToScopeAssociations(clientDTO.getScopes(), client);
     // Save new by none match of new in existing
     newScopes.stream()
-        .filter(newScope -> existingScopes.stream().noneMatch(
-            scope -> scope.getClientScope().equals(newScope.getClientScope())))
+        .filter(newScope -> existingScopes.stream()
+            .noneMatch(scope -> scope.getClientScope().equals(newScope.getClientScope())))
         .forEach(clientScopeRepository::save);
     // Remove deleted by none match of existing in new
     existingScopes.stream()
-        .filter(scope -> newScopes.stream().noneMatch(
-            newScope -> newScope.getClientScope().equals(scope.getClientScope())))
+        .filter(scope -> newScopes.stream()
+            .noneMatch(newScope -> newScope.getClientScope().equals(scope.getClientScope())))
         .forEach(clientScopeRepository::delete);
 
     return client;

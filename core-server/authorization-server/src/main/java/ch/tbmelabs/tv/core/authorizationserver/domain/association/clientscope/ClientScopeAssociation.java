@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @Table(name = "client_has_scopes")
 @IdClass(ClientScopeAssociationId.class)
-public class ClientScopeAssociation extends NicelyDocumentedJDBCResource {
+public class ClientScopeAssociation extends AuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;

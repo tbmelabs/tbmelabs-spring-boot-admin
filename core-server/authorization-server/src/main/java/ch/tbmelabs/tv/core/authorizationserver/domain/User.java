@@ -37,7 +37,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "users")
-public class User extends NicelyDocumentedJDBCResource {
+public class User extends AuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class User extends NicelyDocumentedJDBCResource {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = NicelyDocumentedJDBCResource.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "users_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
@@ -90,11 +90,8 @@ public class User extends NicelyDocumentedJDBCResource {
   @LazyCollection(LazyCollectionOption.FALSE)
   private Set<UserRoleAssociation> roles;
 
-  @Override
   @PrePersist
   public void onCreate() {
-    super.onCreate();
-
     this.setPassword(PASSWORD_ENCODER.encode(this.getPassword()));
   }
 

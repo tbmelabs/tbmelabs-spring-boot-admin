@@ -2,11 +2,11 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.authorizationserver.Application;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import javax.persistence.Entity;
 import org.junit.Test;
 import org.reflections.Reflections;
-import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 
 public class EntityAnnotationTest {
 
@@ -21,6 +21,6 @@ public class EntityAnnotationTest {
   @Test
   public void allEntitiesShouldExtendTheConfiguredSuperType() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain")
-        .getSubTypesOf(NicelyDocumentedJDBCResource.class)).hasSize(EXPECTED_ENTITIES_COUNT);
+        .getSubTypesOf(AuditingEntity.class)).hasSize(EXPECTED_ENTITIES_COUNT);
   }
 }

@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class RoleTest {
 
   @Test
   public void roleShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(NicelyDocumentedJDBCResource.class).isAssignableFrom(Role.class);
+    assertThat(AuditingEntity.class).isAssignableFrom(Role.class);
   }
 
   @Test

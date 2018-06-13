@@ -1,8 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @Table(name = "client_has_grant_types")
 @IdClass(ClientGrantTypeAssociationId.class)
-public class ClientGrantTypeAssociation extends NicelyDocumentedJDBCResource {
+public class ClientGrantTypeAssociation extends AuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;

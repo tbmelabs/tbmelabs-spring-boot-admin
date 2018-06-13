@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @Table(name = "user_has_roles")
 @IdClass(UserRoleAssociationId.class)
-public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
+public class UserRoleAssociation extends AuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
@@ -93,8 +93,8 @@ public class UserRoleAssociation extends NicelyDocumentedJDBCResource {
 
   @Override
   public int hashCode() {
-    if (this.getUser() == null || this.getUser().getId() == null
-        || this.getUserRole() == null || this.getUserRole().getId() == null) {
+    if (this.getUser() == null || this.getUser().getId() == null || this.getUserRole() == null
+        || this.getUserRole().getId() == null) {
       return super.hashCode();
     }
 

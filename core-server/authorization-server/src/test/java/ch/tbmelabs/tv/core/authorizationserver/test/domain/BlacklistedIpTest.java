@@ -3,8 +3,8 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
-import ch.tbmelabs.tv.core.authorizationserver.domain.NicelyDocumentedJDBCResource;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -35,7 +35,7 @@ public class BlacklistedIpTest {
 
   @Test
   public void blacklistedIpShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(NicelyDocumentedJDBCResource.class).isAssignableFrom(BlacklistedIp.class);
+    assertThat(AuditingEntity.class).isAssignableFrom(BlacklistedIp.class);
   }
 
   @Test

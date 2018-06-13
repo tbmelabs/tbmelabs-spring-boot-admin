@@ -47,11 +47,12 @@ public class UserService {
   }
 
   public User update(UserDTO userDTO) {
-    if (userDTO.getId() == null || userRepository.findOne(userDTO.getId()) == null) {
+    User existing;
+    if (userDTO.getId() == null || (existing = userRepository.findOne(userDTO.getId())) == null) {
       throw new IllegalArgumentException("You can only update an existing User!");
     }
 
-    User user = userMapper.toEntity(userDTO);
+    User user = userMapper.updateUserFromUserDTO(userDTO, existing);
     if (user.getPassword() == null || user.getPassword().isEmpty()) {
       user.setPassword(userRepository.findOne(user.getId()).getPassword());
     }
