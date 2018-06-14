@@ -12,6 +12,7 @@ import {
   requestAuthentication,
   signinUser
 } from '../../state/queries/authentication';
+import {launchApplication} from '../../state/queries/application';
 
 import SigninButton from '../../components/SigninButton';
 import StartApplicationButton from '../../components/StartApplicationButton';
@@ -35,8 +36,7 @@ class App extends Component<App.propTypes> {
 
               {
                 isAuthenticated ?
-                    <StartApplicationButton launchApplication={() => {
-                    }} texts={texts}/>
+                    <StartApplicationButton launchApplication={launchApplication} texts={texts}/>
                     :
                     <SigninButton signinUser={signinUser} texts={texts}/>
               }

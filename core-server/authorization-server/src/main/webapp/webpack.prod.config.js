@@ -24,9 +24,10 @@ module.exports = {
     signup: ['babel-polyfill', SIGNUP_APP]
   },
   output: {
-    path: BUILD_DIR,
+    chunkFilename: '[chunkhash].js',
     filename: '[name].bundle.js',
-    chunkFilename: '[chunkhash].js'
+    path: BUILD_DIR,
+    publicPath: 'public/'
   },
   module: {
     rules: [
@@ -75,11 +76,6 @@ module.exports = {
         commons: {
           chunks: 'initial',
           minChunks: 2,
-        },
-        vendor: {
-          test: NODE_DIR,
-          chunks: 'all',
-          name: 'vendor'
         }
       }
     }
@@ -89,7 +85,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       chunks: ['app'],
       filename: '../index.html',
-      template: 'templates/index.template.ejs'
+      template: 'templates/app.template.ejs'
     }),
     new HtmlWebpackPlugin({
       chunks: ['authorize'],

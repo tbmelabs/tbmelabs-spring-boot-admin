@@ -5,5 +5,7 @@ import {
   signinUserSaga,
   signoutUserSaga
 } from './authentication';
+import {launchApplicationSaga} from './application';
 
-export default [requestAuthenticationSaga, signinUserSaga, signoutUserSaga];
+export default [launchApplicationSaga, requestAuthenticationSaga,
+  signinUserSaga, signoutUserSaga];

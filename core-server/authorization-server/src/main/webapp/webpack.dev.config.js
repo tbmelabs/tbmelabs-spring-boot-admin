@@ -74,7 +74,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       chunks: ['app'],
       filename: '../index.html',
-      template: 'templates/index.template.ejs'
+      template: 'templates/app.template.ejs'
     }),
     new HtmlWebpackPlugin({
       chunks: ['authorize'],
