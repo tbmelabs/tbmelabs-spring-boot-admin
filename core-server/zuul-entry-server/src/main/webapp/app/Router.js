@@ -6,7 +6,7 @@ import React, {Component} from 'react';
 import {Route} from 'react-router';
 import {BrowserRouter, Switch} from 'react-router-dom';
 
-import Loadable from 'react-loadable';
+import Loadable from "react-loadable";
 
 const AsyncApp = Loadable({
   loader: () => import('./container/app'),

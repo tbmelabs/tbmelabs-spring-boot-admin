@@ -8,14 +8,13 @@ import {connect} from 'react-redux';
 
 import {getTexts} from '../../state/selectors/language';
 import {getIsAuthenticated} from '../../state/selectors/authentication';
+import {launchApplication} from '../../state/queries/application';
 import {
   requestAuthentication,
   signinUser
 } from '../../state/queries/authentication';
-import {launchApplication} from '../../state/queries/application';
 
-import SigninButton from '../../components/SigninButton';
-import StartApplicationButton from '../../components/StartApplicationButton';
+import TransparentButton from '../../components/TransparentButton';
 
 require('../../styles/tbme-tv.css');
 require('bootstrap/dist/css/bootstrap.min.css');
@@ -28,18 +27,16 @@ class App extends Component<App.propTypes> {
   render() {
     const {isAuthenticated, texts} = this.props;
 
+    if (isAuthenticated) {
+      launchApplication();
+    }
+
     return (
         <div className='intro-container'>
           <div className='intro-body d-flex align-items-center'>
             <div className='container justify-content-center text-center'>
               <h1 className='pb-4'>{texts.title}</h1>
-
-              {
-                isAuthenticated ?
-                    <StartApplicationButton launchApplication={launchApplication} texts={texts}/>
-                    :
-                    <SigninButton signinUser={signinUser} texts={texts}/>
-              }
+              <TransparentButton action={signinUser} lable={texts.signin}/>
             </div>
           </div>
         </div>

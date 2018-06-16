@@ -8,17 +8,6 @@ body {
   background-color: black !important;
 }
 
-.btn-transparent {
-  color: rgba(255, 255, 255, 1);
-  background-color: rgba(255, 255, 255, 0);
-  border: 1px solid rgba(255, 255, 255, 1) !important;
-}
-
-.btn-transparent:hover {
-  color: rgba(175, 175, 175, 1);
-  border: 1px solid rgba(175, 175, 175, 1) !important;
-}
-
 .intro-container {
   background: radial-gradient(rgba(50, 50, 50, 0.4), rgba(175, 175, 175, 0.6), rgba(0, 0, 0, 0.9)),
   url('../images/intro-bg.jpg') no-repeat bottom center fixed;

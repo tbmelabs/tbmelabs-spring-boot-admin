@@ -5,6 +5,7 @@ import {takeLatest} from 'redux-saga/effects';
 import {LAUNCH_APPLICATION} from '../../actions/application/application.types';
 
 function* launchApplication(action: { type: string }) {
+  // TODO: Detect if mobile device?
   window.location.replace('desktop');
 }
 

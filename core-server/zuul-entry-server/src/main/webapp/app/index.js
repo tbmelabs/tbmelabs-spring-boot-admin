@@ -14,3 +14,5 @@ render(
         <Router/>
     </Provider>
     , (document.getElementById('app'): any));
+
+console.log('app rendered');

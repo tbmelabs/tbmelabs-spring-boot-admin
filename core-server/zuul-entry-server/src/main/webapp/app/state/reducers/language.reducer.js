@@ -26,7 +26,7 @@ export default (state: LanguageState = initialState,
 
         return ({
           name: language.name,
-          texts: language,
+          lable: language,
           id: action.payload
         }: LanguageState);
       } catch (error) {
