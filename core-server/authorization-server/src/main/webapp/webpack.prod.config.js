@@ -32,6 +32,7 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
         exclude: [
           NODE_DIR,
           TEST_DIR
@@ -44,7 +45,6 @@ module.exports = {
           SIGNUP_APP
         ],
         loader: 'babel-loader',
-        test: /\.js$/,
         options: {
           plugins: [
             'babel-plugin-syntax-dynamic-import',
@@ -58,14 +58,14 @@ module.exports = {
           ]
         }
       }, {
-        loader: 'style-loader!css-loader',
-        test: /\.css$/
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }, {
-        loader: 'file-loader?publicPath=public/',
-        test: /\.(jpe?g|png|svg|ai)$/
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file-loader?publicPath=public/'
       }, {
-        loader: 'url-loader?limit=100000',
-        test: /\.(woff|woff2|eot|ttf)$/
+        test: /\.(woff|woff2|eot|ttf)$/,
+        loader: 'url-loader?limit=100000'
       }
     ]
   },

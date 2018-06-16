@@ -5,9 +5,6 @@ import React, {Component} from 'react';
 
 import {requestAuthentication} from "../../state/queries/authentication";
 
-import Navbar from './Navbar';
-import FlashMessageList from '../common/FlashMessageList';
-
 class App extends Component<App.propTypes> {
   componentWillMount() {
     requestAuthentication();
@@ -16,13 +13,7 @@ class App extends Component<App.propTypes> {
   render() {
     return (
         <div>
-          <Navbar/>
-
-          <div className='container'>
-            <FlashMessageList/>
-
-            {this.props.children}
-          </div>
+          <h1>This will be the desktop application.</h1>
         </div>
     );
   }

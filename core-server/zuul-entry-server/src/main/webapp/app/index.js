@@ -7,12 +7,10 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import getStore from './getStore';
 
-import Router from './Router';
+import App from './container/app';
 
 render(
     <Provider store={getStore()}>
-        <Router/>
+        <App/>
     </Provider>
     , (document.getElementById('app'): any));
-
-console.log('app rendered');
