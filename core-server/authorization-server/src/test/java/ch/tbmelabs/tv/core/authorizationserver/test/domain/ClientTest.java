@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
@@ -50,7 +50,7 @@ public class ClientTest {
 
   @Test
   public void clientShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(AuditingEntity.class).isAssignableFrom(Client.class);
+    assertThat(AbstractAuditingEntity.class).isAssignableFrom(Client.class);
   }
 
   @Test

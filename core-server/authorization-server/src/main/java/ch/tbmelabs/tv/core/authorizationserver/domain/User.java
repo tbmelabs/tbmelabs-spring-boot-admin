@@ -37,7 +37,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "users")
-public class User extends AuditingEntity {
+public class User extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
@@ -47,7 +47,7 @@ public class User extends AuditingEntity {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "users_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")

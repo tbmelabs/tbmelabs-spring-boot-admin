@@ -20,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Data
 @MappedSuperclass
 @EntityListeners({AuditingEntityListener.class})
-public class AuditingEntity implements Serializable {
+public abstract class AbstractAuditingEntity implements Serializable {
 
   @Transient
   private static final long serialVersionUID = 1L;

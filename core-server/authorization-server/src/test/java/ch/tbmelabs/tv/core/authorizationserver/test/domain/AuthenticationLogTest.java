@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -43,7 +43,7 @@ public class AuthenticationLogTest {
 
   @Test
   public void authenticationLogShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(AuditingEntity.class).isAssignableFrom(AuthenticationLog.class);
+    assertThat(AbstractAuditingEntity.class).isAssignableFrom(AuthenticationLog.class);
   }
 
   @Test

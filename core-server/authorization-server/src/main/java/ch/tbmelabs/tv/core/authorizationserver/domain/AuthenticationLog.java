@@ -27,7 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "authentication_log")
-public class AuthenticationLog extends AuditingEntity {
+public class AuthenticationLog extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class AuthenticationLog extends AuditingEntity {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "authentication_log_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")

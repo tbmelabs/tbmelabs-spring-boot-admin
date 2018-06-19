@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import java.util.Calendar;
@@ -37,7 +37,7 @@ public class EmailConfirmationTokenTest {
 
   @Test
   public void emailConfirmationTokenShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(AuditingEntity.class).isAssignableFrom(EmailConfirmationToken.class);
+    assertThat(AbstractAuditingEntity.class).isAssignableFrom(EmailConfirmationToken.class);
   }
 
   @Test

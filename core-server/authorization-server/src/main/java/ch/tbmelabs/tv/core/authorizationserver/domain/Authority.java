@@ -33,14 +33,14 @@ import org.springframework.security.core.GrantedAuthority;
 @JsonIgnoreProperties
 @Table(name = "client_authorities")
 @EqualsAndHashCode(callSuper = true)
-public class Authority extends AuditingEntity implements GrantedAuthority {
+public class Authority extends AbstractAuditingEntity implements GrantedAuthority {
 
   @Transient
   private static final long serialVersionUID = 1L;
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "client_authorities_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")

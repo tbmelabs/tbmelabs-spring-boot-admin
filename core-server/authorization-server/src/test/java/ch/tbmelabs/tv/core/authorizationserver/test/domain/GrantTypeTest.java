@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.test.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class GrantTypeTest {
 
   @Test
   public void grantTypeShouldExtendNicelyDocumentedJDBCResource() {
-    assertThat(AuditingEntity.class).isAssignableFrom(GrantType.class);
+    assertThat(AbstractAuditingEntity.class).isAssignableFrom(GrantType.class);
   }
 
   @Test

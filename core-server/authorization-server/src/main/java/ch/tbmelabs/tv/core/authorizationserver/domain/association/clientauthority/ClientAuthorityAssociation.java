@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @Table(name = "client_has_authorities")
 @IdClass(ClientAuthorityAssociationId.class)
-public class ClientAuthorityAssociation extends AuditingEntity {
+public class ClientAuthorityAssociation extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;

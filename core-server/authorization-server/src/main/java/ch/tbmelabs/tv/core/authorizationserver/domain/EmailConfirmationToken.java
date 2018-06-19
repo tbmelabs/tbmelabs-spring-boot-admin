@@ -29,14 +29,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "email_confirmation_tokens")
-public class EmailConfirmationToken extends AuditingEntity {
+public class EmailConfirmationToken extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
       parameters = {@Parameter(name = "sequence_name", value = "email_confirmation_tokens_id_seq"),
           @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")

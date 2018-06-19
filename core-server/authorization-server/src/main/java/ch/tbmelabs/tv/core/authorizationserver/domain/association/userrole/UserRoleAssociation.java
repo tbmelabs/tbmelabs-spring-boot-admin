@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -24,7 +24,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @NoArgsConstructor
 @Table(name = "user_has_roles")
 @IdClass(UserRoleAssociationId.class)
-public class UserRoleAssociation extends AuditingEntity {
+public class UserRoleAssociation extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
