@@ -65,28 +65,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     // @formatter:off
     http
-      
+
       .csrf().disable()
-            
+
       .authorizeRequests()
         .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/me","/user").permitAll()
-        .antMatchers(loginEndpoint, "/signup/**").permitAll()
-        .antMatchers("/public/**", "/vendor/**").permitAll()
+        .antMatchers("/signup").permitAll()
+        .antMatchers("/public/**").permitAll()
       .anyRequest().authenticated()
-      
+
       .and().formLogin()
-        .loginPage(loginEndpoint)
-        .loginProcessingUrl(loginEndpoint)
+        .loginPage(loginEndpoint).permitAll()
+        .loginProcessingUrl(loginEndpoint).permitAll()
         .failureHandler(authenticationFailureHandler)
         .successHandler(authenticationSuccessHandler)
-        .permitAll()
       .and().httpBasic()
-      
+
       .and().logout()
-        .logoutSuccessUrl(loginEndpoint + "?goodbye")
-        .permitAll()
-      
+        .logoutSuccessUrl(loginEndpoint + "?goodbye").permitAll()
+
       .and()
         .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class)
         .addFilterBefore(blacklistedIpFilter, UsernamePasswordAuthenticationFilter.class);
