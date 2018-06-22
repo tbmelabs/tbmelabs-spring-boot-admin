@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -61,12 +62,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    String loginEndpoint = "/signin";
-
     // @formatter:off
     http
-
-      .csrf().disable()
 
       .authorizeRequests()
         .antMatchers("/favicon.ico").permitAll()
@@ -76,14 +73,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       .anyRequest().authenticated()
 
       .and().formLogin()
-        .loginPage(loginEndpoint).permitAll()
-        .loginProcessingUrl(loginEndpoint).permitAll()
         .failureHandler(authenticationFailureHandler)
         .successHandler(authenticationSuccessHandler)
       .and().httpBasic()
 
       .and().logout()
-        .logoutSuccessUrl(loginEndpoint + "?goodbye").permitAll()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
 
       .and()
         .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class)

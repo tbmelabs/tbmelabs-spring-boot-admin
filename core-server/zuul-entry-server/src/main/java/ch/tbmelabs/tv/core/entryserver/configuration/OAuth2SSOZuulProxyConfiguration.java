@@ -8,6 +8,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
@@ -37,6 +38,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
         .anyRequest().authenticated()
 
       .and().logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
         .logoutSuccessUrl("/");
     // @formatter:on
   }
