@@ -8,12 +8,14 @@ const NODE_DIR = path.resolve(__dirname, 'node_modules');
 const TEST_DIR = path.resolve(__dirname, '__tests__');
 
 const APP_DIR = path.resolve(__dirname, 'app');
+const LANDING_PAGE_DIR = path.resolve(__dirname, 'landing-page');
 
 const ENV = 'development';
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', APP_DIR]
+	app: ['babel-polyfill', APP_DIR],
+    landingPage: ['babel-polyfill', LANDING_PAGE_DIR]
   },
   output: {
     path: BUILD_DIR,
@@ -28,7 +30,8 @@ module.exports = {
           TEST_DIR
         ],
         include: [
-          APP_DIR
+          APP_DIR,
+          LANDING_PAGE_DIR
         ],
         loader: 'babel-loader',
         options: {
@@ -68,6 +71,11 @@ module.exports = {
       chunks: ['app'],
       filename: '../index.html',
       template: 'templates/app.template.ejs'
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ['landingPage'],
+      filename: '../landing-page.html',
+      template: 'templates/landing-page.template.ejs'
     })
   ]
 };

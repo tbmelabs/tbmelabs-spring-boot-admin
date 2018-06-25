@@ -55,8 +55,7 @@
           <exclude>.*</exclude>
           <exclude>__tests__/**</exclude>
           <exclude>app/**</exclude>
-          <!-- TODO: Remove as soon as react-bootstrap components are removed -->
-          <exclude>deprecated/**</exclude>
+          <exclude>landing-page/**</exclude>
           <exclude>node_modules/**</exclude>
           <exclude>templates/**</exclude>
           <exclude>*.json</exclude>

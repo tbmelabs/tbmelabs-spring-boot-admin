@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 
 import {getTexts} from '../../state/selectors/language';
 import {getIsAuthenticated} from '../../state/selectors/authentication';
-import {launchApplication} from '../../state/queries/application';
 import {
   requestAuthentication,
   signinUser
@@ -26,10 +25,6 @@ class App extends Component<App.propTypes> {
 
   render() {
     const {isAuthenticated, texts} = this.props;
-
-    if (isAuthenticated) {
-      launchApplication();
-    }
 
     return (
         <div className='intro-container'>
