@@ -30,7 +30,7 @@ public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapte
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-    
+
       .authorizeRequests()
         .antMatchers("/", "/favicon.ico").permitAll()
         .antMatchers("/public/**").permitAll()
