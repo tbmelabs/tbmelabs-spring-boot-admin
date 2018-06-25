@@ -6,6 +6,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,13 +26,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -35,24 +35,18 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   private static final String USER_VALIDATION_ERROR_MESSAGE =
       "An error occured. Please check your details!";
-
-  @Autowired
-  private MockMvc mockMvc;
-
-  @Autowired
-  private RoleCRUDRepository roleRepository;
-
-  @Autowired
-  private UserCRUDRepository userRepository;
-
-  private static User existingUser = new User();
   private static final User unexistingUser = new User();
-
+  private static User existingUser = new User();
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
-
   @Rule
   public ExpectedException confirmationException = ExpectedException.none();
+  @Autowired
+  private MockMvc mockMvc;
+  @Autowired
+  private RoleCRUDRepository roleRepository;
+  @Autowired
+  private UserCRUDRepository userRepository;
 
   @BeforeClass
   public static void beforeClassSetUp() {

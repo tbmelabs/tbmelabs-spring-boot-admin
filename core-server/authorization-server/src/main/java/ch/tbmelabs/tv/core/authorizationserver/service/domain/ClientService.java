@@ -60,20 +60,19 @@ public class ClientService {
   }
 
   public Optional<Client> findOneById(Long id) {
-    return Optional.ofNullable(clientRepository.findOne(id));
+    return clientRepository.findById(id);
   }
 
   @Transactional
   public Client update(ClientDTO clientDTO) {
-    Client existing;
+    Optional<Client> existing;
     if (clientDTO.getId() == null
-        || (existing = clientRepository.findOne(clientDTO.getId())) == null) {
+        || (existing = clientRepository.findById(clientDTO.getId())) == null) {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 
-    final Client clientFromDTO = clientMapper.updateClientFromClientDto(clientDTO, existing);
-    
-    final Client client = clientRepository.save(clientMapper.updateClientFromClientDto(clientDTO, existing));
+    final Client client =
+        clientRepository.save(clientMapper.updateClientFromClientDto(clientDTO, existing.get()));
 
     Set<ClientGrantTypeAssociation> existingGrantTypes =
         clientGrantTypeRepository.findAllByClient(client);
@@ -121,6 +120,6 @@ public class ClientService {
   }
 
   public void delete(Long id) {
-    clientRepository.delete(id);
+    clientRepository.deleteById(id);
   }
 }

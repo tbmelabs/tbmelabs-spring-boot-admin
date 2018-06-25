@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.mail;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
+import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,10 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
-import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
 @Profile({"!" + SpringApplicationProfile.NO_MAIL})

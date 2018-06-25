@@ -6,12 +6,12 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
+public class WebMvcConfiguration implements WebMvcConfigurer {
 
   @Bean
   public InternalResourceViewResolver viewResolver() {

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class ControllerAnnotationTest {
 
-  private static final Integer EXPECTED_CONTROLLER_COUNT = 10;
+  private static final Integer EXPECTED_CONTROLLER_COUNT = 8;
 
   private static Set<Class<?>> allControllers = new HashSet<>();
   private static Set<Class<?>> annotatedControllers = new HashSet<>();

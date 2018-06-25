@@ -5,6 +5,10 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -17,21 +21,15 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.stubbing.Answer;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 
 public class EmailConfirmationTokenServiceTest {
 
+  private static EmailConfirmationToken savedToken;
   @Mock
   private EmailConfirmationTokenCRUDRepository mockEmailConfirmationTokenRepository;
-
   @Spy
   @InjectMocks
   private EmailConfirmationTokenService fixture;
-
-  private static EmailConfirmationToken savedToken;
 
   @Before
   public void beforeTestSetUp() {

@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.entryserver.Application;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.BeforeClass;
@@ -9,11 +10,10 @@ import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.entryserver.Application;
 
 public class ControllerAnnotationTest {
 
-  private static final Integer EXPECTED_CONTROLLER_COUNT = 1;
+  private static final Integer EXPECTED_CONTROLLER_COUNT = 2;
 
   private static Set<Class<?>> allControllers = new HashSet<>();
   private static Set<Class<?>> annotatedControllers = new HashSet<>();

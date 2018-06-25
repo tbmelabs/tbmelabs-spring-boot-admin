@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -17,8 +19,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.SecurityConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class SecurityConfigurationTest {
 

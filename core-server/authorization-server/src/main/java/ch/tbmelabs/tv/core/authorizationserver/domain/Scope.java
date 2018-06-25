@@ -14,20 +14,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "client_scopes")
 public class Scope extends AbstractAuditingEntity {
@@ -45,7 +43,7 @@ public class Scope extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Length(max = 8)
+  @Size(max = 8)
   private String name;
 
   @JsonProperty(access = Access.WRITE_ONLY)
@@ -53,6 +51,12 @@ public class Scope extends AbstractAuditingEntity {
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "clientScopeId")
   private Set<ClientScopeAssociation> clientsWithScopes;
+
+  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
+  // If there is an existing constructor "constructor is already defined"
+  public Scope() {
+
+  }
 
   public Scope(String name) {
     setName(name);

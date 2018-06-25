@@ -6,6 +6,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.servicediscovery.Application;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,19 +17,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.servicediscovery.Application;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ApplicationTest {
 
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
       "Do not attempt to run an application in productive and development environment at the same time!";
-
-  private final MockEnvironment mockEnvironment = new MockEnvironment();
-
   @Spy
   @InjectMocks
   private static Application fixture;
+  private final MockEnvironment mockEnvironment = new MockEnvironment();
 
   @Before
   public void beforeTestSetUp() {

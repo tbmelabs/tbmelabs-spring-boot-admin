@@ -128,7 +128,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
     User newUser = userMapper.toEntity(testUserDTO);
     newUser.setPassword(RandomStringUtils.random(11));
     testUserDTO = userMapper.toDto(userRepository.save(newUser));
-    
+
     mockMvc
         .perform(delete(usersEndpoint + "/" + testUserDTO.getId()))
         .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));

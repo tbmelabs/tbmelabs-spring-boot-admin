@@ -5,6 +5,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.servicediscovery.configuration.OAuth2SSOEurekaConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.servicediscovery.configuration.OAuth2SSOEurekaConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class OAuth2SSOEurekaConfigurationTest {
 

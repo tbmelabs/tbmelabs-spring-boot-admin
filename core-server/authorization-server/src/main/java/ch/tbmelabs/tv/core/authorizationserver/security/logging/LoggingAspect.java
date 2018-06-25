@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,6 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Aspect
 @Component

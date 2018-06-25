@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.clientdetails;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -9,15 +11,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.ClientDetails;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 
 public class ClientDetailsImpl implements ClientDetails {
 
-  private static final long serialVersionUID = 1L;
-
   public static final String CLIENT_REDIRECT_URI_SPLITTERATOR = ",";
-
+  private static final long serialVersionUID = 1L;
   private Client client;
 
   public ClientDetailsImpl(Client client) {

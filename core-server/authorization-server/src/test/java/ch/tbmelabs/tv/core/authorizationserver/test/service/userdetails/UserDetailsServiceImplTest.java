@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -17,10 +21,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 
 public class UserDetailsServiceImplTest {
 

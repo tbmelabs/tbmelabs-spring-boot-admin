@@ -10,32 +10,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "authentication_log")
 public class AuthenticationLog extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
-
-  public enum AUTHENTICATION_STATE {
-    OK, NOK
-  }
-
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
@@ -44,23 +37,25 @@ public class AuthenticationLog extends AbstractAuditingEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
-
   @NotNull
   @Column(columnDefinition = "varchar(3)", updatable = false)
   private AUTHENTICATION_STATE state;
-
   @NotEmpty
-  @Length(max = 45)
+  @Size(max = 45)
   @Column(columnDefinition = "bpchar(45)", updatable = false)
   private String ip;
-
-  @Length(max = 256)
+  @Size(max = 256)
   private String message;
-
   @ManyToOne
   @LazyCollection(LazyCollectionOption.FALSE)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
+
+  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
+  // If there is an existing constructor "constructor is already defined"
+  public AuthenticationLog() {
+
+  }
 
   public AuthenticationLog(AUTHENTICATION_STATE state, String ip, String message, User user) {
     setState(state);
@@ -90,5 +85,9 @@ public class AuthenticationLog extends AbstractAuditingEntity {
         .append(this.getId())
         .build();
     // @formatter:on
+  }
+
+  public enum AUTHENTICATION_STATE {
+    OK, NOK
   }
 }

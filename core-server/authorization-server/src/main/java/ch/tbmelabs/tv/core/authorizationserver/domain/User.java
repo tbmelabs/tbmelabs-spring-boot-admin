@@ -18,7 +18,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,9 +30,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Data
@@ -40,11 +40,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class User extends AbstractAuditingEntity {
 
   @Transient
-  private static final long serialVersionUID = 1L;
-
-  @Transient
   public static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
-
+  @Transient
+  private static final long serialVersionUID = 1L;
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
@@ -55,18 +53,18 @@ public class User extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Length(min = 5, max = 64)
+  @Size(min = 5, max = 64)
   @Column(unique = true)
   private String username;
 
   @NotEmpty
   @Email
-  @Length(max = 128)
+  @Size(max = 128)
   @Column(unique = true)
   private String email;
 
   @NotEmpty
-  @Length(min = 60, max = 60)
+  @Size(min = 60, max = 60)
   @Column(columnDefinition = "bpchar(60)")
   @JsonProperty(access = Access.WRITE_ONLY)
   private String password;

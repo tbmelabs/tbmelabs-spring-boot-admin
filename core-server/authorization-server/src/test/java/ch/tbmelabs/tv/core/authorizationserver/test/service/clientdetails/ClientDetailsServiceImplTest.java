@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import java.util.Optional;
 import java.util.UUID;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -17,10 +21,6 @@ import org.mockito.Spy;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 
 public class ClientDetailsServiceImplTest {
 

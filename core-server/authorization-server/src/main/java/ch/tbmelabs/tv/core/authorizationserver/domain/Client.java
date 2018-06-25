@@ -14,7 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,8 +25,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @Entity
@@ -34,11 +34,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Client extends AbstractAuditingEntity {
 
   @Transient
-  private static final long serialVersionUID = 1L;
-
-  @Transient
   public static final String REDIRECT_URI_SPLITTERATOR = ";";
-
+  @Transient
+  private static final long serialVersionUID = 1L;
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
@@ -49,11 +47,11 @@ public class Client extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Length(max = 36, min = 36)
+  @Size(max = 36, min = 36)
   @Column(name = "client_id", columnDefinition = "bpchar(36)", unique = true)
   private String clientId;
 
-  @Length(max = 36, min = 36)
+  @Size(max = 36, min = 36)
   @Column(columnDefinition = "bpchar(36)")
   private String secret;
 
@@ -73,7 +71,7 @@ public class Client extends AbstractAuditingEntity {
   @Column(name = "refresh_token_validity")
   private Integer refreshTokenValiditySeconds;
 
-  @Length(max = 256)
+  @Size(max = 256)
   private String redirectUri;
 
   @JsonManagedReference("client_has_grant_types")

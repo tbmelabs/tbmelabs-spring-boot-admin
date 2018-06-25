@@ -5,6 +5,9 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -19,9 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.stereotype.Component;
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
-import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 
 public class ZuulAccessFilterTest {
 

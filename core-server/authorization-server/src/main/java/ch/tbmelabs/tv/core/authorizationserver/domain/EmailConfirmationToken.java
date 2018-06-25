@@ -14,19 +14,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "email_confirmation_tokens")
 public class EmailConfirmationToken extends AbstractAuditingEntity {
@@ -44,7 +42,7 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Length(min = 36, max = 36)
+  @Size(min = 36, max = 36)
   @Column(columnDefinition = "bpchar(36)", unique = true, updatable = false)
   private String tokenString;
 
@@ -56,6 +54,12 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
   @OneToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
   private User user;
+
+  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
+  // If there is an existing constructor "constructor is already defined"
+  public EmailConfirmationToken() {
+
+  }
 
   public EmailConfirmationToken(String tokenString, User user) {
     setTokenString(tokenString);

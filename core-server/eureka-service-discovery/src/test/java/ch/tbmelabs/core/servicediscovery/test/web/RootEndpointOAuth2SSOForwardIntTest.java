@@ -5,12 +5,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaServerContextAwareTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
-import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaServerContextAwareTest;
 
 public class RootEndpointOAuth2SSOForwardIntTest extends AbstractEurekaServerContextAwareTest {
 

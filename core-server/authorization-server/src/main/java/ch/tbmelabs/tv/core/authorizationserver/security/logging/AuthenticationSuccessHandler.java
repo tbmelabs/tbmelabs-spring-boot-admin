@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
+import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -12,8 +14,6 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Component;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 @Component
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {

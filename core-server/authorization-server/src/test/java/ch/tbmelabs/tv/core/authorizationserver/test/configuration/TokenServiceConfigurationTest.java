@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
+import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import java.lang.reflect.InvocationTargetException;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenServiceConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 
 public class TokenServiceConfigurationTest {
 

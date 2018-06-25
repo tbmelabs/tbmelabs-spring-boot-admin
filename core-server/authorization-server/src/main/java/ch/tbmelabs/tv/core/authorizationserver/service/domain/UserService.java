@@ -35,7 +35,7 @@ public class UserService {
 
     userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
 
-    return userRepository.findOne(user.getId());
+    return userRepository.findById(user.getId()).get();
   }
 
   public Page<UserDTO> findAll(Pageable pageable) {
@@ -43,28 +43,28 @@ public class UserService {
   }
 
   public Optional<User> findOneById(Long id) {
-    return Optional.ofNullable(userRepository.findOne(id));
+    return userRepository.findById(id);
   }
 
   public User update(UserDTO userDTO) {
-    User existing;
-    if (userDTO.getId() == null || (existing = userRepository.findOne(userDTO.getId())) == null) {
+    Optional<User> existing;
+    if (userDTO.getId() == null || (existing = userRepository.findById(userDTO.getId())) == null) {
       throw new IllegalArgumentException("You can only update an existing User!");
     }
 
-    User user = userMapper.updateUserFromUserDTO(userDTO, existing);
+    User user = userMapper.updateUserFromUserDTO(userDTO, existing.get());
     if (user.getPassword() == null || user.getPassword().isEmpty()) {
-      user.setPassword(userRepository.findOne(user.getId()).getPassword());
+      user.setPassword(existing.get().getPassword());
     }
 
     user = userRepository.save(user);
 
     userMapper.rolesToAssociations(userDTO.getRoles(), user).forEach(userRoleRepository::save);
 
-    return userRepository.findOne(user.getId());
+    return userRepository.findById(user.getId()).get();
   }
 
   public void delete(Long id) {
-    userRepository.delete(id);
+    userRepository.deleteById(id);
   }
 }

@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.lang.reflect.Method;
 import org.junit.Test;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,8 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.DatasourceConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class DatasourceConfigurationTest {
 

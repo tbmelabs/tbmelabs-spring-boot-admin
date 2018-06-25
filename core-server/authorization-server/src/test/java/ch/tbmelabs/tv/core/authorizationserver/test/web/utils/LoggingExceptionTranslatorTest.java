@@ -59,7 +59,8 @@ public class LoggingExceptionTranslatorTest {
       throws Exception {
     ResponseEntity<OAuth2Exception> responseFixture = fixture.translate(EXCEPTION);
 
-    assertThat(responseFixture.getBody()).hasCause(EXCEPTION).hasMessage(EXCEPTION_MESSAGE);
+    assertThat(responseFixture.getBody()).hasCause(EXCEPTION)
+        .hasStackTraceContaining(EXCEPTION_MESSAGE);
     assertThat(responseFixture.getStatusCodeValue()).isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     assertThat(responseFixture.getHeaders()).hasSize(2).containsExactly(
         entry("Cache-Control", Collections.singletonList("no-store")),

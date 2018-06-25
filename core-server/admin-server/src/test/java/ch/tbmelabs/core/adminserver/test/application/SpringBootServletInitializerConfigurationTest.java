@@ -1,9 +1,8 @@
 package ch.tbmelabs.core.adminserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import ch.tbmelabs.tv.core.adminserver.Application;
 
 public class SpringBootServletInitializerConfigurationTest {

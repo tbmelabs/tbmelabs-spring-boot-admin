@@ -1,8 +1,8 @@
 package ch.tbmelabs.core.servicediscovery.test.application;
 
-import org.junit.Test;
 import ch.tbmelabs.core.servicediscovery.test.AbstractEurekaServerContextAwareTest;
 import ch.tbmelabs.tv.core.servicediscovery.Application;
+import org.junit.Test;
 
 public class ApplicationIntTest extends AbstractEurekaServerContextAwareTest {
 

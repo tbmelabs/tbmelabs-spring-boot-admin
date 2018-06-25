@@ -1,12 +1,12 @@
 package ch.tbmelabs.tv.core.entryserver.security.filter;
 
+import com.netflix.zuul.ZuulFilter;
+import com.netflix.zuul.context.RequestContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
-import com.netflix.zuul.ZuulFilter;
-import com.netflix.zuul.context.RequestContext;
 
 @Component
 public class ZuulAccessFilter extends ZuulFilter {

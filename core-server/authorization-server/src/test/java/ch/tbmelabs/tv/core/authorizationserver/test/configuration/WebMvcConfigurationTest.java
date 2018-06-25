@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
 
 public class WebMvcConfigurationTest {
 

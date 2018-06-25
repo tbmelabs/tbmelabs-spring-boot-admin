@@ -58,22 +58,22 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
     setUserRole(role);
   }
 
+  public User getUser() {
+    return this.user;
+  }
+
   public void setUser(User user) {
     this.user = user;
     this.userId = user.getId();
   }
 
+  public Role getUserRole() {
+    return this.userRole;
+  }
+
   public void setUserRole(Role role) {
     this.userRole = role;
     this.userRoleId = role.getId();
-  }
-
-  public User getUser() {
-    return this.user;
-  }
-
-  public Role getUserRole() {
-    return this.userRole;
   }
 
   @Override

@@ -13,21 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "user_roles")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -46,13 +44,19 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
   private Long id;
 
   @NotEmpty
-  @Length(max = 16)
+  @Size(max = 16)
   private String name;
 
   @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "userRoleId")
   private Set<UserRoleAssociation> usersWithRoles;
+
+  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
+  // If there is an existing constructor "constructor is already defined"
+  public Role() {
+
+  }
 
   public Role(String authority) {
     setName(authority);

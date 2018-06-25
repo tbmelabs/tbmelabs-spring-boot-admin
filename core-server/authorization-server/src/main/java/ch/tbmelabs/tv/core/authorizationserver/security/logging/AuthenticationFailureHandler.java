@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
+import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 @Component
 public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {

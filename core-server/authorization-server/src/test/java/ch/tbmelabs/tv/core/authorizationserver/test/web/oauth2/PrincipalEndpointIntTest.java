@@ -5,6 +5,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.stream.Collectors;
@@ -17,16 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
 public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 

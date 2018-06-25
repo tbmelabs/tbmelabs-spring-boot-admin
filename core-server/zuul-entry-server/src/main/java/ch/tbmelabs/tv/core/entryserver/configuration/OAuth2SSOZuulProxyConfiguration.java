@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.entryserver.configuration;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 @EnableZuulProxy

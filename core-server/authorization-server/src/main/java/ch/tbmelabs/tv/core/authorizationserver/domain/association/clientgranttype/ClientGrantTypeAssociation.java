@@ -58,11 +58,6 @@ public class ClientGrantTypeAssociation extends AbstractAuditingEntity {
     setGrantType(grantType);
   }
 
-  public void setClient(Client client) {
-    this.client = client;
-    this.clientId = client.getId();
-  }
-
   public void setGrantType(GrantType grantType) {
     this.clientGrantType = grantType;
     this.clientGrantTypeId = grantType.getId();
@@ -70,6 +65,11 @@ public class ClientGrantTypeAssociation extends AbstractAuditingEntity {
 
   public Client getClient() {
     return this.client;
+  }
+
+  public void setClient(Client client) {
+    this.client = client;
+    this.clientId = client.getId();
   }
 
   public GrantType getClientGrantType() {

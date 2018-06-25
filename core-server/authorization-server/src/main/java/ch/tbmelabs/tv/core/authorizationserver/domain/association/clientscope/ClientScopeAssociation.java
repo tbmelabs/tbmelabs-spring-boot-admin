@@ -58,22 +58,22 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
     setClientScope(scope);
   }
 
+  public Client getClient() {
+    return this.client;
+  }
+
   public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
   }
 
+  public Scope getClientScope() {
+    return this.clientScope;
+  }
+
   public void setClientScope(Scope scope) {
     this.clientScope = scope;
     this.clientScopeId = scope.getId();
-  }
-
-  public Client getClient() {
-    return this.client;
-  }
-
-  public Scope getClientScope() {
-    return this.clientScope;
   }
 
   @Override

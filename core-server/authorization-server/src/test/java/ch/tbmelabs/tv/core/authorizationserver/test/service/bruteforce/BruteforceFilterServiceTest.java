@@ -5,6 +5,9 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,9 +21,6 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 
 public class BruteforceFilterServiceTest {
 

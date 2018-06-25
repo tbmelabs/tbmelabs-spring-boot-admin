@@ -2,12 +2,12 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.FlywayConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Test;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.FlywayConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class FlywayConfigurationTest {
 

@@ -7,8 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -23,7 +23,7 @@ public class BlacklistedIpFilter extends GenericFilterBean {
       throws IOException, ServletException {
     if (ipBlacklistRepository.findOneByStartIpLessThanAndEndIpGreaterThan(request.getRemoteAddr(),
         request.getRemoteAddr()).isPresent()) {
-      ((HttpServletResponse) response).sendError(HttpStatus.SC_UNAUTHORIZED);
+      ((HttpServletResponse) response).sendError(HttpStatus.UNAUTHORIZED.value());
     }
 
     chain.doFilter(request, response);

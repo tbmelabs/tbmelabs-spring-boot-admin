@@ -2,8 +2,8 @@ package ch.tbmelabs.tv.core.entryserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
 import ch.tbmelabs.tv.core.entryserver.Application;
+import org.junit.Test;
 
 public class ApplicationPackageNamingTest {
 

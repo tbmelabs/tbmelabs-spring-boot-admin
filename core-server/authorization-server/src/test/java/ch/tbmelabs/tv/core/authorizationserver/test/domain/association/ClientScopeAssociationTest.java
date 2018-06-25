@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociationId;
 import java.util.Random;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
@@ -11,10 +15,6 @@ import javax.persistence.Table;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociationId;
 
 public class ClientScopeAssociationTest {
 

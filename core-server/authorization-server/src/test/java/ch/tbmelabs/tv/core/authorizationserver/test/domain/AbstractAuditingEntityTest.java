@@ -7,7 +7,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
 import java.io.Serializable;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import lombok.Data;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Spy;
@@ -25,11 +24,11 @@ public class AbstractAuditingEntityTest {
 
   @Test
   public void nicelyDocumentedJDBCResourceShouldBeAnnotated() {
-    assertThat(AbstractAuditingEntity.class).hasAnnotation(Data.class)
-        .hasAnnotation(MappedSuperclass.class).hasAnnotation(EntityListeners.class);
+    assertThat(AbstractAuditingEntity.class).hasAnnotation(MappedSuperclass.class)
+        .hasAnnotation(EntityListeners.class);
 
     assertThat(AbstractAuditingEntity.class.getDeclaredAnnotation(EntityListeners.class).value())
-        .isEqualTo(AuditingEntityListener.class);
+        .containsExactly(AuditingEntityListener.class);
   }
 
   @Test

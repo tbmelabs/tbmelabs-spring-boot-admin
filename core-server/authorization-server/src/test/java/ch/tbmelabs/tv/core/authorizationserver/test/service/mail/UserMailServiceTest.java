@@ -7,6 +7,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.UUID;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -19,11 +24,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class UserMailServiceTest {
 

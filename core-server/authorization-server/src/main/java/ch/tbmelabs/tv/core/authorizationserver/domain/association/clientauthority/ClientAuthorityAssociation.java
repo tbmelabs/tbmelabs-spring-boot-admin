@@ -58,22 +58,22 @@ public class ClientAuthorityAssociation extends AbstractAuditingEntity {
     setClientAuthority(authority);
   }
 
+  public Client getClient() {
+    return this.client;
+  }
+
   public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
   }
 
+  public Authority getClientAuthority() {
+    return this.clientAuthority;
+  }
+
   public void setClientAuthority(Authority authority) {
     this.clientAuthority = authority;
     this.clientAuthorityId = authority.getId();
-  }
-
-  public Client getClient() {
-    return this.client;
-  }
-
-  public Authority getClientAuthority() {
-    return this.clientAuthority;
   }
 
   @Override

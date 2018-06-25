@@ -1,15 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
-import java.util.Optional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationAttemptLogger {

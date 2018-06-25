@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
+import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 
 @RestController
 @RequestMapping("/signup")

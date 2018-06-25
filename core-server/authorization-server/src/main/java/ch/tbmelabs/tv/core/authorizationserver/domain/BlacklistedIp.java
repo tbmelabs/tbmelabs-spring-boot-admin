@@ -9,18 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Data
 @Entity
-@NoArgsConstructor
 @EqualsAndHashCode
 @Table(name = "blacklisted_ips")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -39,12 +37,18 @@ public class BlacklistedIp extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Length(max = 45)
+  @Size(max = 45)
   private String startIp;
 
   @NotEmpty
-  @Length(max = 45)
+  @Size(max = 45)
   private String endIp;
+
+  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
+  // If there is an existing constructor "constructor is already defined"
+  public BlacklistedIp() {
+
+  }
 
   public BlacklistedIp(String startIp, String endIp) {
     setStartIp(startIp);

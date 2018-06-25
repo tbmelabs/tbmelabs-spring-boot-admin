@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test;
 
+import ch.tbmelabs.tv.core.authorizationserver.Application;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,8 +15,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
-import ch.tbmelabs.tv.core.authorizationserver.Application;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @AutoConfigureMockMvc
 @ContextConfiguration

@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 public class TokenStoreConfiguration {

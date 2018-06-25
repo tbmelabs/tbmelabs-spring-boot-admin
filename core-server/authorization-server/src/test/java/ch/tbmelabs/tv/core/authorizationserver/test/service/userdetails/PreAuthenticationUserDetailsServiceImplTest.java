@@ -6,6 +6,10 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticationUserDetailsServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 import java.util.Optional;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -20,10 +24,6 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.PreAuthenticationUserDetailsServiceImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsImpl;
 
 public class PreAuthenticationUserDetailsServiceImplTest {
 

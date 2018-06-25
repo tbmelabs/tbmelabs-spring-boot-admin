@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import de.codecentric.boot.admin.config.EnableAdminServer;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 @Configuration
 @EnableOAuth2Sso

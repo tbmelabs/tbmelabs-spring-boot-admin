@@ -2,6 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletContext;
@@ -16,8 +18,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistrat
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.WebMvcConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
 public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 

@@ -2,10 +2,10 @@ package ch.tbmelabs.tv.core.authorizationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
-import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.tv.core.authorizationserver.configuration.SpELConfiguration;
 import ch.tbmelabs.tv.core.authorizationserver.security.spel.SecurityEvaluationContextExtension;
+import org.junit.Test;
+import org.springframework.context.annotation.Configuration;
 
 public class SpELConfigurationTest {
 

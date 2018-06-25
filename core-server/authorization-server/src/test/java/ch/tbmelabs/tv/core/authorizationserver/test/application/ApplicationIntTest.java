@@ -1,8 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.application;
 
-import org.junit.Test;
 import ch.tbmelabs.tv.core.authorizationserver.Application;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import org.junit.Test;
 
 public class ApplicationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -12,7 +13,6 @@ import org.mockito.Spy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import ch.tbmelabs.tv.core.authorizationserver.ApplicationContextHolder;
 
 public class ApplicationContextHolderTest {
 

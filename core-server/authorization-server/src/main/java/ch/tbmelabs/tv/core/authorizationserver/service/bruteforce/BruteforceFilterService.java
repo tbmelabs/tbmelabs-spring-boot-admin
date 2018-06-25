@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.bruteforce;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -7,8 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.tv.core.authorizationserver.domain.BlacklistedIp;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.IPBlacklistCRUDRepository;
 
 @Service
 public class BruteforceFilterService {

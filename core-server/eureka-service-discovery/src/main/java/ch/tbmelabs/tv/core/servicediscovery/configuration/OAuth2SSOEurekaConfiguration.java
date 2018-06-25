@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Configuration
 @EnableOAuth2Sso
