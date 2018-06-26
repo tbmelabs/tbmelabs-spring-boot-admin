@@ -2,10 +2,10 @@ package ch.tbmelabs.core.adminserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.core.adminserver.Application;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
-import ch.tbmelabs.tv.core.adminserver.Application;
 
 public class ConfigurationAnnotationTest {
 

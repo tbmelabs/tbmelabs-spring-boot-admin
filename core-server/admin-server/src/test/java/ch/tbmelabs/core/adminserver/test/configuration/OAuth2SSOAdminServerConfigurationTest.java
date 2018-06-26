@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.tv.core.adminserver.configuration.OAuth2SSOAdminServerConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -14,9 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.adminserver.configuration.OAuth2SSOAdminServerConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 public class OAuth2SSOAdminServerConfigurationTest {
 
@@ -41,8 +42,8 @@ public class OAuth2SSOAdminServerConfigurationTest {
   }
 
   @Test
-  public void eurekaConfigurationShouldHavePublicConstructor() {
-    assertThat(new OAuth2SSOAdminServerConfiguration()).isNotNull();
+  public void oAuth2AdminServerConstructorShouldAcceptEnvironment() {
+    assertThat(new OAuth2SSOAdminServerConfiguration(mockEnvironment)).isNotNull();
   }
 
   @Test
