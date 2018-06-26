@@ -17,6 +17,10 @@ public class Application extends SpringBootServletInitializer {
   @Autowired
   private Environment environment;
 
+  public static void main(String[] args) {
+    SpringApplication.run(APPLICATION_SOURCE_CLASS, args);
+  }
+
   @PostConstruct
   public void initBean() {
     if (environment.acceptsProfiles(SpringApplicationProfile.PROD)
@@ -24,10 +28,6 @@ public class Application extends SpringBootServletInitializer {
       throw new IllegalArgumentException(
           "Do not attempt to run an application in productive and development environment at the same time!");
     }
-  }
-
-  public static void main(String[] args) {
-    SpringApplication.run(APPLICATION_SOURCE_CLASS, args);
   }
 
   @Override
