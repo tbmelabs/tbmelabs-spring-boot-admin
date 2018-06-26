@@ -42,8 +42,8 @@ public class OAuth2SSOEurekaConfigurationTest {
   }
 
   @Test
-  public void eurekaConfigurationShouldHavePublicConstructor() {
-    assertThat(new OAuth2SSOEurekaConfiguration()).isNotNull();
+  public void oAuth2SSOEurekaConfigurationConstructorShouldAcceptEnvironment() {
+    assertThat(new OAuth2SSOEurekaConfiguration(mockEnvironment)).isNotNull();
   }
 
   @Test

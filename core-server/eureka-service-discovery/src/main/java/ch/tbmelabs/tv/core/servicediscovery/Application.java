@@ -2,7 +2,6 @@ package ch.tbmelabs.tv.core.servicediscovery;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -14,8 +13,11 @@ public class Application extends SpringBootServletInitializer {
 
   private static final Class<Application> APPLICATION_SOURCE_CLASS = Application.class;
 
-  @Autowired
   private Environment environment;
+
+  public Application(Environment environment) {
+    this.environment = environment;
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(APPLICATION_SOURCE_CLASS, args);

@@ -1,12 +1,12 @@
 package ch.tbmelabs.tv.core.entryserver;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @SpringCloudApplication
 public class Application extends SpringBootServletInitializer {

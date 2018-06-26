@@ -41,8 +41,8 @@ public class ApplicationTest {
   }
 
   @Test
-  public void applicationShoudHavePublicConstructor() {
-    assertThat(new Application()).isNotNull();
+  public void applicationConstructorShouldAcceptEnvironment() {
+    assertThat(new Application(mockEnvironment)).isNotNull();
   }
 
   @Test

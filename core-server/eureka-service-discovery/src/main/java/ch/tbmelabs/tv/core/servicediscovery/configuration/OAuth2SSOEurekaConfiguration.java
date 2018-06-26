@@ -4,7 +4,6 @@ import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +19,11 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
 
   private static final Logger LOGGER = LogManager.getLogger(OAuth2SSOEurekaConfiguration.class);
 
-  @Autowired
   private Environment environment;
+
+  public OAuth2SSOEurekaConfiguration(Environment environment) {
+    this.environment = environment;
+  }
 
   @Override
   public void configure(WebSecurity web) throws Exception {
