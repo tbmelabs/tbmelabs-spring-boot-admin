@@ -45,11 +45,6 @@ public class TokenServiceConfigurationTest {
   }
 
   @Test
-  public void tokenServiceConfigurationShouldHavePublicConstructor() {
-    assertThat(new TokenServiceConfiguration()).isNotNull();
-  }
-
-  @Test
   public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(TokenServiceConfiguration.class
         .getDeclaredMethod("tokenServiceBean", new Class<?>[]{}).getDeclaredAnnotation(Bean.class))

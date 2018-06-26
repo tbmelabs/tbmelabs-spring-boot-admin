@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +19,11 @@ public class LoggingAspect {
 
   private static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
 
-  @Autowired
   private Environment environment;
+
+  public LoggingAspect(Environment environment) {
+    this.environment = environment;
+  }
 
   @Pointcut("within(ch.tbmelabs.tv.core.authorizationserver.repository..*) "
       + "|| within(ch.tbmelabs.tv.core.authorizationserver.service..*)"

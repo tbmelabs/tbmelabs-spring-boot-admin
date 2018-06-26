@@ -4,7 +4,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.GrantTypeMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class GrantTypeController {
 
-  @Autowired
   private GrantTypeCRUDRepository grantTypeRepository;
 
-  @Autowired
   private GrantTypeMapper grantTypeMapper;
+
+  public GrantTypeController(GrantTypeCRUDRepository grantTypeCRUDRepository,
+      GrantTypeMapper grantTypeMapper) {
+    this.grantTypeRepository = grantTypeCRUDRepository;
+    this.grantTypeMapper = grantTypeMapper;
+  }
 
   @GetMapping
   public Page<GrantTypeDTO> getAllGrantTypes(Pageable pageable) {

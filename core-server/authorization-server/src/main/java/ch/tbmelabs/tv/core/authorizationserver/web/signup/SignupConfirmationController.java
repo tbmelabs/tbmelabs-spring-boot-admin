@@ -4,7 +4,6 @@ import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenN
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +22,11 @@ public class SignupConfirmationController {
   @Value("${server.context-path:}")
   private String contextPath;
 
-  @Autowired
   private EmailConfirmationTokenService emailConfirmationTokenService;
+
+  public SignupConfirmationController(EmailConfirmationTokenService emailConfirmationTokenService) {
+    this.emailConfirmationTokenService = emailConfirmationTokenService;
+  }
 
   @GetMapping({"/confirm-signup/{token}"})
   public void confirmSignup(HttpServletResponse response,

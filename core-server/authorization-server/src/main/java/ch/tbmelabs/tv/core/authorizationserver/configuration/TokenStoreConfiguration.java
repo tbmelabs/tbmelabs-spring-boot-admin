@@ -4,7 +4,6 @@ import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +23,11 @@ public class TokenStoreConfiguration {
   @PropertySource({"classpath:configuration/redis.properties"})
   public class RedisTokenStoreConfiguration {
 
-    @Autowired
     private RedisConnectionFactory redisConnectionFactory;
+
+    public RedisTokenStoreConfiguration(RedisConnectionFactory redisConnectionFactory) {
+      this.redisConnectionFactory = redisConnectionFactory;
+    }
 
     @Bean
     public RedisTokenStore tokenStore() {
@@ -39,8 +41,11 @@ public class TokenStoreConfiguration {
 
     public static final String JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME = "jdbcTokenStoreDatasource";
 
-    @Autowired
     private ApplicationContext applicationContext;
+
+    public JdbcTokenStoreConfiguration(ApplicationContext applicationContext) {
+      this.applicationContext = applicationContext;
+    }
 
     @Bean
     public JdbcTokenStore tokenStore() {

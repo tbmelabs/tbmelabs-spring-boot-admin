@@ -69,11 +69,6 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   }
 
   @Test
-  public void preAuthenticationUserDetailsServiceImplShouldHavePublicConstructor() {
-    assertThat(new PreAuthenticationUserDetailsServiceImpl()).isNotNull();
-  }
-
-  @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
     doReturn(Optional.of(new User())).when(mockUserRepository)
         .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());

@@ -47,8 +47,8 @@ public class BruteforceFilterServiceTest {
   }
 
   @Test
-  public void bruteforceFilterServiceShouldHavePublicConstructor() {
-    assertThat(new BruteforceFilterService()).isNotNull();
+  public void bruteforceFilterConstructorShouldAcceptRepository() {
+    assertThat(new BruteforceFilterService(ipBlacklistRepositoryFixture)).isNotNull();
   }
 
   @Test

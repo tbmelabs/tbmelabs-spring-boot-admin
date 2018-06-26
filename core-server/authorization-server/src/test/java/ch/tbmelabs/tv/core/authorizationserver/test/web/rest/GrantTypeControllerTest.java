@@ -72,11 +72,6 @@ public class GrantTypeControllerTest {
   }
 
   @Test
-  public void grantTypeControllerShouldHavePublicConstructor() {
-    assertThat(new GrantTypeController()).isNotNull();
-  }
-
-  @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
         new Class<?>[]{Pageable.class});

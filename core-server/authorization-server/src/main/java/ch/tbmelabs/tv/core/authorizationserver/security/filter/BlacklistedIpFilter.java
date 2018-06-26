@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
@@ -15,8 +14,11 @@ import org.springframework.web.filter.GenericFilterBean;
 @Component
 public class BlacklistedIpFilter extends GenericFilterBean {
 
-  @Autowired
   private IPBlacklistCRUDRepository ipBlacklistRepository;
+
+  public BlacklistedIpFilter(IPBlacklistCRUDRepository ipBlacklistCRUDRepository) {
+    this.ipBlacklistRepository = ipBlacklistCRUDRepository;
+  }
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

@@ -7,7 +7,6 @@ import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSu
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,23 +26,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private static final Logger LOGGER = LogManager.getLogger(SecurityConfiguration.class);
 
-  @Autowired
   private AuthenticationManager authenticationManager;
 
-  @Autowired
   private Environment environment;
 
-  @Autowired
   private AuthenticationFailureHandler authenticationFailureHandler;
 
-  @Autowired
   private AuthenticationSuccessHandler authenticationSuccessHandler;
 
-  @Autowired
   private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
 
-  @Autowired
   private BlacklistedIpFilter blacklistedIpFilter;
+
+  public SecurityConfiguration(AuthenticationManager authenticationManager, Environment environment,
+      AuthenticationFailureHandler authenticationFailureHandler,
+      AuthenticationSuccessHandler authenticationSuccessHandler,
+      OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter,
+      BlacklistedIpFilter blacklistedIpFilter) {
+    this.authenticationManager = authenticationManager;
+    this.environment = environment;
+    this.authenticationFailureHandler = authenticationFailureHandler;
+    this.authenticationSuccessHandler = authenticationSuccessHandler;
+    this.oAuth2AuthenticationFilter = oAuth2AuthenticationFilter;
+    this.blacklistedIpFilter = blacklistedIpFilter;
+  }
 
   @Override
   protected AuthenticationManager authenticationManager() throws Exception {

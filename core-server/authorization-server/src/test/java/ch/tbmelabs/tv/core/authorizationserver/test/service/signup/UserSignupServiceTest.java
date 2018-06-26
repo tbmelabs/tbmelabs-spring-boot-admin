@@ -96,11 +96,6 @@ public class UserSignupServiceTest {
   }
 
   @Test
-  public void userSignupServiceShouldHavePublicConstructor() {
-    assertThat(new UserSignupService()).isNotNull();
-  }
-
-  @Test
   public void userSignupServiceShouldNotSaveUserOnUsernameNotUnique() {
     doReturn(false).when(fixture).isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
 

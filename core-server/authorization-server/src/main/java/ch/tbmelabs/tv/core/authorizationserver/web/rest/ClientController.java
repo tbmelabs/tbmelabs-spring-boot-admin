@@ -5,7 +5,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class ClientController {
 
-  @Autowired
   private ClientService clientService;
 
-  @Autowired
   private ClientMapper clientMapper;
+
+  public ClientController(ClientService clientService, ClientMapper clientMapper) {
+    this.clientService = clientService;
+    this.clientMapper = clientMapper;
+  }
 
   @PostMapping
   public ClientDTO createClient(@RequestBody ClientDTO clientDTO) {

@@ -54,11 +54,6 @@ public class EmailConfirmationTokenServiceTest {
   }
 
   @Test
-  public void emailConfirmationTokenServiceShouldHavePublicConstructor() {
-    assertThat(new EmailConfirmationTokenService()).isNotNull();
-  }
-
-  @Test
   public void createUniqueEmailConfirmationTokenShouldReturnNewUUID() {
     User user = Mockito.mock(User.class);
 

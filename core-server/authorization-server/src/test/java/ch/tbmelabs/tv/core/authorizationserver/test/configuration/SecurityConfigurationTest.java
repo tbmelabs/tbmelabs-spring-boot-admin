@@ -48,11 +48,6 @@ public class SecurityConfigurationTest {
   }
 
   @Test
-  public void securityConfigurationShouldHavePublicConstructor() {
-    assertThat(new SecurityConfiguration()).isNotNull();
-  }
-
-  @Test
   public void configurationShouldDebugHttpRequestsIfDevelopmentProfileIsActive() throws Exception {
     fixture.configure(webSecurityFixture);
 

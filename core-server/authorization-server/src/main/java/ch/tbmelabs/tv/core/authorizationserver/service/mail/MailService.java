@@ -6,7 +6,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,8 +21,11 @@ public class MailService {
   @Value("${spring.mail.username}")
   private String senderAddress;
 
-  @Autowired
   private JavaMailSender mailSender;
+
+  public MailService(JavaMailSender javaMailSender) {
+    this.mailSender = javaMailSender;
+  }
 
   public void sendMail(User receiver, String subject, String htmlMessage) {
     LOGGER.info("Sending email from " + senderAddress + " to " + receiver.getEmail());

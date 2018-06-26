@@ -36,10 +36,13 @@ public class MailServiceTest {
 
   private static final String TEST_SENDER_ADDRESS = "no-reply@tbme.tv";
   private static MimeMessage sentMimeMessage;
+ 
   @Mock
   private Session mockSession;
+ 
   @Mock
   private JavaMailSender mockJavaMailSender;
+ 
   @Spy
   @InjectMocks
   private MailService fixture;
@@ -67,8 +70,8 @@ public class MailServiceTest {
   }
 
   @Test
-  public void mailServiceShouldHavePublicConstructor() {
-    assertThat(new MailService()).isNotNull();
+  public void mailServiceConstructorShouldAcceptJavaMailSender() {
+    assertThat(new MailService(mockJavaMailSender)).isNotNull();
   }
 
   @Test

@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 import ch.tbmelabs.tv.core.authorizationserver.service.clientdetails.ClientDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.userdetails.UserDetailsServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.web.utils.LoggingExceptionTranslator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -18,23 +17,29 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-  @Autowired
   private AuthenticationManager authenticationManager;
 
-  @Autowired
   private ClientDetailsServiceImpl clientDetailsService;
 
-  @Autowired
   private DefaultTokenServices tokenService;
 
-  @Autowired
   private LoggingExceptionTranslator loggingExceptionTranslator;
 
-  @Autowired
   private TokenStore tokenStore;
 
-  @Autowired
   private UserDetailsServiceImpl userDetailsService;
+
+  public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager,
+      ClientDetailsServiceImpl clientDetailsService, DefaultTokenServices defaultTokenServices,
+      LoggingExceptionTranslator loggingExceptionTranslator
+      , TokenStore tokenStore, UserDetailsServiceImpl userDetailsService) {
+    this.authenticationManager = authenticationManager;
+    this.clientDetailsService = clientDetailsService;
+    this.tokenService = defaultTokenServices;
+    this.loggingExceptionTranslator = loggingExceptionTranslator;
+    this.tokenService = defaultTokenServices;
+    this.userDetailsService = userDetailsService;
+  }
 
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {

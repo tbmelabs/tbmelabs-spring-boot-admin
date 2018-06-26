@@ -72,11 +72,6 @@ public class ScopeControllerTest {
   }
 
   @Test
-  public void scopeControllerShouldHavePublicConstructor() {
-    assertThat(new ScopeController()).isNotNull();
-  }
-
-  @Test
   public void getAllScopesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
         ScopeController.class.getDeclaredMethod("getAllScopes", new Class<?>[]{Pageable.class});

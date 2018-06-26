@@ -50,8 +50,8 @@ public class ClientDetailsServiceImplTest {
   }
 
   @Test
-  public void clientDetailsServiceImplShouldHavePublicConstructor() {
-    assertThat(new ClientDetailsServiceImpl()).isNotNull();
+  public void clientDetailsServiceImplConstructorShouldAcceptRepository() {
+    assertThat(new ClientDetailsServiceImpl(mockClientRepository)).isNotNull();
   }
 
   @Test

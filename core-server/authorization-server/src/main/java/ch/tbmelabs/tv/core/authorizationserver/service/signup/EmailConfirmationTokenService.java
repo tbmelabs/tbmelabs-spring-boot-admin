@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,11 +16,16 @@ public class EmailConfirmationTokenService {
 
   private static final Logger LOGGER = LogManager.getLogger(EmailConfirmationTokenService.class);
 
-  @Autowired
   private EmailConfirmationTokenCRUDRepository emailConfirmationTokenRepository;
 
-  @Autowired
   private UserCRUDRepository userRepository;
+
+  public EmailConfirmationTokenService(
+      EmailConfirmationTokenCRUDRepository emailConfirmationTokenCRUDRepository,
+      UserCRUDRepository userCRUDRepository) {
+    this.emailConfirmationTokenRepository = emailConfirmationTokenCRUDRepository;
+    this.userRepository = userCRUDRepository;
+  }
 
   public String createUniqueEmailConfirmationToken(User user) {
     LOGGER.info("Creating unique confirmation token");

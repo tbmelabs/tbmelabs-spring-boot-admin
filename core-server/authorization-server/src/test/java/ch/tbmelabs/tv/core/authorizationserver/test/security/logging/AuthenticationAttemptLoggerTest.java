@@ -47,11 +47,6 @@ public class AuthenticationAttemptLoggerTest {
   }
 
   @Test
-  public void authenticationAttemptLoggerShouldHavePublicConstructor() {
-    assertThat(new AuthenticationAttemptLogger()).isNotNull();
-  }
-
-  @Test
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
     fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.",
         "Testuser");

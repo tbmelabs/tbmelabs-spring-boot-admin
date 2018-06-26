@@ -54,11 +54,6 @@ public class AuthenticationSuccessHandlerTest {
   }
 
   @Test
-  public void authenticationSuccessHandlerShouldHavePublicConstructor() {
-    assertThat(new AuthenticationSuccessHandler()).isNotNull();
-  }
-
-  @Test
   public void authenticationSuccessHandlerShouldTriggerLoggerAndBruteforceFilter()
       throws IOException, ServletException {
     MockHttpServletRequest mockRequest = new MockHttpServletRequest();

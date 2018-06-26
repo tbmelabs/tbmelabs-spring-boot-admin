@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +16,14 @@ public class BruteforceFilterService {
 
   private static Map<String, Integer> failedLoginAttempts = new HashMap<>();
 
-  @Autowired
-  private IPBlacklistCRUDRepository ipBlacklistRepository;
-
   @Value("${authorization-server.security.max-login-attempts}")
   private Integer maxLoginAttempts;
+
+  private IPBlacklistCRUDRepository ipBlacklistRepository;
+
+  public BruteforceFilterService(IPBlacklistCRUDRepository ipBlacklistCRUDRepository) {
+    this.ipBlacklistRepository = ipBlacklistCRUDRepository;
+  }
 
   public static void resetFilter() {
     LOGGER.warn("Filter resets!");

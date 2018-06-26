@@ -50,8 +50,8 @@ public class UserDetailsServiceImplTest {
   }
 
   @Test
-  public void userDetailsServiceImplShouldHavePublicConstructor() {
-    assertThat(new UserDetailsServiceImpl()).isNotNull();
+  public void userDetailsServiceImplConstructorShouldAcceptRepository() {
+    assertThat(new UserDetailsServiceImpl(userRepositoryFixture)).isNotNull();
   }
 
   @Test

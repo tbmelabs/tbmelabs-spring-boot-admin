@@ -10,9 +10,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,8 +38,13 @@ public class UserMailService extends MailService {
   @Value("${server.context-path:}")
   private String contextPath;
 
-  @Autowired
   private EmailConfirmationTokenService emailConfirmationTokenService;
+
+  public UserMailService(JavaMailSender javaMailSender,
+      EmailConfirmationTokenService emailConfirmationTokenService) {
+    super(javaMailSender);
+    this.emailConfirmationTokenService = emailConfirmationTokenService;
+  }
 
   public void sendSignupConfirmation(User user) {
     LOGGER.info("Sending sign up confirmation to " + user.getEmail());

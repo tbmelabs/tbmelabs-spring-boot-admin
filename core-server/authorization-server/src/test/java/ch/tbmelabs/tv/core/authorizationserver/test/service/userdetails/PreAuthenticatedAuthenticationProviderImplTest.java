@@ -43,8 +43,10 @@ public class PreAuthenticatedAuthenticationProviderImplTest {
   }
 
   @Test
-  public void preAuthenticatedAuthenticationProviderImplShouldHavePublicConstructor() {
-    assertThat(new PreAuthenticatedAuthenticationProviderImpl()).isNotNull();
+  public void preAuthenticatedAuthenticationProviderImplConstructorShouldAcceptBeans() {
+    assertThat(
+        new PreAuthenticatedAuthenticationProviderImpl(mockPreAuthenticationUserDetailsServiceImpl))
+        .isNotNull();
   }
 
   @Test

@@ -17,7 +17,6 @@ import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -31,20 +30,25 @@ public class UserSignupService {
   private static final String PASSWORD_REGEX =
       "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
-  @Autowired
   private ApplicationContext applicationContext;
 
-  @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
   private RoleCRUDRepository roleRepository;
 
-  @Autowired
   private RoleMapper roleMapper;
 
-  @Autowired
   private UserService userService;
+
+  public UserSignupService(ApplicationContext applicationContext,
+      UserCRUDRepository userCRUDRepository, RoleCRUDRepository roleCRUDRepository,
+      RoleMapper roleMapper, UserService userService) {
+    this.applicationContext = applicationContext;
+    this.userRepository = userCRUDRepository;
+    this.roleRepository = roleCRUDRepository;
+    this.roleMapper = roleMapper;
+    this.userService = userService;
+  }
 
   public boolean isUsernameUnique(UserDTO testUser) {
     LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");

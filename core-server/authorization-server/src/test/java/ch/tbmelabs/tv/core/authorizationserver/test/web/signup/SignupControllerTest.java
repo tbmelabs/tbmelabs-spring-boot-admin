@@ -56,11 +56,6 @@ public class SignupControllerTest {
   }
 
   @Test
-  public void signupControllerShouldHavePublicConstructor() {
-    assertThat(new SignupController()).isNotNull();
-  }
-
-  @Test
   public void signupShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
         SignupController.class.getDeclaredMethod("signup", new Class<?>[]{UserDTO.class});

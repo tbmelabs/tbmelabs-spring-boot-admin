@@ -73,11 +73,6 @@ public class UserMailServiceTest {
   }
 
   @Test
-  public void userMailServiceShouldHavePublicConstructor() {
-    assertThat(new UserMailService()).isNotNull();
-  }
-
-  @Test
   public void sendSignupConfirmationShouldCallMailService() {
     User user = new User();
     user.setUsername(RandomStringUtils.random(11));

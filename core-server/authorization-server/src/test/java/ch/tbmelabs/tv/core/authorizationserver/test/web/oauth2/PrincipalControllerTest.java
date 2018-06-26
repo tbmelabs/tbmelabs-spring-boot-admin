@@ -16,11 +16,6 @@ public class PrincipalControllerTest {
   }
 
   @Test
-  public void principalControllerShouldHavePublicConstructor() {
-    assertThat(new PrincipalController()).isNotNull();
-  }
-
-  @Test
   public void getPrincipalShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method fixture = PrincipalController.class.getDeclaredMethod("getPrincipal", new Class<?>[]{});
     assertThat(fixture.getDeclaredAnnotation(GetMapping.class).value()).containsExactly("/me",

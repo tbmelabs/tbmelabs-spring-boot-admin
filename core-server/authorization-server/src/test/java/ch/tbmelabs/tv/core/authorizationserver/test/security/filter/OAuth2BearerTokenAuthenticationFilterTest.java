@@ -8,8 +8,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -36,8 +38,9 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
   }
 
   @Test
-  public void oAuth2BearerTokenAuthenticationFilterShouldHavePublicConstructor() {
-    assertThat(new OAuth2BearerTokenAuthenticationFilter()).isNotNull();
+  public void oAuth2BearerTokenAuthenticationConstructorShouldAcceptTokenStore() {
+    assertThat(new OAuth2BearerTokenAuthenticationFilter(Mockito.mock(TokenStore.class)))
+        .isNotNull();
   }
 
   @Test

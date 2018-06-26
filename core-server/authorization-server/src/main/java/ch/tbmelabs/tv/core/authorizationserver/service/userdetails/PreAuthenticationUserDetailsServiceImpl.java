@@ -5,7 +5,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,11 +19,15 @@ public class PreAuthenticationUserDetailsServiceImpl
   private static final Logger LOGGER =
       LogManager.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 
-  @Autowired
   private TokenStore tokenStore;
 
-  @Autowired
   private UserCRUDRepository userRepository;
+
+  public PreAuthenticationUserDetailsServiceImpl(TokenStore tokenStore,
+      UserCRUDRepository userCRUDRepository) {
+    this.tokenStore = tokenStore;
+    this.userRepository = userCRUDRepository;
+  }
 
   @Override
   public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) {

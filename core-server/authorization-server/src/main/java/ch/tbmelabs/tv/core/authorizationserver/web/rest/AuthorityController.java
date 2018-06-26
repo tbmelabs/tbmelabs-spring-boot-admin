@@ -4,7 +4,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.AuthorityMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
 public class AuthorityController {
 
-  @Autowired
   private AuthorityCRUDRepository authorityRepository;
 
-  @Autowired
   private AuthorityMapper authorityMapper;
+
+  public AuthorityController(AuthorityCRUDRepository authorityCRUDRepository,
+      AuthorityMapper authorityMapper) {
+    this.authorityRepository = authorityCRUDRepository;
+    this.authorityMapper = authorityMapper;
+  }
 
   @GetMapping
   public Page<AuthorityDTO> getAllAuthorities(Pageable pageable) {

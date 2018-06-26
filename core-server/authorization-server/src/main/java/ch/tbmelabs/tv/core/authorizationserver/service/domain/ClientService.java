@@ -13,7 +13,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAsso
 import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,20 +20,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClientService {
 
-  @Autowired
   private ClientMapper clientMapper;
 
-  @Autowired
   private ClientCRUDRepository clientRepository;
 
-  @Autowired
   private ClientGrantTypeAssociationCRUDRepository clientGrantTypeRepository;
 
-  @Autowired
   private ClientAuthorityAssociationCRUDRepository clientAuthorityRepository;
 
-  @Autowired
   private ClientScopeAssociationCRUDRepository clientScopeRepository;
+
+  public ClientService(ClientMapper clientMapper, ClientCRUDRepository clientCRUDRepository,
+      ClientGrantTypeAssociationCRUDRepository clientGrantTypeAssociationCRUDRepository,
+      ClientAuthorityAssociationCRUDRepository clientAuthorityAssociationCRUDRepository,
+      ClientScopeAssociationCRUDRepository clientScopeAssociationCRUDRepository) {
+    this.clientMapper = clientMapper;
+    this.clientRepository = clientCRUDRepository;
+    this.clientGrantTypeRepository = clientGrantTypeAssociationCRUDRepository;
+    this.clientAuthorityRepository = clientAuthorityAssociationCRUDRepository;
+    this.clientScopeRepository = clientScopeAssociationCRUDRepository;
+  }
 
   @Transactional
   public Client save(ClientDTO clientDTO) {

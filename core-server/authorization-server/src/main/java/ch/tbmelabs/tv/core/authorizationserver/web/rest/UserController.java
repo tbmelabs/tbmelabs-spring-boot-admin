@@ -5,7 +5,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
 public class UserController {
 
-  @Autowired
   private UserService userService;
 
-  @Autowired
   private UserMapper userMapper;
+
+  public UserController(UserService userService, UserMapper userMapper) {
+    this.userService = userService;
+    this.userMapper = userMapper;
+  }
 
   @GetMapping
   public Page<UserDTO> getAllUsers(Pageable pageable) {

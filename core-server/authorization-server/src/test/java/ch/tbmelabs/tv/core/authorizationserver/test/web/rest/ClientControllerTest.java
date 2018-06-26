@@ -81,11 +81,6 @@ public class ClientControllerTest {
   }
 
   @Test
-  public void clientControllerShouldHavePublicConstructor() {
-    assertThat(new ClientController()).isNotNull();
-  }
-
-  @Test
   public void createClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
         ClientController.class.getDeclaredMethod("createClient", new Class<?>[]{ClientDTO.class});

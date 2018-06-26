@@ -72,11 +72,6 @@ public class AuthorityControllerTest {
   }
 
   @Test
-  public void authorityControllerShouldHavePublicConstructor() {
-    assertThat(new AuthorityController()).isNotNull();
-  }
-
-  @Test
   public void getAllAuthoritiesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = AuthorityController.class.getDeclaredMethod("getAllAuthorities",
         new Class<?>[]{Pageable.class});

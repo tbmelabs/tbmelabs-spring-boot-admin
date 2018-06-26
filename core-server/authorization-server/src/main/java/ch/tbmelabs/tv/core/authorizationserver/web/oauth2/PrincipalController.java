@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,11 +16,14 @@ public class PrincipalController {
 
   private static final Logger LOGGER = LogManager.getLogger(PrincipalController.class);
 
-  @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
   private UserMapper userMapper;
+
+  public PrincipalController(UserCRUDRepository userCRUDRepository, UserMapper userMapper) {
+    this.userRepository = userCRUDRepository;
+    this.userMapper = userMapper;
+  }
 
   @GetMapping({"/me", "/user"})
   public Map<String, String> getPrincipal() {

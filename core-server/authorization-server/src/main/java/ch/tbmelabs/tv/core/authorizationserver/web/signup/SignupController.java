@@ -3,7 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/signup")
 public class SignupController {
 
-  @Autowired
   private UserSignupService signupService;
+
+  public SignupController(UserSignupService userSignupService) {
+    this.signupService = userSignupService;
+  }
 
   @PostMapping({"/do-signup"})
   public User signup(@RequestBody UserDTO newUserDTO) {

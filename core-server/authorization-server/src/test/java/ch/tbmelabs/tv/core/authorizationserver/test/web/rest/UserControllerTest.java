@@ -79,11 +79,6 @@ public class UserControllerTest {
   }
 
   @Test
-  public void userControllerShouldHavePublicConstructor() {
-    assertThat(new UserController()).isNotNull();
-  }
-
-  @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
         UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[]{Pageable.class});

@@ -60,11 +60,6 @@ public class OAuth2AuthorizationServerConfigurationTest {
   }
 
   @Test
-  public void oAuth2AuthorizationServerConfigurationShouldHavePublicConstructor() {
-    assertThat(new OAuth2AuthorizationServerConfiguration()).isNotNull();
-  }
-
-  @Test
   public void configureAuthorizationServerEndpointsConfigurerShouldInitializeCorrectConfiguration()
       throws Exception {
     AuthorizationServerEndpointsConfigurer configurer =

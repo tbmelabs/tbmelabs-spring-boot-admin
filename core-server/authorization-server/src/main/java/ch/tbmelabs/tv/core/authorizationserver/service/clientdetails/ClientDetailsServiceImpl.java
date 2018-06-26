@@ -5,7 +5,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepos
 import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +13,11 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
 
   private static final Logger LOGGER = LogManager.getLogger(ClientDetailsServiceImpl.class);
 
-  @Autowired
   private ClientCRUDRepository clientRepository;
+
+  public ClientDetailsServiceImpl(ClientCRUDRepository clientCRUDRepository) {
+    this.clientRepository = clientCRUDRepository;
+  }
 
   @Override
   public ClientDetailsImpl loadClientByClientId(String clientId) {

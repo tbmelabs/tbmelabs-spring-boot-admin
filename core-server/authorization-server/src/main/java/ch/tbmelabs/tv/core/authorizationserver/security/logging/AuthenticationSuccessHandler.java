@@ -8,7 +8,6 @@ import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.RequestCache;
@@ -24,11 +23,15 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
   private static String noSavedRequestExceptionIdMessage = UUID.randomUUID().toString();
 
-  @Autowired
   private AuthenticationAttemptLogger authenticationLogger;
 
-  @Autowired
   private BruteforceFilterService bruteforceFilter;
+
+  public AuthenticationSuccessHandler(AuthenticationAttemptLogger authenticationAttemptLogger,
+      BruteforceFilterService bruteforceFilterService) {
+    this.authenticationLogger = authenticationAttemptLogger;
+    this.bruteforceFilter = bruteforceFilterService;
+  }
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
