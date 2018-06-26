@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.tbmelabs.tv.core.entryserver.Application;
 import org.junit.Test;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.mock.env.MockEnvironment;
 
 public class SpringBootServletInitializerConfigurationTest {
 
@@ -16,10 +17,9 @@ public class SpringBootServletInitializerConfigurationTest {
   }
 
   @Test
-  public void applicationSourceShouldBePassedToSpringApplication()
-      throws InstantiationException, IllegalAccessException {
+  public void applicationSourceShouldBePassedToSpringApplication() {
     assertThat(Application.class).hasDeclaredFields(APPLICATION_SOURCE_CLASS_FIELD_NAME);
-    assertThat(Application.class.newInstance())
+    assertThat(new Application(new MockEnvironment()))
         .hasFieldOrPropertyWithValue(APPLICATION_SOURCE_CLASS_FIELD_NAME, Application.class);
   }
 }

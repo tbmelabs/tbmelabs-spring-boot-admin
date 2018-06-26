@@ -8,6 +8,8 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.springframework.security.oauth2.provider.authentication.BearerTokenExtractor;
@@ -18,7 +20,11 @@ import org.springframework.web.filter.GenericFilterBean;
 
 public class OAuth2BearerTokenAuthenticationFilterTest {
 
+  @Mock
+  private TokenStore tokenStore;
+  
   @Spy
+  @InjectMocks
   private OAuth2BearerTokenAuthenticationFilter fixture;
 
   @Before

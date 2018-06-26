@@ -31,13 +31,13 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 
   public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager,
       ClientDetailsServiceImpl clientDetailsService, DefaultTokenServices defaultTokenServices,
-      LoggingExceptionTranslator loggingExceptionTranslator
-      , TokenStore tokenStore, UserDetailsServiceImpl userDetailsService) {
+      LoggingExceptionTranslator loggingExceptionTranslator, TokenStore tokenStore,
+      UserDetailsServiceImpl userDetailsService) {
     this.authenticationManager = authenticationManager;
     this.clientDetailsService = clientDetailsService;
     this.tokenService = defaultTokenServices;
     this.loggingExceptionTranslator = loggingExceptionTranslator;
-    this.tokenService = defaultTokenServices;
+    this.tokenStore = tokenStore;
     this.userDetailsService = userDetailsService;
   }
 
