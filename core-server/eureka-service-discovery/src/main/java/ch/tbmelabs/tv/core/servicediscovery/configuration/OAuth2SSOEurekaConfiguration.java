@@ -39,15 +39,13 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     // @formatter:off
     http
-      
-      .csrf().disable()
-      
+
       .authorizeRequests()
         .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/eureka/**").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
         .anyRequest().hasAnyAuthority(UserAuthority.GANDALF, UserAuthority.SERVER_ADMIN, UserAuthority.SERVER_SUPPORT)
-      
+
       .and().exceptionHandling()
         .accessDeniedPage("/403.html");
     // @formatter:on
