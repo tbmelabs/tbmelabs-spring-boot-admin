@@ -8,7 +8,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import org.junit.Before;
@@ -29,9 +28,6 @@ public class AuthenticationFailureHandlerTest {
 
   @Mock
   private AuthenticationAttemptLogger mockAuthenticationAttemptLogger;
-
-  @Mock
-  private BruteforceFilterService mockBruteforceFilterService;
 
   @Spy
   @InjectMocks
@@ -66,6 +62,5 @@ public class AuthenticationFailureHandlerTest {
     verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(
         ArgumentMatchers.eq(AUTHENTICATION_STATE.NOK), ArgumentMatchers.eq("127.0.0.1"),
         ArgumentMatchers.eq(AUTHENTICATION_FAILED_ERROR_MESSAGE), ArgumentMatchers.anyString());
-    verify(mockBruteforceFilterService, times(1)).authenticationFromIpFailed("127.0.0.1");
   }
 }

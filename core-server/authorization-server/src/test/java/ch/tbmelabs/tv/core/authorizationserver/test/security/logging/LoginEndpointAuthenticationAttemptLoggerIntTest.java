@@ -10,7 +10,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTI
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
   @Before
   public void beforeTestSetUp() {
     authenticationLogRepository.deleteAll();
-    BruteforceFilterService.resetFilter();
 
     User newUser = UserDTOTest.createTestUser();
     newUser.setIsEnabled(true);

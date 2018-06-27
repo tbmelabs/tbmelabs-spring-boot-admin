@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
-import ch.tbmelabs.tv.core.authorizationserver.security.filter.BlacklistedIpFilter;
 import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationFailureHandler;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
@@ -36,19 +35,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
 
-  private BlacklistedIpFilter blacklistedIpFilter;
-
   public SecurityConfiguration(AuthenticationManager authenticationManager, Environment environment,
       AuthenticationFailureHandler authenticationFailureHandler,
       AuthenticationSuccessHandler authenticationSuccessHandler,
-      OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter,
-      BlacklistedIpFilter blacklistedIpFilter) {
+      OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter) {
     this.authenticationManager = authenticationManager;
     this.environment = environment;
     this.authenticationFailureHandler = authenticationFailureHandler;
     this.authenticationSuccessHandler = authenticationSuccessHandler;
     this.oAuth2AuthenticationFilter = oAuth2AuthenticationFilter;
-    this.blacklistedIpFilter = blacklistedIpFilter;
   }
 
   @Override
@@ -87,8 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
 
       .and()
-        .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class)
-        .addFilterBefore(blacklistedIpFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(oAuth2AuthenticationFilter, BasicAuthenticationFilter.class);
     // @formatter:on
   }
 }

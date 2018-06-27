@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +17,8 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 
   private AuthenticationAttemptLogger authenticationLogger;
 
-  private BruteforceFilterService bruteforceFilter;
-
-  public AuthenticationFailureHandler(AuthenticationAttemptLogger authenticationAttemptLogger,
-      BruteforceFilterService bruteforceFilterService) {
+  public AuthenticationFailureHandler(AuthenticationAttemptLogger authenticationAttemptLogger) {
     this.authenticationLogger = authenticationAttemptLogger;
-    this.bruteforceFilter = bruteforceFilterService;
   }
 
   @Override
@@ -40,7 +35,5 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.NOK, requestIp,
         exception.getLocalizedMessage(), request.getParameter(USERNAME_PARAMETER));
-
-    bruteforceFilter.authenticationFromIpFailed(requestIp);
   }
 }

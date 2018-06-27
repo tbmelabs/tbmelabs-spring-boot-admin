@@ -9,7 +9,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTI
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationAttemptLogger;
 import ch.tbmelabs.tv.core.authorizationserver.security.logging.AuthenticationSuccessHandler;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -29,9 +28,6 @@ public class AuthenticationSuccessHandlerTest {
 
   @Mock
   private AuthenticationAttemptLogger mockAuthenticationAttemptLogger;
-
-  @Mock
-  private BruteforceFilterService mockBruteforceFilterService;
 
   @Spy
   @InjectMocks
@@ -68,6 +64,5 @@ public class AuthenticationSuccessHandlerTest {
         ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"),
         ArgumentMatchers.isNull(),
         ArgumentMatchers.anyString());
-    verify(mockBruteforceFilterService, times(1)).authenticationFromIpSucceed("127.0.0.1");
   }
 }

@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import org.junit.Before;
@@ -43,7 +42,6 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
   @Before
   public void beforeTestSetUp() {
     authenticationLogRepository.deleteAll();
-    BruteforceFilterService.resetFilter();
 
     User newUser = UserDTOTest.createTestUser();
     newUser.setIsEnabled(true);

@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.service.bruteforce.BruteforceFilterService;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.UUID;
@@ -25,12 +24,8 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
   private AuthenticationAttemptLogger authenticationLogger;
 
-  private BruteforceFilterService bruteforceFilter;
-
-  public AuthenticationSuccessHandler(AuthenticationAttemptLogger authenticationAttemptLogger,
-      BruteforceFilterService bruteforceFilterService) {
+  public AuthenticationSuccessHandler(AuthenticationAttemptLogger authenticationAttemptLogger) {
     this.authenticationLogger = authenticationAttemptLogger;
-    this.bruteforceFilter = bruteforceFilterService;
   }
 
   @Override
@@ -64,8 +59,6 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, requestIp, null,
         request.getParameter(USERNAME_PARAMETER));
-
-    bruteforceFilter.authenticationFromIpSucceed(requestIp);
   }
 
   private String getSavedRequestCacheRedirectUrl(HttpServletRequest request,
