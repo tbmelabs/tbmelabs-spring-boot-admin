@@ -10,7 +10,7 @@ import org.reflections.Reflections;
 
 public class EntityAnnotationTest {
 
-  private static final Integer EXPECTED_ENTITIES_COUNT = 13;
+  private static final Integer EXPECTED_ENTITIES_COUNT = 12;
 
   @Test
   public void allEntitiesShouldBeAnnotated() {

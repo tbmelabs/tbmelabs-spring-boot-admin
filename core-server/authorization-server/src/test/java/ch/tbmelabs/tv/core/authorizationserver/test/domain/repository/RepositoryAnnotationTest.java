@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 public class RepositoryAnnotationTest {
 
-  private static final Integer EXPECTED_REPOSITORY_COUNT = 15;
+  private static final Integer EXPECTED_REPOSITORY_COUNT = 14;
 
   @Test
   public void packageShouldOnlyContainRepositories() {
