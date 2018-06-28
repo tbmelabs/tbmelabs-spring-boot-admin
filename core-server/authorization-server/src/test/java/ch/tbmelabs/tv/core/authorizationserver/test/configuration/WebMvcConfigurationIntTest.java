@@ -21,6 +21,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
+  private static final Integer REGISTERED_VIEW_COUNT = 2;
+  
   @Autowired
   private ApplicationContext applicationContext;
 
@@ -50,7 +52,7 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServe
 
     assertThat(registrations).isNotNull().hasSize(1);
     assertThat((String[]) ReflectionTestUtils.getField(registrations.get(0), "pathPatterns"))
-        .hasSize(1).containsExactly("/**");
+        .hasSize(1).containsExactly("/*");
     assertThat(
         (ArrayList<String>) ReflectionTestUtils.getField(registrations.get(0), "locationValues"))
         .hasSize(1);
@@ -70,7 +72,7 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServe
     List<ViewControllerRegistration> registrations =
         (List<ViewControllerRegistration>) ReflectionTestUtils.getField(registry, "registrations");
 
-    assertThat(registrations).isNotNull().hasSize(4);
+    assertThat(registrations).isNotNull().hasSize(REGISTERED_VIEW_COUNT);
     assertThat(registry).hasFieldOrPropertyWithValue("order", Ordered.HIGHEST_PRECEDENCE);
 
     registrations.forEach(view -> {
@@ -80,20 +82,10 @@ public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServe
               ((ParameterizableViewController) ReflectionTestUtils.getField(view, "controller"))
                   .getViewName()).isEqualTo("index");
           break;
-        case "/signin":
-          assertThat(
-              ((ParameterizableViewController) ReflectionTestUtils.getField(view, "controller"))
-                  .getViewName()).isEqualTo("signin");
-          break;
         case "/signup":
           assertThat(
               ((ParameterizableViewController) ReflectionTestUtils.getField(view, "controller"))
                   .getViewName()).isEqualTo("signup");
-          break;
-        case "/oauth/confirm_access":
-          assertThat(
-              ((ParameterizableViewController) ReflectionTestUtils.getField(view, "controller"))
-                  .getViewName()).isEqualTo("authorize");
           break;
         default:
           throw new IllegalArgumentException("Unexpected view!");

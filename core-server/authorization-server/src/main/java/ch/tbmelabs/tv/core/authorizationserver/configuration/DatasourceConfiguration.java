@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import javax.sql.DataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
 @Configuration
 public class DatasourceConfiguration {
@@ -19,18 +18,18 @@ public class DatasourceConfiguration {
 
   @Bean
   @Primary
-  @ConfigurationProperties(prefix = "spring.datasource")
-  public DataSource dataSource() {
-    return DataSourceBuilder.create().build();
+  @ConfigurationProperties("spring.datasource")
+  public HikariDataSource dataSource() {
+    return DataSourceBuilder.create().type(HikariDataSource.class).build();
   }
 
   @Bean
   @Profile({SpringApplicationProfile.NO_REDIS})
-  @ConfigurationProperties(prefix = "tokenstore.datasource")
-  public DataSource jdbcTokenStoreDatasource() {
+  @ConfigurationProperties("tokenstore.datasource")
+  public HikariDataSource jdbcTokenStoreDatasource() {
     LOGGER.warn("Profile \"" + SpringApplicationProfile.NO_REDIS
-        + "\" is active: tokenstore will be of type " + JdbcTokenStore.class);
+        + "\" is active: tokenstore will be of " + HikariDataSource.class);
 
-    return DataSourceBuilder.create().build();
+    return DataSourceBuilder.create().type(HikariDataSource.class).build();
   }
 }

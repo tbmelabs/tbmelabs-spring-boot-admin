@@ -2,10 +2,10 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.signup;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -37,14 +37,19 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
       "An error occured. Please check your details!";
   private static final User unexistingUser = new User();
   private static User existingUser = new User();
+
   @Rule
   public ExpectedException passwordException = ExpectedException.none();
+
   @Rule
   public ExpectedException confirmationException = ExpectedException.none();
+
   @Autowired
   private MockMvc mockMvc;
+
   @Autowired
   private RoleCRUDRepository roleRepository;
+
   @Autowired
   private UserCRUDRepository userRepository;
 
@@ -79,18 +84,18 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() throws Exception {
     assertThatThrownBy(() -> mockMvc
-        .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-        .isInstanceOf(NestedServletException.class)
-        .hasCauseInstanceOf(IllegalArgumentException.class)
-        .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
+            .isInstanceOf(NestedServletException.class)
+            .hasCauseInstanceOf(IllegalArgumentException.class)
+            .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
   public void postToSignupEndpointShouldSaveNewUser() throws Exception {
     mockMvc
-        .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
                 .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
@@ -103,7 +108,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   public void postToSignupEndpointShouldReturnCreatedUser() throws Exception {
     JSONObject createdJsonUser = new JSONObject(mockMvc
-        .perform(post(SIGNUP_ENDPOINT).contentType(MediaType.APPLICATION_JSON)
+        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
                 .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))

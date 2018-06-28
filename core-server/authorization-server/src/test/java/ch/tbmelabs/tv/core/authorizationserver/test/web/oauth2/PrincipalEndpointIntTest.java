@@ -2,10 +2,10 @@ package ch.tbmelabs.tv.core.authorizationserver.test.web.oauth2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
@@ -70,16 +70,16 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   @Test
   @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void meEndpointShouldReturnCorrectAuthentication() throws Exception {
-    runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(ME_ENDPOINT)).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+    runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(ME_ENDPOINT).with(csrf()))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
         .getContentAsString()));
   }
 
   @Test
   @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void userEndpointShouldReturnCorrectAuthentication() throws Exception {
-    runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(USER_ENDPOINT)).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+    runJsonCredentialAssertChain(new JSONObject(mockMvc.perform(get(USER_ENDPOINT).with(csrf()))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
         .getContentAsString()));
   }
 
@@ -91,9 +91,10 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   @Test
   @WithMockUser(username = "PrincipalEndpointIntTestUser")
   public void profileEndpointShouldReturnCorrectUserDTO() throws Exception {
-    JSONObject jsonUserRepresentation = new JSONObject(mockMvc.perform(get(PROFILE_ENDPOINT))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
-        .getContentAsString());
+    JSONObject jsonUserRepresentation =
+        new JSONObject(mockMvc.perform(get(PROFILE_ENDPOINT).with(csrf())).andDo(print())
+            .andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+            .getContentAsString());
 
     assertThat(jsonUserRepresentation.getLong("created"))
         .isEqualTo(testUser.getCreated().getTime());

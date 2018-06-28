@@ -1,20 +1,20 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.security.logging;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 
 public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -53,7 +53,7 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
   @Test
   public void loginProcessingWithInvalidUsernameShouldFail() throws Exception {
     mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, "invalid")
+        .perform(post(LOGIN_PROCESSING_URL).with(csrf()).param(USERNAME_PARAMETER_NAME, "invalid")
             .param(PASSWORD_PARAMETER_NAME, password))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
   }
@@ -61,7 +61,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
   @Test
   public void loginProcessingWithInvalidPasswordShoulFail() throws Exception {
     mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, "invalid"))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
   }
@@ -69,7 +70,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
   @Test
   public void loginProcessingWithValidCredentialsShouldSucceed() throws Exception {
     String redirectUrl = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
         .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
         .getRedirectedUrl();
@@ -83,7 +85,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
     userRepository.save(testUser);
 
     String errorMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn()
         .getResponse().getErrorMessage();
@@ -97,7 +100,8 @@ public class LoginEndpointIntTest extends AbstractOAuth2AuthorizationServerConte
     userRepository.save(testUser);
 
     String errorMessage = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
             .param(PASSWORD_PARAMETER_NAME, password))
         .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value())).andReturn()
         .getResponse().getErrorMessage();

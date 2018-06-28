@@ -1,9 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.web.rest;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class GrantTypeControllerIntTest extends AbstractOAuth2AuthorizationServe
   @WithMockUser(username = "GrantTypeControllerIntTestUser",
       authorities = {UserAuthority.SERVER_ADMIN})
   public void getGrantTypesEndpointIsAccessibleToServerAdmins() throws Exception {
-    mockMvc.perform(get(grantTypesEndpoint)).andDo(print())
+    mockMvc.perform(get(grantTypesEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.OK.value()));
   }
 
@@ -33,7 +33,7 @@ public class GrantTypeControllerIntTest extends AbstractOAuth2AuthorizationServe
   @WithMockUser(username = "GrantTypeControllerIntTestUser",
       authorities = {UserAuthority.SERVER_SUPPORT})
   public void getGrantTypeEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
-    mockMvc.perform(get(grantTypesEndpoint)).andDo(print())
+    mockMvc.perform(get(grantTypesEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }
