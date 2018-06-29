@@ -22,6 +22,7 @@ public class ApplicationTest {
 
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
       "Do not attempt to run an application in productive and development environment at the same time!";
+
   @Spy
   @InjectMocks
   private static Application fixture;

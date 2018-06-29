@@ -22,10 +22,13 @@ import org.mockito.Spy;
 public class UserSignupServiceValidationTest {
 
   private static final UserDTO existingUser = new UserDTO();
+
   @Mock
   private UserCRUDRepository userRepository;
+
   @Mock
   private RoleCRUDRepository roleRepository;
+
   @Spy
   @InjectMocks
   private UserSignupService fixture;

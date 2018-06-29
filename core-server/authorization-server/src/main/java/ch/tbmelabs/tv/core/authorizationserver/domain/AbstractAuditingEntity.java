@@ -25,8 +25,10 @@ public abstract class AbstractAuditingEntity implements Serializable {
   @Transient
   public static final String SEQUENCE_GENERATOR_STRATEGY =
       "org.hibernate.id.enhanced.SequenceStyleGenerator";
+
   @Transient
   private static final long serialVersionUID = 1L;
+
   @CreatedDate
   @Setter(AccessLevel.NONE)
   @Column(updatable = false)

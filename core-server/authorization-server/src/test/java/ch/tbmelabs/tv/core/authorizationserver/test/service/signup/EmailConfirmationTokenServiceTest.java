@@ -25,8 +25,10 @@ import org.springframework.stereotype.Service;
 public class EmailConfirmationTokenServiceTest {
 
   private static EmailConfirmationToken savedToken;
+
   @Mock
   private EmailConfirmationTokenCRUDRepository mockEmailConfirmationTokenRepository;
+
   @Spy
   @InjectMocks
   private EmailConfirmationTokenService fixture;

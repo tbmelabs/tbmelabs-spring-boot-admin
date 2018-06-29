@@ -1,10 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +10,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "user_has_roles")
@@ -58,17 +58,9 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
     setUserRole(role);
   }
 
-  public User getUser() {
-    return this.user;
-  }
-
   public void setUser(User user) {
     this.user = user;
     this.userId = user.getId();
-  }
-
-  public Role getUserRole() {
-    return this.userRole;
   }
 
   public void setUserRole(Role role) {
@@ -77,32 +69,21 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof UserRoleAssociation)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    UserRoleAssociation other = (UserRoleAssociation) object;
-    if (other.getUser() == null || other.getUserRole() == null) {
-      return false;
-    }
-
-    return Objects.equals(this.getUser(), other.getUser())
-        && Objects.equals(this.getUserRole(), other.getUserRole());
+    UserRoleAssociation other = (UserRoleAssociation) o;
+    return userId != null && userRoleId != null && userId.equals(other.userId)
+        && userRoleId.equals(other.userRoleId);
   }
 
   @Override
   public int hashCode() {
-    if (this.getUser() == null || this.getUser().getId() == null || this.getUserRole() == null
-        || this.getUserRole().getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getUser().getId())
-        .append(this.getUserRole().getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }

@@ -1,10 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +10,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "client_has_authorities")
@@ -58,17 +58,9 @@ public class ClientAuthorityAssociation extends AbstractAuditingEntity {
     setClientAuthority(authority);
   }
 
-  public Client getClient() {
-    return this.client;
-  }
-
   public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
-  }
-
-  public Authority getClientAuthority() {
-    return this.clientAuthority;
   }
 
   public void setClientAuthority(Authority authority) {
@@ -77,32 +69,21 @@ public class ClientAuthorityAssociation extends AbstractAuditingEntity {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof ClientAuthorityAssociation)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    ClientAuthorityAssociation other = (ClientAuthorityAssociation) object;
-    if (other.getClient() == null || other.getClientAuthority() == null) {
-      return false;
-    }
-
-    return Objects.equals(this.getClient(), other.getClient())
-        && Objects.equals(this.getClientAuthority(), other.getClientAuthority());
+    ClientAuthorityAssociation other = (ClientAuthorityAssociation) o;
+    return clientId != null && clientAuthorityId != null && clientId.equals(other.clientId)
+        && clientAuthorityId.equals(other.clientAuthorityId);
   }
 
   @Override
   public int hashCode() {
-    if (this.getClient() == null || this.getClient().getId() == null
-        || this.getClientAuthority() == null || this.getClientAuthority().getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getClient().getId())
-        .append(this.getClientAuthority().getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }

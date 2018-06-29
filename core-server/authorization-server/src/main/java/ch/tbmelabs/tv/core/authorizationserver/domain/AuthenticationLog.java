@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,22 +12,24 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "authentication_log")
 public class AuthenticationLog extends AbstractAuditingEntity {
 
   @Transient
   private static final long serialVersionUID = 1L;
+
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
@@ -37,25 +38,24 @@ public class AuthenticationLog extends AbstractAuditingEntity {
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;
+
   @NotNull
   @Column(columnDefinition = "varchar(3)", updatable = false)
   private AUTHENTICATION_STATE state;
+
   @NotEmpty
   @Size(max = 45)
   @Column(columnDefinition = "bpchar(45)", updatable = false)
+
   private String ip;
+
   @Size(max = 256)
   private String message;
+
   @ManyToOne
   @LazyCollection(LazyCollectionOption.FALSE)
   @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
-
-  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
-  // If there is an existing constructor "constructor is already defined"
-  public AuthenticationLog() {
-
-  }
 
   public AuthenticationLog(AUTHENTICATION_STATE state, String ip, String message, User user) {
     setState(state);
@@ -65,26 +65,21 @@ public class AuthenticationLog extends AbstractAuditingEntity {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof AuthenticationLog)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    AuthenticationLog other = (AuthenticationLog) object;
-    return Objects.equals(this.getId(), other.getId());
+    AuthenticationLog other = (AuthenticationLog) o;
+    return id != null && id.equals(other.id);
   }
 
   @Override
   public int hashCode() {
-    if (this.getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 
   public enum AUTHENTICATION_STATE {

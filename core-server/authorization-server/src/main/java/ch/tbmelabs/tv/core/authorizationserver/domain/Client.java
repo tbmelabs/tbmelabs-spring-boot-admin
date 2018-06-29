@@ -1,10 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,26 +12,31 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
-@EqualsAndHashCode
 @Table(name = "clients")
 public class Client extends AbstractAuditingEntity {
 
   @Transient
   public static final String REDIRECT_URI_SPLITTERATOR = ";";
+
   @Transient
   private static final long serialVersionUID = 1L;
+
   @Id
   @GenericGenerator(name = "pk_sequence",
       strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
@@ -90,34 +90,20 @@ public class Client extends AbstractAuditingEntity {
   private Set<ClientScopeAssociation> scopes;
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof Client)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    Client other = (Client) object;
-    return Objects.equals(this.getId(), other.getId())
-        && Objects.equals(this.getClientId(), other.getClientId())
-        && Objects.equals(this.getSecret(), other.getSecret())
-        && Objects.equals(this.getIsAutoApprove(), other.getIsAutoApprove())
-        && Objects.equals(this.getIsSecretRequired(), other.getIsSecretRequired())
-        && Objects.equals(this.getAccessTokenValiditySeconds(),
-        other.getAccessTokenValiditySeconds())
-        && Objects.equals(this.getRefreshTokenValiditySeconds(),
-        other.getRefreshTokenValiditySeconds())
-        && Objects.equals(this.getRedirectUri(), other.getRedirectUri());
+    Client other = (Client) o;
+    return id != null && id.equals(other.id);
   }
 
   @Override
   public int hashCode() {
-    if (this.getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }

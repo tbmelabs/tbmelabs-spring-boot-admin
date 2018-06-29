@@ -18,8 +18,10 @@ import lombok.NoArgsConstructor;
 public class UserDTO extends AbstractBasicEntityDTO {
 
   private String username;
+
   @JsonProperty(access = Access.WRITE_ONLY)
   private String password;
+
   @JsonProperty(access = Access.WRITE_ONLY)
   private String confirmation;
   private String email;

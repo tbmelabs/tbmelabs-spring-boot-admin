@@ -1,9 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,15 +15,17 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "email_confirmation_tokens")
 public class EmailConfirmationToken extends AbstractAuditingEntity {
 
@@ -55,12 +55,6 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
   @JoinColumn(name = "user_id")
   private User user;
 
-  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
-  // If there is an existing constructor "constructor is already defined"
-  public EmailConfirmationToken() {
-
-  }
-
   public EmailConfirmationToken(String tokenString, User user) {
     setTokenString(tokenString);
     setUser(user);
@@ -74,25 +68,20 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof EmailConfirmationToken)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    EmailConfirmationToken other = (EmailConfirmationToken) object;
-    return Objects.equals(this.getId(), other.getId());
+    EmailConfirmationToken other = (EmailConfirmationToken) o;
+    return id != null && id.equals(other.id);
   }
 
   @Override
   public int hashCode() {
-    if (this.getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }

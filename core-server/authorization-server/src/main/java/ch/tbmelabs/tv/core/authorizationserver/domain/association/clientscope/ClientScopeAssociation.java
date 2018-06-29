@@ -1,10 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,11 +10,16 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor
 @Table(name = "client_has_scopes")
@@ -58,17 +58,9 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
     setClientScope(scope);
   }
 
-  public Client getClient() {
-    return this.client;
-  }
-
   public void setClient(Client client) {
     this.client = client;
     this.clientId = client.getId();
-  }
-
-  public Scope getClientScope() {
-    return this.clientScope;
   }
 
   public void setClientScope(Scope scope) {
@@ -77,32 +69,21 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof ClientScopeAssociation)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    ClientScopeAssociation other = (ClientScopeAssociation) object;
-    if (other.getClient() == null || other.getClientScope() == null) {
-      return false;
-    }
-
-    return Objects.equals(this.getClient(), other.getClient())
-        && Objects.equals(this.getClientScope(), other.getClientScope());
+    ClientScopeAssociation other = (ClientScopeAssociation) o;
+    return clientId != null && clientScopeId != null && clientId.equals(other.clientId)
+        && clientScopeId.equals(other.clientScopeId);
   }
 
   @Override
   public int hashCode() {
-    if (this.getClient() == null || this.getClient().getId() == null
-        || this.getClientScope() == null || this.getClientScope().getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getClient().getId())
-        .append(this.getClientScope().getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }

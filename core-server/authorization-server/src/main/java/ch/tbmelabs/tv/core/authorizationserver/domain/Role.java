@@ -1,9 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,18 +11,22 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Parameter;
 import org.springframework.security.core.GrantedAuthority;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode
+@NoArgsConstructor
 @Table(name = "user_roles")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role extends AbstractAuditingEntity implements GrantedAuthority {
@@ -52,12 +52,6 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
   @OneToMany(mappedBy = "userRoleId")
   private Set<UserRoleAssociation> usersWithRoles;
 
-  // TODO: This is some serious bug! maven-compiler-plugin does not behave correctly to lombok.
-  // If there is an existing constructor "constructor is already defined"
-  public Role() {
-
-  }
-
   public Role(String authority) {
     setName(authority);
   }
@@ -68,26 +62,20 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
   }
 
   @Override
-  public boolean equals(Object object) {
-    if (object == null || !(object instanceof Role)) {
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
 
-    Role other = (Role) object;
-    return Objects.equals(this.getId(), other.getId())
-        && Objects.equals(this.getName(), other.getName());
+    Role other = (Role) o;
+    return id != null && id.equals(other.id);
   }
 
   @Override
   public int hashCode() {
-    if (this.getId() == null) {
-      return super.hashCode();
-    }
-
-    // @formatter:off
-    return new HashCodeBuilder()
-        .append(this.getId())
-        .build();
-    // @formatter:on
+    return 31;
   }
 }
