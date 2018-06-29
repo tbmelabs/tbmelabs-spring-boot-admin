@@ -1,6 +1,7 @@
 package ch.tbmelabs.core.adminserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,13 +28,13 @@ public class RootEndpointOAuth2SSOForwardIntTest extends AbstractAdminServerCont
 
   @Test
   public void requestToLoginEndpointShouldForwardToOAuth2AuthorizationEndpoint() throws Exception {
-    String loginForward =
-        mockMvc.perform(get("/")).andDo(print()).andExpect(status().is(HttpStatus.FOUND.value()))
-            .andReturn().getResponse().getHeader(FORWARD_HEADER_NAME);
+    String loginForward = mockMvc.perform(get("/").with(csrf())).andDo(print())
+        .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
+        .getHeader(FORWARD_HEADER_NAME);
 
     assertThat(loginForward).isEqualTo(EUREKA_AUTHENTICATOIN_ENTRY_POINT_URI);
 
-    String ssoForward = mockMvc.perform(get("/login")).andDo(print())
+    String ssoForward = mockMvc.perform(get("/login").with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
         .getHeader(FORWARD_HEADER_NAME);
 

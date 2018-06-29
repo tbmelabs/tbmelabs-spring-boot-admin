@@ -5,6 +5,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
@@ -40,14 +41,17 @@ public class UserSignupService {
 
   private UserService userService;
 
+  private UserMapper userMapper;
+
   public UserSignupService(ApplicationContext applicationContext,
       UserCRUDRepository userCRUDRepository, RoleCRUDRepository roleCRUDRepository,
-      RoleMapper roleMapper, UserService userService) {
+      RoleMapper roleMapper, UserService userService, UserMapper userMapper) {
     this.applicationContext = applicationContext;
     this.userRepository = userCRUDRepository;
     this.roleRepository = roleCRUDRepository;
     this.roleMapper = roleMapper;
     this.userService = userService;
+    this.userMapper = userMapper;
   }
 
   public boolean isUsernameUnique(UserDTO testUser) {
@@ -86,7 +90,7 @@ public class UserSignupService {
     return testUser.getConfirmation().equals(testUser.getPassword());
   }
 
-  public User signUpNewUser(UserDTO newUserDTO) {
+  public UserDTO signUpNewUser(UserDTO newUserDTO) {
     if (!isUserValid(newUserDTO)) {
       throw new IllegalArgumentException("An error occured. Please check your details!");
     }
@@ -99,7 +103,7 @@ public class UserSignupService {
 
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
-    return persistedUser;
+    return userMapper.toDto(persistedUser);
   }
 
   private boolean isUserValid(UserDTO testUser) {

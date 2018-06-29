@@ -3,8 +3,6 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -66,11 +64,9 @@ public class User extends AbstractAuditingEntity {
   @NotEmpty
   @Size(min = 60, max = 60)
   @Column(columnDefinition = "bpchar(60)")
-  @JsonProperty(access = Access.WRITE_ONLY)
   private String password;
 
   @Transient
-  @JsonProperty(access = Access.WRITE_ONLY)
   private String confirmation;
 
   @NotNull

@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.entryserver.test.web;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,7 +22,7 @@ public class LogoutEndpointIntTest extends AbstractZuulServerContextAwareTest {
 
   @Test
   public void successfulLogoutShouldRedirectToAuthorizationServerLogout() throws Exception {
-    String redirectUrl = mockMvc.perform(post(LOGOUT_ENDPOINT_URI)).andDo(print())
+    String redirectUrl = mockMvc.perform(post(LOGOUT_ENDPOINT_URI).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
         .getRedirectedUrl();
 

@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
@@ -11,6 +13,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
@@ -54,6 +57,9 @@ public class UserSignupServiceTest {
 
   @Mock
   private UserService mockUserService;
+
+  @Mock
+  private UserMapper mockUserMapper;
 
   @Spy
   @InjectMocks
@@ -157,6 +163,8 @@ public class UserSignupServiceTest {
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
         .findOneByName(UserAuthority.USER);
 
-    assertThat(fixture.signUpNewUser(new UserDTO()).getId()).isNotNull().isInstanceOf(Long.class);
+    fixture.signUpNewUser(new UserDTO());
+
+    verify(mockUserMapper, times(1)).toDto(Mockito.any(User.class));
   }
 }

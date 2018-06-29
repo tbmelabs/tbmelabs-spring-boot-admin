@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class SignupController {
   }
 
   @PostMapping({"/do-signup"})
-  public User signup(@RequestBody UserDTO newUserDTO) {
+  public UserDTO signup(@RequestBody UserDTO newUserDTO) {
     return signupService.signUpNewUser(newUserDTO);
   }
 
