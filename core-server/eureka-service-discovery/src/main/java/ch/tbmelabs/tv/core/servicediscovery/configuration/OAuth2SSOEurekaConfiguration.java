@@ -40,6 +40,9 @@ public class OAuth2SSOEurekaConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
 
+      // TODO: Either uncomment this line or add a custom csrf filter for /eureka
+      // .csrf().disable()
+
       .authorizeRequests()
         .antMatchers("/favicon.ico").permitAll()
         .antMatchers("/eureka/**").permitAll()
