@@ -85,6 +85,6 @@ public class PreAuthenticationUserDetailsServiceImplTest {
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken))
         .isInstanceOf(UsernameNotFoundException.class)
-        .hasMessage("Username " + mockAuthentication.getName() + " does not exist!");
+        .hasMessage("Username \'" + mockAuthentication.getName() + "\' does not exist!");
   }
 }
