@@ -39,7 +39,7 @@ public class UserSignupServiceTest {
   private static final String SIGNUP_FAILED_ERROR_MESSAGE =
       "An error occured. Please check your details!";
   private static final String DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE =
-      "Unable to find default authority \"" + UserAuthority.USER + "\"!";
+      "Unable to find default authority \'" + UserAuthority.USER + "\'!";
 
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 

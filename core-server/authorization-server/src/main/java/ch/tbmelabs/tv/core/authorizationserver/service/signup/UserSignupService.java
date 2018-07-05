@@ -121,7 +121,7 @@ public class UserSignupService {
       Optional<Role> userRole;
       if (!(userRole = roleRepository.findOneByName(UserAuthority.USER)).isPresent()) {
         throw new IllegalArgumentException(
-            "Unable to find default authority \"" + UserAuthority.USER + "\"!");
+            "Unable to find default authority \'" + UserAuthority.USER + "\'!");
       }
 
       newUserDTO.setRoles(
