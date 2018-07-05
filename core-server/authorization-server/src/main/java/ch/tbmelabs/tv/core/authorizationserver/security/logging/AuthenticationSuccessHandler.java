@@ -35,7 +35,7 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
       String savedRedirectUrl;
       if (request.getHeader(NO_REDIRECT_HEADER) != null
           && (savedRedirectUrl = getSavedRequestCacheRedirectUrl(request, response)) != null) {
-        logger.debug("Header \"" + NO_REDIRECT_HEADER + "\" is present: Not sending redirect");
+        logger.debug("Header \'" + NO_REDIRECT_HEADER + "\' is present: Not sending redirect");
         response.setHeader(NO_REDIRECT_HEADER, savedRedirectUrl);
       } else {
         throw new IllegalArgumentException(noSavedRequestExceptionIdMessage);

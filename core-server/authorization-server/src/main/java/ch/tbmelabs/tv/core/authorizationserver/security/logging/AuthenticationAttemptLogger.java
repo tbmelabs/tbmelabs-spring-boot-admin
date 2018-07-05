@@ -2,18 +2,16 @@ package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog;
 import ch.tbmelabs.tv.core.authorizationserver.domain.AuthenticationLog.AUTHENTICATION_STATE;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthenticationLogCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import java.util.Optional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AuthenticationAttemptLogger {
 
-  private static final Logger LOGGER = LogManager.getLogger(AuthenticationAttemptLogger.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationAttemptLogger.class);
 
   private AuthenticationLogCRUDRepository authenticationLogRepository;
 
@@ -28,16 +26,10 @@ public class AuthenticationAttemptLogger {
 
   public void logAuthenticationAttempt(AUTHENTICATION_STATE state, String ip, String message,
       String username) {
-    LOGGER.debug("Authentication attempt from " + ip + " with state " + state.name());
+    LOGGER.debug("Authentication attempt from {} with state {}", ip, state.name());
 
-    Optional<User> user;
-    if (!(user = userRepository.findOneByUsernameIgnoreCase(username)).isPresent()) {
-      LOGGER
-          .warn("Invalid username \"" + username + "\" detected: Probably a bruteforcing attempt?");
-
-      return;
-    }
-
-    authenticationLogRepository.save(new AuthenticationLog(state, ip, message, user.get()));
+    userRepository.findOneByUsernameIgnoreCase(username).ifPresent(
+        (user) -> authenticationLogRepository
+            .save(new AuthenticationLog(state, ip, message, user)));
   }
 }

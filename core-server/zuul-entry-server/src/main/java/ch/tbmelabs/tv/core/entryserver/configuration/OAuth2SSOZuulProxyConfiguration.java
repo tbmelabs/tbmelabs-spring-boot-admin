@@ -1,12 +1,9 @@
 package ch.tbmelabs.tv.core.entryserver.configuration;
 
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -14,19 +11,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableZuulProxy
 @EnableOAuth2Sso
 public class OAuth2SSOZuulProxyConfiguration extends WebSecurityConfigurerAdapter {
-
-  private Environment environment;
-
-  public OAuth2SSOZuulProxyConfiguration(Environment environment) {
-    this.environment = environment;
-  }
-
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    if (environment.acceptsProfiles(SpringApplicationProfile.DEV)) {
-      web.debug(true);
-    }
-  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
