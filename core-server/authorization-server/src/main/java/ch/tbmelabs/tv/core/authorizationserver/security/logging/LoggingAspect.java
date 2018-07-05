@@ -2,14 +2,14 @@ package ch.tbmelabs.tv.core.authorizationserver.security.logging;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Arrays;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoggingAspect {
 
-  private static final Logger LOGGER = LogManager.getLogger(LoggingAspect.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
   private Environment environment;
 
@@ -25,7 +25,7 @@ public class LoggingAspect {
     this.environment = environment;
   }
 
-  @Pointcut("within(ch.tbmelabs.tv.core.authorizationserver.repository..*) "
+  @Pointcut("within(ch.tbmelabs.tv.core.authorizationserver.domain.repository..*) "
       + "|| within(ch.tbmelabs.tv.core.authorizationserver.service..*)"
       + " || within(ch.tbmelabs.tv.core.authorizationserver.web..*)")
   public void loggingPointcut() {
