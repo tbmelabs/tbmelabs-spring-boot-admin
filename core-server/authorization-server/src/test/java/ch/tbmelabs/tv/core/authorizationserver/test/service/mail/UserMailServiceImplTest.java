@@ -9,7 +9,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.UUID;
@@ -25,7 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
-public class UserMailServiceTest {
+public class UserMailServiceImplTest {
 
   private static final String TEST_SENDER_ADDRESS = "no-reply@tbme.tv";
   private static final String TEST_SERVER_ADDRESS = "localhost";
@@ -40,7 +40,7 @@ public class UserMailServiceTest {
 
   @Spy
   @InjectMocks
-  private UserMailService fixture;
+  private UserMailServiceImpl fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -61,15 +61,15 @@ public class UserMailServiceTest {
 
   @Test
   public void userMailServiceShouldBeAnnotated() {
-    assertThat(UserMailService.class).hasAnnotation(Service.class).hasAnnotation(Profile.class);
+    assertThat(UserMailServiceImpl.class).hasAnnotation(Service.class).hasAnnotation(Profile.class);
 
-    assertThat(UserMailService.class.getDeclaredAnnotation(Profile.class).value())
+    assertThat(UserMailServiceImpl.class.getDeclaredAnnotation(Profile.class).value())
         .containsExactly("!" + SpringApplicationProfile.NO_MAIL);
   }
 
   @Test
   public void userMailServiceShouldExtendMailService() {
-    assertThat(MailService.class).isAssignableFrom(UserMailService.class);
+    assertThat(MailService.class).isAssignableFrom(UserMailServiceImpl.class);
   }
 
   @Test

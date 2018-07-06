@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailServiceImpl;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,7 +32,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
 
-public class MailServiceTest {
+public class MailServiceImplTest {
 
   private static final String TEST_SENDER_ADDRESS = "no-reply@tbme.tv";
   private static MimeMessage sentMimeMessage;
@@ -45,7 +45,7 @@ public class MailServiceTest {
 
   @Spy
   @InjectMocks
-  private MailService fixture;
+  private MailServiceImpl fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -56,28 +56,28 @@ public class MailServiceTest {
     doReturn(new Properties()).when(mockSession).getProperties();
     doReturn(new MimeMessage(mockSession)).when(mockJavaMailSender).createMimeMessage();
     doAnswer((Answer<MimeMessage>) invocation -> {
-      MailServiceTest.sentMimeMessage = invocation.getArgument(0);
-      return MailServiceTest.sentMimeMessage;
+      MailServiceImplTest.sentMimeMessage = invocation.getArgument(0);
+      return MailServiceImplTest.sentMimeMessage;
     }).when(mockJavaMailSender).send(ArgumentMatchers.any(MimeMessage.class));
   }
 
   @Test
-  public void mailServiceShouldBeAnnotated() {
-    assertThat(MailService.class).hasAnnotation(Service.class).hasAnnotation(Profile.class);
+  public void MailServiceImplShouldBeAnnotated() {
+    assertThat(MailServiceImpl.class).hasAnnotation(Service.class).hasAnnotation(Profile.class);
 
-    assertThat(MailService.class.getDeclaredAnnotation(Profile.class).value())
+    assertThat(MailServiceImpl.class.getDeclaredAnnotation(Profile.class).value())
         .containsExactly("!" + SpringApplicationProfile.NO_MAIL);
   }
 
   @Test
-  public void mailServiceConstructorShouldAcceptJavaMailSender() {
-    assertThat(new MailService(mockJavaMailSender)).isNotNull();
+  public void MailServiceImplConstructorShouldAcceptJavaMailSender() {
+    assertThat(new MailServiceImpl(mockJavaMailSender)).isNotNull();
   }
 
   @Test
   public void sendMailShouldCallJavaMailSender() throws MessagingException, IOException {
     User receiver = new User();
-    receiver.setEmail("mailservicetest.user@tbme.tv");
+    receiver.setEmail("MailServiceImpltest.user@tbme.tv");
 
     String subject = RandomStringUtils.random(11);
     String htmlBody = "<html><body><h1>" + RandomStringUtils.random(11) + "</h1></body></html>";
@@ -87,13 +87,13 @@ public class MailServiceTest {
     verify(mockJavaMailSender, times(1)).send(ArgumentMatchers.any(MimeMessage.class));
 
     // TODO: Why does this fail in Maven and not in plain JUnit?
-    // assertThat(MailServiceTest.sentMimeMessage.getSubject()).isEqualTo(subject);
-    assertThat(Arrays.stream(MailServiceTest.sentMimeMessage.getFrom()).map(Address::toString)
+    // assertThat(MailServiceImplTest.sentMimeMessage.getSubject()).isEqualTo(subject);
+    assertThat(Arrays.stream(MailServiceImplTest.sentMimeMessage.getFrom()).map(Address::toString)
         .collect(Collectors.toList())).hasSize(1).containsExactly(TEST_SENDER_ADDRESS);
-    assertThat(Arrays.stream(MailServiceTest.sentMimeMessage.getAllRecipients())
+    assertThat(Arrays.stream(MailServiceImplTest.sentMimeMessage.getAllRecipients())
         .map(Address::toString).collect(Collectors.toList())).hasSize(1)
         .containsExactly(receiver.getEmail());
-    assertThat(((MimeMultipart) ((MimeMultipart) MailServiceTest.sentMimeMessage.getContent())
+    assertThat(((MimeMultipart) ((MimeMultipart) MailServiceImplTest.sentMimeMessage.getContent())
         .getBodyPart(0).getContent()).getBodyPart(0).getContent()).isEqualTo(htmlBody);
   }
 }

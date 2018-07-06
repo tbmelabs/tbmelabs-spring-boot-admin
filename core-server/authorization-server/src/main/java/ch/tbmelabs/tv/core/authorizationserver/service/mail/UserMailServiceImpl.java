@@ -1,9 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.mail;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
-import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,10 +10,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
+import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @Service
 @Profile({"!" + SpringApplicationProfile.NO_MAIL})
-public class UserMailService extends MailService {
+public class UserMailServiceImpl extends MailServiceImpl {
 
   private static final String TEMPLATE_FOLDER = "email-templates";
   private static final String SIGNUP_MAIL_TEMPLATE_LOCATION =
@@ -40,7 +40,7 @@ public class UserMailService extends MailService {
 
   private EmailConfirmationTokenService emailConfirmationTokenService;
 
-  public UserMailService(JavaMailSender javaMailSender,
+  public UserMailServiceImpl(JavaMailSender javaMailSender,
       EmailConfirmationTokenService emailConfirmationTokenService) {
     super(javaMailSender);
     this.emailConfirmationTokenService = emailConfirmationTokenService;
@@ -50,7 +50,7 @@ public class UserMailService extends MailService {
     LOGGER.info("Sending sign up confirmation to " + user.getEmail());
 
     try {
-      String emailBody = loadFileContent(new File(UserMailService.class.getClassLoader()
+      String emailBody = loadFileContent(new File(UserMailServiceImpl.class.getClassLoader()
           .getResource(SIGNUP_MAIL_TEMPLATE_LOCATION).toURI()));
 
       final String token = emailConfirmationTokenService.createUniqueEmailConfirmationToken(user);

@@ -17,7 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.util.Optional;
@@ -70,8 +70,8 @@ public class UserSignupServiceTest {
     initMocks(this);
 
     doReturn(mockEnvironment).when(mockApplicationContext).getEnvironment();
-    doReturn(Mockito.mock(UserMailService.class)).when(mockApplicationContext)
-        .getBean(UserMailService.class);
+    doReturn(Mockito.mock(UserMailServiceImpl.class)).when(mockApplicationContext)
+        .getBean(UserMailServiceImpl.class);
 
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
         .findOneByName(UserAuthority.USER);
