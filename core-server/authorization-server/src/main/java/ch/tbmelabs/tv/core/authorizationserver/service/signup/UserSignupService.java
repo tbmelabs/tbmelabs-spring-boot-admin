@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserSignupService {
 
-  private static final Logger LOGGER = LogManager.getLogger(UserSignupService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserSignupService.class);
 
-  private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,64}";
+  private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,20}$";
   private static final String PASSWORD_REGEX =
       "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
@@ -55,25 +55,25 @@ public class UserSignupService {
   }
 
   public boolean isUsernameUnique(UserDTO testUser) {
-    LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" is unique");
+    LOGGER.debug("Checking if username \'{}\' is unique", testUser.getUsername());
 
     return !userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent();
   }
 
   public boolean doesUsernameMatchFormat(UserDTO testUser) {
-    LOGGER.debug("Checking if username \"" + testUser.getUsername() + "\" does match format");
+    LOGGER.debug("Checking if username \'{}\' does match format", testUser.getUsername());
 
     return testUser.getUsername().matches(USERNAME_REGEX);
   }
 
   public boolean isEmailAddressUnique(UserDTO testUser) {
-    LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" is unique");
+    LOGGER.debug("Checking if email \'{}\' is unique", testUser.getEmail());
 
     return !userRepository.findOneByEmailIgnoreCase(testUser.getEmail()).isPresent();
   }
 
   public boolean isEmailAddress(UserDTO testUser) {
-    LOGGER.debug("Checking if email \"" + testUser.getEmail() + "\" does match format");
+    LOGGER.debug("Checking if email \'{}\' does match format", testUser.getEmail());
 
     return EmailValidator.getInstance().isValid(testUser.getEmail());
   }
@@ -98,8 +98,8 @@ public class UserSignupService {
     newUserDTO = setDefaultRolesIfNonePresent(newUserDTO);
     User persistedUser = userService.save(newUserDTO);
 
-    LOGGER.info("New user signed up! username: " + newUserDTO.getUsername() + "; email: "
-        + newUserDTO.getEmail());
+    LOGGER.info("New user signed up! username: {}; email: {}", newUserDTO.getUsername(),
+        newUserDTO.getEmail());
 
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
@@ -107,7 +107,7 @@ public class UserSignupService {
   }
 
   private boolean isUserValid(UserDTO testUser) {
-    LOGGER.debug("Checking if user \"" + testUser + "\" is valid");
+    LOGGER.debug("Checking if user \'{}\' is valid", testUser);
 
     return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser)
         && isEmailAddressUnique(testUser) && isEmailAddress(testUser)
@@ -115,13 +115,13 @@ public class UserSignupService {
   }
 
   private UserDTO setDefaultRolesIfNonePresent(UserDTO newUserDTO) {
-    LOGGER.debug("Setting default roles for " + newUserDTO.getUsername());
+    LOGGER.debug("Setting default roles for {}", newUserDTO.getUsername());
 
     if (newUserDTO.getRoles() == null || newUserDTO.getRoles().isEmpty()) {
       Optional<Role> userRole;
       if (!(userRole = roleRepository.findOneByName(UserAuthority.USER)).isPresent()) {
         throw new IllegalArgumentException(
-            "Unable to find default authority \"" + UserAuthority.USER + "\"!");
+            "Unable to find default authority \'" + UserAuthority.USER + "\'!");
       }
 
       newUserDTO.setRoles(

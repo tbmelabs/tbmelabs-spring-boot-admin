@@ -29,31 +29,12 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
-      <exclusions>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-logging -->
-        <exclusion>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-logging</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2 -->
+    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-oauth2 -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-log4j2</artifactId>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure -->
-    <dependency>
-      <groupId>org.springframework.security.oauth.boot</groupId>
-      <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-oauth2</artifactId>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->

@@ -4,14 +4,14 @@ import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ZuulAccessFilter extends ZuulFilter {
 
-  private static final Logger LOGGER = LogManager.getLogger(ZuulAccessFilter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ZuulAccessFilter.class);
 
   @Override
   public String filterType() {
@@ -33,11 +33,11 @@ public class ZuulAccessFilter extends ZuulFilter {
     HttpServletRequest request = RequestContext.getCurrentContext().getRequest();
     HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
-    LOGGER.info("REQUEST  :: < " + request.getScheme() + " " + request.getLocalAddr() + ":"
-        + request.getLocalPort());
-    LOGGER.info("REQUEST  :: < " + request.getMethod() + " " + request.getRequestURI() + " "
-        + request.getProtocol());
-    LOGGER.info("RESPONSE :: > HTTP:" + response.getStatus());
+    LOGGER.info("REQUEST  :: < {} {}:{}", request.getScheme(), request.getLocalAddr(),
+        request.getLocalPort());
+    LOGGER.info("REQUEST  :: < {} {} {}", request.getMethod(), request.getRequestURI(),
+        request.getProtocol());
+    LOGGER.info("RESPONSE :: > HTTP:{}", response.getStatus());
 
     return null;
   }

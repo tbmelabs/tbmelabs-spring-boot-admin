@@ -7,14 +7,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailConfirmationTokenService {
 
-  private static final Logger LOGGER = LogManager.getLogger(EmailConfirmationTokenService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(EmailConfirmationTokenService.class);
 
   private EmailConfirmationTokenCRUDRepository emailConfirmationTokenRepository;
 
@@ -36,19 +36,19 @@ public class EmailConfirmationTokenService {
       return createUniqueEmailConfirmationToken(user);
     }
 
-    LOGGER.debug("Created token " + token);
+    LOGGER.debug("Created token {}", token);
 
     return emailConfirmationTokenRepository.save(new EmailConfirmationToken(token, user))
         .getTokenString();
   }
 
   public void confirmRegistration(String token) throws EmailConfirmationTokenNotFoundException {
-    LOGGER.info("User confirmation request with token " + token);
+    LOGGER.info("User confirmation request with token {}", token);
 
     Optional<EmailConfirmationToken> emailConfirmationToken;
     if (!(emailConfirmationToken = emailConfirmationTokenRepository.findOneByTokenString(token))
         .isPresent()) {
-      LOGGER.warn("Unable to find " + EmailConfirmationToken.class + ": " + token);
+      LOGGER.warn("Unable to find {}: {}", EmailConfirmationToken.class, token);
 
       throw new EmailConfirmationTokenNotFoundException(token);
     }
@@ -59,6 +59,6 @@ public class EmailConfirmationTokenService {
     // TODO: This is not affected?
     emailConfirmationTokenRepository.delete(emailConfirmationToken.get());
 
-    LOGGER.debug("User " + user.getUsername() + " confirmed registration with token " + token);
+    LOGGER.debug("User {} confirmed registration with token {}", user.getUsername(), token);
   }
 }

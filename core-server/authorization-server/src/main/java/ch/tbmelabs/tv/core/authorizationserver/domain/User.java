@@ -51,7 +51,7 @@ public class User extends AbstractAuditingEntity {
   private Long id;
 
   @NotEmpty
-  @Size(min = 5, max = 64)
+  @Size(min = 5, max = 20)
   @Column(unique = true)
   private String username;
 

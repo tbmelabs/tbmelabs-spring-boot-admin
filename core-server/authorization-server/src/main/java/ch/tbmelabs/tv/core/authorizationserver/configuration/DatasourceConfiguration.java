@@ -2,8 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import com.zaxxer.hikari.HikariDataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class DatasourceConfiguration {
 
-  private static final Logger LOGGER = LogManager.getLogger(DatasourceConfiguration.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(DatasourceConfiguration.class);
 
   @Bean
   @Primary
@@ -27,8 +27,8 @@ public class DatasourceConfiguration {
   @Profile({SpringApplicationProfile.NO_REDIS})
   @ConfigurationProperties("tokenstore.datasource")
   public HikariDataSource jdbcTokenStoreDatasource() {
-    LOGGER.warn("Profile \"" + SpringApplicationProfile.NO_REDIS
-        + "\" is active: tokenstore will be of " + HikariDataSource.class);
+    LOGGER.warn("Profile \'{}\' is active: tokenstore will be of {}",
+        SpringApplicationProfile.NO_REDIS, HikariDataSource.class);
 
     return DataSourceBuilder.create().type(HikariDataSource.class).build();
   }

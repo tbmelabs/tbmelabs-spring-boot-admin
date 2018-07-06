@@ -2,8 +2,8 @@ package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.sql.DataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @Configuration
 public class TokenStoreConfiguration {
 
-  private static final Logger LOGGER = LogManager.getLogger(TokenStoreConfiguration.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(TokenStoreConfiguration.class);
 
   @Configuration
   @Profile({"!" + SpringApplicationProfile.NO_REDIS})
@@ -49,8 +49,8 @@ public class TokenStoreConfiguration {
 
     @Bean
     public JdbcTokenStore tokenStore() {
-      LOGGER.warn("Profile \"" + SpringApplicationProfile.NO_REDIS
-          + "\" is active: tokenstore will be of type " + JdbcTokenStore.class);
+      LOGGER.warn("Profile \'{}\' is active: tokenstore will be of {}",
+          SpringApplicationProfile.NO_REDIS, JdbcTokenStore.class);
 
       return new JdbcTokenStore(
           (DataSource) applicationContext.getBean(JDBC_TOKENSTORE_DATASOURCE_BEAN_NAME));

@@ -1,8 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.userdetails;
 
 import javax.annotation.PostConstruct;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ public class PreAuthenticatedAuthenticationProviderImpl
     extends PreAuthenticatedAuthenticationProvider {
 
   private static final Logger LOGGER =
-      LogManager.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
+      LoggerFactory.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 
   private PreAuthenticationUserDetailsServiceImpl userDetailsService;
 
