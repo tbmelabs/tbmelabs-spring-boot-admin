@@ -6,6 +6,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -87,9 +88,9 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
         .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
+        .isInstanceOf(NestedServletException.class)
+        .hasCauseInstanceOf(IllegalArgumentException.class)
+        .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test

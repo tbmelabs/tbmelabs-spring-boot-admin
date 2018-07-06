@@ -22,7 +22,7 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
 
   @Mock
   private TokenStore tokenStore;
-  
+
   @Spy
   @InjectMocks
   private OAuth2BearerTokenAuthenticationFilter fixture;

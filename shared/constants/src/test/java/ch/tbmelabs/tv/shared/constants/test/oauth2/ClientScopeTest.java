@@ -2,11 +2,11 @@ package ch.tbmelabs.tv.shared.constants.test.oauth2;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import ch.tbmelabs.tv.shared.constants.oauth2.ClientScope;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import org.junit.Test;
-import ch.tbmelabs.tv.shared.constants.oauth2.ClientScope;
 
 public class ClientScopeTest {
 

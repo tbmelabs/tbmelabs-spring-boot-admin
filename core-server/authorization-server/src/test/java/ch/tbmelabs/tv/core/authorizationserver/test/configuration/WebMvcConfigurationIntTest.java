@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class WebMvcConfigurationIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final Integer REGISTERED_VIEW_COUNT = 2;
-  
+
   @Autowired
   private ApplicationContext applicationContext;
 
