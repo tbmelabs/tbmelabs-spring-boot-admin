@@ -1,4 +1,5 @@
 # TBME TV
+# *Note: This is out of date and will be updated in [this issue](https://github.com/tbmelabs/tbme-tv/issues/19)!*
 
 A free to use streaming application.
 

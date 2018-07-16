@@ -33,7 +33,7 @@
   </dependencies>
 
   <build>
-    <defaultGoal>spring-boot:run</defaultGoal>
+    <defaultGoal>clean compile spring-boot:run</defaultGoal>
 
     <resources>
       <resource>

@@ -1,14 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
@@ -21,6 +12,15 @@ import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserSignupServiceImpl implements UserSignupService {

@@ -1,11 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.domain;
 
-import java.util.Optional;
-import java.util.Set;
-import javax.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
@@ -16,6 +10,12 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientAuthority
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientGrantTypeAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientScopeAssociationCRUDRepository;
+import java.util.Optional;
+import java.util.Set;
+import javax.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ClientServiceImpl implements ClientService {

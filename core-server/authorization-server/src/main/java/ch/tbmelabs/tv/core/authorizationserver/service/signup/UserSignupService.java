@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 
 public interface UserSignupService {
+
   boolean isUsernameUnique(UserDTO testUser);
 
   boolean doesUsernameMatchFormat(UserDTO testUser);
