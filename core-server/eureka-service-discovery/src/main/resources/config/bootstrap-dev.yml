@@ -4,6 +4,4 @@ spring:
       fail-fast: false
       label: development
       profile: dev
-  profiles:
-    include:
-    - native
+      uri: http://localhost:8888/config

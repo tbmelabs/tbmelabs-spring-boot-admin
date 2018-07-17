@@ -1,0 +1,20 @@
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  server:
+    enable-self-preservation: false
+security:
+  oauth2:
+    client:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRET}
+server:
+  port: 8761
+spring:
+  application:
+    name: eureka
+  security:
+    user:
+      name: ${eureka.administrator.name}
+      password: ${eureka.administrator.password}

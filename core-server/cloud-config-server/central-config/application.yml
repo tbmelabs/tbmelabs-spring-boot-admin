@@ -1,0 +1,15 @@
+eureka:
+  administrator:
+    name: ${EUREKA_ADMIN_USERNAME}
+    password: ${EUREKA_ADMIN_PASSWORD}
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
+security:
+  oauth2:
+    client:
+      access-token-uri: ${OAUTH2_SERVER_URI}/oauth/token
+      user-authorization-uri: ${OAUTH2_SERVER_URI}/oauth/authorize
+    resource:
+      prefer-token-info: false
+      user-info-uri: ${OAUTH2_SERVER_URI}/user

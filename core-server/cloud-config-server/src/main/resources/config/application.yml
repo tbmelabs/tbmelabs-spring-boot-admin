@@ -1,6 +1,5 @@
 server:
   port: 8888
-
 spring:
   application:
     name: configserver
@@ -12,7 +11,7 @@ spring:
       server:
         bootstrap: true
         git:
-          uri: GIT_CONFIG_REPOSITORY_URI
+          uri: ${GIT_CONFIG_REPOSITORY_URI}
         native:
           search-locations: file:./central-config
         prefix: /config

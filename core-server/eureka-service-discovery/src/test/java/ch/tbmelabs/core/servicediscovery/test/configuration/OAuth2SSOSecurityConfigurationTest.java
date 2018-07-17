@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.context.annotation.Configuration;
 
-public class OAuth2SSOEurekaConfigurationTest {
+public class OAuth2SSOSecurityConfigurationTest {
 
   @Test
   public void eurekaConfigurationShouldBeAnnotated() {
