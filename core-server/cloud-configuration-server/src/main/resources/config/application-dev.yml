@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    include:
+    - native
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    root: DEBUG
