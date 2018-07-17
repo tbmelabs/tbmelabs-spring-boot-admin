@@ -1,11 +1,11 @@
 package ch.tbmelabs.tv.core.configserver;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.core.env.Environment;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 @EnableConfigServer
 @SpringCloudApplication

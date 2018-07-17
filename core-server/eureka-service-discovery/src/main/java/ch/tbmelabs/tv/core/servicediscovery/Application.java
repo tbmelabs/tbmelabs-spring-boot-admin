@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.core.env.Environment;
 
+@EnableEurekaServer
 @SpringCloudApplication
 public class Application extends SpringBootServletInitializer {
 

@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.configserver;
+package ch.tbmelabs.tv.core.servicediscovery;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
