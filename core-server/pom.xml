@@ -19,7 +19,7 @@
   </parent>
 
   <modules>
-    <module>cloud-configuration-server</module>
+    <module>cloud-config-server</module>
     <module>eureka-service-discovery</module>
     <module>authorization-server</module>
     <module>zuul-entry-server</module>

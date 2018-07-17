@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.configurationserver;
+package ch.tbmelabs.tv.core.configserver;
 
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;

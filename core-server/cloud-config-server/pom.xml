@@ -3,14 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.tbmelabs.tv.core-server</groupId>
-  <artifactId>cloud-configuration-server</artifactId>
+  <artifactId>cloud-config-server</artifactId>
 
-  <name>TBME TV | Cloud Configuration Server</name>
-  <description>Spring-Cloud Configuration-Server hosting centralized configuration.</description>
+  <name>TBME TV | Cloud Config Server</name>
+  <description>Server hosting centralized Spring Cloud Config.</description>
 
   <properties>
     <!-- General configuration -->
-    <exec.mainClass>ch.tbmelabs.tv.core.configurationserver.ConfigServerApplication</exec.mainClass>
+    <exec.mainClass>ch.tbmelabs.tv.core.configserver.Application</exec.mainClass>
   </properties>
 
   <parent>

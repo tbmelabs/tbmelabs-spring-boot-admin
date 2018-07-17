@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.configurationserver.configuration;
+package ch.tbmelabs.tv.core.configserver.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
