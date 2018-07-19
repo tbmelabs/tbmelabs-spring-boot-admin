@@ -9,12 +9,13 @@ security:
     client:
       client-id: ${CLIENT_ID}
       client-secret: ${CLIENT_SECRET}
-server:
-  port: 8761
 spring:
   application:
-    name: eureka
+    name: eureka-peer-1
   security:
     user:
       name: ${eureka.administrator.name}
       password: ${eureka.administrator.password}
+      role: CLIENT
+server:
+  port: 8761
