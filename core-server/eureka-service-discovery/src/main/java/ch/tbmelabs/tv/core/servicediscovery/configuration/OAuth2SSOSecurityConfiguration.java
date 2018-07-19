@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Configuration
-//@EnableOAuth2Sso
+@EnableOAuth2Sso
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -19,16 +19,11 @@ public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter
     // @formatter:off
     http
 
-      .csrf().ignoringAntMatchers("/eureka/**")
-
-      .and().authorizeRequests()
+      .authorizeRequests()
         .antMatchers("/favicon.ico").permitAll()
-        .antMatchers("/eureka/**").permitAll()
         .antMatchers("/public/**", "/vendor/**").permitAll()
         .anyRequest().hasAnyAuthority(UserAuthority.GANDALF, UserAuthority.SERVER_ADMIN, UserAuthority.SERVER_SUPPORT)
 
-        .and().formLogin().and().httpBasic()
-        
       .and().exceptionHandling()
         .accessDeniedPage("/403.html");
     // @formatter:on

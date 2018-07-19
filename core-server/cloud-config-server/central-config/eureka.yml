@@ -16,6 +16,6 @@ spring:
     user:
       name: ${eureka.administrator.name}
       password: ${eureka.administrator.password}
-      role: CLIENT
+      roles: CLIENT
 server:
   port: 8761
