@@ -1,15 +1,14 @@
 package ch.tbmelabs.tv.core.entryserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import ch.tbmelabs.tv.core.entryserver.Application;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
+import ch.tbmelabs.tv.core.entryserver.Application;
 
 public class ConfigurationAnnotationTest {
 
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 1;
 
   @Test
   public void packageShouldOnlyContainConfigurations() {

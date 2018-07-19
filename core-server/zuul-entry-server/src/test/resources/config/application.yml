@@ -1,9 +1,6 @@
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false
-  server:
-    enable-self-preservation: false
+    enabled: false
 security:
   oauth2:
     client:
@@ -14,5 +11,3 @@ security:
     resource:
       prefer-token-info: false
       user-info-uri: http://localhost/user
-server:
-  port: 8761

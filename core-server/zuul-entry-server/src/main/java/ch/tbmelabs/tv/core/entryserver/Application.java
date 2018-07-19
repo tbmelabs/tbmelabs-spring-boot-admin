@@ -1,13 +1,14 @@
 package ch.tbmelabs.tv.core.entryserver;
 
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.core.env.Environment;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
+@EnableZuulProxy
 @SpringCloudApplication
 public class Application extends SpringBootServletInitializer {
 
@@ -30,10 +31,5 @@ public class Application extends SpringBootServletInitializer {
       throw new IllegalArgumentException(
           "Do not attempt to run an application in productive and development environment at the same time!");
     }
-  }
-
-  @Override
-  protected SpringApplicationBuilder configure(SpringApplicationBuilder applicationBuilder) {
-    return applicationBuilder.sources(APPLICATION_SOURCE_CLASS);
   }
 }

@@ -4,7 +4,7 @@ eureka:
     password: Welcome$18
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://${eureka.administrator.name}:${eureka.administrator.password}@localhost:8761/eureka
 logging:
   level:
     org:
