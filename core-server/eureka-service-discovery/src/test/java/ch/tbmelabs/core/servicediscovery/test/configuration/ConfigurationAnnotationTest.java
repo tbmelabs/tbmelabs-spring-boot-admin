@@ -1,10 +1,11 @@
 package ch.tbmelabs.core.servicediscovery.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import ch.tbmelabs.tv.core.servicediscovery.Application;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
-import ch.tbmelabs.tv.core.servicediscovery.Application;
 
 public class ConfigurationAnnotationTest {
 

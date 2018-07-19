@@ -29,6 +29,11 @@
       "name": "tokenstore.datasource.driver-class-name",
       "type": "java.lang.String",
       "description": "The driver class used to connect to the tokenstore-datasource in development environments (postgresql)."
+    },
+    {
+      "name": "spring.datasource.jdbc-url",
+      "type": "java.lang.String",
+      "description": "Placeholder for 'spring.datasource.hikari.jdbc-url'"
     }
   ]
 }

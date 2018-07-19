@@ -1,0 +1,23 @@
+authorization-server:
+  security:
+    max-login-attempts: 3
+eureka:
+  client:
+    enabled: false
+server:
+  address: localhost
+  servlet:
+    context-path: /auth
+spring:
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: jdbc:postgresql://localhost:5432/auth_test_database
+    username: auth_test_user
+    password: auth_test_user_password
+  redis:
+    host: localhost
+    port: 6379

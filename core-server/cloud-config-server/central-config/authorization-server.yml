@@ -1,0 +1,29 @@
+authorization-server:
+  security:
+    max-login-attempts: ${MAX_LOGIN_ATTEMPTS}
+eureka:
+  client:
+    register-with-eureka: false
+spring:
+  application:
+    name: authorization-server
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    jdbc-url: ${PSQL_DATASOURCE_JDBC_URL}
+    username: ${PSQL_DATASOURCE_USERNAME}
+    password: ${PSQL_DATASOURCE_PASSWORD}
+  jackson:
+    date-format: dd.MM.yyyy HH:mm:ss
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  address: ${OAUTH2_SERVER_URL}
+  port: ${SERVER_PORT}
