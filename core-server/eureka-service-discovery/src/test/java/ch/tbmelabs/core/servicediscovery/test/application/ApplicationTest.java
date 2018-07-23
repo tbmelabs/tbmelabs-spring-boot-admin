@@ -2,21 +2,16 @@ package ch.tbmelabs.core.servicediscovery.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
-import ch.tbmelabs.tv.core.servicediscovery.Application;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.test.util.ReflectionTestUtils;
+import ch.tbmelabs.tv.core.servicediscovery.Application;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ApplicationTest {
 
@@ -50,14 +45,5 @@ public class ApplicationTest {
   public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
     assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
         .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
-  }
-
-  @Test
-  public void configureShouldAddApplicationSourceToApplicationBuilder() {
-    SpringApplicationBuilder builder = Mockito.mock(SpringApplicationBuilder.class);
-
-    ReflectionTestUtils.invokeMethod(fixture, "configure", builder);
-
-    verify(builder, times(1)).sources(Application.class);
   }
 }

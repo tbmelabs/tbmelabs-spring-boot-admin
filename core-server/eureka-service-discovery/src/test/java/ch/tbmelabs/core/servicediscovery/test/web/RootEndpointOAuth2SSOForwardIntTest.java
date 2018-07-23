@@ -22,7 +22,7 @@ public class RootEndpointOAuth2SSOForwardIntTest extends AbstractEurekaServerCon
   @Autowired
   private MockMvc mockMvc;
 
-  @Value("${security.oauth2.client.clientId}")
+  @Value("${security.oauth2.client.client-id}")
   private String clientId;
 
   @Test

@@ -18,7 +18,7 @@ public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAd
 
         .csrf().ignoringAntMatchers("/eureka/**")
 
-        .and().authorizeRequests()
+        .and().antMatcher("/eureka/**").authorizeRequests()
           .antMatchers("/eureka/**").hasRole("CLIENT")
 
         .and().httpBasic();
