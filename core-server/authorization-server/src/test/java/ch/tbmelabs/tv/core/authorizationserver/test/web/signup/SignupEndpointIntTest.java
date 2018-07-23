@@ -11,6 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +54,9 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Autowired
   private UserCRUDRepository userRepository;
+  
+  @Autowired
+  private UserRoleAssociationCRUDRepository userRoleRepository;
 
   @BeforeClass
   public static void beforeClassSetUp() {

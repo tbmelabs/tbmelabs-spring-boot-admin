@@ -79,9 +79,9 @@ public class User extends AbstractAuditingEntity {
   @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
   private EmailConfirmationToken emailConfirmationToken;
 
-  @OneToMany(mappedBy = "user")
   @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
   private Set<UserRoleAssociation> roles;
 
   @PrePersist

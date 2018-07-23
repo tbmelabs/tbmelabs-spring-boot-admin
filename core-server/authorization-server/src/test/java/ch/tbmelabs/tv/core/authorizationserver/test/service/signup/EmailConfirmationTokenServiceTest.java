@@ -8,7 +8,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenServiceImpl;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class EmailConfirmationTokenServiceTest {
 
   @Spy
   @InjectMocks
-  private EmailConfirmationTokenService fixture;
+  private EmailConfirmationTokenServiceImpl fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -52,7 +52,7 @@ public class EmailConfirmationTokenServiceTest {
 
   @Test
   public void emailConfirmationTokenSerivceShouldBeAnnotated() {
-    assertThat(EmailConfirmationTokenService.class).hasAnnotation(Service.class);
+    assertThat(EmailConfirmationTokenServiceImpl.class).hasAnnotation(Service.class);
   }
 
   @Test

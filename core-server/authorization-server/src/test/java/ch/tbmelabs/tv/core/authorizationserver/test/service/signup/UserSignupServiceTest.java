@@ -18,7 +18,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupServiceImpl;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import java.util.Optional;
 import java.util.Random;
@@ -63,7 +63,7 @@ public class UserSignupServiceTest {
 
   @Spy
   @InjectMocks
-  private UserSignupService fixture;
+  private UserSignupServiceImpl fixture;
 
   @Before
   public void beforeTestSetUp() {
@@ -98,7 +98,7 @@ public class UserSignupServiceTest {
 
   @Test
   public void userSignupServiceShouldBeAnnotated() {
-    assertThat(UserSignupService.class).hasAnnotation(Service.class);
+    assertThat(UserSignupServiceImpl.class).hasAnnotation(Service.class);
   }
 
   @Test

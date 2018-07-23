@@ -15,13 +15,13 @@ spring:
       base-path: /rest/api
   datasource:
     driver-class-name: org.postgresql.Driver
+    flyway:
+      url: ${spring.datasource.jdbc-url}
+      user: ${PSQL_FLYWAY_USERNAME:${spring.datasource.username}}
+      password: ${PSQL_FLYWAY_PASSWORD:${spring.datasource.password}}
     jdbc-url: ${PSQL_DATASOURCE_JDBC_URL}
     username: ${PSQL_DATASOURCE_USERNAME}
     password: ${PSQL_DATASOURCE_PASSWORD}
-  flyway:
-    url: ${spring.datasource.jdbc-url}
-    user: ${PSQL_FLYWAY_USERNAME:${spring.datasource.username}}
-    password: ${PSQL_FLYWAY_PASSWORD:${spring.datasource.password}}
   jackson:
     date-format: dd.MM.yyyy HH:mm:ss
   jpa:

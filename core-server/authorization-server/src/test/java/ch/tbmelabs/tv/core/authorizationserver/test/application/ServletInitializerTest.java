@@ -1,4 +1,4 @@
-package ch.tbmelabs.core.servicediscovery.test.application;
+package ch.tbmelabs.tv.core.authorizationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
@@ -11,8 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.servicediscovery.Application;
-import ch.tbmelabs.tv.core.servicediscovery.ServletInitializer;
+import ch.tbmelabs.tv.core.authorizationserver.Application;
+import ch.tbmelabs.tv.core.authorizationserver.ServletInitializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ServletInitializerTest {
