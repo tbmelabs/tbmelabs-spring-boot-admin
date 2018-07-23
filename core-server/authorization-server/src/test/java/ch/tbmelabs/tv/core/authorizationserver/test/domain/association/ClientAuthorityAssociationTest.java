@@ -56,10 +56,8 @@ public class ClientAuthorityAssociationTest {
   @Test
   public void clientAuthorityAssociationShouldHaveAllArgsConstructor() {
     assertThat(new ClientAuthorityAssociation(clientFixture, authorityFixture))
-        .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("clientAuthorityId", authorityFixture.getId())
         .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("clientAuthority", authorityFixture);
+        .hasFieldOrPropertyWithValue("authority", authorityFixture);
   }
 
   @Test
@@ -67,18 +65,14 @@ public class ClientAuthorityAssociationTest {
     ClientAuthorityAssociation fixture = new ClientAuthorityAssociation();
     fixture.setClient(clientFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("client", clientFixture);
     assertThat(fixture.getClient()).isEqualTo(clientFixture);
   }
 
   @Test
   public void clientAuthorityAssociationShouldHaveAuthorityGetterAndSetter() {
     ClientAuthorityAssociation fixture = new ClientAuthorityAssociation();
-    fixture.setClientAuthority(authorityFixture);
+    fixture.setAuthority(authorityFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientAuthorityId", authorityFixture.getId())
-        .hasFieldOrPropertyWithValue("clientAuthority", authorityFixture);
-    assertThat(fixture.getClientAuthority()).isEqualTo(authorityFixture);
+    assertThat(fixture.getAuthority()).isEqualTo(authorityFixture);
   }
 }

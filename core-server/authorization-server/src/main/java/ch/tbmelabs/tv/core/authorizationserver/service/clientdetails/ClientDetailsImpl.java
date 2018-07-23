@@ -66,12 +66,12 @@ public class ClientDetailsImpl implements ClientDetails {
   @Override
   public Set<String> getAuthorizedGrantTypes() {
     return client.getGrantTypes().stream()
-        .map(association -> association.getClientGrantType().getName()).collect(Collectors.toSet());
+        .map(association -> association.getGrantType().getName()).collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> getScope() {
-    return client.getScopes().stream().map(association -> association.getClientScope().getName())
+    return client.getScopes().stream().map(association -> association.getScope().getName())
         .collect(Collectors.toSet());
   }
 
@@ -84,7 +84,7 @@ public class ClientDetailsImpl implements ClientDetails {
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
     return client.getGrantedAuthorities().stream()
-        .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList());
+        .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList());
   }
 
   @Override

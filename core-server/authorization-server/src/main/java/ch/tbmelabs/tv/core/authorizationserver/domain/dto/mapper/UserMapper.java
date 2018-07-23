@@ -25,7 +25,7 @@ public interface UserMapper extends EntityMapper<User, UserDTO> {
   User updateUserFromUserDTO(UserDTO updated, @MappingTarget User existing);
 
   default Set<RoleDTO> associationsToRoles(Set<UserRoleAssociation> roles) {
-    return roles.stream().map(UserRoleAssociation::getUserRole).map(roleMapper::toDto)
+    return roles.stream().map(UserRoleAssociation::getRole).map(roleMapper::toDto)
         .collect(Collectors.toSet());
   }
 

@@ -65,7 +65,7 @@ public class ClientDetailsImplTest {
     assertThat(fixture.getRegisteredRedirectUri()).isEqualTo(new HashSet<>(Arrays
         .asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
     assertThat(fixture.getAuthorities()).isEqualTo(mockClient.getGrantedAuthorities().stream()
-        .map(ClientAuthorityAssociation::getClientAuthority).collect(Collectors.toList()));
+        .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList()));
     assertThat(fixture.getAdditionalInformation()).isEqualTo(new HashMap<>());
   }
 }

@@ -107,7 +107,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
     assertThat(jsonUserRepresentation.getJSONArray("roles").length()).isEqualTo(1);
 
     JSONObject actualRole = jsonUserRepresentation.getJSONArray("roles").getJSONObject(0);
-    Role expectedRole = testUser.getRoles().iterator().next().getUserRole();
+    Role expectedRole = testUser.getRoles().iterator().next().getRole();
     assertThat(actualRole.getLong("created")).isEqualTo(expectedRole.getCreated().getTime());
     assertThat(actualRole.getLong("lastUpdated"))
         .isEqualTo(expectedRole.getLastUpdated().getTime());

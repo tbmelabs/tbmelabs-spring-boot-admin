@@ -86,11 +86,11 @@ public class ClientServiceImpl implements ClientService {
     // Save new by none match of new in existing
     newGrantTypes.stream()
         .filter(newGrantType -> existingGrantTypes.stream().noneMatch(
-            grantType -> grantType.getClientGrantType().equals(newGrantType.getClientGrantType())))
+            grantType -> grantType.getGrantType().equals(newGrantType.getGrantType())))
         .forEach(clientGrantTypeRepository::save);
     // Remove deleted by none match of existing in new
     existingGrantTypes.stream().filter(grantType -> newGrantTypes.stream().noneMatch(
-        newGrantType -> newGrantType.getClientGrantType().equals(grantType.getClientGrantType())))
+        newGrantType -> newGrantType.getGrantType().equals(grantType.getGrantType())))
         .forEach(clientGrantTypeRepository::delete);
 
     Set<ClientAuthorityAssociation> existingAuthorities =
@@ -100,11 +100,11 @@ public class ClientServiceImpl implements ClientService {
     // Save new by none match of new in existing
     newAuthorities.stream()
         .filter(newAuthority -> existingAuthorities.stream().noneMatch(
-            authority -> authority.getClientAuthority().equals(newAuthority.getClientAuthority())))
+            authority -> authority.getAuthority().equals(newAuthority.getAuthority())))
         .forEach(clientAuthorityRepository::save);
     // Remove deleted by none match of existing in new
     existingAuthorities.stream().filter(authority -> newAuthorities.stream().noneMatch(
-        newAuthority -> newAuthority.getClientAuthority().equals(authority.getClientAuthority())))
+        newAuthority -> newAuthority.getAuthority().equals(authority.getAuthority())))
         .forEach(clientAuthorityRepository::delete);
 
     Set<ClientScopeAssociation> existingScopes = clientScopeRepository.findAllByClient(client);
@@ -113,12 +113,12 @@ public class ClientServiceImpl implements ClientService {
     // Save new by none match of new in existing
     newScopes.stream()
         .filter(newScope -> existingScopes.stream()
-            .noneMatch(scope -> scope.getClientScope().equals(newScope.getClientScope())))
+            .noneMatch(scope -> scope.getScope().equals(newScope.getScope())))
         .forEach(clientScopeRepository::save);
     // Remove deleted by none match of existing in new
     existingScopes.stream()
         .filter(scope -> newScopes.stream()
-            .noneMatch(newScope -> newScope.getClientScope().equals(scope.getClientScope())))
+            .noneMatch(newScope -> newScope.getScope().equals(scope.getScope())))
         .forEach(clientScopeRepository::delete);
 
     return client;

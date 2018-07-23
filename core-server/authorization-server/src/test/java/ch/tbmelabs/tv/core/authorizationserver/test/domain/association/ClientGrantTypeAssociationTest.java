@@ -56,10 +56,8 @@ public class ClientGrantTypeAssociationTest {
   @Test
   public void ShouldHaveAllArgsConstructor() {
     assertThat(new ClientGrantTypeAssociation(clientFixture, grantTypeFixture))
-        .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("clientGrantTypeId", grantTypeFixture.getId())
         .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("clientGrantType", grantTypeFixture);
+        .hasFieldOrPropertyWithValue("grantType", grantTypeFixture);
   }
 
   @Test
@@ -67,8 +65,6 @@ public class ClientGrantTypeAssociationTest {
     ClientGrantTypeAssociation fixture = new ClientGrantTypeAssociation();
     fixture.setClient(clientFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("client", clientFixture);
     assertThat(fixture.getClient()).isEqualTo(clientFixture);
   }
 
@@ -77,8 +73,6 @@ public class ClientGrantTypeAssociationTest {
     ClientGrantTypeAssociation fixture = new ClientGrantTypeAssociation();
     fixture.setGrantType(grantTypeFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientGrantTypeId", grantTypeFixture.getId())
-        .hasFieldOrPropertyWithValue("clientGrantType", grantTypeFixture);
-    assertThat(fixture.getClientGrantType()).isEqualTo(grantTypeFixture);
+    assertThat(fixture.getGrantType()).isEqualTo(grantTypeFixture);
   }
 }

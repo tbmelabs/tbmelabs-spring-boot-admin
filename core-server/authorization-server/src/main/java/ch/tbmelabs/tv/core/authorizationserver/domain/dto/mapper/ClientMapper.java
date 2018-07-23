@@ -49,7 +49,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
 
   default Set<GrantTypeDTO> grantTypeAssociationsToGrantTypes(
       Set<ClientGrantTypeAssociation> grantTypes) {
-    return grantTypes.stream().map(ClientGrantTypeAssociation::getClientGrantType)
+    return grantTypes.stream().map(ClientGrantTypeAssociation::getGrantType)
         .map(grantTypeMapper::toDto).collect(Collectors.toSet());
   }
 
@@ -62,7 +62,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
 
   default Set<AuthorityDTO> authorityAssociationsToAuthorities(
       Set<ClientAuthorityAssociation> grantedAuthorities) {
-    return grantedAuthorities.stream().map(ClientAuthorityAssociation::getClientAuthority)
+    return grantedAuthorities.stream().map(ClientAuthorityAssociation::getAuthority)
         .map(authorityMapper::toDto).collect(Collectors.toSet());
   }
 
@@ -74,7 +74,7 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   }
 
   default Set<ScopeDTO> scopeAssociationsToScopes(Set<ClientScopeAssociation> scopes) {
-    return scopes.stream().map(ClientScopeAssociation::getClientScope).map(scopeMapper::toDto)
+    return scopes.stream().map(ClientScopeAssociation::getScope).map(scopeMapper::toDto)
         .collect(Collectors.toSet());
   }
 

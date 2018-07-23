@@ -55,10 +55,8 @@ public class ClientScopeAssociationTest {
   @Test
   public void clientScopeAssociationShouldHaveAllArgsConstructor() {
     assertThat(new ClientScopeAssociation(clientFixture, scopeFixture))
-        .hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("clientScopeId", scopeFixture.getId())
         .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("clientScope", scopeFixture);
+        .hasFieldOrPropertyWithValue("scope", scopeFixture);
   }
 
   @Test
@@ -66,18 +64,14 @@ public class ClientScopeAssociationTest {
     ClientScopeAssociation fixture = new ClientScopeAssociation();
     fixture.setClient(clientFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientFixture.getId())
-        .hasFieldOrPropertyWithValue("client", clientFixture);
     assertThat(fixture.getClient()).isEqualTo(clientFixture);
   }
 
   @Test
   public void clientScopeAssociationShouldHaveScopeGetterAndSetter() {
     ClientScopeAssociation fixture = new ClientScopeAssociation();
-    fixture.setClientScope(scopeFixture);
+    fixture.setScope(scopeFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientScopeId", scopeFixture.getId())
-        .hasFieldOrPropertyWithValue("clientScope", scopeFixture);
-    assertThat(fixture.getClientScope()).isEqualTo(scopeFixture);
+    assertThat(fixture.getScope()).isEqualTo(scopeFixture);
   }
 }

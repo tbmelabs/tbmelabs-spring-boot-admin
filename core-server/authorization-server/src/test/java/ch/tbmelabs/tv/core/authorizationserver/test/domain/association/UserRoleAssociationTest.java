@@ -55,10 +55,8 @@ public class UserRoleAssociationTest {
   @Test
   public void userRoleAssociationShouldHaveAllArgsConstructor() {
     assertThat(new UserRoleAssociation(userFixture, roleFixture))
-        .hasFieldOrPropertyWithValue("userId", userFixture.getId())
-        .hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId())
         .hasFieldOrPropertyWithValue("user", userFixture)
-        .hasFieldOrPropertyWithValue("userRole", roleFixture);
+        .hasFieldOrPropertyWithValue("role", roleFixture);
   }
 
   @Test
@@ -66,18 +64,14 @@ public class UserRoleAssociationTest {
     UserRoleAssociation fixture = new UserRoleAssociation();
     fixture.setUser(userFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("userId", userFixture.getId())
-        .hasFieldOrPropertyWithValue("user", userFixture);
     assertThat(fixture.getUser()).isEqualTo(userFixture);
   }
 
   @Test
   public void userRoleAssociationShouldHaveRoleGetterAndSetter() {
     UserRoleAssociation fixture = new UserRoleAssociation();
-    fixture.setUserRole(roleFixture);
+    fixture.setRole(roleFixture);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("userRoleId", roleFixture.getId())
-        .hasFieldOrPropertyWithValue("userRole", roleFixture);
-    assertThat(fixture.getUserRole()).isEqualTo(roleFixture);
+    assertThat(fixture.getRole()).isEqualTo(roleFixture);
   }
 }
