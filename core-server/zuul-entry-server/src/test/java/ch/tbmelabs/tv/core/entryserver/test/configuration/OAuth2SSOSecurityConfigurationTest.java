@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import ch.tbmelabs.tv.core.entryserver.configuration.OAuth2SSOSecurityConfiguration;
 import org.junit.Test;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Configuration;
 
 public class OAuth2SSOSecurityConfigurationTest {
@@ -13,7 +12,7 @@ public class OAuth2SSOSecurityConfigurationTest {
   @Test
   public void oauth2SSOZuulProxyConfigurationShouldBeAnnotated() {
     assertThat(OAuth2SSOSecurityConfiguration.class).hasAnnotation(Configuration.class)
-        .hasAnnotation(EnableZuulProxy.class).hasAnnotation(EnableOAuth2Sso.class);
+        .hasAnnotation(EnableOAuth2Sso.class);
   }
 
   @Test
