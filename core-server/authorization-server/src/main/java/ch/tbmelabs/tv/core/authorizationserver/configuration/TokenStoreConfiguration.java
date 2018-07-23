@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
@@ -20,7 +19,6 @@ public class TokenStoreConfiguration {
 
   @Configuration
   @Profile({"!" + SpringApplicationProfile.NO_REDIS})
-  @PropertySource({"classpath:configuration/redis.properties"})
   public class RedisTokenStoreConfiguration {
 
     private RedisConnectionFactory redisConnectionFactory;

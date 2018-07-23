@@ -69,9 +69,6 @@ public class TokenStoreConfigurationTest {
 
     assertThat(RedisTokenStoreConfiguration.class.getDeclaredAnnotation(Profile.class).value())
         .hasSize(1).containsExactly("!" + SpringApplicationProfile.NO_REDIS);
-    assertThat(
-        RedisTokenStoreConfiguration.class.getDeclaredAnnotation(PropertySource.class).value())
-        .hasSize(1).containsExactly("classpath:configuration/redis.properties");
   }
 
   @Test

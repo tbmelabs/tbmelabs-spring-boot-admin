@@ -4,6 +4,8 @@ authorization-server:
 spring:
   jpa:
     show-sql: true
+  mail:
+    test-connection: false
 server:
   address: localhost
   port: 88
