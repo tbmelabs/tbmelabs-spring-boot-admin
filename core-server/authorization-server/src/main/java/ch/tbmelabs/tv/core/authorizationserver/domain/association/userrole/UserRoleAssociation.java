@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -30,16 +31,16 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
   @Transient
   private static final long serialVersionUID = 1L;
 
-  @ManyToOne
   @JoinColumn(name = "user_id")
   @JsonBackReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @ManyToOne(cascade = {CascadeType.ALL})
   private User user;
 
-  @ManyToOne
   @JoinColumn(name = "user_role_id")
   @JsonBackReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
   private Role role;
 
   @Override
@@ -52,8 +53,7 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
     }
 
     UserRoleAssociation other = (UserRoleAssociation) o;
-    return user != null && user.equals(other.user) && role != null
-        && role.equals(other.role);
+    return user != null && user.equals(other.user) && role != null && role.equals(other.role);
   }
 
   @Override

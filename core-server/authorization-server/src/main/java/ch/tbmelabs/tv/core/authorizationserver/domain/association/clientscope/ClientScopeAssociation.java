@@ -1,6 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -30,16 +31,16 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
   @Transient
   private static final long serialVersionUID = 1L;
 
-  @ManyToOne
   @JoinColumn(name = "client_id")
   @JsonBackReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @ManyToOne(cascade = {CascadeType.ALL})
   private Client client;
 
-  @ManyToOne
   @JoinColumn(name = "client_scope_id")
   @JsonBackReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
+  @ManyToOne(cascade = {CascadeType.ALL})
   private Scope scope;
 
   @Override

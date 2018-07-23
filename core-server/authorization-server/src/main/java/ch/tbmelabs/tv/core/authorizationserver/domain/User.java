@@ -82,7 +82,7 @@ public class User extends AbstractAuditingEntity {
 
   @JsonManagedReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
+  @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL})
   private Set<UserRoleAssociation> roles;
 
   @PrePersist

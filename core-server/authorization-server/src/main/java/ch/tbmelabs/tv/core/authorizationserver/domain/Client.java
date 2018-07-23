@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -77,17 +78,17 @@ public class Client extends AbstractAuditingEntity {
 
   @JsonManagedReference("client_has_grant_types")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Set<ClientGrantTypeAssociation> grantTypes;
 
   @JsonManagedReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Set<ClientAuthorityAssociation> grantedAuthorities;
 
   @JsonManagedReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "client")
+  @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
   private Set<ClientScopeAssociation> scopes;
 
   @Override
