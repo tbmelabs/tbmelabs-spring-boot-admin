@@ -2,6 +2,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -82,6 +83,6 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
-    return 31;
+    return Objects.hashCode(id);
   }
 }

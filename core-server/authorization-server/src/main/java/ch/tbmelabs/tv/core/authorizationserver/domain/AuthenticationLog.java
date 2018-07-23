@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -79,7 +80,7 @@ public class AuthenticationLog extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
-    return 31;
+    return Objects.hashCode(id);
   }
 
   public enum AUTHENTICATION_STATE {

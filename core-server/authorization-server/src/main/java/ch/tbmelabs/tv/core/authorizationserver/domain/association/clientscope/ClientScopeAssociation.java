@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -84,6 +85,6 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
-    return 31;
+    return Objects.hashCode(client.getId() + HASH_CODE_SEPARATOR + clientScope.getId());
   }
 }

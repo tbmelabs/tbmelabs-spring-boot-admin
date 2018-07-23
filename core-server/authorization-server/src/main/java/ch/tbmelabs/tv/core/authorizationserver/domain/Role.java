@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,6 +77,6 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
 
   @Override
   public int hashCode() {
-    return 31;
+    return Objects.hashCode(id);
   }
 }

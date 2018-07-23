@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -84,6 +85,6 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
-    return 31;
+    return Objects.hashCode(user.getId() + HASH_CODE_SEPARATOR + userRole.getId());
   }
 }
