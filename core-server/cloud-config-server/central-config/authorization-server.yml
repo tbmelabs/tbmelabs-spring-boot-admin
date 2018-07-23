@@ -11,6 +11,8 @@ spring:
     web:
       pageable:
         default-page-size: 10
+    rest:
+      base-path: /rest/api
   datasource:
     driver-class-name: org.postgresql.Driver
     jdbc-url: ${PSQL_DATASOURCE_JDBC_URL}
@@ -28,21 +30,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-  mail:
-    host: ${SMTP_HOST}
-    port: ${SMTP_PORT}
-    username: ${SMTP_USERNAME}
-    password: ${SMTP_PASSWORD}
-    properties:
-      mail:
-        auth: true
-        imap:
-          ssl:
-            enable: true
-        smtp:
-          starttls:
-            enable: true
-    test-connection: trueF
   redis:
     host: ${REDIS_HOST:localhost}
     port: ${REDIS_PORT:6379}
