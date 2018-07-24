@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.shared.securityutils.configuration;
+package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -15,30 +15,11 @@ public class ApplicationProperties {
   public static class Eureka {
 
     private Administrator administrator;
-    private Instance instance;
 
     @Data
     public static class Administrator {
       private String name;
       private String password;
-    }
-
-    @Data
-    public static class Instance {
-
-      private MetadataMap metadataMap;
-
-      @Data
-      public static class MetadataMap {
-
-        private User user;
-
-        @Data
-        public static class User {
-          private String name;
-          private String password;
-        }
-      }
     }
   }
 }

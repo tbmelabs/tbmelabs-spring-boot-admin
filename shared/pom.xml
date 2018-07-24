@@ -13,6 +13,6 @@
 
   <modules>
     <module>constants</module>
-    <module>security-utils</module>
+    <module>actuator-security-utils</module>
   </modules>
 </project>

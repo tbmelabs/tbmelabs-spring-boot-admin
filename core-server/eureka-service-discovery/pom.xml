@@ -31,6 +31,13 @@
       <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
     <dependency>
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>security-utils</artifactId>

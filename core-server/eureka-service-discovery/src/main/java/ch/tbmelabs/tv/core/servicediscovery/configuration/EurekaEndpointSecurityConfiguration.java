@@ -3,9 +3,12 @@ package ch.tbmelabs.tv.core.servicediscovery.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ch.tbmelabs.tv.shared.constants.security.ApplicationUserRole;
 
 @Order(1)
@@ -13,15 +16,28 @@ import ch.tbmelabs.tv.shared.constants.security.ApplicationUserRole;
 @EnableWebSecurity
 public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private AuthenticationManager authenticationManager;
+  private static final BCryptPasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
-  public EurekaEndpointSecurityConfiguration(AuthenticationManager authenticationManager) {
-    this.authenticationManager = authenticationManager;
+  private ObjectPostProcessor<Object> objectPostProcessor;
+
+  private String eurekaUserName;
+  private String eurekaUserPassword;
+
+  public EurekaEndpointSecurityConfiguration(ObjectPostProcessor<Object> objectPostProcessor,
+      ApplicationProperties applicationProperties) {
+    this.objectPostProcessor = objectPostProcessor;
+
+    this.eurekaUserName = applicationProperties.getEureka().getAdministrator().getName();
+    this.eurekaUserPassword = applicationProperties.getEureka().getAdministrator().getPassword();
   }
 
   @Override
-  protected AuthenticationManager authenticationManager() {
-    return authenticationManager;
+  protected AuthenticationManager authenticationManager() throws Exception {
+    AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
+    builder.inMemoryAuthentication().passwordEncoder(PASSWORD_ENCODER).withUser(eurekaUserName)
+        .password(PASSWORD_ENCODER.encode(eurekaUserPassword))
+        .roles(ApplicationUserRole.EUREKA_ROLE);
+    return builder.build();
   }
 
   @Override
