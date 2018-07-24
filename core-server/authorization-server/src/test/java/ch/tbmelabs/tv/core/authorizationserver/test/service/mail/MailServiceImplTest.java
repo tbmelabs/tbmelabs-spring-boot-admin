@@ -23,10 +23,7 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.stubbing.Answer;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -44,7 +41,7 @@ public class MailServiceImplTest {
   @Mock
   private JavaMailSender mockJavaMailSender;
 
-  @Mock
+  @Mock(answer = Answers.RETURNS_MOCKS)
   private ApplicationProperties mockApplicationProperties;
 
   @Spy

@@ -43,8 +43,8 @@ public class MailServiceImpl implements MailService {
       helper.setTo(receiver.getEmail());
 
       helper.setText(htmlMessage, true);
-
       mailSender.send(message);
+
     } catch (MessagingException e) {
       throw new IllegalArgumentException(e);
     }

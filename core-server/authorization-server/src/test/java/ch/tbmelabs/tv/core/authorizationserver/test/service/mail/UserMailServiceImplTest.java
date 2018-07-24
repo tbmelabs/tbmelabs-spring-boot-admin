@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
@@ -16,10 +17,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -37,6 +35,9 @@ public class UserMailServiceImplTest {
 
   @Mock
   private JavaMailSender mockMailSender;
+
+  @Mock(answer = Answers.RETURNS_MOCKS)
+  private ApplicationProperties mockApplicationProperties;
 
   @Spy
   @InjectMocks

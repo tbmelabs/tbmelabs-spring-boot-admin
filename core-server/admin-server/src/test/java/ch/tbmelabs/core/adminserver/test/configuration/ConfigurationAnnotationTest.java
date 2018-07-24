@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 public class ConfigurationAnnotationTest {
 
-  private static final Integer EXPECTED_CONFIGURATION_COUNT = 2;
+  private static final Integer EXPECTED_CONFIGURATION_COUNT = 1;
 
   @Test
   public void packageShouldOnlyContainConfigurations() {
