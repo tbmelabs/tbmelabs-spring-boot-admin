@@ -59,6 +59,12 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
+    if (client == null || client.getId() == null) {
+      return Objects.hashCode(scope.getId());
+    } else if (scope == null || scope.getId() == null) {
+      return Objects.hashCode(client.getId());
+    }
+    
     return Objects.hashCode(client.getId() + HASH_CODE_SEPARATOR + scope.getId());
   }
 }

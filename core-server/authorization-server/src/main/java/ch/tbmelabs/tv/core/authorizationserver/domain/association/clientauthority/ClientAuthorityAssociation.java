@@ -59,6 +59,12 @@ public class ClientAuthorityAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
+    if (client == null || client.getId() == null) {
+      return Objects.hashCode(authority.getId());
+    } else if (authority == null || authority.getId() == null) {
+      return Objects.hashCode(client.getId());
+    }
+    
     return Objects.hashCode(client.getId() + HASH_CODE_SEPARATOR + authority.getId());
   }
 }

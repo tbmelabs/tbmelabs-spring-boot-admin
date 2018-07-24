@@ -58,6 +58,12 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
+    if (user == null || user.getId() == null) {
+      return Objects.hashCode(role.getId());
+    } else if (role == null || role.getId() == null) {
+      return Objects.hashCode(user.getId());
+    }
+    
     return Objects.hashCode(user.getId() + HASH_CODE_SEPARATOR + role.getId());
   }
 }

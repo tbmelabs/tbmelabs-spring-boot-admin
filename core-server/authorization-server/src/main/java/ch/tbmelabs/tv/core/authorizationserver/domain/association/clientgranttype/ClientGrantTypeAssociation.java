@@ -59,6 +59,12 @@ public class ClientGrantTypeAssociation extends AbstractAuditingEntity {
 
   @Override
   public int hashCode() {
+    if (client == null || client.getId() == null) {
+      return Objects.hashCode(grantType.getId());
+    } else if (grantType == null || grantType.getId() == null) {
+      return Objects.hashCode(client.getId());
+    }
+    
     return Objects.hashCode(client.getId() + HASH_CODE_SEPARATOR + grantType.getId());
   }
 }
