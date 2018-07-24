@@ -6,7 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
-
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.MailServiceImpl;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
@@ -43,6 +43,9 @@ public class MailServiceImplTest {
   @Mock
   private JavaMailSender mockJavaMailSender;
 
+  @Mock
+  private ApplicationProperties mockApplicationProperties;
+  
   @Spy
   @InjectMocks
   private MailServiceImpl fixture;
@@ -71,7 +74,7 @@ public class MailServiceImplTest {
 
   @Test
   public void MailServiceImplConstructorShouldAcceptJavaMailSender() {
-    assertThat(new MailServiceImpl(mockJavaMailSender)).isNotNull();
+    assertThat(new MailServiceImpl(mockJavaMailSender, mockApplicationProperties)).isNotNull();
   }
 
   @Test

@@ -1,0 +1,8 @@
+eureka:
+  client:
+    register-with-eureka: false
+spring:
+  application:
+    name: spring-boot-admin-server
+server:
+  port: ${SERVER_PORT}

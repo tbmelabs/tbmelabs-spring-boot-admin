@@ -1,16 +1,18 @@
 package ch.tbmelabs.tv.core.adminserver.configuration;
 
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 
 @Configuration
 @EnableOAuth2Sso
-@EnableAdminServer
-public class OAuth2SSOAdminServerConfiguration extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
