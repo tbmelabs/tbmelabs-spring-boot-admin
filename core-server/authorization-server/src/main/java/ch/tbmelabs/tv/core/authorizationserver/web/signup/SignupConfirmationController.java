@@ -1,10 +1,10 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.signup;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +19,15 @@ public class SignupConfirmationController {
   private static final String CONFIRMATION_ERROR_REDIRECT = "/signin?confirmation_failed";
   private static final String CONFIRMATION_SUCCESS_REDIRECT = "/signin?confirmation_succeed";
 
-  @Value("${server.context-path:}")
-  private String contextPath;
-
   private EmailConfirmationTokenService emailConfirmationTokenService;
 
-  public SignupConfirmationController(EmailConfirmationTokenService emailConfirmationTokenService) {
+  private String contextPath;
+
+  public SignupConfirmationController(EmailConfirmationTokenService emailConfirmationTokenService,
+      ApplicationProperties applicationProperties) {
     this.emailConfirmationTokenService = emailConfirmationTokenService;
+
+    this.contextPath = applicationProperties.getServer().getContextPath();
   }
 
   @GetMapping({"/confirm-signup/{token}"})

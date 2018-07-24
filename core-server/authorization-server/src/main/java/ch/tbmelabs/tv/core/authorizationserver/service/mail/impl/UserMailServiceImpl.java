@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.mail.impl;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
@@ -10,7 +11,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -26,24 +26,27 @@ public class UserMailServiceImpl extends MailServiceImpl {
   private static final String USERNAME_REPLACEMENT = "%USERNAME%";
   private static final String CONFIRMATION_URL_REPLACEMENT = "%CONFIRMATION_URL%";
 
-  @Value("${server.ssl.enabled:false}")
   private boolean httpsEnabled;
 
-  @Value("${server.address}")
   private String serverAddress;
 
-  @Value("${server.port:80}")
   private Integer serverPort;
 
-  @Value("${server.context-path:}")
   private String contextPath;
 
   private EmailConfirmationTokenService emailConfirmationTokenService;
 
   public UserMailServiceImpl(JavaMailSender javaMailSender,
-      EmailConfirmationTokenService emailConfirmationTokenService) {
-    super(javaMailSender);
+      EmailConfirmationTokenService emailConfirmationTokenService,
+      ApplicationProperties applicationProperties) {
+    super(javaMailSender, applicationProperties);
+
     this.emailConfirmationTokenService = emailConfirmationTokenService;
+
+    this.httpsEnabled = applicationProperties.getServer().getSsl().isEnabled();
+    this.serverAddress = applicationProperties.getServer().getAddress();
+    this.serverPort = applicationProperties.getServer().getPort();
+    this.contextPath = applicationProperties.getServer().getContextPath();
   }
 
   public void sendSignupConfirmation(User user) {

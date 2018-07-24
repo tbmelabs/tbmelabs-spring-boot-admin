@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.mail.impl;
 
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
@@ -7,7 +8,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,13 +19,15 @@ public class MailServiceImpl implements MailService {
 
   protected static final Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
 
-  @Value("${spring.mail.username}")
-  private String senderAddress;
-
   private JavaMailSender mailSender;
 
-  public MailServiceImpl(JavaMailSender javaMailSender) {
+  private String senderAddress;
+
+  public MailServiceImpl(JavaMailSender javaMailSender,
+      ApplicationProperties applicationProperties) {
     this.mailSender = javaMailSender;
+
+    this.senderAddress = applicationProperties.getSpring().getMail().getUsername();
   }
 
   public void sendMail(User receiver, String subject, String htmlMessage) {
