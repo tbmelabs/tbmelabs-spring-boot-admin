@@ -6,6 +6,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
 import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.MailServiceImpl;
@@ -45,7 +46,7 @@ public class MailServiceImplTest {
 
   @Mock
   private ApplicationProperties mockApplicationProperties;
-  
+
   @Spy
   @InjectMocks
   private MailServiceImpl fixture;

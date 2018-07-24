@@ -3,6 +3,9 @@ package ch.tbmelabs.core.adminserver.test.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import ch.tbmelabs.tv.core.adminserver.Application;
+import ch.tbmelabs.tv.core.adminserver.ServletInitializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -11,8 +14,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.adminserver.Application;
-import ch.tbmelabs.tv.core.adminserver.ServletInitializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ServletInitializerTest {

@@ -1,11 +1,11 @@
 package ch.tbmelabs.tv.core.adminserver;
 
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 @EnableAdminServer
 @SpringCloudApplication
