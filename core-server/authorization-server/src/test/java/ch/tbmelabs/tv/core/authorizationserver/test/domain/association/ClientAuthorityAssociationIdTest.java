@@ -1,14 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientAuthorityAssociationIdTest {
