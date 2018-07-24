@@ -54,7 +54,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Autowired
   private UserCRUDRepository userRepository;
-  
+
   @Autowired
   private UserRoleAssociationCRUDRepository userRoleRepository;
 

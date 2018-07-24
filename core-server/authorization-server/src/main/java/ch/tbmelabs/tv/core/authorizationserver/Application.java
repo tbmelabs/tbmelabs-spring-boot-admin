@@ -7,7 +7,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.core.env.Environment;
 
 @SpringCloudApplication
-public class Application  {
+public class Application {
 
   private Environment environment;
 

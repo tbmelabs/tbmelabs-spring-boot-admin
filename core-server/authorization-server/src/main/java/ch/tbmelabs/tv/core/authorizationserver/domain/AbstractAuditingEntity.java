@@ -28,7 +28,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
   @Transient
   public static final String HASH_CODE_SEPARATOR = "/";
-  
+
   @Transient
   private static final long serialVersionUID = 1L;
 

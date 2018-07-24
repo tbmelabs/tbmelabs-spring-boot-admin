@@ -4,6 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
+import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration.JdbcTokenStoreConfiguration;
+import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration.RedisTokenStoreConfiguration;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,10 +21,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration.JdbcTokenStoreConfiguration;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.TokenStoreConfiguration.RedisTokenStoreConfiguration;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class TokenStoreConfigurationTest {
 

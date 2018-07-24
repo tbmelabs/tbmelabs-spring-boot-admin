@@ -3,6 +3,9 @@ package ch.tbmelabs.core.servicediscovery.test.application;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.tv.core.servicediscovery.Application;
+import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +13,6 @@ import org.mockito.Spy;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.tv.core.servicediscovery.Application;
-import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 
 public class ApplicationTest {
 
