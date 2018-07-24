@@ -1,7 +1,15 @@
 eureka:
+  administrator:
+    name: eureka-administrator
+    password: Welcome$18
   client:
     fetch-registry: false
     register-with-eureka: false
+  instance:
+    metadata-map:
+      user:
+        name: actuator-admin
+        password: Welcome$18
   server:
     enable-self-preservation: false
 security:
