@@ -1,9 +1,6 @@
 authorization-server:
   security:
     max-login-attempts: ${MAX_LOGIN_ATTEMPTS}
-eureka:
-  client:
-    register-with-eureka: false
 spring:
   application:
     name: authorization-server

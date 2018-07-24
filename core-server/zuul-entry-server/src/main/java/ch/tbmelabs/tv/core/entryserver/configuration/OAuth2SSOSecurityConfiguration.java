@@ -23,6 +23,7 @@ public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter
         .antMatchers("/", "/favicon.ico").permitAll()
         .antMatchers("/public/**").permitAll()
         .antMatchers("/authenticated").permitAll()
+        .antMatchers("/actuator/**").permitAll()
         .anyRequest().authenticated()
 
       .and().logout()

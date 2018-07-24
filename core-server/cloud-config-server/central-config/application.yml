@@ -1,3 +1,10 @@
+eureka:
+  administrator:
+    name: ${EUREKA_USERNAME}
+    password: ${EUREKA_PASSWORD}
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
 security:
   oauth2:
     client:

@@ -94,6 +94,15 @@
           <goal>repackage</goal>
           <mainClass>${exec.mainClass}</mainClass>
         </configuration>
+        
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+              <goal>build-info</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- https://mvnrepository.com/artifact/com.spotify/docker-maven-plugin -->
