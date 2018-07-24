@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,12 +32,14 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
   @Transient
   private static final long serialVersionUID = 1L;
 
+  @Id
   @JoinColumn(name = "user_id")
   @JsonBackReference("user_has_roles")
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = {CascadeType.ALL})
   private User user;
 
+  @Id
   @JoinColumn(name = "user_role_id")
   @JsonBackReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
@@ -63,7 +66,7 @@ public class UserRoleAssociation extends AbstractAuditingEntity {
     } else if (role == null || role.getId() == null) {
       return Objects.hashCode(user.getId());
     }
-    
+
     return Objects.hashCode(user.getId() + HASH_CODE_SEPARATOR + role.getId());
   }
 }

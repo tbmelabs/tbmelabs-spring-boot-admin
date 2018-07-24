@@ -75,7 +75,7 @@ public class AuthenticationLog extends AbstractAuditingEntity {
     }
 
     AuthenticationLog other = (AuthenticationLog) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

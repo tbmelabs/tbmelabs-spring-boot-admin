@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,12 +32,14 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
   @Transient
   private static final long serialVersionUID = 1L;
 
+  @Id
   @JoinColumn(name = "client_id")
   @JsonBackReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
   @ManyToOne(cascade = {CascadeType.ALL})
   private Client client;
 
+  @Id
   @JoinColumn(name = "client_scope_id")
   @JsonBackReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
@@ -64,7 +67,7 @@ public class ClientScopeAssociation extends AbstractAuditingEntity {
     } else if (scope == null || scope.getId() == null) {
       return Objects.hashCode(client.getId());
     }
-    
+
     return Objects.hashCode(client.getId() + HASH_CODE_SEPARATOR + scope.getId());
   }
 }

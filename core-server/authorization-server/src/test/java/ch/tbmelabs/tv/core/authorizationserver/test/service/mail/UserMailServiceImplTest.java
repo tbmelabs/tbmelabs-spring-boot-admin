@@ -9,7 +9,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.UUID;

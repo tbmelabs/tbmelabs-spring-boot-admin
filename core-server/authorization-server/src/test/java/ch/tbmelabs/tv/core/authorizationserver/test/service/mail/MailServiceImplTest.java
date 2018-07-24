@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.MailServiceImpl;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.io.IOException;
 import java.util.Arrays;

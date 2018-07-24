@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class GrantType extends AbstractAuditingEntity {
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "clientGrantType")
+  @OneToMany(mappedBy = "grantType", cascade = {CascadeType.ALL})
   private Set<ClientGrantTypeAssociation> clientsWithGrantTypes;
 
   public GrantType(String name) {
@@ -67,7 +68,7 @@ public class GrantType extends AbstractAuditingEntity {
     }
 
     GrantType other = (GrantType) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

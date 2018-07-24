@@ -4,6 +4,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.AuthorityService;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.GrantTypeService;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
@@ -11,7 +13,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", uses = {RoleMapper.class})
+@Mapper(componentModel = "spring",
+    uses = {RoleMapper.class, AuthorityService.class, GrantTypeService.class})
 public interface UserMapper extends EntityMapper<User, UserDTO> {
 
   RoleMapper roleMapper = Mappers.getMapper(RoleMapper.class);
@@ -21,7 +24,7 @@ public interface UserMapper extends EntityMapper<User, UserDTO> {
   @Mapping(target = "confirmation", ignore = true)
   UserDTO toDto(User entity);
 
-  @Mapping(target = "roles", ignore = true)
+  @Mapping(target = "id", ignore = true)
   User updateUserFromUserDTO(UserDTO updated, @MappingTarget User existing);
 
   default Set<RoleDTO> associationsToRoles(Set<UserRoleAssociation> roles) {

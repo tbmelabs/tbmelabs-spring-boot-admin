@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,7 +54,7 @@ public class Authority extends AbstractAuditingEntity implements GrantedAuthorit
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "clientAuthority")
+  @OneToMany(mappedBy = "authority", cascade = {CascadeType.ALL})
   private Set<ClientAuthorityAssociation> clientsWithAuthorities;
 
   public Authority(String name) {
@@ -75,7 +76,7 @@ public class Authority extends AbstractAuditingEntity implements GrantedAuthorit
     }
 
     Authority other = (Authority) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

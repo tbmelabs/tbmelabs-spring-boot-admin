@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.service.mail;
+package ch.tbmelabs.tv.core.authorizationserver.service.mail.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;

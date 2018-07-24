@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import java.io.Serializable;
 import lombok.Data;
 
@@ -8,6 +10,6 @@ public class ClientAuthorityAssociationId implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private Long clientId;
-  private Long clientAuthorityId;
+  private Client client;
+  private Authority authority;
 }

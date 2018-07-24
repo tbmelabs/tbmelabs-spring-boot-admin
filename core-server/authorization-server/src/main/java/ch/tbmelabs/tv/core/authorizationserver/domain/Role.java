@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
 
   @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "userRoleId")
+  @OneToMany(mappedBy = "role", cascade = {CascadeType.ALL})
   private Set<UserRoleAssociation> usersWithRoles;
 
   public Role(String authority) {
@@ -72,7 +73,7 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
     }
 
     Role other = (Role) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +51,7 @@ public class Scope extends AbstractAuditingEntity {
   @JsonProperty(access = Access.WRITE_ONLY)
   @JsonManagedReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
-  @OneToMany(mappedBy = "clientScopeId")
+  @OneToMany(mappedBy = "scope", cascade = {CascadeType.ALL})
   private Set<ClientScopeAssociation> clientsWithScopes;
 
   public Scope(String name) {
@@ -67,7 +68,7 @@ public class Scope extends AbstractAuditingEntity {
     }
 
     Scope other = (Scope) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

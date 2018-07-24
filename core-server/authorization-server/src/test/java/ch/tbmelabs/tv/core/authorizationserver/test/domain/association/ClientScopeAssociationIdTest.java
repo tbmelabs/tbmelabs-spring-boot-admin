@@ -1,12 +1,20 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociationId;
-import java.util.Random;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociationId;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ClientScopeAssociationIdTest {
+
+  @Spy
+  private ClientScopeAssociationId fixture;
 
   @Test
   public void clientScopeAssociationIdShouldHaveNoArgsConstructor() {
@@ -14,24 +22,22 @@ public class ClientScopeAssociationIdTest {
   }
 
   @Test
-  public void clientScopeAssociationIdShouldHaveClientIdGetterAndSetter() {
-    ClientScopeAssociationId fixture = new ClientScopeAssociationId();
-    Long clientId = new Random().nextLong();
+  public void clientAuthorityAssociationIdShouldHaveClientGetterAndSetter() {
+    Client client = Mockito.mock(Client.class);
 
-    fixture.setClientId(clientId);
+    fixture.setClient(client);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientId);
-    assertThat(fixture.getClientId()).isEqualTo(clientId);
+    assertThat(fixture).hasFieldOrPropertyWithValue("client", client);
+    assertThat(fixture.getClient()).isEqualTo(client);
   }
 
   @Test
   public void clientAuthorityAssociationIdShouldHaveAuthorityIdGetterAndSetter() {
-    ClientScopeAssociationId fixture = new ClientScopeAssociationId();
-    Long clientScopeId = new Random().nextLong();
+    Scope scope = Mockito.mock(Scope.class);
 
-    fixture.setClientScopeId(clientScopeId);
+    fixture.setScope(scope);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientScopeId", clientScopeId);
-    assertThat(fixture.getClientScopeId()).isEqualTo(clientScopeId);
+    assertThat(fixture).hasFieldOrPropertyWithValue("scope", scope);
+    assertThat(fixture.getScope()).isEqualTo(scope);
   }
 }

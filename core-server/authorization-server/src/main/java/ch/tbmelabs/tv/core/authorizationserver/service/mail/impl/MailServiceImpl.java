@@ -1,6 +1,7 @@
-package ch.tbmelabs.tv.core.authorizationserver.service.mail;
+package ch.tbmelabs.tv.core.authorizationserver.service.mail.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;

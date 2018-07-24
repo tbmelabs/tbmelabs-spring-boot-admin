@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.service.signup;
+package ch.tbmelabs.tv.core.authorizationserver.service.signup.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
@@ -9,7 +9,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.UserMailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Collections;

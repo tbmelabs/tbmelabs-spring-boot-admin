@@ -1,10 +1,11 @@
-package ch.tbmelabs.tv.core.authorizationserver.service.signup;
+package ch.tbmelabs.tv.core.authorizationserver.service.signup.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.exception.EmailConfirmationTokenNotFoundException;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;

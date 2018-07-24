@@ -101,7 +101,7 @@ public class Client extends AbstractAuditingEntity {
     }
 
     Client other = (Client) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

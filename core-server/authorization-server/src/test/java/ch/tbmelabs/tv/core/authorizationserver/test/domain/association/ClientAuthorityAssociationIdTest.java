@@ -1,12 +1,20 @@
 package ch.tbmelabs.tv.core.authorizationserver.test.domain.association;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
-import java.util.Random;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Authority;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthority.ClientAuthorityAssociationId;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ClientAuthorityAssociationIdTest {
+
+  @Spy
+  private ClientAuthorityAssociationId fixture;
 
   @Test
   public void clientAuthorityAssociationIdShouldHaveNoArgsConstructor() {
@@ -14,24 +22,22 @@ public class ClientAuthorityAssociationIdTest {
   }
 
   @Test
-  public void clientAuthorityAssociationIdShouldHaveClientIdGetterAndSetter() {
-    ClientAuthorityAssociationId fixture = new ClientAuthorityAssociationId();
-    Long clientId = new Random().nextLong();
+  public void clientAuthorityAssociationIdShouldHaveClientGetterAndSetter() {
+    Client client = Mockito.mock(Client.class);
 
-    fixture.setClientId(clientId);
+    fixture.setClient(client);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientId", clientId);
-    assertThat(fixture.getClientId()).isEqualTo(clientId);
+    assertThat(fixture).hasFieldOrPropertyWithValue("client", client);
+    assertThat(fixture.getClient()).isEqualTo(client);
   }
 
   @Test
-  public void clientAuthorityAssociationIdShouldHaveAuthorityIdGetterAndSetter() {
-    ClientAuthorityAssociationId fixture = new ClientAuthorityAssociationId();
-    Long clientAuthorityId = new Random().nextLong();
+  public void clientAuthorityAssociationIdShouldHaveAuthorityGetterAndSetter() {
+    Authority authority = Mockito.mock(Authority.class);
 
-    fixture.setClientAuthorityId(clientAuthorityId);
+    fixture.setAuthority(authority);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("clientAuthorityId", clientAuthorityId);
-    assertThat(fixture.getClientAuthorityId()).isEqualTo(clientAuthorityId);
+    assertThat(fixture).hasFieldOrPropertyWithValue("authority", authority);
+    assertThat(fixture.getAuthority()).isEqualTo(authority);
   }
 }

@@ -100,7 +100,7 @@ public class User extends AbstractAuditingEntity {
     }
 
     User other = (User) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

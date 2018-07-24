@@ -78,7 +78,7 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
     }
 
     EmailConfirmationToken other = (EmailConfirmationToken) o;
-    return id != null && id.equals(other.id);
+    return id != null && Objects.equals(id, other.id);
   }
 
   @Override

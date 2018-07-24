@@ -33,10 +33,8 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   @Mapping(source = "redirectUris", target = "redirectUri")
   Client toEntity(ClientDTO dto);
 
+  @Mapping(target = "id", ignore = true)
   @Mapping(source = "redirectUris", target = "redirectUri")
-  @Mapping(target = "grantTypes", ignore = true)
-  @Mapping(target = "grantedAuthorities", ignore = true)
-  @Mapping(target = "scopes", ignore = true)
   Client updateClientFromClientDto(ClientDTO updated, @MappingTarget Client existing);
 
   default String[] redirectUriToRedirectUris(String redirectUri) {

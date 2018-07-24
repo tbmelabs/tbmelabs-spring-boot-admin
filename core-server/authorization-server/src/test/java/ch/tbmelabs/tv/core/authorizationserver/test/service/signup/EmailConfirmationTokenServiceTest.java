@@ -8,7 +8,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import ch.tbmelabs.tv.core.authorizationserver.domain.EmailConfirmationToken;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.EmailConfirmationTokenCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.impl.EmailConfirmationTokenServiceImpl;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
