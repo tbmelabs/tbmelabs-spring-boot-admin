@@ -1,6 +1,5 @@
 package ch.tbmelabs.tv.core.adminserver.configuration;
 
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

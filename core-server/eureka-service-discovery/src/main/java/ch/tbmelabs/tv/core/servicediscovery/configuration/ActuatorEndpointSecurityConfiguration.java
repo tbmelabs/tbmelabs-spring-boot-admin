@@ -1,7 +1,7 @@
 package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
-import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.tv.shared.securityutils.annotation.EnableActuatorEndpointSecurity;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableActuatorEndpointSecurity
