@@ -20,6 +20,8 @@ public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAd
 
         .and().antMatcher("/eureka/**").authorizeRequests()
           .antMatchers("/eureka/**").hasRole("CLIENT")
+        .and().antMatcher("/actuator/**").authorizeRequests()
+          .antMatchers("/actuator/**").hasRole("ACTUATOR")
 
         .and().httpBasic();
     // @formatter:on

@@ -5,6 +5,18 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_DEFAULT_ZONE}
+  instance:
+    metadata-map:
+      user.name: ${ACTUATOR_USERNAME}
+      user.password: ${ACTUATOR_PASSWORD}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  
+  endpoint:
+    health:
+      show-details: ALWAYS
 security:
   oauth2:
     client:
@@ -13,3 +25,9 @@ security:
     resource:
       prefer-token-info: false
       user-info-uri: ${AUTHORIZATION_SERVER_URI}/user
+spring:
+  security:
+    user:
+      name: ${eureka.instance.metadata-map.user.name}
+      password: ${eureka.instance.metadata-map.user.password}
+      roles: ACTUATOR
