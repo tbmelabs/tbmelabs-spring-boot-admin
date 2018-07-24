@@ -7,8 +7,9 @@ eureka:
       defaultZone: http://${eureka.administrator.name}:${eureka.administrator.password}@localhost:8761/eureka
   instance:
     metadata-map:
-      user.name: actuator-admin
-      user.password: Welcome$18
+      user:
+        name: actuator-admin
+        password: Welcome$18
 logging:
   level:
     org:

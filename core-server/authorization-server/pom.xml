@@ -33,7 +33,7 @@
   <parent>
     <groupId>ch.tbmelabs.tv</groupId>
     <artifactId>core-server</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0.SNAPSHOT</version>
   </parent>
 
   <dependencies>

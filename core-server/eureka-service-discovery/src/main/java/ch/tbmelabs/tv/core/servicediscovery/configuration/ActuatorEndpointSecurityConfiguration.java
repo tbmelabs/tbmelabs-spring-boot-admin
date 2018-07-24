@@ -8,14 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import ch.tbmelabs.tv.shared.constants.security.ApplicationUserRole;
 
-@Order(1)
+@Order(2)
 @Configuration
 @EnableWebSecurity
-public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class ActuatorEndpointSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   private AuthenticationManager authenticationManager;
 
-  public EurekaEndpointSecurityConfiguration(AuthenticationManager authenticationManager) {
+  public ActuatorEndpointSecurityConfiguration(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
   }
 
@@ -31,8 +31,8 @@ public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAd
 
         .csrf().ignoringAntMatchers("/eureka/**")
 
-        .and().antMatcher("/eureka/**").authorizeRequests()
-          .antMatchers("/eureka/**").hasRole(ApplicationUserRole.EUREKA_ROLE)
+        .and().antMatcher("/actuator/**").authorizeRequests()
+          .antMatchers("/actuator/**").hasRole(ApplicationUserRole.ACTUATOR_ROLE)
 
         .and().httpBasic();
     // @formatter:on

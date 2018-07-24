@@ -11,10 +11,5 @@ security:
 spring:
   application:
     name: eureka-peer-1
-  security:
-    user:
-      name: ${eureka.administrator.name}
-      password: ${eureka.administrator.password}
-      roles: CLIENT
 server:
   port: 8761

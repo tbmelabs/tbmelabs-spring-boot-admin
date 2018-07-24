@@ -1,5 +1,10 @@
 spring:
   application:
     name: spring-boot-admin-server
+security:
+  oauth2:
+    client:
+      client-id: ${CLIENT_ID}
+      client-secret: ${CLIENT_SECRET}
 server:
   port: ${SERVER_PORT}
