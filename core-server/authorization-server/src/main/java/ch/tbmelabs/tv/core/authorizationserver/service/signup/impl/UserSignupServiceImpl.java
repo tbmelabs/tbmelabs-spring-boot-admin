@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -9,10 +8,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
-import java.util.Collections;
-import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -97,14 +93,9 @@ public class UserSignupServiceImpl implements UserSignupService {
     }
 
     User persistedUser = userService.save(newUserDTO);
-    if (persistedUser.getRoles().isEmpty()) {
-      setDefaultRolesIfNonePresent(persistedUser);
-      entityManager.flush();
-      entityManager.refresh(persistedUser);
-    }
 
-    LOGGER.info("New user signed up! username: {}; email: {}", newUserDTO.getUsername(),
-        newUserDTO.getEmail());
+    LOGGER.info("New user signed up! username: '{}'; email: '{}'", persistedUser.getUsername(),
+        persistedUser.getEmail());
 
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
@@ -117,16 +108,6 @@ public class UserSignupServiceImpl implements UserSignupService {
     return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser)
         && isEmailAddressUnique(testUser) && isEmailAddress(testUser)
         && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
-  }
-
-  public void setDefaultRolesIfNonePresent(User newUser) {
-    LOGGER.debug("Setting default roles for {}", newUser.getUsername());
-
-    newUser.setRoles(new HashSet<>(Collections.singletonList(new UserRoleAssociation(newUser,
-        roleRepository.findByName(UserRole.USER).orElseThrow(() -> new IllegalArgumentException(
-            "Unable to find default " + UserRole.class + "'" + UserRole.USER + "'"))))));
-
-    userRepository.save(newUser);
   }
 
   public User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {

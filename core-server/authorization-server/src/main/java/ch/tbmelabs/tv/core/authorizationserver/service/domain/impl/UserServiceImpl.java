@@ -1,10 +1,15 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.domain.impl;
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -18,9 +23,13 @@ public class UserServiceImpl implements UserService {
 
   private UserCRUDRepository userRepository;
 
-  public UserServiceImpl(UserMapper userMapper, UserCRUDRepository userCRUDRepository) {
+  private RoleCRUDRepository roleRepository;
+
+  public UserServiceImpl(UserMapper userMapper, UserCRUDRepository userCRUDRepository,
+      RoleCRUDRepository roleRepository) {
     this.userMapper = userMapper;
     this.userRepository = userCRUDRepository;
+    this.roleRepository = roleRepository;
   }
 
   @Transactional
@@ -29,7 +38,16 @@ public class UserServiceImpl implements UserService {
       throw new IllegalArgumentException("You can only create a new User without an id!");
     }
 
-    return userRepository.save(userMapper.toEntity(userDTO));
+    User userToPersist = userMapper.toEntity(userDTO);
+    setDefaultRolesIfNonePresent(userToPersist);
+
+    return userRepository.save(userToPersist);
+  }
+
+  private void setDefaultRolesIfNonePresent(User newUser) {
+    newUser.setRoles(new HashSet<>(Collections.singletonList(new UserRoleAssociation(newUser,
+        roleRepository.findByName(UserRole.USER).orElseThrow(() -> new IllegalArgumentException(
+            "Unable to find default " + UserRole.class + "'" + UserRole.USER + "'"))))));
   }
 
   public Page<UserDTO> findAll(Pageable pageable) {
