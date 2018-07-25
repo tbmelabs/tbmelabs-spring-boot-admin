@@ -37,6 +37,12 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>ch.tbmelabs.tv.shared</groupId>
+      <artifactId>actuator-security-utils</artifactId>
+      <version>1.0.0.SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <build>
