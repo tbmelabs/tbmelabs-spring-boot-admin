@@ -151,6 +151,47 @@
     </resources>
 
     <plugins>
+      <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+      <plugin>
+        <groupId>com.github.eirslett</groupId>
+        <artifactId>frontend-maven-plugin</artifactId>
+        <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
+
+        <executions>
+          <!-- download nodejs and npm -->
+          <execution>
+            <id>install node and npm</id>
+            <phase>generate-resources</phase>
+
+            <goals>
+              <goal>install-node-and-npm</goal>
+            </goals>
+
+            <configuration>
+              <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+              <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
+              <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
+            </configuration>
+          </execution>
+
+          <!-- install npm dependencies -->
+          <execution>
+            <id>npm install</id>
+            <phase>generate-resources</phase>
+
+            <goals>
+              <goal>npm</goal>
+            </goals>
+
+            <configuration>
+              <arguments>install --no-save</arguments>
+              <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+              <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
       <plugin>
         <groupId>org.flywaydb</groupId>
@@ -208,38 +249,6 @@
             <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
             <executions>
-              <!-- download nodejs and npm -->
-              <execution>
-                <id>install node and npm</id>
-                <phase>generate-resources</phase>
-
-                <goals>
-                  <goal>install-node-and-npm</goal>
-                </goals>
-
-                <configuration>
-                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
-                  <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
-                  <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
-                </configuration>
-              </execution>
-
-              <!-- install npm dependencies -->
-              <execution>
-                <id>npm install</id>
-                <phase>generate-resources</phase>
-
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-
-                <configuration>
-                  <arguments>install \-\-no-save</arguments>
-                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
-                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
-                </configuration>
-              </execution>
-
               <!-- build frontend -->
               <execution>
                 <id>npm run build:dev</id>
@@ -294,38 +303,6 @@
             <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
             <executions>
-              <!-- download nodejs and npm -->
-              <execution>
-                <id>install node and npm</id>
-                <phase>generate-resources</phase>
-
-                <goals>
-                  <goal>install-node-and-npm</goal>
-                </goals>
-
-                <configuration>
-                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
-                  <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
-                  <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
-                </configuration>
-              </execution>
-
-              <!-- install npm dependencies -->
-              <execution>
-                <id>npm install</id>
-                <phase>generate-resources</phase>
-
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-
-                <configuration>
-                  <arguments>install</arguments>
-                  <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
-                  <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
-                </configuration>
-              </execution>
-
               <!-- lint type check -->
               <execution>
                 <id>npm run lint</id>
