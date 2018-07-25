@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.adminserver.configuration;
 
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -18,12 +19,10 @@ public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter
     // @formatter:off
     http
       
-      .antMatcher("/**").authorizeRequests().anyRequest().permitAll()
-      // TODO: Enable security again
-//      .authorizeRequests()
-//        .antMatchers("/favicon.ico").permitAll()
-//        .antMatchers("/public/**", "/vendor/**").permitAll()
-//        .anyRequest().hasAnyAuthority(UserAuthority.GANDALF, UserAuthority.SERVER_ADMIN, UserAuthority.SERVER_SUPPORT)
+      .antMatcher("/**").authorizeRequests()
+        .antMatchers("/favicon.ico").permitAll()
+        .antMatchers("/public/**", "/vendor/**").permitAll()
+        .anyRequest().hasAnyAuthority(UserRole.GANDALF, UserRole.SERVER_ADMIN, UserRole.SERVER_SUPPORT)
       
       .and().exceptionHandling()
         .accessDeniedPage("/403.html");
