@@ -71,17 +71,17 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
     doReturn(Optional.of(new User())).when(mockUserRepository)
-        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
         .hasFieldOrPropertyWithValue("user",
-            mockUserRepository.findOneByUsernameIgnoreCase("").get());
+            mockUserRepository.findByUsernameIgnoreCase("").get());
   }
 
   @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
     doReturn(Optional.empty()).when(mockUserRepository)
-        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken))
         .isInstanceOf(UsernameNotFoundException.class)

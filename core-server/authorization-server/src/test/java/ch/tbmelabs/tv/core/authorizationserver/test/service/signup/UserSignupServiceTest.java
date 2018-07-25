@@ -74,7 +74,7 @@ public class UserSignupServiceTest {
         .getBean(UserMailServiceImpl.class);
 
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
-        .findOneByName(UserAuthority.USER);
+        .findByName(UserAuthority.USER);
 
     doAnswer((Answer<RoleDTO>) invocation -> {
       RoleDTO dto = new RoleDTO();
@@ -151,7 +151,7 @@ public class UserSignupServiceTest {
 
   @Test
   public void userSignupServiceShouldThrowErrorIfUserRoleDoesNotExist() {
-    doReturn(Optional.empty()).when(mockRoleRepository).findOneByName(UserAuthority.USER);
+    doReturn(Optional.empty()).when(mockRoleRepository).findByName(UserAuthority.USER);
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
         .isInstanceOf(IllegalArgumentException.class)
@@ -161,7 +161,7 @@ public class UserSignupServiceTest {
   @Test
   public void userSignupServiceShouldSaveValidUser() {
     doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
-        .findOneByName(UserAuthority.USER);
+        .findByName(UserAuthority.USER);
 
     fixture.signUpNewUser(new UserDTO());
 

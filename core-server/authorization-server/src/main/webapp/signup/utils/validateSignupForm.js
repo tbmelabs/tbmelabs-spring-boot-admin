@@ -9,8 +9,8 @@ import validatePassword from './validators/validatePassword';
 import validatePasswordConfirmation from './validators/validatePasswordConfirmation';
 
 export default (control: string,
-    data: userType & { errors: userType & { form: string } },
-    callback: (errors: userType) => void) => {
+    data;: userType & { errors: userType & { form: string } },
+    callback;: (errors;: userType;) =;> void;) =;> {
   const {username, email, password, confirmation, errors} = data;
 
   delete errors.form;
@@ -35,8 +35,9 @@ export default (control: string,
           validatePassword(password, errors, errors => {
             validatePasswordConfirmation(password, confirmation, errors,
                 callback);
-          });
-        });
-      });
   }
+)
+})
+})
+}
 }

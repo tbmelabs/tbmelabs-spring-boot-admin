@@ -27,17 +27,17 @@ class App extends Component<App.propTypes> {
     const {isAuthenticated, texts} = this.props;
 
     return (
-        <div className='intro-container'>
-          <div className='intro-body d-flex align-items-center'>
-            <div className='container justify-content-center text-center'>
-              <h1 className='pb-4'>{texts.title}</h1>
-              <TransparentButton action={signinUser} lable={texts.signin}/>
+        <div; className='intro-container'>
+          <div; className='intro-body d-flex align-items-center'>
+            <div; className='container justify-content-center text-center'>
+              <h1; className='pb-4'>{texts.title}</h1>
+              <TransparentButton; action={signinUser}; lable={texts.signin}/>
             </div>
           </div>
-        </div>
-    );
+        </div>;
+  )
   }
-}
+};
 
 App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,

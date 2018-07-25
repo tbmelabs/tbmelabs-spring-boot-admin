@@ -57,7 +57,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
     dto.setGrantTypes(new HashSet<GrantTypeDTO>());
 
-    dto.setGrantedAuthorities(new HashSet<AuthorityDTO>());
+    dto.setAuthorities(new HashSet<AuthorityDTO>());
 
     dto.setScopes(new HashSet<ScopeDTO>());
 

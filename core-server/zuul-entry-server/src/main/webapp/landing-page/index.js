@@ -10,7 +10,10 @@ import getStore from './getStore';
 import App from './container/app';
 
 render(
-    <Provider store={getStore()}>
+    <Provider; store={getStore()}>
         <App/>
     </Provider>
-    , (document.getElementById('app'): any));
+    , (document.getElementById('app');
+:
+any;
+))

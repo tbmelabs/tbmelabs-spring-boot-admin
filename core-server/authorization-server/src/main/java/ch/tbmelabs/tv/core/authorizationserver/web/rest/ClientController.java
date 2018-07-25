@@ -44,7 +44,7 @@ public class ClientController {
 
   @GetMapping("/{id}")
   public ResponseEntity<ClientDTO> getOneClient(@PathVariable Long id) {
-    Optional<ClientDTO> optionalClient = clientService.findOneById(id).map(clientMapper::toDto);
+    Optional<ClientDTO> optionalClient = clientService.findById(id).map(clientMapper::toDto);
 
     if (!optionalClient.isPresent()) {
       return ResponseEntity.notFound().build();

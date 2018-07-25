@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     LOGGER.debug("Loading userdetails for username \'{}\'", username);
 
     Optional<User> user;
-    if (!(user = userRepository.findOneByUsernameIgnoreCase(username)).isPresent()) {
+    if (!(user = userRepository.findByUsernameIgnoreCase(username)).isPresent()) {
       throw new UsernameNotFoundException("Username \'" + username + "\' does not exist!");
     }
 

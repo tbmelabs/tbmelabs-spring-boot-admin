@@ -1,9 +1,9 @@
 // @flow
 
-export type roleType = {
+export type; roleType = {
   id?: number;
   created?: number;
   lastUpdated?: number;
-  name: string;
-  authority: string;
+  string;
+  string;
 }

@@ -23,4 +23,5 @@ const AUTHORITIES = [
   ANONYMOUS
 ];
 
-export default [...AUTHORITIES];
+export default [...AUTHORITIES
+]

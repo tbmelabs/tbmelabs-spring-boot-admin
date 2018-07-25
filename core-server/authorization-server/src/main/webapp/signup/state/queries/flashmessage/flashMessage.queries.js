@@ -9,10 +9,10 @@ import {
 
 import {type FlashMessageType} from '../../reducers/flashMessage.reducer';
 
-export function addFlashMessage(flashMessage: FlashMessageType) {
+export function addFlashMessage(flashMessage: FlashMessageType;) {
   getStore().dispatch(addFlashMessageAction(flashMessage));
 }
 
-export function removeFlashMessage(id: number) {
+export function removeFlashMessage(id: number;) {
   getStore().dispatch(removeFlashMessageAction(id));
 }

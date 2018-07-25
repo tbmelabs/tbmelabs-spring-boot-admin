@@ -62,9 +62,9 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @Before
   public void beforeTestSetUp() {
     User existingUser;
-    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserDTO.getUsername())
+    if ((existingUser = userRepository.findByUsernameIgnoreCase(testUserDTO.getUsername())
         .orElse(null)) != null) {
-      userRepository.delete(existingUser);
+      userRepository.deleteById(existingUser.getId());
     }
   }
 
@@ -97,7 +97,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
             .content(new ObjectMapper().writeValueAsString(persistedUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsernameIgnoreCase(persistedUser.getUsername()).isPresent())
+    assertThat(userRepository.findByUsernameIgnoreCase(persistedUser.getUsername()).isPresent())
         .isTrue();
   }
 

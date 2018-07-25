@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.tv.core.authorizationserver.security.filter.OAuth2BearerTokenAuthenticationFilter;
-import java.io.IOException;
-import javax.servlet.ServletException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -28,7 +26,7 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
   private OAuth2BearerTokenAuthenticationFilter fixture;
 
   @Before
-  public void beforeTestSetUp() throws IOException, ServletException {
+  public void beforeTestSetUp() {
     initMocks(this);
   }
 

@@ -4,6 +4,11 @@ authorization-server:
 eureka:
   client:
     enabled: false
+  instance:
+    metadata-map:
+      user:
+        name: actuator-admin
+        password: Welcome$18
 server:
   address: localhost
   servlet:

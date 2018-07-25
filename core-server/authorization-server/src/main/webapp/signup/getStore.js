@@ -27,12 +27,11 @@ const store = createStore(
     reducers,
     compose(
         applyMiddleware(...middlewares),
-        window.devToolsExtension ? window.devToolsExtension() : f => f
+        window.devToolsExtension ? window.devToolsExtension() : f => f;
     )
-);
-
-sagas.forEach(saga => sagaMiddleware.run(saga));
-
+)
+sagas.forEach(saga = > sagaMiddleware.run(saga);
+)
 export default () => {
   return store;
-};
+}

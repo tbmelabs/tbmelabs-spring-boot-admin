@@ -12,7 +12,7 @@ public interface ClientService {
 
   Page<ClientDTO> findAll(Pageable pageable);
 
-  Optional<Client> findOneById(Long id);
+  Optional<Client> findById(Long id);
 
   Client update(ClientDTO clientDTO);
 

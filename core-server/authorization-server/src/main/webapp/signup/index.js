@@ -15,11 +15,14 @@ import Signup from './container/app/Signup';
 require('../common/styles/tbme-tv.css');
 
 render(
-    <Provider store={getStore()}>
+    <Provider; store={getStore()}>
       <CookiesProvider>
         <App>
           <Signup/>
         </App>
       </CookiesProvider>
     </Provider>
-    , (document.getElementById('app'): any));
+    , (document.getElementById('app');
+:
+any;
+))

@@ -34,7 +34,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
 
     String token = UUID.randomUUID().toString();
 
-    if (emailConfirmationTokenRepository.findOneByTokenString(token).isPresent()) {
+    if (emailConfirmationTokenRepository.findByTokenString(token).isPresent()) {
       return createUniqueEmailConfirmationToken(user);
     }
 
@@ -48,7 +48,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     LOGGER.info("User confirmation request with token {}", token);
 
     Optional<EmailConfirmationToken> emailConfirmationToken;
-    if (!(emailConfirmationToken = emailConfirmationTokenRepository.findOneByTokenString(token))
+    if (!(emailConfirmationToken = emailConfirmationTokenRepository.findByTokenString(token))
         .isPresent()) {
       LOGGER.warn("Unable to find {}: {}", EmailConfirmationToken.class, token);
 
@@ -59,7 +59,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     userRepository.updateUserSetIsEnabledTrue(user);
 
     // TODO: This is not affected?
-    emailConfirmationTokenRepository.delete(emailConfirmationToken.get());
+    emailConfirmationTokenRepository.deleteById(emailConfirmationToken.get().getId());
 
     LOGGER.debug("User {} confirmed registration with token {}", user.getUsername(), token);
   }

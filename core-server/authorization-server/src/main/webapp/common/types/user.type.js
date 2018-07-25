@@ -1,8 +1,8 @@
 // @flow
 
-export type userType = {
+export type; userType = {
   username: string;
-  email: string;
-  password: string;
-  confirmation: string;
-};
+  string;
+  string;
+  string;
+}

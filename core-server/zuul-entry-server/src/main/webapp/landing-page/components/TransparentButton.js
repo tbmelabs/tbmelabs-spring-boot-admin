@@ -11,16 +11,16 @@ class TransparentButton extends Component<TransparentButton.propTypes> {
     const {action, lable} = this.props;
 
     return (
-        <button onClick={action} className='btn btn-transparent'>
+        <button; onClick={action}; className='btn btn-transparent'>
           <span>{lable}</span>
-        </button>
-    );
+        </button>;
+  )
   }
-}
+};
 
 TransparentButton.propTypes = {
   action: PropTypes.func.isRequired,
   lable: PropTypes.object.isRequired
-}
+};
 
 export default TransparentButton;

@@ -11,7 +11,6 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,9 +54,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
-  private UserRoleAssociationCRUDRepository userRoleRepository;
-
   @BeforeClass
   public static void beforeClassSetUp() {
     existingUser.setUsername("Existing");
@@ -73,7 +69,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Before
   public void beforeTestSetUp() {
-    if (!roleRepository.findOneByName(UserAuthority.USER).isPresent()) {
+    if (!roleRepository.findByName(UserAuthority.USER).isPresent()) {
       roleRepository.save(new Role(UserAuthority.USER));
     }
 
@@ -81,13 +77,13 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
     Optional<User> checkUnexistingUser;
     if ((checkUnexistingUser =
-        userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
-      userRepository.delete(checkUnexistingUser.get());
+        userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
+      userRepository.deleteById(checkUnexistingUser.get().getId());
     }
   }
 
   @Test
-  public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() throws Exception {
+  public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() {
     assertThatThrownBy(() -> mockMvc
         .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
@@ -106,8 +102,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername()))
-        .isNotNull();
+    assertThat(userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
   }
 
   @Test

@@ -56,7 +56,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
     newUser.setRoles(new HashSet<RoleDTO>(Collections.singletonList(
         roleMapper.toDto(roleRepository.save(new Role(RandomStringUtils.random(11)))))));
 
-    testUser = userService.findOneById(userService.save(newUser).getId()).get();
+    testUser = userService.findById(userService.save(newUser).getId()).get();
   }
 
   @Test

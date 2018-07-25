@@ -84,7 +84,7 @@ public class Client extends AbstractAuditingEntity {
   @JsonManagedReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
-  private Set<ClientAuthorityAssociation> grantedAuthorities;
+  private Set<ClientAuthorityAssociation> authorities;
 
   @JsonManagedReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)

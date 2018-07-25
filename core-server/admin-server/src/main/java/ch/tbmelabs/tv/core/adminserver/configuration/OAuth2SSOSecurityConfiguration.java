@@ -23,10 +23,7 @@ public class OAuth2SSOSecurityConfiguration extends WebSecurityConfigurerAdapter
 //      .authorizeRequests()
 //        .antMatchers("/favicon.ico").permitAll()
 //        .antMatchers("/public/**", "/vendor/**").permitAll()
-//        .antMatchers("/actuator/**").permitAll()
 //        .anyRequest().hasAnyAuthority(UserAuthority.GANDALF, UserAuthority.SERVER_ADMIN, UserAuthority.SERVER_SUPPORT)
-
-      .and().httpBasic()
       
       .and().exceptionHandling()
         .accessDeniedPage("/403.html");

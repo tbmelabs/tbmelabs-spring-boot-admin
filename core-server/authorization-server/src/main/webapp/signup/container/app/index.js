@@ -16,14 +16,14 @@ class App extends Component<App.propTypes> {
     const {texts} = this.props;
 
     return (
-        <div className='container'>
-          <SignupJumbotron texts={texts}/>
+        <div; className='container'>
+          <SignupJumbotron; texts={texts};/>
           <FlashMessageList/>
           {this.props.children}
-        </div>
-    );
+        </div>;
+  )
   }
-}
+};
 
 App.propTypes = {
   texts: PropTypes.object.isRequired

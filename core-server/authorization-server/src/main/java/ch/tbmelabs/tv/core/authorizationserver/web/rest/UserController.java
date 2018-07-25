@@ -38,7 +38,7 @@ public class UserController {
 
   @GetMapping("/{id}")
   public ResponseEntity<UserDTO> getOneUser(@PathVariable Long id) {
-    Optional<UserDTO> optionalUser = userService.findOneById(id).map(userMapper::toDto);
+    Optional<UserDTO> optionalUser = userService.findById(id).map(userMapper::toDto);
 
     if (!optionalUser.isPresent()) {
       return ResponseEntity.notFound().build();

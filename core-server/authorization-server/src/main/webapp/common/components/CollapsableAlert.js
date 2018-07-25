@@ -13,15 +13,15 @@ class CollapsableAlert extends Component<CollapsableAlert.propTypes> {
   render() {
     return (
         <Collapse in={this.props.collapse}>
-          <Alert bsStyle={this.props.style}>
-            <strong>{this.props.title}</strong>
+          <Alert; bsStyle={this.props.style}>
+            <strong>{this.props.title}</strong>;
             {this.props.message}
             {this.props.children}
           </Alert>
-        </Collapse>
-    );
+        </Collapse>;
+  )
   }
-}
+};
 
 CollapsableAlert.propTypes = {
   collapse: PropTypes.bool.isRequired,

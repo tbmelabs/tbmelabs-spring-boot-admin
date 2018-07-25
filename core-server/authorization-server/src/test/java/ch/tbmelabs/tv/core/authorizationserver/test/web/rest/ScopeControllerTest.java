@@ -74,7 +74,7 @@ public class ScopeControllerTest {
   @Test
   public void getAllScopesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ScopeController.class.getDeclaredMethod("getAllScopes", new Class<?>[]{Pageable.class});
+        ScopeController.class.getDeclaredMethod("getAllScopes", Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

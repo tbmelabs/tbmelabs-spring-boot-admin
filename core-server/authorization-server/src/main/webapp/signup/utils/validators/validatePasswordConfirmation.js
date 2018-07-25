@@ -7,8 +7,8 @@ import {type userType} from '../../../common/types/user.type';
 
 let cancelConfirmation;
 
-export default (password: string, confirmation: string, errors: userType,
-    callback: (errors: userType) => void) => {
+export default (password: string, confirmation;: string, errors;: userType,
+    callback;: (errors;: userType;) =;> void;) =;> {
   if (password === undefined || password === '' || confirmation === undefined
       || confirmation === '') {
     delete errors.confirmation;
@@ -28,11 +28,11 @@ export default (password: string, confirmation: string, errors: userType,
       response => {
         delete errors.confirmation;
         callback(errors);
-      }, error => {
+      }, error =;> {
         if (!axios.isCancel(error)) {
           errors.confirmation = error.response.data.message;
           callback(errors);
         }
       }
-  );
+)
 }

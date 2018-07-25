@@ -58,7 +58,7 @@ public class UserSignupServiceImpl implements UserSignupService {
   public boolean isUsernameUnique(UserDTO testUser) {
     LOGGER.debug("Checking if username \'{}\' is unique", testUser.getUsername());
 
-    return !userRepository.findOneByUsernameIgnoreCase(testUser.getUsername()).isPresent();
+    return !userRepository.findByUsernameIgnoreCase(testUser.getUsername()).isPresent();
   }
 
   public boolean doesUsernameMatchFormat(UserDTO testUser) {
@@ -70,7 +70,7 @@ public class UserSignupServiceImpl implements UserSignupService {
   public boolean isEmailAddressUnique(UserDTO testUser) {
     LOGGER.debug("Checking if email \'{}\' is unique", testUser.getEmail());
 
-    return !userRepository.findOneByEmailIgnoreCase(testUser.getEmail()).isPresent();
+    return !userRepository.findByEmailIgnoreCase(testUser.getEmail()).isPresent();
   }
 
   public boolean isEmailAddress(UserDTO testUser) {
@@ -120,7 +120,7 @@ public class UserSignupServiceImpl implements UserSignupService {
 
     if (newUserDTO.getRoles() == null || newUserDTO.getRoles().isEmpty()) {
       Optional<Role> userRole;
-      if (!(userRole = roleRepository.findOneByName(UserAuthority.USER)).isPresent()) {
+      if (!(userRole = roleRepository.findByName(UserAuthority.USER)).isPresent()) {
         throw new IllegalArgumentException(
             "Unable to find default authority \'" + UserAuthority.USER + "\'!");
       }

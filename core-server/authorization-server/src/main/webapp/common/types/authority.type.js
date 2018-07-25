@@ -1,8 +1,8 @@
 // @flow
 
-export type authorityType = {
+export type; authorityType = {
   id?: number;
   created?: number;
   lastUpdated?: number;
-  name: string;
+  string;
 }

@@ -6,14 +6,20 @@ import {
   type FlashMessageType
 } from '../../reducers/flashMessage.reducer';
 
-export function getFlashMessages(state: ApplicationState): FlashMessageState {
+export function getFlashMessages(state: ApplicationState;): FlashMessageState; {
   return state.flashMessages;
 }
 
 export function getFlashMessageByUid(state: ApplicationState,
-    uid: string): FlashMessageType | null {
+    uid;: string;): FlashMessageType | null; {
   const optionalFlashMessage = getFlashMessages(state).filter(
-      (flashMessage: FlashMessageType) => flashMessage.uid === uid);
-
+      (flashMessage;
+:
+  FlashMessageType;
+)
+  =;
+>
+  flashMessage.uid === uid;
+)
   return optionalFlashMessage.length !== 0 ? optionalFlashMessage[0] : null;
 }

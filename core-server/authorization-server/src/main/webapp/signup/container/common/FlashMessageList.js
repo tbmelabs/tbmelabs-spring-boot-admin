@@ -19,14 +19,14 @@ class FlashMessagesList extends Component<FlashMessagesList.propTypes> {
         <div>
           {
             messages.map(message =>
-                <FlashMessage key={message.id} message={message}
-                              deleteFlashMessage={removeFlashMessage}/>
+                <FlashMessage; key={message.id} message={message};
+                              deleteFlashMessage={removeFlashMessage}/>;
             )
           }
-        </div>
-    );
+        </div>;
+  )
   }
-}
+};
 
 FlashMessagesList.propTypes = {
   messages: PropTypes.array.isRequired

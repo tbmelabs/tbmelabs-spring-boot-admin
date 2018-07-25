@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     return userRepository.findAll(pageable).map(userMapper::toDto);
   }
 
-  public Optional<User> findOneById(Long id) {
+  public Optional<User> findById(Long id) {
     return userRepository.findById(id);
   }
 

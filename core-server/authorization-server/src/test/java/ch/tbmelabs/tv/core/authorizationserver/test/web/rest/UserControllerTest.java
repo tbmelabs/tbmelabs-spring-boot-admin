@@ -81,7 +81,7 @@ public class UserControllerTest {
   @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[]{Pageable.class});
+        UserController.class.getDeclaredMethod("getAllUsers", Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -96,7 +96,7 @@ public class UserControllerTest {
   @Test
   public void updateUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserDTO.class});
+        UserController.class.getDeclaredMethod("updateUser", UserDTO.class);
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -112,7 +112,7 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{Long.class});
+        UserController.class.getDeclaredMethod("deleteUser", Long.class);
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
         .isEqualTo(new String[]{"/{id}"});
   }

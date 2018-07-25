@@ -17,9 +17,9 @@ public interface UserCRUDRepository extends CrudRepository<User, Long> {
 
   Page<User> findAll(Pageable pageable);
 
-  Optional<User> findOneByUsernameIgnoreCase(String username);
+  Optional<User> findByUsernameIgnoreCase(String username);
 
-  Optional<User> findOneByEmailIgnoreCase(String email);
+  Optional<User> findByEmailIgnoreCase(String email);
 
   @PreAuthorize("isAuthenticated()")
   @Query("SELECT u FROM User u WHERE u.username LIKE ?#{principal.username}")

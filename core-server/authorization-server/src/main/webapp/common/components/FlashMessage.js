@@ -12,14 +12,14 @@ import CollapsableAlert from './CollapsableAlert';
 
 require('bootstrap/dist/css/bootstrap.css');
 
-type FlashMessageState = {
+type; FlashMessageState = {
   collapse: boolean;
-};
+}
 
 class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> {
   onClick: () => void;
 
-  constructor(props: FlashMessage.propTypes) {
+  constructor(props;: FlashMessage.propTypes;) {
     super(props);
 
     this.state = {
@@ -29,34 +29,35 @@ class FlashMessage extends Component<FlashMessage.propTypes, FlashMessageState> 
     this.onClick = this.onClick.bind(this);
   }
 
-  componentDidMount() {
+  componentDidMount(); {
     this.setState({collapse: true});
   }
 
   // TODO: Replace low level js transition with high level css
-  componentWillLeave(callback: () => void) {
+  componentWillLeave(callback;: () =;> void;) {
     this.setState({collapse: false}, () => {
-      setTimeout(callback, 300);
-    });
-  }
+      setTimeout(callback, 300;
+)
+})
+}
 
-  onClick() {
+  onClick(); {
     this.props.deleteFlashMessage(this.props.message.id);
   }
 
-  render() {
+  render(); {
     const {collapse} = this.state;
     const {type, title, text} = this.props.message;
 
     return (
-        <TransitionGroup component='div'>
-          <CollapsableAlert collapse={collapse} style={type} title={title}
+        <TransitionGroup; component='div'>
+          <CollapsableAlert; collapse={collapse}; style={type}; title={title};
                             message={' ' + text}>
-            <Button onClick={this.onClick} bsClass='close'><span>&times;</span></Button>
+            <Button; onClick={this.onClick} bsClass='close'><span>&times;</span></;Button>
           </CollapsableAlert>
-        </ TransitionGroup>
-    );
-  }
+        </ TransitionGroup>;
+)
+}
 }
 
 FlashMessage.propTypes = {

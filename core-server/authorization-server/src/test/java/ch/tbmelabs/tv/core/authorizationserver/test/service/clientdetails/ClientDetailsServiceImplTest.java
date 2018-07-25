@@ -36,7 +36,7 @@ public class ClientDetailsServiceImplTest {
     initMocks(this);
 
     doReturn(Optional.of(new Client())).when(mockClientRepository)
-        .findOneByClientId(ArgumentMatchers.anyString());
+        .findByClientId(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -56,17 +56,17 @@ public class ClientDetailsServiceImplTest {
 
   @Test
   public void loadClientByClientIdShouldLoadCorrectClient()
-      throws IllegalAccessException, NoSuchFieldException, SecurityException {
+      throws SecurityException {
     ClientDetailsImpl clientDetails = fixture.loadClientByClientId(UUID.randomUUID().toString());
 
     assertThat(ReflectionTestUtils.getField(clientDetails, "client"))
-        .isEqualTo(mockClientRepository.findOneByClientId(UUID.randomUUID().toString()).get());
+        .isEqualTo(mockClientRepository.findByClientId(UUID.randomUUID().toString()).get());
   }
 
   @Test
   public void loadClientShouldThrowExceptionIfClientIdDoesNotExist() {
     doReturn(Optional.empty()).when(mockClientRepository)
-        .findOneByClientId(ArgumentMatchers.anyString());
+        .findByClientId(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadClientByClientId(RandomStringUtils.random(11)))
         .isInstanceOf(IllegalArgumentException.class).hasMessageContaining("Client with ID")

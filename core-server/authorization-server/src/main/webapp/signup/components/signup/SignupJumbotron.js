@@ -16,10 +16,10 @@ class SignupJumbotron extends Component<SignupJumbotron.propTypes> {
         <Jumbotron>
           <h1>{texts.jumbotron_title}</h1>
           <p>{texts.jumbotron_text}</p>
-        </Jumbotron>
-    );
+        </Jumbotron>;
+  )
   }
-}
+};
 
 SignupJumbotron.propTypes = {
   texts: PropTypes.object.isRequired

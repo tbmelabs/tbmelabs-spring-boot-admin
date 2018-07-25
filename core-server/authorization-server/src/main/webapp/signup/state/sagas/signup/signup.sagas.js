@@ -22,9 +22,9 @@ import {addFlashMessageAction} from '../../actions/flashmessage';
 
 const SIGNUP_FAILED_ERROR_UID = shortid.generate();
 
-function* signupUser(action: { type: string, payload: userType }) {
+function* signupUser(action: { string, payload;: userType }) {
   try {
-    const response: AxiosResponse = yield axios.post('signup/do-signup', {
+    const response;: AxiosResponse = yield axios.post('signup/do-signup', {
       username: action.payload.username,
       email: action.payload.email,
       password: action.payload.password,

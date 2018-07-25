@@ -74,7 +74,7 @@ public class AuthorityControllerTest {
   @Test
   public void getAllAuthoritiesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = AuthorityController.class.getDeclaredMethod("getAllAuthorities",
-        new Class<?>[]{Pageable.class});
+        Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

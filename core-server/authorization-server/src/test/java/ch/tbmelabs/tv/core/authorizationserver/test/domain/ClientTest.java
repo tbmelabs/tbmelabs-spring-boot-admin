@@ -163,10 +163,10 @@ public class ClientTest {
     Set<ClientAuthorityAssociation> grantedAuthorities = new HashSet<>(Collections.singletonList(
         new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY))));
 
-    fixture.setGrantedAuthorities(grantedAuthorities);
+    fixture.setAuthorities(grantedAuthorities);
 
-    assertThat(fixture).hasFieldOrPropertyWithValue("grantedAuthorities", grantedAuthorities);
-    assertThat(fixture.getGrantedAuthorities()).isEqualTo(grantedAuthorities);
+    assertThat(fixture).hasFieldOrPropertyWithValue("authorities", grantedAuthorities);
+    assertThat(fixture.getAuthorities()).isEqualTo(grantedAuthorities);
   }
 
   @Test

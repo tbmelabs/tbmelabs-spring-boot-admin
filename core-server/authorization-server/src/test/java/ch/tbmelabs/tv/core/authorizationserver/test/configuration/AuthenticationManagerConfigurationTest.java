@@ -53,7 +53,7 @@ public class AuthenticationManagerConfigurationTest {
   public void authenticationManagerBeanShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
     assertThat(AuthenticationManagerConfiguration.class
-        .getDeclaredMethod("authenticationManager", new Class<?>[]{})
+        .getDeclaredMethod("authenticationManager")
         .getDeclaredAnnotation(Bean.class)).isNotNull();
   }
 

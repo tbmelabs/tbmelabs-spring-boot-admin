@@ -24,7 +24,7 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     LOGGER.debug("Loading client details for client id \'{}\'", clientId);
 
     Optional<Client> client;
-    if (!(client = clientRepository.findOneByClientId(clientId)).isPresent()) {
+    if (!(client = clientRepository.findByClientId(clientId)).isPresent()) {
       throw new IllegalArgumentException("Client with ID \'" + clientId + "\' does not exist!");
     }
 

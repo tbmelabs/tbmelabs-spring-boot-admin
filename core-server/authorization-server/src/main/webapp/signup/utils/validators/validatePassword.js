@@ -7,8 +7,8 @@ import {type userType} from '../../../common/types/user.type';
 
 let cancelPassword;
 
-export default (password: string, errors: userType,
-    callback: (errors: userType) => void) => {
+export default (password: string, errors;: userType,
+    callback;: (errors;: userType;) =;> void;) =;> {
   if (password === undefined || password === '') {
     delete errors.password;
     return;
@@ -26,11 +26,11 @@ export default (password: string, errors: userType,
       response => {
         delete errors.password;
         callback(errors);
-      }, error => {
+      }, error =;> {
         if (!axios.isCancel(error)) {
           errors.password = error.response.data.message;
           callback(errors);
         }
       }
-  );
+)
 }

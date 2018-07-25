@@ -7,8 +7,8 @@ import {type userType} from '../../../common/types/user.type';
 
 let cancelEmail;
 
-export default (email: string, errors: userType,
-    callback: (errors: userType) => void) => {
+export default (email: string, errors;: userType,
+    callback;: (errors;: userType;) =;> void;) =;> {
   if (email === undefined || email === '') {
     delete errors.email;
     return;
@@ -32,18 +32,18 @@ export default (email: string, errors: userType,
             response => {
               delete errors.email;
               callback(errors);
-            }, error => {
+            }, error =;> {
               if (!axios.isCancel(error)) {
                 errors.email = error.response.data.message;
                 callback(errors);
               }
             }
-        );
-      }, error => {
+)
+}, error =;> {
         if (!axios.isCancel(error)) {
           errors.email = error.response.data.message;
           callback(errors);
         }
       }
-  );
+)
 }

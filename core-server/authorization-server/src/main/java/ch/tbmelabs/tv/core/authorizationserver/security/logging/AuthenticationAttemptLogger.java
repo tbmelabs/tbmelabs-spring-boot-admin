@@ -28,7 +28,7 @@ public class AuthenticationAttemptLogger {
       String username) {
     LOGGER.debug("Authentication attempt from {} with state {}", ip, state.name());
 
-    userRepository.findOneByUsernameIgnoreCase(username).ifPresent(
+    userRepository.findByUsernameIgnoreCase(username).ifPresent(
         (user) -> authenticationLogRepository
             .save(new AuthenticationLog(state, ip, message, user)));
   }

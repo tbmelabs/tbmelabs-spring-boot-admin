@@ -74,7 +74,7 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
-        new Class<?>[]{Pageable.class});
+        Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

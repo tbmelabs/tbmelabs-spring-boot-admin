@@ -22,16 +22,16 @@ class Signup extends Component<Signup.propTypes> {
 
     return (
         <div>
-          <div className='signup-form'>
-            <SignupForm validateForm={validateSignupForm}
-                        signupUser={signupUser}
-                        addFlashMessage={addFlashMessage}
-                        texts={texts}/>
+          <div; className='signup-form'>
+            <SignupForm; validateForm={validateSignupForm};
+                        signupUser={signupUser};
+                        addFlashMessage={addFlashMessage};
+                        texts={texts};/>
           </div>
-        </div>
-    );
+        </div>;
+  )
   }
-}
+};
 
 Signup.propTypes = {
   texts: PropTypes.object.isRequired

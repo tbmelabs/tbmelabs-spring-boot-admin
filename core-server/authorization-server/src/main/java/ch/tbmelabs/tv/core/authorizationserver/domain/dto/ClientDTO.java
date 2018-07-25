@@ -23,6 +23,6 @@ public class ClientDTO extends AbstractBasicEntityDTO {
   private Integer refreshTokenValiditySeconds;
   private String[] redirectUris;
   private Set<GrantTypeDTO> grantTypes;
-  private Set<AuthorityDTO> grantedAuthorities;
+  private Set<AuthorityDTO> authorities;
   private Set<ScopeDTO> scopes;
 }
