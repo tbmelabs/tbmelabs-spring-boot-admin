@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "authorization-server-frontend": {
+    "tbme-labs-authorization-server": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/authorization-server-frontend",
+            "outputPath": "dist/tbme-labs-authorization-server",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "authorization-server-frontend:build"
+            "browserTarget": "tbme-labs-authorization-server:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "authorization-server-frontend:build:production"
+              "browserTarget": "tbme-labs-authorization-server:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "authorization-server-frontend:build"
+            "browserTarget": "tbme-labs-authorization-server:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "authorization-server-frontend-e2e": {
+    "tbme-labs-authorization-server-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "authorization-server-frontend:serve"
+            "devServerTarget": "tbme-labs-authorization-server:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "authorization-server-frontend:serve:production"
+              "devServerTarget": "tbme-labs-authorization-server:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "authorization-server-frontend"
+  "defaultProject": "tbme-labs-authorization-server"
 }

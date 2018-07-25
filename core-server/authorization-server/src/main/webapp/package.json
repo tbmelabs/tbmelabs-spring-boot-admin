@@ -1,6 +1,13 @@
 {
-  "name": "authorization-server-frontend",
-  "version": "0.0.0",
+  "name": "tbme-labs-authorization-server",
+  "description": "The webapplication for the TBME Labs authorization server.",
+  "version": "1.0.0-SNAPSHOT",
+  "author": "TBME Labs",
+  "repository": "https://github.com/tbmelabs/tbme-tv.git",
+  "bugs": {
+    "url": "https://github.com/tbmelabs/tbme-tv/issues"
+  },
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +16,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^6.0.3",
     "@angular/common": "^6.0.3",
