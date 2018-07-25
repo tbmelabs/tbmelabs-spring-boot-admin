@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     if (userDTO.getId() != null) {
       throw new IllegalArgumentException("You can only create a new User without an id!");
     }
-
+      
     return userRepository.save(userMapper.toEntity(userDTO));
   }
 

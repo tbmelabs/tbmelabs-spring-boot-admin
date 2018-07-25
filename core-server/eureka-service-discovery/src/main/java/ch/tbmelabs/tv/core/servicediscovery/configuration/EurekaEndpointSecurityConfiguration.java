@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.servicediscovery.configuration;
 
-import ch.tbmelabs.tv.shared.constants.security.ApplicationUserRole;
+import ch.tbmelabs.tv.shared.constants.security.ClientUserRole;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,7 +36,7 @@ public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAd
     AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
     builder.inMemoryAuthentication().passwordEncoder(PASSWORD_ENCODER).withUser(eurekaUserName)
         .password(PASSWORD_ENCODER.encode(eurekaUserPassword))
-        .roles(ApplicationUserRole.EUREKA_ROLE);
+        .roles(ClientUserRole.EUREKA_ROLE);
     return builder.build();
   }
 
@@ -48,7 +48,7 @@ public class EurekaEndpointSecurityConfiguration extends WebSecurityConfigurerAd
         .csrf().ignoringAntMatchers("/eureka/**")
 
         .and().antMatcher("/eureka/**").authorizeRequests()
-          .antMatchers("/eureka/**").hasRole(ApplicationUserRole.EUREKA_ROLE)
+          .antMatchers("/eureka/**").hasRole(ClientUserRole.EUREKA_ROLE)
 
         .and().httpBasic();
     // @formatter:on

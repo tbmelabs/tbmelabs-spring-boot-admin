@@ -11,7 +11,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Collections;
 import java.util.HashSet;
@@ -120,9 +120,9 @@ public class UserSignupServiceImpl implements UserSignupService {
 
     if (newUserDTO.getRoles() == null || newUserDTO.getRoles().isEmpty()) {
       Optional<Role> userRole;
-      if (!(userRole = roleRepository.findByName(UserAuthority.USER)).isPresent()) {
+      if (!(userRole = roleRepository.findByName(UserRole.USER)).isPresent()) {
         throw new IllegalArgumentException(
-            "Unable to find default authority \'" + UserAuthority.USER + "\'!");
+            "Unable to find default authority \'" + UserRole.USER + "\'!");
       }
 
       newUserDTO.setRoles(

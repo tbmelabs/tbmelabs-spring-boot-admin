@@ -19,7 +19,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.impl.UserSignupServiceImpl;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.util.Optional;
 import java.util.Random;
 import org.junit.Before;
@@ -39,7 +39,7 @@ public class UserSignupServiceTest {
   private static final String SIGNUP_FAILED_ERROR_MESSAGE =
       "An error occured. Please check your details!";
   private static final String DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE =
-      "Unable to find default authority \'" + UserAuthority.USER + "\'!";
+      "Unable to find default authority \'" + UserRole.USER + "\'!";
 
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 
@@ -73,8 +73,8 @@ public class UserSignupServiceTest {
     doReturn(Mockito.mock(UserMailServiceImpl.class)).when(mockApplicationContext)
         .getBean(UserMailServiceImpl.class);
 
-    doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
-        .findByName(UserAuthority.USER);
+    doReturn(Optional.of(new Role(UserRole.USER))).when(mockRoleRepository)
+        .findByName(UserRole.USER);
 
     doAnswer((Answer<RoleDTO>) invocation -> {
       RoleDTO dto = new RoleDTO();
@@ -151,7 +151,7 @@ public class UserSignupServiceTest {
 
   @Test
   public void userSignupServiceShouldThrowErrorIfUserRoleDoesNotExist() {
-    doReturn(Optional.empty()).when(mockRoleRepository).findByName(UserAuthority.USER);
+    doReturn(Optional.empty()).when(mockRoleRepository).findByName(UserRole.USER);
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
         .isInstanceOf(IllegalArgumentException.class)
@@ -160,8 +160,8 @@ public class UserSignupServiceTest {
 
   @Test
   public void userSignupServiceShouldSaveValidUser() {
-    doReturn(Optional.of(new Role(UserAuthority.USER))).when(mockRoleRepository)
-        .findByName(UserAuthority.USER);
+    doReturn(Optional.of(new Role(UserRole.USER))).when(mockRoleRepository)
+        .findByName(UserRole.USER);
 
     fixture.signUpNewUser(new UserDTO());
 

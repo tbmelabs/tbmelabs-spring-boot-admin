@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.json.JSONException;
@@ -69,8 +69,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Before
   public void beforeTestSetUp() {
-    if (!roleRepository.findByName(UserAuthority.USER).isPresent()) {
-      roleRepository.save(new Role(UserAuthority.USER));
+    if (!roleRepository.findByName(UserRole.USER).isPresent()) {
+      roleRepository.save(new Role(UserRole.USER));
     }
 
     existingUser = userRepository.save(existingUser);
@@ -144,6 +144,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0))
-        .isEqualTo(UserAuthority.USER);
+        .isEqualTo(UserRole.USER);
   }
 }

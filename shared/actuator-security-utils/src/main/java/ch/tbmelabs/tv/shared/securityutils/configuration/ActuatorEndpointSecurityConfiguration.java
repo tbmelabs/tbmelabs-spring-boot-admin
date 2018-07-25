@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.shared.securityutils.configuration;
 
-import ch.tbmelabs.tv.shared.constants.security.ApplicationUserRole;
+import ch.tbmelabs.tv.shared.constants.security.ClientUserRole;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,7 +38,7 @@ public class ActuatorEndpointSecurityConfiguration extends WebSecurityConfigurer
     AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
     builder.inMemoryAuthentication().passwordEncoder(PASSWORD_ENCODER).withUser(actuatorUserName)
         .password(PASSWORD_ENCODER.encode(actuatorUserPassword))
-        .roles(ApplicationUserRole.ACTUATOR_ROLE);
+        .roles(ClientUserRole.ACTUATOR_ROLE);
     return builder.build();
   }
 
@@ -48,7 +48,7 @@ public class ActuatorEndpointSecurityConfiguration extends WebSecurityConfigurer
     http
 
         .antMatcher("/actuator/**").authorizeRequests()
-          .antMatchers("/actuator/**").hasRole(ApplicationUserRole.ACTUATOR_ROLE)
+          .antMatchers("/actuator/**").hasRole(ClientUserRole.ACTUATOR_ROLE)
 
         .and().httpBasic();
     // @formatter:on

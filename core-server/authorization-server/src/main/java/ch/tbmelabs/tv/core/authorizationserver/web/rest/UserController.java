@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"${spring.data.rest.base-path}/users"})
-@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')")
+@PreAuthorize("hasAuthority('" + UserRole.SERVER_SUPPORT + "')")
 public class UserController {
 
   private UserService userService;

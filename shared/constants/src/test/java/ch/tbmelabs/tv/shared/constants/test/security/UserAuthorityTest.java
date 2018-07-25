@@ -2,7 +2,7 @@ package ch.tbmelabs.tv.shared.constants.test.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -22,22 +22,22 @@ public class UserAuthorityTest {
 
   @Test
   public void securityRolesShouldBePublicStatic() {
-    assertThat(UserAuthority.GANDALF).isEqualTo(GANDALF);
-    assertThat(UserAuthority.SERVER_ADMIN).isEqualTo(SERVER_ADMIN);
-    assertThat(UserAuthority.SERVER_SUPPORT).isEqualTo(SERVER_SUPPORT);
-    assertThat(UserAuthority.CONTENT_ADMIN).isEqualTo(CONTENT_ADMIN);
-    assertThat(UserAuthority.CONTENT_SUPPORT).isEqualTo(CONTENT_SUPPORT);
-    assertThat(UserAuthority.PREMIUM_USER).isEqualTo(PREMIUM_USER);
-    assertThat(UserAuthority.USER).isEqualTo(USER);
-    assertThat(UserAuthority.GUEST).isEqualTo(GUEST);
-    assertThat(UserAuthority.ANONYMOUS).isEqualTo(ANONYMOUS);
+    assertThat(UserRole.GANDALF).isEqualTo(GANDALF);
+    assertThat(UserRole.SERVER_ADMIN).isEqualTo(SERVER_ADMIN);
+    assertThat(UserRole.SERVER_SUPPORT).isEqualTo(SERVER_SUPPORT);
+    assertThat(UserRole.CONTENT_ADMIN).isEqualTo(CONTENT_ADMIN);
+    assertThat(UserRole.CONTENT_SUPPORT).isEqualTo(CONTENT_SUPPORT);
+    assertThat(UserRole.PREMIUM_USER).isEqualTo(PREMIUM_USER);
+    assertThat(UserRole.USER).isEqualTo(USER);
+    assertThat(UserRole.GUEST).isEqualTo(GUEST);
+    assertThat(UserRole.ANONYMOUS).isEqualTo(ANONYMOUS);
   }
 
   @Test
   public void staticHolderClassShouldNotHaveAnyAccessibleConstructor() throws NoSuchMethodException,
       SecurityException, InstantiationException, IllegalAccessException, InvocationTargetException {
-    Constructor<UserAuthority> fixture =
-        UserAuthority.class.getDeclaredConstructor();
+    Constructor<UserRole> fixture =
+        UserRole.class.getDeclaredConstructor();
     fixture.setAccessible(true);
 
     assertThat(Modifier.isPrivate(fixture.getModifiers())).isTrue();
