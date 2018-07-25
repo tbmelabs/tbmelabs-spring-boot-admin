@@ -14,29 +14,6 @@
         }
       },
       "architect": {
-        "dev-build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/tbme-labs-authorization-server",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.sass"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-              "extractCss": true,
-              "vendorChunk": false
-            }
-          }
-        },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
@@ -55,6 +32,18 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "fileReplacements": [],
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": true,
+              "aot": false,
+              "extractLicenses": false,
+              "vendorChunk": false,
+              "buildOptimizer": false
+            },
             "production": {
               "fileReplacements": [
                 {
