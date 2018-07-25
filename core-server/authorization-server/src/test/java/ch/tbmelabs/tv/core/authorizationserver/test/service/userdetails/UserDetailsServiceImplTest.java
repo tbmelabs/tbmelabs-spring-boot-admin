@@ -36,7 +36,7 @@ public class UserDetailsServiceImplTest {
     initMocks(this);
 
     doReturn(Optional.of(new User())).when(userRepositoryFixture)
-        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -56,17 +56,17 @@ public class UserDetailsServiceImplTest {
 
   @Test
   public void loadUserByUsernameShouldLoadCorrectUser()
-      throws IllegalAccessException, NoSuchFieldException, SecurityException {
+      throws SecurityException {
     UserDetailsImpl userDetails = fixture.loadUserByUsername(RandomStringUtils.random(11));
 
     assertThat(ReflectionTestUtils.getField(userDetails, "user")).isEqualTo(
-        userRepositoryFixture.findOneByUsernameIgnoreCase(RandomStringUtils.random(11)).get());
+        userRepositoryFixture.findByUsernameIgnoreCase(RandomStringUtils.random(11)).get());
   }
 
   @Test
   public void loadUserShouldThrowExceptionIfUsernameDoesNotExist() {
     doReturn(Optional.empty()).when(userRepositoryFixture)
-        .findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserByUsername(RandomStringUtils.random(11)))
         .isInstanceOf(UsernameNotFoundException.class).hasMessageContaining("Username")

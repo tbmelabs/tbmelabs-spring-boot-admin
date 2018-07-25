@@ -3,7 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.AuthorityMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"${spring.data.rest.base-path}/authorities"})
-@PreAuthorize("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')")
+@PreAuthorize("hasAuthority('" + UserRole.SERVER_ADMIN + "')")
 public class AuthorityController {
 
   private AuthorityCRUDRepository authorityRepository;

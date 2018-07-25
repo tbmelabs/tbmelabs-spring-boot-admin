@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttyp
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -52,7 +53,7 @@ public class GrantType extends AbstractAuditingEntity {
   @JsonManagedReference("grant_type_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "grantType", cascade = {CascadeType.ALL})
-  private Set<ClientGrantTypeAssociation> clientsWithGrantTypes;
+  private Set<ClientGrantTypeAssociation> clientsWithGrantTypes = new HashSet<>();
 
   public GrantType(String name) {
     setName(name);

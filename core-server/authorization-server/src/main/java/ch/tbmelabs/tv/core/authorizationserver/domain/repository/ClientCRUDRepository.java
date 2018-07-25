@@ -12,5 +12,5 @@ public interface ClientCRUDRepository extends CrudRepository<Client, Long> {
 
   Page<Client> findAll(Pageable pageable);
 
-  Optional<Client> findOneByClientId(String clientId);
+  Optional<Client> findByClientId(String clientId);
 }

@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ScopeMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -68,13 +68,13 @@ public class ScopeControllerTest {
     assertThat(ScopeController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/scopes");
     assertThat(ScopeController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')");
+        .isEqualTo("hasAuthority('" + UserRole.SERVER_ADMIN + "')");
   }
 
   @Test
   public void getAllScopesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ScopeController.class.getDeclaredMethod("getAllScopes", new Class<?>[]{Pageable.class});
+        ScopeController.class.getDeclaredMethod("getAllScopes", Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

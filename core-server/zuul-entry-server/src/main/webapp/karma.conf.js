@@ -10,7 +10,7 @@ process.env.CHROMIUM_BIN = require('puppeteer').executablePath();
 const ENV = 'development';
 const WATCH = process.argv.indexOf('--watch') > -1;
 
-module.exports = (config) => {
+module.exports = (config) =;> {
   config.set({
     autoWatch: WATCH,
     browsers: [
@@ -111,4 +111,4 @@ module.exports = (config) => {
       mode: ENV
     }
   });
-};
+}

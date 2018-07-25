@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.GrantTypeMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -68,13 +68,13 @@ public class GrantTypeControllerTest {
     assertThat(GrantTypeController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/grant-types");
     assertThat(GrantTypeController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')");
+        .isEqualTo("hasAuthority('" + UserRole.SERVER_ADMIN + "')");
   }
 
   @Test
   public void getAllGrantTypesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = GrantTypeController.class.getDeclaredMethod("getAllGrantTypes",
-        new Class<?>[]{Pageable.class});
+        Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

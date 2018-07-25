@@ -17,8 +17,7 @@ public class SpELConfigurationIntTest extends AbstractOAuth2AuthorizationServerC
   private EvaluationContextExtension bean;
 
   @Test
-  public void primaryRegisteredBeanShouldEqualConfiguredEvaluationContextExtension()
-      throws Exception {
+  public void primaryRegisteredBeanShouldEqualConfiguredEvaluationContextExtension() {
     assertThat(configuration.securityExtension()).isEqualTo(bean);
   }
 }

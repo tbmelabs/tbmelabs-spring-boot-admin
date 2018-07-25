@@ -5,23 +5,29 @@ import {ADD_FLASH_MESSAGE, REMOVE_FLASH_MESSAGE} from '../actions/flashmessage';
 import shortid from 'shortid';
 import findIndex from 'lodash/findIndex';
 
-export type FlashMessageType = {
+export type; FlashMessageType = {
   id: number;
-  type: string;
-  title: string;
-  text: string;
-};
+  string;
+  string;
+  string;
+}
 
-export type FlashMessageState = FlashMessageType[];
+export type; FlashMessageState = FlashMessageType[];
 
-const initialState: FlashMessageState = [];
+const initialState;: FlashMessageState = [];
 
 export default (state: FlashMessageState = initialState,
-    action: { type: string, payload: FlashMessageType | number }): FlashMessageState => {
+    action;: { string, payload;: FlashMessageType | number }): FlashMessageState =;> {
   switch (action.type) {
     case ADD_FLASH_MESSAGE:
-      const flashMessagePayload: FlashMessageType = ((action.payload: any): FlashMessageType);
-
+      const flashMessagePayload;
+    :
+      FlashMessageType = ((action.payload;
+    :
+      any;
+    ):
+      FlashMessageType;
+    )
       return [
         ...state,
         {
@@ -29,22 +35,29 @@ export default (state: FlashMessageState = initialState,
           type: flashMessagePayload.type,
           title: flashMessagePayload.title,
           text: flashMessagePayload.text
-        }
-      ];
+        };
+    ]
     case REMOVE_FLASH_MESSAGE:
-      const numberPayload: number = ((action.payload: any): number);
-
+      const numberPayload;
+    :
+      number = ((action.payload;
+    :
+      any;
+    ):
+      number;
+    )
       const index = findIndex(state, {id: action.payload});
 
       if (index >= 0) {
         return [
-          ...state.slice(0, index),
-          ...state.slice(index + 1)
-        ];
+          ...state.slice(0, index),;
+          ...state.slice(index + 1);
+      ]
       }
 
-      return [...state];
+      return [...state;
+    ]
     default:
       return state;
   }
-};
+}

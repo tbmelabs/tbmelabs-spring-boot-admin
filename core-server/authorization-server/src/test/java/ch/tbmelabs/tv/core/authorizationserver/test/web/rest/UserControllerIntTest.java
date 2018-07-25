@@ -14,7 +14,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashSet;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -62,22 +62,22 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   @Before
   public void beforeTestSetUp() {
     User existingUser;
-    if ((existingUser = userRepository.findOneByUsernameIgnoreCase(testUserDTO.getUsername())
+    if ((existingUser = userRepository.findByUsernameIgnoreCase(testUserDTO.getUsername())
         .orElse(null)) != null) {
-      userRepository.delete(existingUser);
+      userRepository.deleteById(existingUser.getId());
     }
   }
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void getUsersEndpointIsAccessibleToServerSupports() throws Exception {
     mockMvc.perform(get(usersEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserRole.CONTENT_ADMIN})
   public void getUsersEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc.perform(get(usersEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
@@ -85,7 +85,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void putUserEndpointIsAccessibleToServerSupports() throws Exception {
     User newUser = userMapper.toEntity(testUserDTO);
     newUser.setPassword(RandomStringUtils.random(11));
@@ -97,12 +97,12 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
             .content(new ObjectMapper().writeValueAsString(persistedUser)))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
 
-    assertThat(userRepository.findOneByUsernameIgnoreCase(persistedUser.getUsername()).isPresent())
+    assertThat(userRepository.findByUsernameIgnoreCase(persistedUser.getUsername()).isPresent())
         .isTrue();
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserRole.CONTENT_ADMIN})
   public void putUserEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     mockMvc
         .perform(put(usersEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
@@ -112,7 +112,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Test
   @WithMockUser(username = "UserControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void deleteUserEndpointIsAccessibleToServerSupports() throws Exception {
     User newUser = userMapper.toEntity(testUserDTO);
     newUser.setPassword(RandomStringUtils.random(11));
@@ -123,7 +123,7 @@ public class UserControllerIntTest extends AbstractOAuth2AuthorizationServerCont
   }
 
   @Test
-  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserAuthority.CONTENT_ADMIN})
+  @WithMockUser(username = "UserControllerIntTestUser", authorities = {UserRole.CONTENT_ADMIN})
   public void deleteUserEndpointIsNotAccessibleToNonServerSupports() throws Exception {
     User newUser = userMapper.toEntity(testUserDTO);
     newUser.setPassword(RandomStringUtils.random(11));

@@ -49,7 +49,7 @@ public class UserSignupServiceValidationTest {
       }
 
       return Optional.empty();
-    }).when(userRepository).findOneByUsernameIgnoreCase(ArgumentMatchers.anyString());
+    }).when(userRepository).findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     doAnswer(invocation -> {
       if (invocation.getArgument(0).equals(existingUser.getEmail())) {
@@ -57,7 +57,7 @@ public class UserSignupServiceValidationTest {
       }
 
       return Optional.empty();
-    }).when(userRepository).findOneByEmailIgnoreCase(ArgumentMatchers.anyString());
+    }).when(userRepository).findByEmailIgnoreCase(ArgumentMatchers.anyString());
 
     doCallRealMethod().when(fixture).isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
     doCallRealMethod().when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));

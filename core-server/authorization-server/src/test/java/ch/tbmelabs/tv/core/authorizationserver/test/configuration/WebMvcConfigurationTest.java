@@ -46,7 +46,7 @@ public class WebMvcConfigurationTest {
   @Test
   public void internalResourceViewResolverBeanShouldBeAnnotated()
       throws NoSuchMethodException, SecurityException {
-    assertThat(WebMvcConfiguration.class.getMethod("viewResolver", new Class<?>[]{})
+    assertThat(WebMvcConfiguration.class.getMethod("viewResolver")
         .getDeclaredAnnotation(Bean.class)).isNotNull();
   }
 

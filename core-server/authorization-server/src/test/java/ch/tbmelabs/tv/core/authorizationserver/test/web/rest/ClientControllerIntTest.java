@@ -17,7 +17,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashSet;
 import org.junit.Test;
@@ -57,7 +57,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
     dto.setGrantTypes(new HashSet<GrantTypeDTO>());
 
-    dto.setGrantedAuthorities(new HashSet<AuthorityDTO>());
+    dto.setAuthorities(new HashSet<AuthorityDTO>());
 
     dto.setScopes(new HashSet<ScopeDTO>());
 
@@ -66,7 +66,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_ADMIN})
+      authorities = {UserRole.SERVER_ADMIN})
   public void postClientEndpointIsAccessibleToServerAdmins() throws Exception {
     mockMvc
         .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +76,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void postClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc
         .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
@@ -86,7 +86,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_ADMIN})
+      authorities = {UserRole.SERVER_ADMIN})
   public void getClientsEndpointIsAccessibleToServerAdmins() throws Exception {
     mockMvc.perform(get(clientsEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.OK.value()));
@@ -94,7 +94,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void getClientsEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc.perform(get(clientsEndpoint).with(csrf())).andDo(print())
         .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
@@ -102,7 +102,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_ADMIN})
+      authorities = {UserRole.SERVER_ADMIN})
   public void putClientEndpointIsAccessibleToServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
@@ -114,7 +114,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void putClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc
         .perform(put(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
@@ -124,7 +124,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_ADMIN})
+      authorities = {UserRole.SERVER_ADMIN})
   public void deleteClientEndpointIsAccessibleToServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
@@ -134,7 +134,7 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserAuthority.SERVER_SUPPORT})
+      authorities = {UserRole.SERVER_SUPPORT})
   public void deleteClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 

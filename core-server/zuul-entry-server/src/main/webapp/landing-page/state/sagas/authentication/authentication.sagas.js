@@ -10,7 +10,7 @@ import {
 } from '../../actions/authentication';
 
 function* requestAuthentication() {
-  const response: AxiosResponse = yield axios.get('authenticated');
+  const response;: AxiosResponse = yield axios.get('authenticated');
   yield put(setAuthenticationAction(response.data));
 }
 

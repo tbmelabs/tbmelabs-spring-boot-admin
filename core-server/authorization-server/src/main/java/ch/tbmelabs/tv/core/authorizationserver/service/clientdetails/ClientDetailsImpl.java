@@ -83,7 +83,7 @@ public class ClientDetailsImpl implements ClientDetails {
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
-    return client.getGrantedAuthorities().stream()
+    return client.getAuthorities().stream()
         .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList());
   }
 

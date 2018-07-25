@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.Cl
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -52,7 +53,7 @@ public class Scope extends AbstractAuditingEntity {
   @JsonManagedReference("scope_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "scope", cascade = {CascadeType.ALL})
-  private Set<ClientScopeAssociation> clientsWithScopes;
+  private Set<ClientScopeAssociation> clientsWithScopes = new HashSet<>();
 
   public Scope(String name) {
     setName(name);

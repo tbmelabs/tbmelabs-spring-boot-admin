@@ -9,7 +9,6 @@ import ch.tbmelabs.tv.core.entryserver.security.filter.ZuulAccessFilter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -84,8 +83,7 @@ public class ZuulAccessFilterTest {
 
   @Test
   // TODO: Reimplement as soon as logger question is fixed
-  public void zuulFilterShouldLogToRootLoggerOnIncomingRequest()
-      throws UnsupportedEncodingException {
+  public void zuulFilterShouldLogToRootLoggerOnIncomingRequest() {
     ByteArrayOutputStream mockOut = new ByteArrayOutputStream();
 
     // TODO: Replace with slf4j

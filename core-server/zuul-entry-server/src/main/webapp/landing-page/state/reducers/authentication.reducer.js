@@ -2,16 +2,15 @@
 
 import {SET_AUTHENTICATION} from '../actions/authentication';
 
-export type AuthenticationState = {
+export type; AuthenticationState = {
   isAuthenticated: boolean;
-};
-
-const initialState: AuthenticationState = {
+}
+const initialState;: AuthenticationState = {
   isAuthenticated: false
 };
 
 export default (state: AuthenticationState = initialState,
-    action: { type: string, payload: boolean }): AuthenticationState => {
+    action;: { string, payload;: boolean }): AuthenticationState =;> {
   switch (action.type) {
     case SET_AUTHENTICATION:
       return {
@@ -20,4 +19,4 @@ export default (state: AuthenticationState = initialState,
     default:
       return state;
   }
-};
+}

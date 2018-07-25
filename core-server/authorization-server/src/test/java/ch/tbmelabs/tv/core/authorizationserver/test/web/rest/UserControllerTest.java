@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Random;
@@ -75,13 +75,13 @@ public class UserControllerTest {
     assertThat(UserController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/users");
     assertThat(UserController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserAuthority.SERVER_SUPPORT + "')");
+        .isEqualTo("hasAuthority('" + UserRole.SERVER_SUPPORT + "')");
   }
 
   @Test
   public void getAllUsersShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("getAllUsers", new Class<?>[]{Pageable.class});
+        UserController.class.getDeclaredMethod("getAllUsers", Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -96,7 +96,7 @@ public class UserControllerTest {
   @Test
   public void updateUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("updateUser", new Class<?>[]{UserDTO.class});
+        UserController.class.getDeclaredMethod("updateUser", UserDTO.class);
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -112,7 +112,7 @@ public class UserControllerTest {
   @Test
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        UserController.class.getDeclaredMethod("deleteUser", new Class<?>[]{Long.class});
+        UserController.class.getDeclaredMethod("deleteUser", Long.class);
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
         .isEqualTo(new String[]{"/{id}"});
   }

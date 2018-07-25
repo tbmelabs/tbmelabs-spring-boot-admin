@@ -11,9 +11,8 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserRoleAssociationCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.json.JSONException;
@@ -55,9 +54,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   @Autowired
   private UserCRUDRepository userRepository;
 
-  @Autowired
-  private UserRoleAssociationCRUDRepository userRoleRepository;
-
   @BeforeClass
   public static void beforeClassSetUp() {
     existingUser.setUsername("Existing");
@@ -73,21 +69,21 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
   @Before
   public void beforeTestSetUp() {
-    if (!roleRepository.findOneByName(UserAuthority.USER).isPresent()) {
-      roleRepository.save(new Role(UserAuthority.USER));
+    if (!roleRepository.findByName(UserRole.USER).isPresent()) {
+      roleRepository.save(new Role(UserRole.USER));
     }
 
     existingUser = userRepository.save(existingUser);
 
     Optional<User> checkUnexistingUser;
     if ((checkUnexistingUser =
-        userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
+        userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
       userRepository.delete(checkUnexistingUser.get());
     }
   }
 
   @Test
-  public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() throws Exception {
+  public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() {
     assertThatThrownBy(() -> mockMvc
         .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new ObjectMapper().writeValueAsString(existingUser)))
@@ -98,20 +94,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   }
 
   @Test
-  public void postToSignupEndpointShouldSaveNewUser() throws Exception {
-    mockMvc
-        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
-                .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
-                .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
-
-    assertThat(userRepository.findOneByUsernameIgnoreCase(unexistingUser.getUsername()))
-        .isNotNull();
-  }
-
-  @Test
-  public void postToSignupEndpointShouldReturnCreatedUser() throws Exception {
+  public void postToSignupEndpointShouldCreateUser() throws Exception {
     JSONObject createdJsonUser = new JSONObject(mockMvc
         .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
@@ -119,6 +102,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
         .getContentAsString());
+
+    assertThat(userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
 
     Integer id = createdJsonUser.getInt("id");
     assertThat(id).isNotNull().isPositive();
@@ -149,6 +134,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0))
-        .isEqualTo(UserAuthority.USER);
+        .isEqualTo(UserRole.USER);
   }
 }

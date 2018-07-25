@@ -12,7 +12,7 @@ public interface UserService {
 
   Page<UserDTO> findAll(Pageable pageable);
 
-  Optional<User> findOneById(Long id);
+  Optional<User> findById(Long id);
 
   User update(UserDTO userDTO);
 

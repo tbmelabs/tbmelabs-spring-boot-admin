@@ -3,6 +3,7 @@ package ch.tbmelabs.tv.core.authorizationserver.domain;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -52,7 +53,7 @@ public class Role extends AbstractAuditingEntity implements GrantedAuthority {
   @JsonManagedReference("role_has_users")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "role", cascade = {CascadeType.ALL})
-  private Set<UserRoleAssociation> usersWithRoles;
+  private Set<UserRoleAssociation> usersWithRoles = new HashSet<>();
 
   public Role(String authority) {
     setName(authority);

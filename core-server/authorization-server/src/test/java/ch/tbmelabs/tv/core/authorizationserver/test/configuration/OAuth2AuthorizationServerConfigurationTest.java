@@ -49,7 +49,7 @@ public class OAuth2AuthorizationServerConfigurationTest {
   private OAuth2AuthorizationServerConfiguration fixture;
 
   @Before
-  public void beforeTestSetUp() throws Exception {
+  public void beforeTestSetUp() {
     initMocks(this);
   }
 

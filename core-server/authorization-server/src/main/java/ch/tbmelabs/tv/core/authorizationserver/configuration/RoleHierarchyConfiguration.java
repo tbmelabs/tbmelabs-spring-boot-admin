@@ -1,6 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -15,15 +15,15 @@ public class RoleHierarchyConfiguration {
   private static final List<String> ROLE_HIERARCHY = new ArrayList<>();
 
   static {
-    ROLE_HIERARCHY.add(UserAuthority.GANDALF);
-    ROLE_HIERARCHY.add(UserAuthority.SERVER_ADMIN);
-    ROLE_HIERARCHY.add(UserAuthority.SERVER_SUPPORT);
-    ROLE_HIERARCHY.add(UserAuthority.CONTENT_ADMIN);
-    ROLE_HIERARCHY.add(UserAuthority.CONTENT_SUPPORT);
-    ROLE_HIERARCHY.add(UserAuthority.PREMIUM_USER);
-    ROLE_HIERARCHY.add(UserAuthority.USER);
-    ROLE_HIERARCHY.add(UserAuthority.GUEST);
-    ROLE_HIERARCHY.add(UserAuthority.ANONYMOUS);
+    ROLE_HIERARCHY.add(UserRole.GANDALF);
+    ROLE_HIERARCHY.add(UserRole.SERVER_ADMIN);
+    ROLE_HIERARCHY.add(UserRole.SERVER_SUPPORT);
+    ROLE_HIERARCHY.add(UserRole.CONTENT_ADMIN);
+    ROLE_HIERARCHY.add(UserRole.CONTENT_SUPPORT);
+    ROLE_HIERARCHY.add(UserRole.PREMIUM_USER);
+    ROLE_HIERARCHY.add(UserRole.USER);
+    ROLE_HIERARCHY.add(UserRole.GUEST);
+    ROLE_HIERARCHY.add(UserRole.ANONYMOUS);
   }
 
   private String getRoleHierarchy() {

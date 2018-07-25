@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Random;
@@ -77,13 +77,13 @@ public class ClientControllerTest {
     assertThat(ClientController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/clients");
     assertThat(ClientController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')");
+        .isEqualTo("hasAuthority('" + UserRole.SERVER_ADMIN + "')");
   }
 
   @Test
   public void createClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ClientController.class.getDeclaredMethod("createClient", new Class<?>[]{ClientDTO.class});
+        ClientController.class.getDeclaredMethod("createClient", ClientDTO.class);
     assertThat(method.getDeclaredAnnotation(PostMapping.class).value()).isEmpty();
   }
 
@@ -97,7 +97,7 @@ public class ClientControllerTest {
   @Test
   public void getAllClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ClientController.class.getDeclaredMethod("getAllClients", new Class<?>[]{Pageable.class});
+        ClientController.class.getDeclaredMethod("getAllClients", Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 
@@ -112,7 +112,7 @@ public class ClientControllerTest {
   @Test
   public void updateClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ClientController.class.getDeclaredMethod("updateClient", new Class<?>[]{ClientDTO.class});
+        ClientController.class.getDeclaredMethod("updateClient", ClientDTO.class);
     assertThat(method.getDeclaredAnnotation(PutMapping.class).value()).isEmpty();
   }
 
@@ -128,7 +128,7 @@ public class ClientControllerTest {
   @Test
   public void deleteClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method =
-        ClientController.class.getDeclaredMethod("deleteClient", new Class<?>[]{Long.class});
+        ClientController.class.getDeclaredMethod("deleteClient", Long.class);
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
         .isEqualTo(new String[]{"/{id}"});
   }

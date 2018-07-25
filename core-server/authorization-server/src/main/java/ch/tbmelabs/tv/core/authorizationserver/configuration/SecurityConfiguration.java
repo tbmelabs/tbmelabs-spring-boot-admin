@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   }
 
   @Override
-  protected AuthenticationManager authenticationManager() throws Exception {
+  protected AuthenticationManager authenticationManager() {
     return authenticationManager;
   }
 
@@ -50,7 +50,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/me","/user").permitAll()
         .antMatchers("/signup/**").permitAll()
         .antMatchers("/public/**").permitAll()
-        .antMatchers("/actuator/**").permitAll()
       .anyRequest().authenticated()
 
       .and().formLogin()

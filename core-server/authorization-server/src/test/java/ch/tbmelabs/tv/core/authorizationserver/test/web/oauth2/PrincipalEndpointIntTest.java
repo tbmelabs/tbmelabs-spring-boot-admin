@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
@@ -53,10 +52,10 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
     newUser.setUsername(RandomStringUtils.randomAlphabetic(11));
     newUser.setEmail(newUser.getUsername() + "@tbme.tv");
     newUser.setPassword(RandomStringUtils.random(11));
-    newUser.setRoles(new HashSet<RoleDTO>(Collections.singletonList(
+    newUser.setRoles(new HashSet<>(Collections.singletonList(
         roleMapper.toDto(roleRepository.save(new Role(RandomStringUtils.random(11)))))));
 
-    testUser = userService.findOneById(userService.save(newUser).getId()).get();
+    testUser = userService.save(newUser);
   }
 
   @Test

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 public class ServiceAnnotationTest {
 
-  private static final Integer EXPECTED_SERVICE_COUNT = 12;
+  private static final Integer EXPECTED_SERVICE_COUNT = 13;
 
   @Test
   public void packageShouldOnlyContainServices() {

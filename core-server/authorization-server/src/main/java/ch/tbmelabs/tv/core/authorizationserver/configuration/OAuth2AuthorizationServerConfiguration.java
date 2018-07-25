@@ -42,14 +42,14 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
   }
 
   @Override
-  public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+  public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
     endpoints.authenticationManager(authenticationManager)
         .exceptionTranslator(loggingExceptionTranslator).reuseRefreshTokens(false)
         .tokenServices(tokenService).tokenStore(tokenStore).userDetailsService(userDetailsService);
   }
 
   @Override
-  public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+  public void configure(AuthorizationServerSecurityConfigurer security) {
     security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
   }
 

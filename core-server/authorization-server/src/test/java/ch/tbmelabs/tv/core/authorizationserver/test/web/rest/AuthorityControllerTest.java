@@ -12,7 +12,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.AuthorityMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.AuthorityCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.web.rest.AuthorityController;
-import ch.tbmelabs.tv.shared.constants.security.UserAuthority;
+import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -68,13 +68,13 @@ public class AuthorityControllerTest {
     assertThat(AuthorityController.class.getDeclaredAnnotation(RequestMapping.class).value())
         .containsExactly("${spring.data.rest.base-path}/authorities");
     assertThat(AuthorityController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserAuthority.SERVER_ADMIN + "')");
+        .isEqualTo("hasAuthority('" + UserRole.SERVER_ADMIN + "')");
   }
 
   @Test
   public void getAllAuthoritiesShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = AuthorityController.class.getDeclaredMethod("getAllAuthorities",
-        new Class<?>[]{Pageable.class});
+        Pageable.class);
     assertThat(method.getDeclaredAnnotation(GetMapping.class).value()).isEmpty();
   }
 

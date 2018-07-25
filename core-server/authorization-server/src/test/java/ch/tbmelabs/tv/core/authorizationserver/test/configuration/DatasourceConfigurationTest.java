@@ -34,7 +34,7 @@ public class DatasourceConfigurationTest {
     assertThat(new DatasourceConfiguration().dataSource()).isInstanceOf(HikariDataSource.class);
 
     Method datasourceConfiguration =
-        DatasourceConfiguration.class.getDeclaredMethod("dataSource", new Class[]{});
+        DatasourceConfiguration.class.getDeclaredMethod("dataSource");
 
     assertThat(datasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(datasourceConfiguration.getDeclaredAnnotation(Primary.class)).isNotNull();
@@ -50,7 +50,7 @@ public class DatasourceConfigurationTest {
         .isInstanceOf(HikariDataSource.class);
 
     Method jdbcTokenStoreDatasourceConfiguration =
-        DatasourceConfiguration.class.getDeclaredMethod("jdbcTokenStoreDatasource", new Class[]{});
+        DatasourceConfiguration.class.getDeclaredMethod("jdbcTokenStoreDatasource");
 
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Bean.class)).isNotNull();
     assertThat(jdbcTokenStoreDatasourceConfiguration.getDeclaredAnnotation(Profile.class).value())

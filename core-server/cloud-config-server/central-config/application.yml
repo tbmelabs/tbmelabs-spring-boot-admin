@@ -5,6 +5,19 @@ eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_DEFAULT_ZONE}
+  instance:
+    metadata-map:
+      user:
+        name: ${ACTUATOR_USERNAME}
+        password: ${ACTUATOR_PASSWORD}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
 security:
   oauth2:
     client:

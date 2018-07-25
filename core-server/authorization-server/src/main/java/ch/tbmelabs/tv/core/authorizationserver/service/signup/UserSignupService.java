@@ -21,7 +21,5 @@ public interface UserSignupService {
 
   boolean isUserValid(UserDTO testUser);
 
-  UserDTO setDefaultRolesIfNonePresent(UserDTO newUserDTO);
-
   User sendConfirmationEmailIfEmailIsEnabled(User persistedUser);
 }

@@ -36,7 +36,7 @@ public class ClientServiceImpl implements ClientService {
     return clientRepository.findAll(pageable).map(clientMapper::toDto);
   }
 
-  public Optional<Client> findOneById(Long id) {
+  public Optional<Client> findById(Long id) {
     return clientRepository.findById(id);
   }
 
