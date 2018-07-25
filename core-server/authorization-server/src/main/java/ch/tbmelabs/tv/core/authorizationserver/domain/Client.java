@@ -4,6 +4,7 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientauthorit
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientscope.ClientScopeAssociation;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -79,17 +80,17 @@ public class Client extends AbstractAuditingEntity {
   @JsonManagedReference("client_has_grant_types")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
-  private Set<ClientGrantTypeAssociation> grantTypes;
+  private Set<ClientGrantTypeAssociation> grantTypes = new HashSet<>();
 
   @JsonManagedReference("client_has_authorities")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
-  private Set<ClientAuthorityAssociation> authorities;
+  private Set<ClientAuthorityAssociation> authorities = new HashSet<>();
 
   @JsonManagedReference("client_has_scopes")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "client", cascade = {CascadeType.ALL})
-  private Set<ClientScopeAssociation> scopes;
+  private Set<ClientScopeAssociation> scopes = new HashSet<>();
 
   @Override
   public boolean equals(Object o) {

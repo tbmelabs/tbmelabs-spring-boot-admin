@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -55,7 +56,7 @@ public class Authority extends AbstractAuditingEntity implements GrantedAuthorit
   @JsonManagedReference("authority_has_clients")
   @LazyCollection(LazyCollectionOption.FALSE)
   @OneToMany(mappedBy = "authority", cascade = {CascadeType.ALL})
-  private Set<ClientAuthorityAssociation> clientsWithAuthorities;
+  private Set<ClientAuthorityAssociation> clientsWithAuthorities = new HashSet<>();
 
   public Authority(String name) {
     setName(name);

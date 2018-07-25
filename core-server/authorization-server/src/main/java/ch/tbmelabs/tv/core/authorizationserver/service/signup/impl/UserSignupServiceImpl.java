@@ -1,10 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup.impl;
 
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
@@ -15,7 +13,8 @@ import ch.tbmelabs.tv.shared.constants.security.UserRole;
 import ch.tbmelabs.tv.shared.constants.spring.SpringApplicationProfile;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,21 +37,21 @@ public class UserSignupServiceImpl implements UserSignupService {
 
   private RoleCRUDRepository roleRepository;
 
-  private RoleMapper roleMapper;
-
   private UserService userService;
 
   private UserMapper userMapper;
 
+  private EntityManager entityManager;
+
   public UserSignupServiceImpl(ApplicationContext applicationContext,
       UserCRUDRepository userCRUDRepository, RoleCRUDRepository roleCRUDRepository,
-      RoleMapper roleMapper, UserService userService, UserMapper userMapper) {
+      UserService userService, UserMapper userMapper, EntityManager entityManager) {
     this.applicationContext = applicationContext;
     this.userRepository = userCRUDRepository;
     this.roleRepository = roleCRUDRepository;
-    this.roleMapper = roleMapper;
     this.userService = userService;
     this.userMapper = userMapper;
+    this.entityManager = entityManager;
   }
 
   public boolean isUsernameUnique(UserDTO testUser) {
@@ -91,13 +90,18 @@ public class UserSignupServiceImpl implements UserSignupService {
     return testUser.getConfirmation().equals(testUser.getPassword());
   }
 
+  @Transactional
   public UserDTO signUpNewUser(UserDTO newUserDTO) {
     if (!isUserValid(newUserDTO)) {
       throw new IllegalArgumentException("An error occured. Please check your details!");
     }
 
-    newUserDTO = setDefaultRolesIfNonePresent(newUserDTO);
     User persistedUser = userService.save(newUserDTO);
+    if (persistedUser.getRoles().isEmpty()) {
+      setDefaultRolesIfNonePresent(persistedUser);
+      entityManager.flush();
+      entityManager.refresh(persistedUser);
+    }
 
     LOGGER.info("New user signed up! username: {}; email: {}", newUserDTO.getUsername(),
         newUserDTO.getEmail());
@@ -115,21 +119,14 @@ public class UserSignupServiceImpl implements UserSignupService {
         && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
   }
 
-  public UserDTO setDefaultRolesIfNonePresent(UserDTO newUserDTO) {
-    LOGGER.debug("Setting default roles for {}", newUserDTO.getUsername());
+  public void setDefaultRolesIfNonePresent(User newUser) {
+    LOGGER.debug("Setting default roles for {}", newUser.getUsername());
 
-    if (newUserDTO.getRoles() == null || newUserDTO.getRoles().isEmpty()) {
-      Optional<Role> userRole;
-      if (!(userRole = roleRepository.findByName(UserRole.USER)).isPresent()) {
-        throw new IllegalArgumentException(
-            "Unable to find default authority \'" + UserRole.USER + "\'!");
-      }
+    newUser.setRoles(new HashSet<>(Collections.singletonList(new UserRoleAssociation(newUser,
+        roleRepository.findByName(UserRole.USER).orElseThrow(() -> new IllegalArgumentException(
+            "Unable to find default " + UserRole.class + "'" + UserRole.USER + "'"))))));
 
-      newUserDTO.setRoles(
-          new HashSet<RoleDTO>(Collections.singletonList(roleMapper.toDto(userRole.get()))));
-    }
-
-    return newUserDTO;
+    userRepository.save(newUser);
   }
 
   public User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {
