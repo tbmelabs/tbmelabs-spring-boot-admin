@@ -10,7 +10,7 @@
   <parent>
     <groupId>ch.tbmelabs.tv</groupId>
     <artifactId>shared</artifactId>
-    <version>1.0.0.SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <dependencies>
@@ -30,7 +30,7 @@
     <dependency>
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>constants</artifactId>
-      <version>1.0.0.SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>

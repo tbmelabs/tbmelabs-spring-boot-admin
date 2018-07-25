@@ -8,7 +8,7 @@
   <parent>
     <groupId>ch.tbmelabs</groupId>
     <artifactId>tv</artifactId>
-    <version>1.0.0.SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <properties>
@@ -67,7 +67,7 @@
     <dependency>
       <groupId>ch.tbmelabs.tv.shared</groupId>
       <artifactId>constants</artifactId>
-      <version>1.0.0.SNAPSHOT</version>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
@@ -108,7 +108,7 @@
       <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>docker-maven-plugin</artifactId>
-        <version>1.0.0.SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
 
         <configuration>
           <baseImage>java:8</baseImage>
