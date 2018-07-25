@@ -78,7 +78,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
     Optional<User> checkUnexistingUser;
     if ((checkUnexistingUser =
         userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
-      userRepository.deleteById(checkUnexistingUser.get().getId());
+      userRepository.delete(checkUnexistingUser.get());
     }
   }
 
@@ -94,19 +94,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   }
 
   @Test
-  public void postToSignupEndpointShouldSaveNewUser() throws Exception {
-    mockMvc
-        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
-                .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
-                .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
-
-    assertThat(userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
-  }
-
-  @Test
-  public void postToSignupEndpointShouldReturnCreatedUser() throws Exception {
+  public void postToSignupEndpointShouldCreateUser() throws Exception {
     JSONObject createdJsonUser = new JSONObject(mockMvc
         .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
             .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
@@ -114,6 +102,8 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
                 .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
         .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
         .getContentAsString());
+
+    assertThat(userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
 
     Integer id = createdJsonUser.getInt("id");
     assertThat(id).isNotNull().isPositive();
