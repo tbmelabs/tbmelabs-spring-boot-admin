@@ -1,7 +1,7 @@
 import {} from 'jasmine';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SigninComponent } from './signin.component';
+import {SigninComponent} from './signin.component';
 
 describe('SigninComponent', () => {
   let component: SigninComponent;
@@ -9,7 +9,7 @@ describe('SigninComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SigninComponent ]
+      declarations: [SigninComponent]
     })
     .compileComponents();
   }));

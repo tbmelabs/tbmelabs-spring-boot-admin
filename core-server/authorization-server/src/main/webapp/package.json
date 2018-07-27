@@ -11,9 +11,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production",
-    "build:dev": "ng build --configuration=development",
+    "build": "npm run build:browser -- --configuration=production --delete-output-path --progress && npm run build:server -- --delete-output-path --progress",
+    "build:dev": "npm run build:browser -- --configuration=development --watch",
+    "build:browser": "ng build tbme-labs-authorization-server-application",
+    "build:server": "ng build",
     "test": "ng test",
+    "test:watch": "ng test --watch",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -26,6 +29,7 @@
     "@angular/http": "^6.0.3",
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
+    "@angular/platform-server": "^6.0.9",
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
     "rxjs": "^6.0.0",

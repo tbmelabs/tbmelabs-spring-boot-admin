@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { SigninComponent } from './signin';
-import { SignupComponent } from './signup';
-import { ConfirmAccessComponent } from './oauth/confirm-access';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {SigninComponent} from './signin';
+import {SignupComponent} from './signup';
+import {ConfirmAccessComponent} from './oauth/confirm-access';
+import {AppRoutingModule} from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -21,4 +21,5 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

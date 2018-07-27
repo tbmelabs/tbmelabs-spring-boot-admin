@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'oauth/confirm_access', component: ConfirmAccessComponent},
-  { path: '**', redirectTo: '/' }
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
