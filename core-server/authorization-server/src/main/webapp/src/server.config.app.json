@@ -4,7 +4,7 @@
     "entryModule": "./app/server.app.module#ServerAppModule"
   },
   "compilerOptions": {
-    "outDir": "../out-tsc/server",
+    "outDir": "../dist/server",
     "baseUrl": "./",
     "module": "commonjs",
     "types": []
