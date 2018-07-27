@@ -1,11 +1,11 @@
 // These are important and needed before anything else
-require('zone.js/dist/zone-node');
-require('reflect-metadata');
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
 
-const enableProdMode =  require('@angular/core').enableProdMode;
+import { enableProdMode } from '@angular/core';
 
-const express = require('express');
-const join = require('path').join;
+import * as express from 'express';
+import { join } from 'path';
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
@@ -20,9 +20,9 @@ const DIST_FOLDER = join(process.cwd(), 'dist');
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main');
 
 // Express Engine
-const ngExpressEngine = require('@nguniversal/express-engine').ngExpressEngine;
+import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
-const provideModuleMap = require('@nguniversal/module-map-ngfactory-loader').provideModuleMap;
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 app.engine('html', ngExpressEngine({
   bootstrap: AppServerModuleNgFactory,

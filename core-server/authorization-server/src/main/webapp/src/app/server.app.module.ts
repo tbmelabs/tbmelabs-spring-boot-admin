@@ -1,6 +1,6 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {ServerModule} from '@angular/platform-server';
 import {NgModule} from '@angular/core';
+import {ModuleMapLoaderModule} from '@nguniversal/module-map-ngfactory-loader';
 
 import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
@@ -8,8 +8,8 @@ import {AppComponent} from './app.component';
 @NgModule({
   imports: [
     AppModule,
-    BrowserModule.withServerTransition({appId: 'tbme-labs-authorization-server'}),
     ServerModule,
+    ModuleMapLoaderModule
   ],
   bootstrap: [AppComponent]
 })
