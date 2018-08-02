@@ -1,5 +1,5 @@
 import {enableProdMode} from '@angular/core';
 
-export {ServerAppModule} from './app/server.app.module';
+export {AppServerModule} from './app/app.server.module';
 
 enableProdMode();

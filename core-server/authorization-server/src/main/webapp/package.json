@@ -11,7 +11,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:server": "node dist/server",
+    "start:server": "node server",
     "build": "npm run build:browser -- --prod --configuration=production --delete-output-path --progress && npm run build:server -- --delete-output-path --progress",
     "build:dev": "npm run build:browser -- --watch",
     "build:browser": "ng build",
