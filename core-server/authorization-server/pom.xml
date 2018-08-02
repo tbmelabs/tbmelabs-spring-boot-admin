@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>ch.tbmelabs.tv.core-server</groupId>
@@ -137,16 +136,26 @@
       </resource>
 
       <resource>
-        <directory>src/main/webapp</directory>
+        <directory>src/main/webapp/dist/browser</directory>
         <excludes>
-          <exclude>.*</exclude>
-          <exclude>e2e/**</exclude>
-          <exclude>node_modules/**</exclude>
-          <exclude>src/**</exclude>
-          <exclude>*.json</exclude>
+          <exclude>*.css</exclude>
           <exclude>*.js</exclude>
         </excludes>
         <targetPath>static</targetPath>
+      </resource>
+
+      <resource>
+        <directory>src/main/webapp/dist/browser</directory>
+        <includes>
+          <include>*.css</include>
+          <include>*.js</include>
+        </includes>
+        <targetPath>static/public</targetPath>
+      </resource>
+
+      <resource>
+        <directory>src/main/webapp/dist/server</directory>
+        <targetPath>server-side-rendering</targetPath>
       </resource>
     </resources>
 
@@ -192,14 +201,39 @@
         </executions>
       </plugin>
 
+      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+      <!-- <plugin> -->
+      <!-- <groupId>org.codehaus.mojo</groupId> -->
+      <!-- <artifactId>exec-maven-plugin</artifactId> -->
+
+      <!-- <executions> -->
+      <!-- Breakup Angular-CLI flat folder structure -->
+      <!-- <execution> -->
+      <!-- <id>prepare-browser-app.sh</id> -->
+      <!-- <phase>process-resources</phase> -->
+
+      <!-- <goals> -->
+      <!-- <goal>exec</goal> -->
+      <!-- </goals> -->
+
+      <!-- <configuration> -->
+      <!-- <executable>cmd</executable> -->
+      <!-- <argument>/C</argument> -->
+      <!-- <argument>${basedir}/src/main/webapp/prepare-browser-app.sh</argument> -->
+      <!-- </configuration> -->
+      <!-- </execution> -->
+      <!-- </executions> -->
+      <!-- </plugin> -->
+
       <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
       <plugin>
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
 
+        <!-- Clear database before running integration tests -->
         <executions>
           <execution>
-            <id>pre-integration-test</id>
+            <id>flyway:clean</id>
 
             <phase>pre-integration-test</phase>
 
