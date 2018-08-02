@@ -15,7 +15,7 @@
     "build": "npm run build:browser:prod && npm run build:server:prod",
     "build:dev": "npm run build:browser",
     "build:browser": "ng build",
-    "build:browser:prod": "npm run build:browser -- --prod --delete-output-path --progress",
+    "build:browser:prod": "npm run build:browser -- --prod --deploy-url=/public --delete-output-path --progress",
     "build:server": "ng run tbme-labs-authorization-server:server",
     "build:server:prod": "ng run tbme-labs-authorization-server:server:production --delete-output-path --progress",
     "test": "ng test",
