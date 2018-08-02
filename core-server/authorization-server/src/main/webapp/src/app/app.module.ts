@@ -15,7 +15,7 @@ import { AppRoutingModule } from './/app-routing.module';
     ConfirmAccessComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule
   ],
   providers: [],
