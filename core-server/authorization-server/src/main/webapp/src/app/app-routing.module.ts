@@ -7,7 +7,8 @@ import {ConfirmAccessComponent} from './oauth/confirm-access';
 const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent},
-  {path: 'oauth/confirm_access', component: ConfirmAccessComponent}
+  {path: 'oauth/confirm_access', component: ConfirmAccessComponent},
+  {path: '**', redirectTo: '/'}
 ];
 
 @NgModule({
