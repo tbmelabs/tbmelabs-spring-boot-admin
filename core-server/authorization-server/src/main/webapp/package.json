@@ -11,13 +11,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:server": "node server",
-    "build": "npm run build:browser:prod && npm run build:server:prod",
+    "build": "npm run build:browser:prod && npm run build:server:prod && npm run webpack:server",
     "build:dev": "npm run build:browser",
     "build:browser": "ng build",
     "build:browser:prod": "npm run build:browser -- --prod --deploy-url=/public/ --delete-output-path --progress",
     "build:server": "ng run tbme-labs-authorization-server:server",
     "build:server:prod": "ng run tbme-labs-authorization-server:server:production --delete-output-path --progress",
+    "webpack:server": "webpack --config webpack.server.config.js --progress",
     "test": "ng test",
     "test:watch": "npm run test -- --watch",
     "lint": "ng lint",
@@ -57,8 +57,10 @@
     "karma-jasmine": "~1.1.1",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.3.0",
+    "ts-loader": "^4.4.2",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
-    "typescript": "~2.7.2"
+    "typescript": "~2.7.2",
+    "webpack-cli": "^3.1.0"
   }
 }
