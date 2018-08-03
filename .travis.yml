@@ -9,6 +9,7 @@ notifications:
   email: false
 
 addons:
+  chrome: stable
   sonarcloud:
     organization: "tbmelabs-github"
     token:
@@ -16,7 +17,6 @@ addons:
     branches:
       - master
       - development
-      - feature/*
 
 services:
   - postgresql
