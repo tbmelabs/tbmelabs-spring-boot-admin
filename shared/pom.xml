@@ -14,5 +14,6 @@
   <modules>
     <module>constants</module>
     <module>actuator-security-utils</module>
+    <module>angular-universal-j2v8-renderer</module>
   </modules>
 </project>

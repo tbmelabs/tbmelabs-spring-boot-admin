@@ -1,0 +1,85 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ch.tbmelabs.tv.shared</groupId>
+	<artifactId>angular-universal-j2v8-renderer</artifactId>
+
+	<parent>
+		<groupId>ch.tbmelabs.tv</groupId>
+		<artifactId>shared</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<properties>
+		<!-- Plugin configuration -->
+		<com.eclipsesource.j2v8.version>4.6.0</com.eclipsesource.j2v8.version>
+	</properties>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>eclipsesource-j2v8-linux</id>
+
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_linux_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_linux_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>eclipsesource-j2v8-windows</id>
+
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_win32_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_win32_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>eclipsesource-j2v8-mac</id>
+
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_macosx_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_macosx_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+</project>
