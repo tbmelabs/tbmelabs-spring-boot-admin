@@ -22,6 +22,7 @@
 
 		<!-- Plugin configuration -->
 		<com.eclipsesource.j2v8.version>4.6.0</com.eclipsesource.j2v8.version>
+		<org.json.json.version>20180130</org.json.json.version>
 		<org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
 		<com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
 		<com.github.eirslett.frontend-maven-plugin.node.version>v8.11.3</com.github.eirslett.frontend-maven-plugin.node.version>
@@ -53,6 +54,19 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-websocket -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${org.json.json.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
