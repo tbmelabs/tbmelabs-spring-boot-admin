@@ -21,6 +21,7 @@
 		<org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
 
 		<!-- Plugin configuration -->
+		<com.eclipsesource.j2v8.version>4.6.0</com.eclipsesource.j2v8.version>
 		<org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
 		<com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
 		<com.github.eirslett.frontend-maven-plugin.node.version>v8.11.3</com.github.eirslett.frontend-maven-plugin.node.version>
@@ -364,6 +365,63 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+
+		<profile>
+			<id>eclipsesource-j2v8-linux</id>
+
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_linux_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_linux_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>eclipsesource-j2v8-windows</id>
+
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_win32_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_win32_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<id>eclipsesource-j2v8-mac</id>
+
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+
+			<dependencies>
+				<!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_macosx_x86_64 -->
+				<dependency>
+					<groupId>com.eclipsesource.j2v8</groupId>
+					<artifactId>j2v8_macosx_x86_64</artifactId>
+					<version>${com.eclipsesource.j2v8.version}</version>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>
