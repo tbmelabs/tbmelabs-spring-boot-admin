@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.core.authorizationserver.service.userdetails;
+package ch.tbmelabs.tv.core.authorizationserver.ssr;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
