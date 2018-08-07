@@ -1,16 +1,32 @@
 require('zone.js');
 
-// TODO: Install the latest stable version as soon as the pull-request is merged
-// --> https://github.com/angular/universal/pull/999
-import * as socketEngine from './vendor/socket-engine';
-import {SocketEngineServer} from './vendor/socket-engine/src/main';
-// const socketEngine = require('@nguniversal/socket-engine');
+import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
+import {renderModuleFactory} from '@angular/platform-server';
 
-// * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main');
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/angular-server/main');
 
-socketEngine.startSocketEngine(AppServerModuleNgFactory).then((server: SocketEngineServer) => {
-  console.log('Successfully started socket-engine on port 9090.');
-}).catch((error) => {
-  throw new Error('Unable to start the socket-engine: ' + error);
-});
+export declare function registerRenderAdapter(renderadapter: RenderAdapter): void;
+
+export declare function receiveRenderedPage(uuid: string, html: string, error: any): void;
+
+export class RenderAdapter {
+  constructor(private appServerModuleNgFactory: any, private lazyModuleMap: any) {
+    registerRenderAdapter(this);
+  }
+
+  renderPage(uuid: string, uri: string) {
+    renderModuleFactory(this.appServerModuleNgFactory, {
+      document: '<app-root></app-root>',
+      url: uri,
+      extraProviders: [
+        provideModuleMap(this.lazyModuleMap)
+      ]
+    }).then(html => {
+      receiveRenderedPage(uuid, html, null);
+    }).catch(error => {
+      receiveRenderedPage(uuid, null, error);
+    });
+  }
+}
+
+new RenderAdapter(AppServerModuleNgFactory, LAZY_MODULE_MAP);
