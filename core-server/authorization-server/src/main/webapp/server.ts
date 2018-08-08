@@ -3,7 +3,7 @@ require('zone.js');
 import {provideModuleMap} from '@nguniversal/module-map-ngfactory-loader';
 import {renderModuleFactory} from '@angular/platform-server';
 
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/angular-server/main');
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require('./dist/server/main');
 
 export declare function registerRenderAdapter(renderadapter: RenderAdapter): void;
 
@@ -29,4 +29,5 @@ export class RenderAdapter {
   }
 }
 
+// tslint:disable-next-line
 new RenderAdapter(AppServerModuleNgFactory, LAZY_MODULE_MAP);

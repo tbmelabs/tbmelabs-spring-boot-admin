@@ -1,7 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
 import java.io.IOException;
-import java.util.concurrent.Executor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +27,7 @@ public class AngularUniversalRenderEngineConfiguration {
 
   @Bean
   @Qualifier("angularUniversalRenderEngineExecutor")
-  public Executor angularUniversalRenderEngineExecutor() {
+  public ThreadPoolTaskExecutor angularUniversalRenderEngineExecutor() {
     ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
     executor.setCorePoolSize(2);
     executor.setMaxPoolSize(2);
