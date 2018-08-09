@@ -12,8 +12,6 @@ public class RenderRequest extends CompletableFuture<String> {
   private String uri;
 
   public RenderRequest(String uri) {
-    super();
-
     setUri(uri);
 
     uuid = UUID.randomUUID().toString();
