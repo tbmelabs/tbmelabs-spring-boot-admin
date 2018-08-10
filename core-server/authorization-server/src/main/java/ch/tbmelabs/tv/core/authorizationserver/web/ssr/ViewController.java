@@ -8,6 +8,7 @@ import ch.tbmelabs.tv.core.authorizationserver.ssr.AngularUniversalRenderEngine;
 
 @RestController
 public class ViewController {
+
   private AngularUniversalRenderEngine angularUniversalRenderEngine;
 
   public ViewController(AngularUniversalRenderEngine angularUniversalRenderEngine) {

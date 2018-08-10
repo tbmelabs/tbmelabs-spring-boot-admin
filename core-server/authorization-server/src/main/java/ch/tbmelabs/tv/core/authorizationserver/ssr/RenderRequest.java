@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RenderRequest extends CompletableFuture<String> {
+
   private String uuid;
   private String uri;
 

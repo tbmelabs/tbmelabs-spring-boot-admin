@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.function.Consumer;
 import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import com.eclipsesource.v8.NodeJS;
 import com.eclipsesource.v8.V8Array;
@@ -22,13 +25,19 @@ public class AngularUniversalRenderEngine {
 
   private static final String SERVER_BUNDLE_LOCATION = "classpath:/server-side-rendering/server.js";
 
+  private static boolean handleRenderRequests = false;
   private static Set<RenderRequest> currentlyRenderingRequests = new HashSet<>();
+
+  ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
   private NodeJS nodeJs;
   private MemoryManager memoryManager;
   private V8Object renderAdapter;
 
-  public AngularUniversalRenderEngine(ResourceLoader resourceLoader) throws IOException {
+  public AngularUniversalRenderEngine(ResourceLoader resourceLoader,
+      ThreadPoolTaskExecutor angularUniversalRenderingExecutor) throws IOException {
+    this.threadPoolTaskExecutor = angularUniversalRenderingExecutor;
+
     File serverBundle = resourceLoader.getResource(SERVER_BUNDLE_LOCATION).getFile();
 
     LOGGER.info("Initilize {} with server runtime '{}'", AngularUniversalRenderEngine.class,
@@ -60,21 +69,30 @@ public class AngularUniversalRenderEngine {
 
     nodeJs.exec(serverBundle);
 
-    // TODO: An asynchronous task would handle this
-    nodeJs.handleMessage();
-
     return nodeJs;
   }
 
   public void start() {
+    AngularUniversalRenderEngine.handleRenderRequests = true;
+
     releaseThreadLock();
+
+    threadPoolTaskExecutor.execute(() -> {
+      while (AngularUniversalRenderEngine.handleRenderRequests) {
+        try {
+          executeV8ThreadAwareRunnable(() -> nodeJs.handleMessage()).get();
+        } catch (InterruptedException | ExecutionException e) {
+          throw new IllegalArgumentException(e);
+        }
+      }
+    });
+
   }
 
   public RenderRequest renderUri(String uri) {
     return completeRenderRequest(new RenderRequest(uri));
   }
 
-  // TODO: Run async (queue)
   private RenderRequest completeRenderRequest(RenderRequest renderRequest) {
     LOGGER.debug("Received render request {} for uri '{}'", renderRequest.getUuid(),
         renderRequest.getUri());
@@ -84,32 +102,24 @@ public class AngularUniversalRenderEngine {
           "An error occured while queing " + RenderRequest.class + " " + renderRequest.getUuid());
     }
 
-    acquireThreadLock();
-
-    // TODO: Queue up
-    V8Array parameters = new V8Array(nodeJs.getRuntime());
-    parameters = new V8Array(nodeJs.getRuntime());
-    parameters.push(renderRequest.getUuid());
-    parameters.push(renderRequest.getUri());
-    renderAdapter.executeVoidFunction("renderPage", parameters);
-    parameters.release();
-
-    releaseThreadLock();
-
-    // TODO: Run async (thread)
-    while (!renderRequest.isDone()) {
-      handleRenderRequests();
-    }
+    executeV8ThreadAwareRunnable(() -> {
+      V8Array parameters = new V8Array(nodeJs.getRuntime());
+      parameters = new V8Array(nodeJs.getRuntime());
+      parameters.push(renderRequest.getUuid());
+      parameters.push(renderRequest.getUri());
+      renderAdapter.executeVoidFunction("renderPage", parameters);
+      parameters.release();
+    });
 
     return renderRequest;
   }
 
-  private void handleRenderRequests() {
-    acquireThreadLock();
-
-    nodeJs.handleMessage();
-
-    releaseThreadLock();
+  private Future<?> executeV8ThreadAwareRunnable(Runnable runnable) {
+    return threadPoolTaskExecutor.submit(() -> {
+      acquireThreadLock();
+      runnable.run();
+      releaseThreadLock();
+    });
   }
 
   private void acquireThreadLock() {
@@ -152,9 +162,17 @@ public class AngularUniversalRenderEngine {
     AngularUniversalRenderEngine.currentlyRenderingRequests.remove(renderRequest);
   }
 
+  public void stop() {
+    AngularUniversalRenderEngine.handleRenderRequests = false;
+
+    acquireThreadLock();
+  }
+
   @PreDestroy
   public void preDestroy() {
     LOGGER.info("Destroying {}", AngularUniversalRenderEngine.class);
+
+    stop();
 
     memoryManager.release();
     nodeJs.release();
