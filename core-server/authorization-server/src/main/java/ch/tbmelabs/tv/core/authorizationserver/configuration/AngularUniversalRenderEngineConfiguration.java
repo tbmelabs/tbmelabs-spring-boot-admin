@@ -1,22 +1,16 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
-import java.io.IOException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ResourceLoader;
-import ch.tbmelabs.tv.core.authorizationserver.ssr.AngularUniversalRenderEngine;
 
+// @EnableAsync
 @Configuration
 public class AngularUniversalRenderEngineConfiguration {
-  private ResourceLoader resourceLoader;
-
-  public AngularUniversalRenderEngineConfiguration(ResourceLoader resourceLoader) {
-    this.resourceLoader = resourceLoader;
-  }
-
-  @Bean
-  public AngularUniversalRenderEngine angularUniversalRenderEngine() throws IOException {
-    return new AngularUniversalRenderEngine(
-        resourceLoader.getResource("classpath:/server-side-rendering/server.js").getFile());
-  }
+  // @Bean
+  // public ThreadPoolTaskExecutor angularUniversalRenderingExecutor() {
+  // ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+  // threadPoolTaskExecutor.setThreadNamePrefix("angular-universal-rendering-executor-");
+  // threadPoolTaskExecutor.setMaxPoolSize(2);
+  // threadPoolTaskExecutor.afterPropertiesSet();
+  // return threadPoolTaskExecutor;
+  // }
 }

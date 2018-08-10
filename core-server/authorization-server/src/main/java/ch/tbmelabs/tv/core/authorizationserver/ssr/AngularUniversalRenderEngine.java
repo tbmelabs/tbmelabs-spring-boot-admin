@@ -1,36 +1,42 @@
 package ch.tbmelabs.tv.core.authorizationserver.ssr;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 import com.eclipsesource.v8.NodeJS;
 import com.eclipsesource.v8.V8Array;
 import com.eclipsesource.v8.V8Object;
 import com.eclipsesource.v8.utils.MemoryManager;
 
+@Component
 public class AngularUniversalRenderEngine {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AngularUniversalRenderEngine.class);
 
-  private static Set<RenderRequest> currentlyRenderingRequests = new HashSet<>();
+  private static final String SERVER_BUNDLE_LOCATION = "classpath:/server-side-rendering/server.js";
 
-  private PessimisticThreadLockingV8TaskScheduler taskScheduler;
+  private static Set<RenderRequest> currentlyRenderingRequests = new HashSet<>();
 
   private NodeJS nodeJs;
   private MemoryManager memoryManager;
   private V8Object renderAdapter;
 
-  public AngularUniversalRenderEngine(File serverBundle) {
+  public AngularUniversalRenderEngine(ResourceLoader resourceLoader) throws IOException {
+    File serverBundle = resourceLoader.getResource(SERVER_BUNDLE_LOCATION).getFile();
+
     LOGGER.info("Initilize {} with server runtime '{}'", AngularUniversalRenderEngine.class,
         serverBundle.getAbsolutePath());
 
     nodeJs = initializeNodeRuntime(serverBundle);
 
-    taskScheduler = new PessimisticThreadLockingV8TaskScheduler(nodeJs, true);
+    start();
   }
 
   private NodeJS initializeNodeRuntime(File serverBundle) {
@@ -54,15 +60,23 @@ public class AngularUniversalRenderEngine {
 
     nodeJs.exec(serverBundle);
 
+    // TODO: An asynchronous task would handle this
+    nodeJs.handleMessage();
+
     return nodeJs;
+  }
+
+  public void start() {
+    releaseThreadLock();
   }
 
   public RenderRequest renderUri(String uri) {
     return completeRenderRequest(new RenderRequest(uri));
   }
 
+  // TODO: Run async (queue)
   private RenderRequest completeRenderRequest(RenderRequest renderRequest) {
-    LOGGER.info("Received render request {} for uri '{}'", renderRequest.getUuid(),
+    LOGGER.debug("Received render request {} for uri '{}'", renderRequest.getUuid(),
         renderRequest.getUri());
 
     if (!AngularUniversalRenderEngine.currentlyRenderingRequests.add(renderRequest)) {
@@ -70,25 +84,48 @@ public class AngularUniversalRenderEngine {
           "An error occured while queing " + RenderRequest.class + " " + renderRequest.getUuid());
     }
 
-    taskScheduler.schedule(() -> {
-      LOGGER.info("I am handling a rendering :)");
+    acquireThreadLock();
 
-      V8Array parameters = new V8Array(nodeJs.getRuntime());
-      parameters = new V8Array(nodeJs.getRuntime());
-      parameters.push(renderRequest.getUuid());
-      parameters.push(renderRequest.getUri());
-      renderAdapter.executeVoidFunction("renderPage", parameters);
-      parameters.release();
-    });
+    // TODO: Queue up
+    V8Array parameters = new V8Array(nodeJs.getRuntime());
+    parameters = new V8Array(nodeJs.getRuntime());
+    parameters.push(renderRequest.getUuid());
+    parameters.push(renderRequest.getUri());
+    renderAdapter.executeVoidFunction("renderPage", parameters);
+    parameters.release();
 
-    LOGGER.info("Fired scheduled task!");
+    releaseThreadLock();
+
+    // TODO: Run async (thread)
+    while (!renderRequest.isDone()) {
+      handleRenderRequests();
+    }
 
     return renderRequest;
   }
 
+  private void handleRenderRequests() {
+    acquireThreadLock();
+
+    nodeJs.handleMessage();
+
+    releaseThreadLock();
+  }
+
+  private void acquireThreadLock() {
+    nodeJs.getRuntime().getLocker().acquire();
+  }
+
+  private void releaseThreadLock() {
+    nodeJs.getRuntime().getLocker().release();
+  }
+
   private void renderRequestCompleted(String uuid, String html) {
     LOGGER.debug("Render request {} completed", uuid);
-    LOGGER.trace("Generated html is: {}", html);
+
+    if (LOGGER.isTraceEnabled()) {
+      LOGGER.trace("Generated html is: {}", html);
+    }
 
     consumeRenderRequest(uuid, renderRequest -> {
       renderRequest.complete(html);
@@ -116,10 +153,8 @@ public class AngularUniversalRenderEngine {
   }
 
   @PreDestroy
-  public synchronized void preDestroy() {
+  public void preDestroy() {
     LOGGER.info("Destroying {}", AngularUniversalRenderEngine.class);
-
-    taskScheduler.stop();
 
     memoryManager.release();
     nodeJs.release();
