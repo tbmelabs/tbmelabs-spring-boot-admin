@@ -26,7 +26,7 @@
     <org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
     <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
     <com.github.eirslett.frontend-maven-plugin.node.version>v8.11.3</com.github.eirslett.frontend-maven-plugin.node.version>
-    <com.github.eirslett.frontend-maven-plugin.npm.version>5.6.0</com.github.eirslett.frontend-maven-plugin.npm.version>
+    <com.github.eirslett.frontend-maven-plugin.yarn.version>v1.9.4</com.github.eirslett.frontend-maven-plugin.yarn.version>
     <com.github.eirslett.frontend-maven-plugin.installDirectory>target/node</com.github.eirslett.frontend-maven-plugin.installDirectory>
     <com.github.eirslett.frontend-maven-plugin.workingDirectory>src/main/webapp</com.github.eirslett.frontend-maven-plugin.workingDirectory>
   </properties>
@@ -175,34 +175,38 @@
         <artifactId>frontend-maven-plugin</artifactId>
         <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+
         <executions>
           <!-- download nodejs and npm -->
           <execution>
-            <id>install node and npm</id>
+            <id>install node and yarn</id>
             <phase>generate-resources</phase>
 
             <goals>
-              <goal>install-node-and-npm</goal>
+              <goal>install-node-and-yarn</goal>
             </goals>
 
             <configuration>
               <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
               <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
-              <npmVersion>${com.github.eirslett.frontend-maven-plugin.npm.version}</npmVersion>
+              <yarnVersion>${com.github.eirslett.frontend-maven-plugin.yarn.version}</yarnVersion>
             </configuration>
           </execution>
 
-          <!-- install npm dependencies -->
+          <!-- install dependencies -->
           <execution>
-            <id>npm install</id>
+            <id>yarn install</id>
             <phase>generate-resources</phase>
 
             <goals>
-              <goal>npm</goal>
+              <goal>yarn</goal>
             </goals>
 
             <configuration>
-              <arguments>install --no-save</arguments>
+              <arguments>install</arguments>
               <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
               <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
             </configuration>
@@ -267,14 +271,18 @@
             <artifactId>frontend-maven-plugin</artifactId>
             <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+
             <executions>
               <!-- build frontend -->
               <execution>
-                <id>npm run build:dev</id>
+                <id>yarn run build:dev</id>
                 <phase>generate-resources</phase>
 
                 <goals>
-                  <goal>npm</goal>
+                  <goal>yarn</goal>
                 </goals>
 
                 <configuration>
@@ -321,14 +329,18 @@
             <artifactId>frontend-maven-plugin</artifactId>
             <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+
             <executions>
               <!-- lint type check -->
               <execution>
-                <id>npm run lint</id>
+                <id>yarn run lint</id>
                 <phase>generate-resources</phase>
 
                 <goals>
-                  <goal>npm</goal>
+                  <goal>yarn</goal>
                 </goals>
 
                 <configuration>
@@ -340,11 +352,11 @@
 
               <!-- test application -->
               <execution>
-                <id>npm run test</id>
+                <id>yarn run test</id>
                 <phase>generate-resources</phase>
 
                 <goals>
-                  <goal>npm</goal>
+                  <goal>yarn</goal>
                 </goals>
 
                 <configuration>
@@ -356,11 +368,11 @@
 
               <!-- build frontend -->
               <execution>
-                <id>npm run build</id>
+                <id>yarn run build</id>
                 <phase>generate-resources</phase>
 
                 <goals>
-                  <goal>npm</goal>
+                  <goal>yarn</goal>
                 </goals>
 
                 <configuration>
