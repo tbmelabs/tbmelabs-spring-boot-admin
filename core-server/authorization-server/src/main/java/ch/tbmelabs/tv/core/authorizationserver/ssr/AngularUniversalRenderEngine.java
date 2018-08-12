@@ -28,7 +28,7 @@ public class AngularUniversalRenderEngine {
   private static boolean handleRenderRequests = false;
   private static Set<RenderRequest> currentlyRenderingRequests = new HashSet<>();
 
-  ThreadPoolTaskExecutor threadPoolTaskExecutor;
+  private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
   private NodeJS nodeJs;
   private MemoryManager memoryManager;

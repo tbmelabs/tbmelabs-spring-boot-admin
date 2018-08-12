@@ -2,10 +2,10 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "defaultProject": "tbme-labs-authorization-server",
+  "newProjectRoot": "projects",
   "cli": {
     "packageManager": "yarn"
   },
-  "newProjectRoot": "projects",
   "projects": {
     "tbme-labs-authorization-server": {
       "root": "",
