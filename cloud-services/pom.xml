@@ -72,8 +72,6 @@
   </dependencies>
 
   <build>
-    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
-
     <resources>
       <resource>
         <directory>src/main/resources</directory>
