@@ -15,6 +15,8 @@ branches:
   - development
 
 deploy:
+  provider: script
+  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && ./scripts/deploy.sh"
   skip_cleanup: true
 
 addons:
@@ -35,9 +37,9 @@ before_script:
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Pprod
   - sonar-scanner
-  - ./scripts/deploy.sh
 
 cache:
   directories:
+    - "$HOME/.cache"
     - '$HOME/.m2/repository'
     - '$HOME/.sonar/cache'

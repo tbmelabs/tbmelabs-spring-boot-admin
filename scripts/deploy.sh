@@ -5,11 +5,11 @@
 set -ev
 
 if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" ]]; then
-  # mvn deploy
-  echo "deploying master release"
+  # mvn versions:set deploy -DremoveSnapshot -DskipTests=true
+  echo "we'll deploy releases here!"
 else
-  # mvn deploy
-  echo "deploying snapshot release"
+  # mvn deploy -DskipTests=true
+  echo "we'll deploy snapshot here!"
 fi
 
 exit $?
