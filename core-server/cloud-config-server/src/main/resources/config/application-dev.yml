@@ -1,9 +1,0 @@
-spring:
-  cloud:
-    config:
-      fail-fast: false
-      label: development
-      profile: dev
-  profiles:
-    include:
-    - native

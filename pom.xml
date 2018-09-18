@@ -1,231 +1,469 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ch.tbmelabs</groupId>
-  <artifactId>tv</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>authorization-server</artifactId>
 
-  <name>TBME TV</name>
-  <description>Free to use streaming application.</description>
+    <name>TBME Labs | Authorization-Server</name>
+    <description>OAuth2 server allowing users to authenticate across multiple applications.</description>
+    <url>https://github.com/tbmelabs/tbmelabs-authorization-server</url>
 
-  <properties>
-    <!-- General configuration -->
-    <buildNumber>${maven.build.timestamp}</buildNumber>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-    <!-- Dependency configuration -->
-    <org.mockito.mockito-core.version>2.9.0</org.mockito.mockito-core.version>
+    <scm>
+        <url>https://github.com/tbmelabs/tbmelabs-authorization-server</url>
+        <connection>scm:git:git://github.com/tbmelabs/tbmelabs-authorization-server.git</connection>
+        <developerConnection>scm:git:git@github.com:tbmelabs/tbmelabs-authorization-server.git</developerConnection>
+    </scm>
 
-    <!-- Plugin configuration -->
-    <com.spotify.docker-maven-plugin.version>1.1.1</com.spotify.docker-maven-plugin.version>
-    <org.jacoco.jacoco-maven-plugin.version>0.8.1</org.jacoco.jacoco-maven-plugin.version>
+    <developers>
+        <developer>
+            <name>TBME Labs</name>
+            <email>info@tbmelabs.ch</email>
+            <organization>TBME Labs</organization>
+            <organizationUrl>tbmelabs.ch</organizationUrl>
+        </developer>
+    </developers>
 
-    <!-- Test coverage configuration -->
-    <project.build.test-result-directory>${project.build.directory}/test-results</project.build.test-result-directory>
+    <properties>
+        <!-- General configuration -->
+        <exec.mainClass>ch.tbmelabs.tv.core.authorizationserver.Application</exec.mainClass>
 
-    <org.jacoco.jacoco-maven-plugin.dest-file-path>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</org.jacoco.jacoco-maven-plugin.dest-file-path>
-    <org.jacoco.jacoco-maven-plugin.output-path>${project.build.test-result-directory}/coverage/jacoco</org.jacoco.jacoco-maven-plugin.output-path>
+        <!-- TBME Labs specific configuration -->
+        <ch.tbmelabs.version>1.0.0-SNAPSHOT</ch.tbmelabs.version>
 
-    <!-- Sonar configuration -->
-    <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
-    <sonar.issue.ignore.multicriteria>S2068a,S2068b</sonar.issue.ignore.multicriteria>
-    <sonar.issue.ignore.multicriteria.S2068a.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068a.ruleKey>
-    <sonar.issue.ignore.multicriteria.S2068a.resourceKey>**/UserSignupService.java</sonar.issue.ignore.multicriteria.S2068a.resourceKey>
-    <sonar.issue.ignore.multicriteria.S2068b.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068b.ruleKey>
-    <sonar.issue.ignore.multicriteria.S2068b.resourceKey>**/ClientGrantType.java</sonar.issue.ignore.multicriteria.S2068b.resourceKey>
+        <!-- org.flyway default properties during post-integration-test cleanup -->
+        <flyway.url>jdbc:postgresql://localhost:5432/auth_test_database</flyway.url>
+        <flyway.user>auth_test_user</flyway.user>
+        <flyway.password>auth_test_user_password</flyway.password>
 
-    <!-- Sonar report paths for sonar-server >= 6.2 -->
-    <sonar.jacoco.reportPaths>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</sonar.jacoco.reportPaths>
-    <sonar.javascript.lcov.reportPaths>${project.build.test-result-directory}/coverage/report-lcov/lcov.info</sonar.javascript.lcov.reportPaths>
+        <!-- Dependency configuration -->
+        <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
+        <org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
+        <org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
 
-    <!-- Sonar report paths for sonar-server < 6.2 -->
-    <sonar.jacoco.reportPath>${sonar.jacoco.reportPaths}</sonar.jacoco.reportPath>
-    <sonar.javascript.lcov.reportPath>${sonar.javascript.lcov.reportPaths}</sonar.javascript.lcov.reportPath>
-  </properties>
+        <!-- Plugin configuration -->
+        <com.eclipsesource.j2v8.version>4.6.0</com.eclipsesource.j2v8.version>
+        <com.github.eirslett.frontend-maven-plugin.version>1.6</com.github.eirslett.frontend-maven-plugin.version>
+        <com.github.eirslett.frontend-maven-plugin.node.version>v8.11.3</com.github.eirslett.frontend-maven-plugin.node.version>
+        <com.github.eirslett.frontend-maven-plugin.yarn.version>v1.9.4</com.github.eirslett.frontend-maven-plugin.yarn.version>
+        <com.github.eirslett.frontend-maven-plugin.installDirectory>target/node</com.github.eirslett.frontend-maven-plugin.installDirectory>
+        <com.github.eirslett.frontend-maven-plugin.workingDirectory>src/main/webapp</com.github.eirslett.frontend-maven-plugin.workingDirectory>
+    </properties>
 
-  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.3.RELEASE</version>
-  </parent>
+    <parent>
+        <groupId>ch.tbmelabs</groupId>
+        <artifactId>server-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
-  <modules>
-    <module>shared</module>
-    <module>core-server</module>
-    <module>cloud-services</module>
-  </modules>
-
-  <dependencyManagement>
     <dependencies>
-      <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Finchley.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-jdk8 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-jdk8</artifactId>
+            <version>${org.mapstruct.mapstruct-jdk8.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.mapstruct-processor.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/commons-validator/commons-validator -->
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.commons-validator.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <!-- <dependency> -->
+        <!-- <groupId>javax.validation</groupId> -->
+        <!-- <artifactId>validation-api</artifactId> -->
+        <!-- </dependency> -->
+
+        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+        <!-- <dependency> -->
+        <!-- <groupId>javax.servlet</groupId> -->
+        <!-- <artifactId>javax.servlet-api</artifactId> -->
+        <!-- </dependency> -->
+
+        <!-- DOTO: Update on release -->
+        <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/server-constants/ -->
+        <dependency>
+            <groupId>ch.tbmelabs</groupId>
+            <artifactId>server-constants</artifactId>
+        </dependency>
+
+        <!-- DOTO: Update on release -->
+        <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/actuator-endpoints-security-utils/ -->
+        <dependency>
+            <groupId>ch.tbmelabs</groupId>
+            <artifactId>actuator-endpoints-security-utils</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
-  </dependencyManagement>
 
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/webapp/dist/browser</directory>
+                <excludes>
+                    <exclude>*.css</exclude>
+                    <exclude>*.js</exclude>
+                </excludes>
+                <targetPath>static</targetPath>
+            </resource>
 
-    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <!-- Do not remove this! Mockito < 2.0 is required. -->
-      <version>${org.mockito.mockito-core.version}</version>
-      <scope>test</scope>
-    </dependency>
+            <resource>
+                <directory>src/main/webapp/dist/browser</directory>
+                <includes>
+                    <include>*.css</include>
+                    <include>*.js</include>
+                </includes>
+                <targetPath>static/public</targetPath>
+            </resource>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+            <resource>
+                <directory>src/main/webapp/dist/server</directory>
+                <targetPath>server-side-rendering</targetPath>
+            </resource>
+        </resources>
 
-  <build>
-    <defaultGoal>clean install</defaultGoal>
-    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+        <plugins>
+            <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
-    <plugins>
-      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-      </plugin>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
 
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
+                <executions>
+                    <!-- download nodejs and npm -->
+                    <execution>
+                        <id>install node and yarn</id>
+                        <phase>generate-resources</phase>
 
-        <executions>
-          <execution>
-            <id>unit-tests</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
 
-            <phase>test</phase>
+                        <configuration>
+                            <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                            <nodeVersion>${com.github.eirslett.frontend-maven-plugin.node.version}</nodeVersion>
+                            <yarnVersion>${com.github.eirslett.frontend-maven-plugin.yarn.version}</yarnVersion>
+                        </configuration>
+                    </execution>
 
-            <goals>
-              <goal>test</goal>
-            </goals>
+                    <!-- install dependencies -->
+                    <execution>
+                        <id>yarn install</id>
+                        <phase>generate-resources</phase>
 
-            <configuration>
-              <includes>
-                <include>**/*Test.java</include>
-              </includes>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
 
-              <excludes>
-                <exclude>**/*IntTest.java</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+                        <configuration>
+                            <arguments>install</arguments>
+                            <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                            <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
+            <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-maven-plugin -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
 
-        <executions>
-          <execution>
-            <id>integration-tests</id>
+                <!-- Clear database before running integration tests -->
+                <executions>
+                    <execution>
+                        <id>flyway:clean</id>
 
-            <phase>integration-test</phase>
+                        <phase>pre-integration-test</phase>
 
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-            <configuration>
-              <includes>
-                <include>**/*IntTest.java</include>
-              </includes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+    <profiles>
+        <profile>
+            <id>no-eureka</id>
 
-      <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${org.jacoco.jacoco-maven-plugin.version}</version>
+            <properties>
+                <run.jvmArguments>-Deureka.client.enabled=false</run.jvmArguments>
+            </properties>
+        </profile>
 
-        <executions>
-          <!-- download and install JaCoCo agent -->
-          <execution>
-            <id>prepare-agent</id>
+        <profile>
+            <id>no-redis</id>
 
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
+            <properties>
+                <run.profiles>,no-redis</run.profiles>
+            </properties>
+        </profile>
 
-            <configuration>
-              <destFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</destFile>
-            </configuration>
-          </execution>
+        <profile>
+            <id>no-mail</id>
 
-          <!-- report test coverage -->
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
+            <properties>
+                <run.profiles>,no-mail</run.profiles>
+            </properties>
+        </profile>
 
-            <goals>
-              <goal>report</goal>
-            </goals>
+        <profile>
+            <id>webpack</id>
 
-            <configuration>
-              <dataFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</dataFile>
-              <outputDirectory>${org.jacoco.jacoco-maven-plugin.output-path}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+            <build>
+                <plugins>
+                    <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
 
-  <reporting>
-    <plugins>
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <show>public</show>
-          <nohelp>true</nohelp>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
+                        <executions>
+                            <!-- build frontend -->
+                            <execution>
+                                <id>yarn run build:dev</id>
+                                <phase>generate-resources</phase>
+
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+
+                                <configuration>
+                                    <arguments>run build:dev</arguments>
+                                    <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                                    <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+
+            <build>
+                <plugins>
+                    <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${com.github.eirslett.frontend-maven-plugin.version}</version>
+
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+
+                        <executions>
+                            <!-- lint type check -->
+                            <execution>
+                                <id>yarn run lint</id>
+                                <phase>generate-resources</phase>
+
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+
+                                <configuration>
+                                    <arguments>run lint</arguments>
+                                    <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                                    <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                                </configuration>
+                            </execution>
+
+                            <!-- test application -->
+                            <execution>
+                                <id>yarn run test</id>
+                                <phase>generate-resources</phase>
+
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+
+                                <configuration>
+                                    <arguments>run test</arguments>
+                                    <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                                    <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                                </configuration>
+                            </execution>
+
+                            <!-- build frontend -->
+                            <execution>
+                                <id>yarn run build</id>
+                                <phase>generate-resources</phase>
+
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                    <installDirectory>${com.github.eirslett.frontend-maven-plugin.installDirectory}</installDirectory>
+                                    <workingDirectory>${com.github.eirslett.frontend-maven-plugin.workingDirectory}</workingDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>eclipsesource-j2v8-linux</id>
+
+            <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_linux_x86_64 -->
+                <dependency>
+                    <groupId>com.eclipsesource.j2v8</groupId>
+                    <artifactId>j2v8_linux_x86_64</artifactId>
+                    <version>${com.eclipsesource.j2v8.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>eclipsesource-j2v8-windows</id>
+
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_win32_x86_64 -->
+                <dependency>
+                    <groupId>com.eclipsesource.j2v8</groupId>
+                    <artifactId>j2v8_win32_x86_64</artifactId>
+                    <version>${com.eclipsesource.j2v8.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>eclipsesource-j2v8-mac</id>
+
+            <activation>
+                <os>
+                    <family>mac</family>
+                </os>
+            </activation>
+
+            <dependencies>
+                <!-- https://mvnrepository.com/artifact/com.eclipsesource.j2v8/j2v8_macosx_x86_64 -->
+                <dependency>
+                    <groupId>com.eclipsesource.j2v8</groupId>
+                    <artifactId>j2v8_macosx_x86_64</artifactId>
+                    <version>${com.eclipsesource.j2v8.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>ossrh-snapshot</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
+        <repository>
+            <id>apache</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

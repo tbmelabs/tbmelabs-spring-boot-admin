@@ -1,8 +1,0 @@
-spring:
-  cloud:
-    config:
-      fail-fast: true
-      label: master
-      name: spring-boot-admin-server
-      profile: ${spring.profiles.active:prod}
-      uri: ${CLOUD_CONFIG_URL}/config
