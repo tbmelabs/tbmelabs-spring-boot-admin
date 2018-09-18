@@ -1,13 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.signup.impl;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
-import org.apache.commons.validator.routines.EmailValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Service;
 import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
@@ -17,6 +9,14 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDReposit
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
 import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
 import ch.tbmelabs.tv.core.authorizationserver.service.signup.UserSignupService;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserSignupServiceImpl implements UserSignupService {
@@ -25,7 +25,7 @@ public class UserSignupServiceImpl implements UserSignupService {
 
   private static final String USERNAME_REGEX = "^[A-Za-z0-9_-]{5,20}$";
   private static final String PASSWORD_REGEX =
-      "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
   private ApplicationContext applicationContext;
 
@@ -40,8 +40,8 @@ public class UserSignupServiceImpl implements UserSignupService {
   private EntityManager entityManager;
 
   public UserSignupServiceImpl(ApplicationContext applicationContext,
-      UserCRUDRepository userCRUDRepository, RoleCRUDRepository roleCRUDRepository,
-      UserService userService, UserMapper userMapper, EntityManager entityManager) {
+    UserCRUDRepository userCRUDRepository, RoleCRUDRepository roleCRUDRepository,
+    UserService userService, UserMapper userMapper, EntityManager entityManager) {
     this.applicationContext = applicationContext;
     this.userRepository = userCRUDRepository;
     this.roleRepository = roleCRUDRepository;
@@ -95,7 +95,7 @@ public class UserSignupServiceImpl implements UserSignupService {
     User persistedUser = userService.save(newUserDTO);
 
     LOGGER.info("New user signed up! username: '{}'; email: '{}'", persistedUser.getUsername(),
-        persistedUser.getEmail());
+      persistedUser.getEmail());
 
     sendConfirmationEmailIfEmailIsEnabled(persistedUser);
 
@@ -106,8 +106,8 @@ public class UserSignupServiceImpl implements UserSignupService {
     LOGGER.debug("Checking if user \'{}\' is valid", testUser);
 
     return isUsernameUnique(testUser) && doesUsernameMatchFormat(testUser)
-        && isEmailAddressUnique(testUser) && isEmailAddress(testUser)
-        && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
+      && isEmailAddressUnique(testUser) && isEmailAddress(testUser)
+      && doesPasswordMatchFormat(testUser) && doPasswordsMatch(testUser);
   }
 
   public User sendConfirmationEmailIfEmailIsEnabled(User persistedUser) {
@@ -116,9 +116,9 @@ public class UserSignupServiceImpl implements UserSignupService {
     if (!environment.acceptsProfiles(SpringApplicationProfileEnum.NO_MAIL.getName())) {
       applicationContext.getBean(UserMailServiceImpl.class).sendSignupConfirmation(persistedUser);
     } else if (!environment.acceptsProfiles(SpringApplicationProfileEnum.DEV.getName(),
-        SpringApplicationProfileEnum.TEST.getName())) {
+      SpringApplicationProfileEnum.TEST.getName())) {
       throw new IllegalArgumentException(
-          "You cannot run a productive environment without any mail configuration!");
+        "You cannot run a productive environment without any mail configuration!");
     } else {
       userRepository.updateUserSetIsEnabledTrue(persistedUser);
     }

@@ -66,25 +66,25 @@ public class ClientDetailsImpl implements ClientDetails {
   @Override
   public Set<String> getAuthorizedGrantTypes() {
     return client.getGrantTypes().stream()
-        .map(association -> association.getGrantType().getName()).collect(Collectors.toSet());
+      .map(association -> association.getGrantType().getName()).collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> getScope() {
     return client.getScopes().stream().map(association -> association.getScope().getName())
-        .collect(Collectors.toSet());
+      .collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> getRegisteredRedirectUri() {
     return new HashSet<>(
-        Arrays.asList(client.getRedirectUri().split(CLIENT_REDIRECT_URI_SPLITTERATOR)));
+      Arrays.asList(client.getRedirectUri().split(CLIENT_REDIRECT_URI_SPLITTERATOR)));
   }
 
   @Override
   public Collection<GrantedAuthority> getAuthorities() {
     return client.getAuthorities().stream()
-        .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList());
+      .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList());
   }
 
   @Override

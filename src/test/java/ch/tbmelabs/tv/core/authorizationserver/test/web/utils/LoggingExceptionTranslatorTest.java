@@ -24,7 +24,7 @@ public class LoggingExceptionTranslatorTest {
 
   private static final String EXCEPTION_MESSAGE = "This is a test exception.";
   private static final IllegalArgumentException EXCEPTION =
-      new IllegalArgumentException(EXCEPTION_MESSAGE);
+    new IllegalArgumentException(EXCEPTION_MESSAGE);
 
   @Mock
   private ThrowableAnalyzer throwableAnalyzerFixture;
@@ -40,7 +40,7 @@ public class LoggingExceptionTranslatorTest {
 
     doCallRealMethod().when(fixture).translate(ArgumentMatchers.any(Exception.class));
     doReturn(new Throwable[]{}).when(throwableAnalyzerFixture)
-        .determineCauseChain(ArgumentMatchers.any(Throwable.class));
+      .determineCauseChain(ArgumentMatchers.any(Throwable.class));
   }
 
   @Test
@@ -51,19 +51,19 @@ public class LoggingExceptionTranslatorTest {
   @Test
   public void loggingExceptionTranslatorShouldExtendDefaultWebResponseExceptionTranslator() {
     assertThat(DefaultWebResponseExceptionTranslator.class)
-        .isAssignableFrom(LoggingExceptionTranslator.class);
+      .isAssignableFrom(LoggingExceptionTranslator.class);
   }
 
   @Test
   public void loggingExceptionTranslatorShouldTranslateExceptionToResponseEntity()
-      throws Exception {
+    throws Exception {
     ResponseEntity<OAuth2Exception> responseFixture = fixture.translate(EXCEPTION);
 
     assertThat(responseFixture.getBody()).hasCause(EXCEPTION)
-        .hasStackTraceContaining(EXCEPTION_MESSAGE);
+      .hasStackTraceContaining(EXCEPTION_MESSAGE);
     assertThat(responseFixture.getStatusCodeValue()).isEqualTo(HttpStatus.SC_INTERNAL_SERVER_ERROR);
     assertThat(responseFixture.getHeaders()).hasSize(2).containsExactly(
-        entry("Cache-Control", Collections.singletonList("no-store")),
-        entry("Pragma", Collections.singletonList("no-cache")));
+      entry("Cache-Control", Collections.singletonList("no-store")),
+      entry("Pragma", Collections.singletonList("no-cache")));
   }
 }

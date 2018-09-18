@@ -51,25 +51,25 @@ public class AuthenticationManagerConfigurationTest {
 
   @Test
   public void authenticationManagerBeanShouldBeAnnotated()
-      throws NoSuchMethodException, SecurityException {
+    throws NoSuchMethodException, SecurityException {
     assertThat(AuthenticationManagerConfiguration.class
-        .getDeclaredMethod("authenticationManager")
-        .getDeclaredAnnotation(Bean.class)).isNotNull();
+      .getDeclaredMethod("authenticationManager")
+      .getDeclaredAnnotation(Bean.class)).isNotNull();
   }
 
   @Test
   public void authenticationManagerBeanShouldReturnAnAuthenticationManager() throws Exception {
     assertThat(((ProviderManager) fixture.authenticationManager()).getProviders()).isNotNull()
-        .hasSize(2).contains(preAuthProviderImplFixture);
+      .hasSize(2).contains(preAuthProviderImplFixture);
 
     Optional<AuthenticationProvider> daoProvider =
-        ((ProviderManager) fixture.authenticationManager()).getProviders().stream()
-            .filter(
-                provider -> DaoAuthenticationProvider.class.isAssignableFrom(provider.getClass()))
-            .findFirst();
+      ((ProviderManager) fixture.authenticationManager()).getProviders().stream()
+        .filter(
+          provider -> DaoAuthenticationProvider.class.isAssignableFrom(provider.getClass()))
+        .findFirst();
 
     assertThat(daoProvider.isPresent()).isTrue();
     assertThat((DaoAuthenticationProvider) daoProvider.get())
-        .hasFieldOrPropertyWithValue("userDetailsService", userDetailsServiceImplFixture);
+      .hasFieldOrPropertyWithValue("userDetailsService", userDetailsServiceImplFixture);
   }
 }

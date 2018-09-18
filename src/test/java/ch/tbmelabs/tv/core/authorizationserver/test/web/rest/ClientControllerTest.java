@@ -5,6 +5,14 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.security.UserRoleEnum;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Random;
@@ -24,13 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.serverconstants.security.UserRoleEnum;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
-import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.ClientController;
 
 public class ClientControllerTest {
 
@@ -59,11 +60,11 @@ public class ClientControllerTest {
     testClientDTO.setAccessTokenValiditySeconds(testClient.getAccessTokenValiditySeconds());
     testClientDTO.setRefreshTokenValiditySeconds(testClient.getRefreshTokenValiditySeconds());
     testClientDTO
-        .setRedirectUris(testClient.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
+      .setRedirectUris(testClient.getRedirectUri().split(Client.REDIRECT_URI_SPLITTERATOR));
     // TODO: Associations
 
     doReturn(new PageImpl<ClientDTO>(Collections.singletonList(testClientDTO)))
-        .when(mockClientService).findAll(Mockito.any(Pageable.class));
+      .when(mockClientService).findAll(Mockito.any(Pageable.class));
 
     doReturn(testClientDTO).when(mockClientMapper).toDto(ArgumentMatchers.any(Client.class));
     doReturn(testClient).when(mockClientMapper).toEntity(ArgumentMatchers.any(ClientDTO.class));
@@ -72,11 +73,11 @@ public class ClientControllerTest {
   @Test
   public void clientControllerShouldBeAnnotated() {
     assertThat(ClientController.class).hasAnnotation(RestController.class)
-        .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
+      .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
     assertThat(ClientController.class.getDeclaredAnnotation(RequestMapping.class).value())
-        .containsExactly("${spring.data.rest.base-path}/clients");
+      .containsExactly("${spring.data.rest.base-path}/clients");
     assertThat(ClientController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
+      .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
   }
 
   @Test
@@ -101,7 +102,7 @@ public class ClientControllerTest {
   @Test
   public void getAllClientsShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllClients(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testClientDTO);
+      .containsExactly(testClientDTO);
 
     verify(mockClientService, times(1)).findAll(Mockito.any(Pageable.class));
   }
@@ -125,7 +126,7 @@ public class ClientControllerTest {
   public void deleteClientShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = ClientController.class.getDeclaredMethod("deleteClient", Long.class);
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
-        .isEqualTo(new String[] {"/{id}"});
+      .isEqualTo(new String[]{"/{id}"});
   }
 
   @Test

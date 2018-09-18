@@ -5,6 +5,14 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.security.UserRoleConstants;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Random;
@@ -23,13 +31,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.serverconstants.security.UserRoleConstants;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.UserDTOTest;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.UserController;
 
 public class UserControllerTest {
 
@@ -61,7 +62,7 @@ public class UserControllerTest {
     // TODO: Associations
 
     doReturn(new PageImpl<>(Collections.singletonList(testUserDTO))).when(mockUserService)
-        .findAll(ArgumentMatchers.any(Pageable.class));
+      .findAll(ArgumentMatchers.any(Pageable.class));
 
     doReturn(testUserDTO).when(mockUserMapper).toDto(ArgumentMatchers.any(User.class));
     doReturn(testUser).when(mockUserMapper).toEntity(ArgumentMatchers.any(UserDTO.class));
@@ -70,11 +71,11 @@ public class UserControllerTest {
   @Test
   public void userControllerShouldBeAnnotated() {
     assertThat(UserController.class).hasAnnotation(RestController.class)
-        .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
+      .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
     assertThat(UserController.class.getDeclaredAnnotation(RequestMapping.class).value())
-        .containsExactly("${spring.data.rest.base-path}/users");
+      .containsExactly("${spring.data.rest.base-path}/users");
     assertThat(UserController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserRoleConstants.SERVER_SUPPORT + "')");
+      .isEqualTo("hasAuthority('" + UserRoleConstants.SERVER_SUPPORT + "')");
   }
 
   @Test
@@ -86,7 +87,7 @@ public class UserControllerTest {
   @Test
   public void getAllUsersShouldReturnPageWithAllClients() {
     assertThat(fixture.getAllUsers(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(testUserDTO);
+      .containsExactly(testUserDTO);
 
     verify(mockUserService, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
@@ -110,7 +111,7 @@ public class UserControllerTest {
   public void deleteUserShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method method = UserController.class.getDeclaredMethod("deleteUser", Long.class);
     assertThat(method.getDeclaredAnnotation(DeleteMapping.class).value())
-        .isEqualTo(new String[] {"/{id}"});
+      .isEqualTo(new String[]{"/{id}"});
   }
 
   @Test

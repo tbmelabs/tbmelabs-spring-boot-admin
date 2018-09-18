@@ -17,7 +17,7 @@ public class TokenServiceConfiguration {
   private TokenStore tokenStore;
 
   public TokenServiceConfiguration(AuthenticationManager authenticationManager,
-      ClientDetailsServiceImpl clientDetailsService, TokenStore tokenStore) {
+    ClientDetailsServiceImpl clientDetailsService, TokenStore tokenStore) {
     this.authenticationManager = authenticationManager;
     this.clientDetailsService = clientDetailsService;
     this.tokenStore = tokenStore;

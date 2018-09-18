@@ -36,7 +36,7 @@ public class AuthorityTest {
     assertThat(Authority.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(Authority.class.getDeclaredAnnotation(Table.class).name())
-        .isEqualTo("client_authorities");
+      .isEqualTo("client_authorities");
   }
 
   @Test
@@ -52,7 +52,7 @@ public class AuthorityTest {
   @Test
   public void authorityShouldHaveAllArgsConstructor() {
     assertThat(new Authority(TEST_AUTHORITY_NAME)).hasFieldOrPropertyWithValue("name",
-        TEST_AUTHORITY_NAME);
+      TEST_AUTHORITY_NAME);
   }
 
   @Test
@@ -78,7 +78,7 @@ public class AuthorityTest {
   @Test
   public void authorityShouldHaveClientsGetterAndSetter() {
     Set<ClientAuthorityAssociation> associations = new HashSet<>(
-        Collections.singletonList(Mockito.mock(ClientAuthorityAssociation.class)));
+      Collections.singletonList(Mockito.mock(ClientAuthorityAssociation.class)));
 
     fixture.setClientsWithAuthorities(associations);
 

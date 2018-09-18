@@ -22,7 +22,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = {GrantTypeMapper.class, GrantTypeService.class,
-    AuthorityMapper.class, AuthorityService.class, ScopeMapper.class, ScopeService.class})
+  AuthorityMapper.class, AuthorityService.class, ScopeMapper.class, ScopeService.class})
 public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
 
   GrantTypeMapper grantTypeMapper = Mappers.getMapper(GrantTypeMapper.class);
@@ -72,45 +72,45 @@ public interface ClientMapper extends EntityMapper<Client, ClientDTO> {
   }
 
   default Set<GrantTypeDTO> grantTypeAssociationsToGrantTypes(
-      Set<ClientGrantTypeAssociation> grantTypes) {
+    Set<ClientGrantTypeAssociation> grantTypes) {
     return grantTypes.stream().map(ClientGrantTypeAssociation::getGrantType)
-        .map(grantTypeMapper::toDto).collect(Collectors.toSet());
+      .map(grantTypeMapper::toDto).collect(Collectors.toSet());
   }
 
   default Set<ClientGrantTypeAssociation> grantTypesToGrantTypeAssociations(
-      Set<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
+    Set<GrantTypeDTO> grantTypes, @MappingTarget Client client) {
     return grantTypes.stream()
-        .map(grantType -> new ClientGrantTypeAssociation(client,
-            ApplicationContextHolder.getApplicationContext().getBean(GrantTypeService.class)
-                .findByName(grantType.getName())))
-        .collect(Collectors.toSet());
+      .map(grantType -> new ClientGrantTypeAssociation(client,
+        ApplicationContextHolder.getApplicationContext().getBean(GrantTypeService.class)
+          .findByName(grantType.getName())))
+      .collect(Collectors.toSet());
   }
 
   default Set<AuthorityDTO> authorityAssociationsToAuthorities(
-      Set<ClientAuthorityAssociation> grantedAuthorities) {
+    Set<ClientAuthorityAssociation> grantedAuthorities) {
     return grantedAuthorities.stream().map(ClientAuthorityAssociation::getAuthority)
-        .map(authorityMapper::toDto).collect(Collectors.toSet());
+      .map(authorityMapper::toDto).collect(Collectors.toSet());
   }
 
   default Set<ClientAuthorityAssociation> authoritiesToAuthorityAssociations(
-      Set<AuthorityDTO> authorities, @MappingTarget Client client) {
+    Set<AuthorityDTO> authorities, @MappingTarget Client client) {
     return authorities.stream()
-        .map(authority -> new ClientAuthorityAssociation(client,
-            ApplicationContextHolder.getApplicationContext().getBean(AuthorityService.class)
-                .findByName(authority.getName())))
-        .collect(Collectors.toSet());
+      .map(authority -> new ClientAuthorityAssociation(client,
+        ApplicationContextHolder.getApplicationContext().getBean(AuthorityService.class)
+          .findByName(authority.getName())))
+      .collect(Collectors.toSet());
   }
 
   default Set<ScopeDTO> scopeAssociationsToScopes(Set<ClientScopeAssociation> scopes) {
     return scopes.stream().map(ClientScopeAssociation::getScope).map(scopeMapper::toDto)
-        .collect(Collectors.toSet());
+      .collect(Collectors.toSet());
   }
 
   default Set<ClientScopeAssociation> scopesToScopeAssociations(Set<ScopeDTO> scopes,
-      @MappingTarget Client client) {
+    @MappingTarget Client client) {
     return scopes.stream()
-        .map(scope -> new ClientScopeAssociation(client, ApplicationContextHolder
-            .getApplicationContext().getBean(ScopeService.class).findByName(scope.getName())))
-        .collect(Collectors.toSet());
+      .map(scope -> new ClientScopeAssociation(client, ApplicationContextHolder
+        .getApplicationContext().getBean(ScopeService.class).findByName(scope.getName())))
+      .collect(Collectors.toSet());
   }
 }

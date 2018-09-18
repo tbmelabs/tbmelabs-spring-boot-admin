@@ -22,6 +22,6 @@ public class SpELConfigurationTest {
   @Test
   public void securityExtensionShouldReturnAnEvaluationContextExtension() {
     assertThat(new SpELConfiguration().securityExtension())
-        .isInstanceOf(SecurityEvaluationContextExtension.class);
+      .isInstanceOf(SecurityEvaluationContextExtension.class);
   }
 }

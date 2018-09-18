@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserAuthorityAssociationCRUDRepository
-    extends CrudRepository<UserRoleAssociation, Long> {
+  extends CrudRepository<UserRoleAssociation, Long> {
 
 }

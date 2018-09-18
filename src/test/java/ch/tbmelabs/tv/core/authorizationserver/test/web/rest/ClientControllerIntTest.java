@@ -7,15 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.util.HashSet;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ch.tbmelabs.serverconstants.security.UserRoleConstants;
 import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
 import ch.tbmelabs.tv.core.authorizationserver.domain.dto.AuthorityDTO;
@@ -26,6 +18,15 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ClientCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 import ch.tbmelabs.tv.core.authorizationserver.test.domain.dto.ClientDTOTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashSet;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 
 public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -65,79 +66,79 @@ public class ClientControllerIntTest extends AbstractOAuth2AuthorizationServerCo
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_ADMIN})
+    authorities = {UserRoleConstants.SERVER_ADMIN})
   public void postClientEndpointIsAccessibleToServerAdmins() throws Exception {
     mockMvc
-        .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_SUPPORT})
+    authorities = {UserRoleConstants.SERVER_SUPPORT})
   public void postClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc
-        .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
-        .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+      .perform(post(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+      .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_ADMIN})
+    authorities = {UserRoleConstants.SERVER_ADMIN})
   public void getClientsEndpointIsAccessibleToServerAdmins() throws Exception {
     mockMvc.perform(get(clientsEndpoint).with(csrf())).andDo(print())
-        .andExpect(status().is(HttpStatus.OK.value()));
+      .andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_SUPPORT})
+    authorities = {UserRoleConstants.SERVER_SUPPORT})
   public void getClientsEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc.perform(get(clientsEndpoint).with(csrf())).andDo(print())
-        .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+      .andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_ADMIN})
+    authorities = {UserRoleConstants.SERVER_ADMIN})
   public void putClientEndpointIsAccessibleToServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc
-        .perform(put(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(put(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_SUPPORT})
+    authorities = {UserRoleConstants.SERVER_SUPPORT})
   public void putClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     mockMvc
-        .perform(put(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(testClientDTO)))
-        .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+      .perform(put(clientsEndpoint).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(testClientDTO)))
+      .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_ADMIN})
+    authorities = {UserRoleConstants.SERVER_ADMIN})
   public void deleteClientEndpointIsAccessibleToServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc.perform(delete(clientsEndpoint + "/" + testClientDTO.getId()).with(csrf()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 
   @Test
   @WithMockUser(username = "ClientControllerIntTestUser",
-      authorities = {UserRoleConstants.SERVER_SUPPORT})
+    authorities = {UserRoleConstants.SERVER_SUPPORT})
   public void deleteClientEndpointIsNotAccessibleToNonServerAdmins() throws Exception {
     testClientDTO = clientMapper.toDto(clientRepository.save(clientMapper.toEntity(testClientDTO)));
 
     mockMvc.perform(delete(clientsEndpoint + "/" + testClientDTO.getId()).with(csrf()))
-        .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
+      .andDo(print()).andExpect(status().is(HttpStatus.FORBIDDEN.value()));
   }
 }

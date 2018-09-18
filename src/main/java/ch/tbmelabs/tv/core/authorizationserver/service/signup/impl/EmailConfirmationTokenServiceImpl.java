@@ -16,15 +16,15 @@ import org.springframework.stereotype.Service;
 public class EmailConfirmationTokenServiceImpl implements EmailConfirmationTokenService {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(EmailConfirmationTokenServiceImpl.class);
+    LoggerFactory.getLogger(EmailConfirmationTokenServiceImpl.class);
 
   private EmailConfirmationTokenCRUDRepository emailConfirmationTokenRepository;
 
   private UserCRUDRepository userRepository;
 
   public EmailConfirmationTokenServiceImpl(
-      EmailConfirmationTokenCRUDRepository emailConfirmationTokenCRUDRepository,
-      UserCRUDRepository userCRUDRepository) {
+    EmailConfirmationTokenCRUDRepository emailConfirmationTokenCRUDRepository,
+    UserCRUDRepository userCRUDRepository) {
     this.emailConfirmationTokenRepository = emailConfirmationTokenCRUDRepository;
     this.userRepository = userCRUDRepository;
   }
@@ -41,7 +41,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
     LOGGER.debug("Created token {}", token);
 
     return emailConfirmationTokenRepository.save(new EmailConfirmationToken(token, user))
-        .getTokenString();
+      .getTokenString();
   }
 
   public void confirmRegistration(String token) throws EmailConfirmationTokenNotFoundException {
@@ -49,7 +49,7 @@ public class EmailConfirmationTokenServiceImpl implements EmailConfirmationToken
 
     Optional<EmailConfirmationToken> emailConfirmationToken;
     if (!(emailConfirmationToken = emailConfirmationTokenRepository.findByTokenString(token))
-        .isPresent()) {
+      .isPresent()) {
       LOGGER.warn("Unable to find {}: {}", EmailConfirmationToken.class, token);
 
       throw new EmailConfirmationTokenNotFoundException(token);

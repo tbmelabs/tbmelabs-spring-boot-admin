@@ -25,10 +25,10 @@ public class SignupController {
 
   @PostMapping({"/is-username-unique"})
   public ResponseEntity<IllegalArgumentException> isUsernameUnique(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.isUsernameUnique(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("Username already exists!"));
+        .body(new IllegalArgumentException("Username already exists!"));
     }
 
     return ResponseEntity.ok().build();
@@ -36,10 +36,10 @@ public class SignupController {
 
   @PostMapping({"/does-username-match-format"})
   public ResponseEntity<IllegalArgumentException> doesUsernameMatchFormat(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.doesUsernameMatchFormat(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("Username does not match format!"));
+        .body(new IllegalArgumentException("Username does not match format!"));
     }
 
     return ResponseEntity.ok().build();
@@ -47,10 +47,10 @@ public class SignupController {
 
   @PostMapping({"/is-email-unique"})
   public ResponseEntity<IllegalArgumentException> isEmailAddressUnique(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.isEmailAddressUnique(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("E-mail address already in use!"));
+        .body(new IllegalArgumentException("E-mail address already in use!"));
     }
 
     return ResponseEntity.ok().build();
@@ -58,10 +58,10 @@ public class SignupController {
 
   @PostMapping({"/is-email"})
   public ResponseEntity<IllegalArgumentException> isEmailAddress(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.isEmailAddress(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("Not a valid e-mail address!"));
+        .body(new IllegalArgumentException("Not a valid e-mail address!"));
     }
 
     return ResponseEntity.ok().build();
@@ -69,10 +69,10 @@ public class SignupController {
 
   @PostMapping({"/does-password-match-format"})
   public ResponseEntity<IllegalArgumentException> doesPasswordMatchFormat(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.doesPasswordMatchFormat(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("Password does not match format!"));
+        .body(new IllegalArgumentException("Password does not match format!"));
     }
 
     return ResponseEntity.ok().build();
@@ -80,10 +80,10 @@ public class SignupController {
 
   @PostMapping({"/do-passwords-match"})
   public ResponseEntity<IllegalArgumentException> doPasswordsMatch(
-      @RequestBody UserDTO newUser) {
+    @RequestBody UserDTO newUser) {
     if (!signupService.doPasswordsMatch(newUser)) {
       return ResponseEntity.badRequest()
-          .body(new IllegalArgumentException("Passwords do not match!"));
+        .body(new IllegalArgumentException("Passwords do not match!"));
     }
 
     return ResponseEntity.ok().build();

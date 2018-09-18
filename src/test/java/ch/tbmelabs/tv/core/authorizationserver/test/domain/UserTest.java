@@ -120,14 +120,14 @@ public class UserTest {
     fixture.setEmailConfirmationToken(emailConfirmationToken);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("emailConfirmationToken",
-        emailConfirmationToken);
+      emailConfirmationToken);
     assertThat(fixture.getEmailConfirmationToken()).isEqualTo(emailConfirmationToken);
   }
 
   @Test
   public void userShouldHaveRoleGetterAndSetter() {
     Set<UserRoleAssociation> roles = new HashSet<>(
-        Collections.singletonList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE))));
+      Collections.singletonList(new UserRoleAssociation(fixture, new Role(TEST_USER_ROLE))));
 
     fixture.setRoles(roles);
 
@@ -145,6 +145,6 @@ public class UserTest {
     fixture.onCreate();
 
     assertThat(new BCryptPasswordEncoder().matches(password,
-        (String) ReflectionTestUtils.getField(fixture, "password"))).isTrue();
+      (String) ReflectionTestUtils.getField(fixture, "password"))).isTrue();
   }
 }

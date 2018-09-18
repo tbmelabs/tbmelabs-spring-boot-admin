@@ -46,17 +46,17 @@ public class TokenServiceConfigurationTest {
   @Test
   public void tokenServiceBeanShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     assertThat(TokenServiceConfiguration.class
-        .getDeclaredMethod("tokenServiceBean").getDeclaredAnnotation(Bean.class))
-        .isNotNull();
+      .getDeclaredMethod("tokenServiceBean").getDeclaredAnnotation(Bean.class))
+      .isNotNull();
   }
 
   @Test
   public void tokenServiceBeanShouldReturnATokenService() throws
-      SecurityException {
+    SecurityException {
     assertThat(fixture.tokenServiceBean()).isNotNull()
-        .hasFieldOrPropertyWithValue("authenticationManager", authenticationManagerFixture)
-        .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsServiceFixture)
-        .hasFieldOrPropertyWithValue("reuseRefreshToken", false)
-        .hasFieldOrPropertyWithValue("tokenStore", tokenStoreFixture);
+      .hasFieldOrPropertyWithValue("authenticationManager", authenticationManagerFixture)
+      .hasFieldOrPropertyWithValue("clientDetailsService", clientDetailsServiceFixture)
+      .hasFieldOrPropertyWithValue("reuseRefreshToken", false)
+      .hasFieldOrPropertyWithValue("tokenStore", tokenStoreFixture);
   }
 }

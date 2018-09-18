@@ -41,14 +41,14 @@ public interface UserMapper extends EntityMapper<User, UserDTO> {
 
   default Set<RoleDTO> associationsToRoles(Set<UserRoleAssociation> roles) {
     return roles.stream().map(UserRoleAssociation::getRole).map(roleMapper::toDto)
-        .collect(Collectors.toSet());
+      .collect(Collectors.toSet());
   }
 
   default Set<UserRoleAssociation> rolesToAssociations(Set<RoleDTO> roles,
-      @MappingTarget User entity) {
+    @MappingTarget User entity) {
     return roles.stream()
-        .map(role -> new UserRoleAssociation(entity, ApplicationContextHolder
-            .getApplicationContext().getBean(RoleService.class).findByName(role.getName())))
-        .collect(Collectors.toSet());
+      .map(role -> new UserRoleAssociation(entity, ApplicationContextHolder
+        .getApplicationContext().getBean(RoleService.class).findByName(role.getName())))
+      .collect(Collectors.toSet());
   }
 }

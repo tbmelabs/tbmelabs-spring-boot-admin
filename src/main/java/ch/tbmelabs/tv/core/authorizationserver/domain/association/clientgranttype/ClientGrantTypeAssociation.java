@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
+import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,17 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import ch.tbmelabs.tv.core.authorizationserver.domain.AbstractAuditingEntity;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Client;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 @Getter
 @Setter
@@ -59,7 +59,7 @@ public class ClientGrantTypeAssociation extends AbstractAuditingEntity {
 
     ClientGrantTypeAssociation other = (ClientGrantTypeAssociation) o;
     return client != null && client.equals(other.client) && grantType != null
-        && grantType.equals(other.grantType);
+      && grantType.equals(other.grantType);
   }
 
   @Override

@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 
 public class AuthenticationManagerConfigurationIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   @Autowired
   private AuthenticationManagerConfiguration configuration;

@@ -19,8 +19,8 @@ public class AuthenticationManagerConfiguration {
   private UserDetailsServiceImpl userDetailsService;
 
   public AuthenticationManagerConfiguration(ObjectPostProcessor<Object> objectObjectPostProcessor,
-      PreAuthenticatedAuthenticationProviderImpl preAuthenticatedAuthenticationProvider,
-      UserDetailsServiceImpl userDetailsService) {
+    PreAuthenticatedAuthenticationProviderImpl preAuthenticatedAuthenticationProvider,
+    UserDetailsServiceImpl userDetailsService) {
     this.objectPostProcessor = objectObjectPostProcessor;
     this.preAuthenticationProvider = preAuthenticatedAuthenticationProvider;
     this.userDetailsService = userDetailsService;
@@ -30,7 +30,7 @@ public class AuthenticationManagerConfiguration {
   public AuthenticationManager authenticationManager() throws Exception {
     AuthenticationManagerBuilder builder = new AuthenticationManagerBuilder(objectPostProcessor);
     builder.authenticationProvider(preAuthenticationProvider).userDetailsService(userDetailsService)
-        .passwordEncoder(User.PASSWORD_ENCODER);
+      .passwordEncoder(User.PASSWORD_ENCODER);
     return builder.build();
   }
 }

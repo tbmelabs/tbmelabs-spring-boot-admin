@@ -6,6 +6,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.security.UserRoleEnum;
+import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.GrantTypeMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,12 +30,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.serverconstants.security.UserRoleEnum;
-import ch.tbmelabs.tv.core.authorizationserver.domain.GrantType;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.GrantTypeDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.GrantTypeMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.GrantTypeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.GrantTypeController;
 
 public class GrantTypeControllerTest {
 
@@ -51,7 +52,7 @@ public class GrantTypeControllerTest {
     testGrantType = new GrantType(RandomStringUtils.random(11));
 
     doReturn(new PageImpl<>(Collections.singletonList(testGrantType))).when(mockGrantTypeRepository)
-        .findAll(ArgumentMatchers.any(Pageable.class));
+      .findAll(ArgumentMatchers.any(Pageable.class));
 
     doAnswer((Answer<GrantTypeDTO>) arg0 -> {
       GrantTypeDTO dto = new GrantTypeDTO();
@@ -63,11 +64,11 @@ public class GrantTypeControllerTest {
   @Test
   public void grantTypeControllerShouldBeAnnotated() {
     assertThat(GrantTypeController.class).hasAnnotation(RestController.class)
-        .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
+      .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
     assertThat(GrantTypeController.class.getDeclaredAnnotation(RequestMapping.class).value())
-        .containsExactly("${spring.data.rest.base-path}/grant-types");
+      .containsExactly("${spring.data.rest.base-path}/grant-types");
     assertThat(GrantTypeController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
+      .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
   }
 
   @Test
@@ -79,7 +80,7 @@ public class GrantTypeControllerTest {
   @Test
   public void getAllGrantTypesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllGrantTypes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(mockGrantTypeMapper.toDto(testGrantType));
+      .containsExactly(mockGrantTypeMapper.toDto(testGrantType));
     verify(mockGrantTypeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

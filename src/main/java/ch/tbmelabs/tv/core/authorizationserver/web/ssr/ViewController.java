@@ -1,10 +1,10 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.ssr;
 
+import ch.tbmelabs.tv.core.authorizationserver.ssr.AngularUniversalRenderEngine;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.tv.core.authorizationserver.ssr.AngularUniversalRenderEngine;
 
 @RestController
 public class ViewController {

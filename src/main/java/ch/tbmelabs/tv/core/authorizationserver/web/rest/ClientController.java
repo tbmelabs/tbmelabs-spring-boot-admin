@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.web.rest;
 
+import ch.tbmelabs.serverconstants.security.UserRoleConstants;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.serverconstants.security.UserRoleConstants;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ClientDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ClientMapper;
-import ch.tbmelabs.tv.core.authorizationserver.service.domain.ClientService;
 
 @RestController
 @RequestMapping({"${spring.data.rest.base-path}/clients"})

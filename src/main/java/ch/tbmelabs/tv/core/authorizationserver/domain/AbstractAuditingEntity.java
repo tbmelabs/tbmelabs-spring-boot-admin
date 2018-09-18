@@ -24,7 +24,7 @@ public abstract class AbstractAuditingEntity implements Serializable {
 
   @Transient
   public static final String SEQUENCE_GENERATOR_STRATEGY =
-      "org.hibernate.id.enhanced.SequenceStyleGenerator";
+    "org.hibernate.id.enhanced.SequenceStyleGenerator";
 
   @Transient
   public static final String HASH_CODE_SEPARATOR = "/";

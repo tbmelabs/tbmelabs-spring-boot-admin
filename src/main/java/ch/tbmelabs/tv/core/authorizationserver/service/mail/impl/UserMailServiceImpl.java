@@ -1,27 +1,31 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.mail.impl;
 
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
+import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
-import ch.tbmelabs.tv.core.authorizationserver.web.signup.SignupConfirmationController;
 
 @Service
 @Profile({"!" + SpringApplicationProfileConstants.NO_MAIL})
 public class UserMailServiceImpl extends MailServiceImpl {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserMailServiceImpl.class);
+
   private static final String TEMPLATE_FOLDER = "email-templates";
   private static final String SIGNUP_MAIL_TEMPLATE_LOCATION =
-      TEMPLATE_FOLDER + "/signup.email.html";
+    TEMPLATE_FOLDER + "/signup.email.html";
 
   private static final String USERNAME_REPLACEMENT = "%USERNAME%";
   private static final String CONFIRMATION_URL_REPLACEMENT = "%CONFIRMATION_URL%";
@@ -37,8 +41,8 @@ public class UserMailServiceImpl extends MailServiceImpl {
   private EmailConfirmationTokenService emailConfirmationTokenService;
 
   public UserMailServiceImpl(JavaMailSender javaMailSender,
-      EmailConfirmationTokenService emailConfirmationTokenService,
-      ApplicationProperties applicationProperties) {
+    EmailConfirmationTokenService emailConfirmationTokenService,
+    ApplicationProperties applicationProperties) {
     super(javaMailSender, applicationProperties);
 
     this.emailConfirmationTokenService = emailConfirmationTokenService;
@@ -54,7 +58,7 @@ public class UserMailServiceImpl extends MailServiceImpl {
 
     try {
       String emailBody = loadFileContent(new File(UserMailServiceImpl.class.getClassLoader()
-          .getResource(SIGNUP_MAIL_TEMPLATE_LOCATION).toURI()));
+        .getResource(SIGNUP_MAIL_TEMPLATE_LOCATION).toURI()));
 
       final String token = emailConfirmationTokenService.createUniqueEmailConfirmationToken(user);
 
@@ -71,7 +75,7 @@ public class UserMailServiceImpl extends MailServiceImpl {
     LOGGER.debug("Loading file content from " + file.getAbsolutePath());
 
     try (BufferedReader reader =
-        new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+      new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
       StringBuilder htmlBuilder = new StringBuilder();
       String htmlLine;
       while ((htmlLine = reader.readLine()) != null) {
@@ -91,7 +95,7 @@ public class UserMailServiceImpl extends MailServiceImpl {
     }
 
     confirmationUrl += serverAddress + ":" + serverPort + contextPath
-        + SignupConfirmationController.CONFIRMATION_ENDPOINT + token;
+      + SignupConfirmationController.CONFIRMATION_ENDPOINT + token;
 
     LOGGER.debug("Created confirmation url " + confirmationUrl);
 

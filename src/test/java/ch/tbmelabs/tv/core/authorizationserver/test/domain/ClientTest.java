@@ -122,7 +122,7 @@ public class ClientTest {
     fixture.setAccessTokenValiditySeconds(accessTokenValiditySeconds);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("accessTokenValiditySeconds",
-        accessTokenValiditySeconds);
+      accessTokenValiditySeconds);
     assertThat(fixture.getAccessTokenValiditySeconds()).isEqualTo(accessTokenValiditySeconds);
   }
 
@@ -133,7 +133,7 @@ public class ClientTest {
     fixture.setRefreshTokenValiditySeconds(refreshTokenValiditySeconds);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("refreshTokenValiditySeconds",
-        refreshTokenValiditySeconds);
+      refreshTokenValiditySeconds);
     assertThat(fixture.getRefreshTokenValiditySeconds()).isEqualTo(refreshTokenValiditySeconds);
   }
 
@@ -150,7 +150,7 @@ public class ClientTest {
   @Test
   public void clientShouldHaveGrantTypesGetterAndSetter() {
     Set<ClientGrantTypeAssociation> grantTypes = new HashSet<>(Collections.singletonList(
-        new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE))));
+      new ClientGrantTypeAssociation(fixture, new GrantType(TEST_CLIENT_GRANT_TYPE))));
 
     fixture.setGrantTypes(grantTypes);
 
@@ -161,7 +161,7 @@ public class ClientTest {
   @Test
   public void clientShouldHaveGrantedAuthoritiesGetterAndSetter() {
     Set<ClientAuthorityAssociation> grantedAuthorities = new HashSet<>(Collections.singletonList(
-        new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY))));
+      new ClientAuthorityAssociation(fixture, new Authority(TEST_CLIENT_AUTHORITY))));
 
     fixture.setAuthorities(grantedAuthorities);
 
@@ -172,7 +172,7 @@ public class ClientTest {
   @Test
   public void clientShouldHaveScopesGetterAndSetter() {
     Set<ClientScopeAssociation> scopes = new HashSet<>(Collections
-        .singletonList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE))));
+      .singletonList(new ClientScopeAssociation(fixture, new Scope(TEST_CLIENT_SCOPE))));
 
     fixture.setScopes(scopes);
 

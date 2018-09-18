@@ -19,7 +19,7 @@ public class PrincipalControllerTest {
   public void getPrincipalShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method fixture = PrincipalController.class.getDeclaredMethod("getPrincipal");
     assertThat(fixture.getDeclaredAnnotation(GetMapping.class).value()).containsExactly("/me",
-        "/user");
+      "/user");
   }
 
   @Test

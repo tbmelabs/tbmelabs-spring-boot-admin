@@ -53,7 +53,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
     newUser.setEmail(newUser.getUsername() + "@tbme.tv");
     newUser.setPassword(RandomStringUtils.random(11));
     newUser.setRoles(new HashSet<>(Collections.singletonList(
-        roleMapper.toDto(roleRepository.save(new Role(RandomStringUtils.random(11)))))));
+      roleMapper.toDto(roleRepository.save(new Role(RandomStringUtils.random(11)))))));
 
     testUser = userService.save(newUser);
   }
@@ -61,17 +61,17 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   @Test
   public void meEndpointShouldReturnCorrectAuthentication() throws Exception {
     runJsonCredentialAssertChain(new JSONObject(
-        mockMvc.perform(get(ME_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
-            .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
-            .getContentAsString()));
+      mockMvc.perform(get(ME_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString()));
   }
 
   @Test
   public void userEndpointShouldReturnCorrectAuthentication() throws Exception {
     runJsonCredentialAssertChain(new JSONObject(
-        mockMvc.perform(get(USER_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
-            .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
-            .getContentAsString()));
+      mockMvc.perform(get(USER_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString()));
   }
 
   private void runJsonCredentialAssertChain(JSONObject jsonCredential) throws JSONException {
@@ -82,23 +82,23 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
   @Test
   public void profileEndpointShouldReturnCorrectUserDTO() throws Exception {
     JSONObject jsonUserRepresentation = new JSONObject(
-        mockMvc.perform(get(PROFILE_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
-            .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
-            .getContentAsString());
+      mockMvc.perform(get(PROFILE_ENDPOINT).with(csrf()).with(user(testUser.getUsername())))
+        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+        .getContentAsString());
 
     assertThat(jsonUserRepresentation.getLong("created"))
-        .isEqualTo(testUser.getCreated().getTime());
+      .isEqualTo(testUser.getCreated().getTime());
     assertThat(jsonUserRepresentation.getLong("lastUpdated"))
-        .isEqualTo(testUser.getLastUpdated().getTime());
+      .isEqualTo(testUser.getLastUpdated().getTime());
     assertThat(jsonUserRepresentation.getLong("id")).isEqualTo(testUser.getId());
     assertThat(jsonUserRepresentation.getString("username")).isEqualTo(testUser.getUsername());
     assertThat(jsonUserRepresentation.getString("email")).isEqualTo(testUser.getEmail());
 
     assertThatThrownBy(() -> jsonUserRepresentation.getString("password"))
-        .isInstanceOf(JSONException.class).hasMessage("No value for password");
+      .isInstanceOf(JSONException.class).hasMessage("No value for password");
 
     assertThatThrownBy(() -> jsonUserRepresentation.getString("confirmation"))
-        .isInstanceOf(JSONException.class).hasMessage("No value for confirmation");
+      .isInstanceOf(JSONException.class).hasMessage("No value for confirmation");
 
     assertThat(jsonUserRepresentation.getBoolean("isEnabled")).isEqualTo(testUser.getIsEnabled());
     assertThat(jsonUserRepresentation.getBoolean("isBlocked")).isEqualTo(testUser.getIsBlocked());
@@ -109,7 +109,7 @@ public class PrincipalEndpointIntTest extends AbstractOAuth2AuthorizationServerC
     Role expectedRole = testUser.getRoles().iterator().next().getRole();
     assertThat(actualRole.getLong("created")).isEqualTo(expectedRole.getCreated().getTime());
     assertThat(actualRole.getLong("lastUpdated"))
-        .isEqualTo(expectedRole.getLastUpdated().getTime());
+      .isEqualTo(expectedRole.getLastUpdated().getTime());
     assertThat(actualRole.getLong("id")).isEqualTo(expectedRole.getId());
     assertThat(actualRole.getString("name")).isEqualTo(expectedRole.getName());
     assertThat(actualRole.getString("authority")).isEqualTo(expectedRole.getAuthority());

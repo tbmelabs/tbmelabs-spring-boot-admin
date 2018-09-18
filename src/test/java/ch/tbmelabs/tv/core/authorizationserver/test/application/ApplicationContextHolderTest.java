@@ -50,9 +50,9 @@ public class ApplicationContextHolderTest {
     fixture.setApplicationContext(applicationContextFixture);
 
     assertThat(fixture).hasFieldOrPropertyWithValue("applicationContext",
-        applicationContextFixture);
+      applicationContextFixture);
 
     assertThat(ApplicationContextHolder.getApplicationContext())
-        .isEqualTo(applicationContextFixture);
+      .isEqualTo(applicationContextFixture);
   }
 }

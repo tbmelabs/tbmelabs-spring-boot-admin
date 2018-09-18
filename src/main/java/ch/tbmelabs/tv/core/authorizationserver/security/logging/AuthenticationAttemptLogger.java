@@ -18,18 +18,18 @@ public class AuthenticationAttemptLogger {
   private UserCRUDRepository userRepository;
 
   public AuthenticationAttemptLogger(
-      AuthenticationLogCRUDRepository authenticationLogCRUDRepository,
-      UserCRUDRepository userCRUDRepository) {
+    AuthenticationLogCRUDRepository authenticationLogCRUDRepository,
+    UserCRUDRepository userCRUDRepository) {
     this.authenticationLogRepository = authenticationLogCRUDRepository;
     this.userRepository = userCRUDRepository;
   }
 
   public void logAuthenticationAttempt(AUTHENTICATION_STATE state, String ip, String message,
-      String username) {
+    String username) {
     LOGGER.debug("Authentication attempt from {} with state {}", ip, state.name());
 
     userRepository.findByUsernameIgnoreCase(username).ifPresent(
-        (user) -> authenticationLogRepository
-            .save(new AuthenticationLog(state, ip, message, user)));
+      (user) -> authenticationLogRepository
+        .save(new AuthenticationLog(state, ip, message, user)));
   }
 }

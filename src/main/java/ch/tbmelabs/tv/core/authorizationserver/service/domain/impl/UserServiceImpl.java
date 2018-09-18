@@ -1,12 +1,5 @@
 package ch.tbmelabs.tv.core.authorizationserver.service.domain.impl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Optional;
-import javax.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import ch.tbmelabs.serverconstants.security.UserRoleEnum;
 import ch.tbmelabs.tv.core.authorizationserver.domain.User;
 import ch.tbmelabs.tv.core.authorizationserver.domain.association.userrole.UserRoleAssociation;
@@ -15,6 +8,13 @@ import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
 import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Optional;
+import javax.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
   private RoleCRUDRepository roleRepository;
 
   public UserServiceImpl(UserMapper userMapper, UserCRUDRepository userCRUDRepository,
-      RoleCRUDRepository roleRepository) {
+    RoleCRUDRepository roleRepository) {
     this.userMapper = userMapper;
     this.userRepository = userCRUDRepository;
     this.roleRepository = roleRepository;
@@ -46,9 +46,9 @@ public class UserServiceImpl implements UserService {
 
   private void setDefaultRolesIfNonePresent(User newUser) {
     newUser.setRoles(new HashSet<>(Collections.singletonList(new UserRoleAssociation(newUser,
-        roleRepository.findByName(UserRoleEnum.USER.getAuthority())
-            .orElseThrow(() -> new IllegalArgumentException("Unable to find default "
-                + UserRoleEnum.class + "'" + UserRoleEnum.USER.getAuthority() + "'"))))));
+      roleRepository.findByName(UserRoleEnum.USER.getAuthority())
+        .orElseThrow(() -> new IllegalArgumentException("Unable to find default "
+          + UserRoleEnum.class + "'" + UserRoleEnum.USER.getAuthority() + "'"))))));
   }
 
   public Page<UserDTO> findAll(Pageable pageable) {

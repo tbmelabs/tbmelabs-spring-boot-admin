@@ -1,5 +1,7 @@
 package ch.tbmelabs.tv.core.authorizationserver.test;
 
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
+import ch.tbmelabs.tv.core.authorizationserver.Application;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,18 +15,16 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
-import ch.tbmelabs.tv.core.authorizationserver.Application;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles({SpringApplicationProfileConstants.TEST, SpringApplicationProfileConstants.NO_REDIS,
-    SpringApplicationProfileConstants.NO_MAIL})
+  SpringApplicationProfileConstants.NO_MAIL})
 @SpringBootTest(classes = {Application.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ServletTestExecutionListener.class,
-    DirtiesContextTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
-    DependencyInjectionTestExecutionListener.class, WithSecurityContextTestExecutionListener.class})
+  DirtiesContextTestExecutionListener.class, DirtiesContextBeforeModesTestExecutionListener.class,
+  DependencyInjectionTestExecutionListener.class, WithSecurityContextTestExecutionListener.class})
 public abstract class AbstractOAuth2AuthorizationServerContextAwareTest {
 
 }

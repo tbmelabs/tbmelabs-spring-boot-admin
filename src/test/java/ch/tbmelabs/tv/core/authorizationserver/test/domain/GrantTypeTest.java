@@ -35,7 +35,7 @@ public class GrantTypeTest {
     assertThat(GrantType.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(GrantType.class.getDeclaredAnnotation(Table.class).name())
-        .isEqualTo("client_grant_types");
+      .isEqualTo("client_grant_types");
   }
 
   @Test
@@ -51,7 +51,7 @@ public class GrantTypeTest {
   @Test
   public void grantTypeShouldHaveAllArgsConstructor() {
     assertThat(new GrantType(TEST_GRANT_TYPE_NAME)).hasFieldOrPropertyWithValue("name",
-        TEST_GRANT_TYPE_NAME);
+      TEST_GRANT_TYPE_NAME);
   }
 
   @Test
@@ -77,7 +77,7 @@ public class GrantTypeTest {
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
     Set<ClientGrantTypeAssociation> associations =
-        new HashSet<>(Collections.singletonList(Mockito.mock(ClientGrantTypeAssociation.class)));
+      new HashSet<>(Collections.singletonList(Mockito.mock(ClientGrantTypeAssociation.class)));
 
     fixture.setClientsWithGrantTypes(associations);
 

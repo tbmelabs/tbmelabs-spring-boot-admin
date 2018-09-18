@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -14,20 +18,16 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.annotations.Parameter;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import ch.tbmelabs.tv.core.authorizationserver.domain.association.clientgranttype.ClientGrantTypeAssociation;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Parameter;
 
 @Getter
 @Setter
@@ -43,9 +43,9 @@ public class GrantType extends AbstractAuditingEntity {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
-      parameters = {@Parameter(name = "sequence_name", value = "client_grant_types_id_seq"),
-          @Parameter(name = "increment_size", value = "1")})
+    strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+    parameters = {@Parameter(name = "sequence_name", value = "client_grant_types_id_seq"),
+      @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;

@@ -76,7 +76,7 @@ public class RoleTest {
   @Test
   public void roleShouldHaveUserGetterAndSetter() {
     Set<UserRoleAssociation> associations =
-        new HashSet<>(Collections.singletonList(Mockito.mock(UserRoleAssociation.class)));
+      new HashSet<>(Collections.singletonList(Mockito.mock(UserRoleAssociation.class)));
 
     fixture.setUsersWithRoles(associations);
 

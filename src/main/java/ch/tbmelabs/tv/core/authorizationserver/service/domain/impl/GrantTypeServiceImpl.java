@@ -16,6 +16,6 @@ public class GrantTypeServiceImpl implements GrantTypeService {
 
   public GrantType findByName(String name) {
     return grantTypeRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException(
-        "The default " + GrantType.class + "'" + name + "' does not exist!"));
+      "The default " + GrantType.class + "'" + name + "' does not exist!"));
   }
 }

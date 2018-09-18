@@ -30,9 +30,9 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
   private UserDetailsServiceImpl userDetailsService;
 
   public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager,
-      ClientDetailsServiceImpl clientDetailsService, DefaultTokenServices defaultTokenServices,
-      LoggingExceptionTranslator loggingExceptionTranslator, TokenStore tokenStore,
-      UserDetailsServiceImpl userDetailsService) {
+    ClientDetailsServiceImpl clientDetailsService, DefaultTokenServices defaultTokenServices,
+    LoggingExceptionTranslator loggingExceptionTranslator, TokenStore tokenStore,
+    UserDetailsServiceImpl userDetailsService) {
     this.authenticationManager = authenticationManager;
     this.clientDetailsService = clientDetailsService;
     this.tokenService = defaultTokenServices;
@@ -44,8 +44,8 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
   @Override
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
     endpoints.authenticationManager(authenticationManager)
-        .exceptionTranslator(loggingExceptionTranslator).reuseRefreshTokens(false)
-        .tokenServices(tokenService).tokenStore(tokenStore).userDetailsService(userDetailsService);
+      .exceptionTranslator(loggingExceptionTranslator).reuseRefreshTokens(false)
+      .tokenServices(tokenService).tokenStore(tokenStore).userDetailsService(userDetailsService);
   }
 
   @Override

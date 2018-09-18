@@ -1,5 +1,8 @@
 package ch.tbmelabs.tv.core.authorizationserver.configuration;
 
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
+import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -8,9 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
-import com.zaxxer.hikari.HikariDataSource;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 
 @Configuration
 public class DatasourceConfiguration {
@@ -29,7 +29,7 @@ public class DatasourceConfiguration {
   @ConfigurationProperties("tokenstore.datasource")
   public HikariDataSource jdbcTokenStoreDatasource() {
     LOGGER.warn("Profile \'{}\' is active: tokenstore will be of {}",
-        SpringApplicationProfileEnum.NO_REDIS.getName(), HikariDataSource.class);
+      SpringApplicationProfileEnum.NO_REDIS.getName(), HikariDataSource.class);
 
     return DataSourceBuilder.create().type(HikariDataSource.class).build();
   }

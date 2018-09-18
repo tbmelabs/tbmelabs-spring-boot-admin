@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
   public Client update(ClientDTO clientDTO) {
     Optional<Client> existing;
     if (clientDTO.getId() == null
-        || (existing = clientRepository.findById(clientDTO.getId())) == null) {
+      || (existing = clientRepository.findById(clientDTO.getId())) == null) {
       throw new IllegalArgumentException("You can only update an existing client!");
     }
 

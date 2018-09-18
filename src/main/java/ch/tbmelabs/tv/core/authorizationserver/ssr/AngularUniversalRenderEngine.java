@@ -1,5 +1,9 @@
 package ch.tbmelabs.tv.core.authorizationserver.ssr;
 
+import com.eclipsesource.v8.NodeJS;
+import com.eclipsesource.v8.V8Array;
+import com.eclipsesource.v8.V8Object;
+import com.eclipsesource.v8.utils.MemoryManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -13,10 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-import com.eclipsesource.v8.NodeJS;
-import com.eclipsesource.v8.V8Array;
-import com.eclipsesource.v8.V8Object;
-import com.eclipsesource.v8.utils.MemoryManager;
 
 @Component
 public class AngularUniversalRenderEngine {
@@ -35,13 +35,13 @@ public class AngularUniversalRenderEngine {
   private V8Object renderAdapter;
 
   public AngularUniversalRenderEngine(ResourceLoader resourceLoader,
-      ThreadPoolTaskExecutor angularUniversalRenderingExecutor) throws IOException {
+    ThreadPoolTaskExecutor angularUniversalRenderingExecutor) throws IOException {
     this.threadPoolTaskExecutor = angularUniversalRenderingExecutor;
 
     File serverBundle = resourceLoader.getResource(SERVER_BUNDLE_LOCATION).getFile();
 
     LOGGER.info("Initilize {} with server runtime '{}'", AngularUniversalRenderEngine.class,
-        serverBundle.getAbsolutePath());
+      serverBundle.getAbsolutePath());
 
     nodeJs = initializeNodeRuntime(serverBundle);
 
@@ -95,11 +95,11 @@ public class AngularUniversalRenderEngine {
 
   private RenderRequest completeRenderRequest(RenderRequest renderRequest) {
     LOGGER.debug("Received render request {} for uri '{}'", renderRequest.getUuid(),
-        renderRequest.getUri());
+      renderRequest.getUri());
 
     if (!AngularUniversalRenderEngine.currentlyRenderingRequests.add(renderRequest)) {
       throw new IllegalArgumentException(
-          "An error occured while queing " + RenderRequest.class + " " + renderRequest.getUuid());
+        "An error occured while queing " + RenderRequest.class + " " + renderRequest.getUuid());
     }
 
     executeV8ThreadAwareRunnable(() -> {
@@ -154,8 +154,8 @@ public class AngularUniversalRenderEngine {
 
   private void consumeRenderRequest(String uuid, Consumer<RenderRequest> consumer) {
     AngularUniversalRenderEngine.currentlyRenderingRequests.stream()
-        .filter(renderRequest -> renderRequest.getUuid().equals(uuid)).findFirst()
-        .ifPresent(consumer);
+      .filter(renderRequest -> renderRequest.getUuid().equals(uuid)).findFirst()
+      .ifPresent(consumer);
   }
 
   private void removeFromQueue(RenderRequest renderRequest) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmailConfirmationTokenCRUDRepository
-    extends CrudRepository<EmailConfirmationToken, Long> {
+  extends CrudRepository<EmailConfirmationToken, Long> {
 
   Optional<EmailConfirmationToken> findByTokenString(String tokenString);
 }

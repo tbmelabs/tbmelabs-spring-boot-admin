@@ -75,7 +75,7 @@ public class ScopeTest {
   @Test
   public void grantTypeShouldHaveClientsGetterAndSetter() {
     Set<ClientScopeAssociation> associations =
-        new HashSet<>(Collections.singletonList(Mockito.mock(ClientScopeAssociation.class)));
+      new HashSet<>(Collections.singletonList(Mockito.mock(ClientScopeAssociation.class)));
 
     fixture.setClientsWithScopes(associations);
 

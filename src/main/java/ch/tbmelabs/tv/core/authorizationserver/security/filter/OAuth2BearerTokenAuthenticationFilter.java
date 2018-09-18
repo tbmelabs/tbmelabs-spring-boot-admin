@@ -34,13 +34,13 @@ public class OAuth2BearerTokenAuthenticationFilter extends GenericFilterBean {
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
+    throws IOException, ServletException {
     Authentication authentication;
     if ((authentication = bearerTokenExtractor.extract((HttpServletRequest) request)) != null) {
       logger.debug("Bearer token found, authenticating");
 
       SecurityContextHolder.getContext()
-          .setAuthentication(tokenStore.readAuthentication((String) authentication.getPrincipal()));
+        .setAuthentication(tokenStore.readAuthentication((String) authentication.getPrincipal()));
 
       logger.debug("Authentication successful, continuing filter chain");
     }

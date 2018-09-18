@@ -32,7 +32,7 @@ public class EmailConfirmationTokenTest {
     assertThat(EmailConfirmationToken.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(EmailConfirmationToken.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
-        .isEqualTo("email_confirmation_tokens");
+      .isEqualTo("email_confirmation_tokens");
   }
 
   @Test
@@ -58,14 +58,14 @@ public class EmailConfirmationTokenTest {
     given.setTime(fixture.getExpirationDate());
 
     assertThat(fixture).hasFieldOrPropertyWithValue("tokenString", tokenString)
-        .hasFieldOrPropertyWithValue("user", user);
+      .hasFieldOrPropertyWithValue("user", user);
     assertThat(given.get(Calendar.DATE)).isEqualTo(expected.get(Calendar.DATE));
   }
 
   @Test
   public void emailConfirmationTokenShouldHaveIdGetterAndSetter() {
     EmailConfirmationToken emailConfirmationToken =
-        Mockito.mock(EmailConfirmationToken.class, Mockito.CALLS_REAL_METHODS);
+      Mockito.mock(EmailConfirmationToken.class, Mockito.CALLS_REAL_METHODS);
     Long id = new Random().nextLong();
 
     emailConfirmationToken.setId(id);

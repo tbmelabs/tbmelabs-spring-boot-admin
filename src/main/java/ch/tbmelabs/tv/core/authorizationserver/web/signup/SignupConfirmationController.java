@@ -24,7 +24,7 @@ public class SignupConfirmationController {
   private String contextPath;
 
   public SignupConfirmationController(EmailConfirmationTokenService emailConfirmationTokenService,
-      ApplicationProperties applicationProperties) {
+    ApplicationProperties applicationProperties) {
     this.emailConfirmationTokenService = emailConfirmationTokenService;
 
     this.contextPath = applicationProperties.getServer().getContextPath();
@@ -32,7 +32,7 @@ public class SignupConfirmationController {
 
   @GetMapping({"/confirm-signup/{token}"})
   public void confirmSignup(HttpServletResponse response,
-      @PathVariable(name = "token", required = true) String token) throws IOException {
+    @PathVariable(name = "token", required = true) String token) throws IOException {
     try {
       emailConfirmationTokenService.confirmRegistration(token);
     } catch (EmailConfirmationTokenNotFoundException e) {

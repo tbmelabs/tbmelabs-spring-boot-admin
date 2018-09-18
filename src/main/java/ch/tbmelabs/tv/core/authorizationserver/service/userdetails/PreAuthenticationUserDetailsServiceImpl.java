@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PreAuthenticationUserDetailsServiceImpl
-    implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
+  implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
+    LoggerFactory.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 
   private TokenStore tokenStore;
 
   private UserCRUDRepository userRepository;
 
   public PreAuthenticationUserDetailsServiceImpl(TokenStore tokenStore,
-      UserCRUDRepository userCRUDRepository) {
+    UserCRUDRepository userCRUDRepository) {
     this.tokenStore = tokenStore;
     this.userRepository = userCRUDRepository;
   }

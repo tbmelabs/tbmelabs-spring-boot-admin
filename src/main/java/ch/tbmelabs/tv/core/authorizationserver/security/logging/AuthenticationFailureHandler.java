@@ -23,7 +23,7 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
 
   @Override
   public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-      AuthenticationException exception) throws IOException, ServletException {
+    AuthenticationException exception) throws IOException, ServletException {
     super.onAuthenticationFailure(request, response, exception);
 
     String requestIp = request.getHeader(X_FORWARDED_HEADER);
@@ -34,6 +34,6 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
     logger.debug("Failed authentication from " + requestIp);
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.NOK, requestIp,
-        exception.getLocalizedMessage(), request.getParameter(USERNAME_PARAMETER));
+      exception.getLocalizedMessage(), request.getParameter(USERNAME_PARAMETER));
   }
 }

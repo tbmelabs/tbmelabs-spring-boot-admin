@@ -16,7 +16,7 @@ public class EmailConfirmationTokenNotFoundExceptionTest {
 
   @Test(expected = EmailConfirmationTokenNotFoundException.class)
   public void emailConfirmationTokenNotFountExceptionShouldBeThrowable()
-      throws EmailConfirmationTokenNotFoundException {
+    throws EmailConfirmationTokenNotFoundException {
     throw new EmailConfirmationTokenNotFoundException(RandomStringUtils.random(11));
   }
 
@@ -28,7 +28,7 @@ public class EmailConfirmationTokenNotFoundExceptionTest {
       throw new EmailConfirmationTokenNotFoundException(tokenString);
     } catch (EmailConfirmationTokenNotFoundException e) {
       assertThat(e.getLocalizedMessage())
-          .isEqualTo("Unable to find " + EmailConfirmationToken.class + ": " + tokenString);
+        .isEqualTo("Unable to find " + EmailConfirmationToken.class + ": " + tokenString);
     }
   }
 }

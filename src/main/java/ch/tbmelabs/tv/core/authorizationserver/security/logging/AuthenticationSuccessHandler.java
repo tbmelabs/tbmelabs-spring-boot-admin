@@ -30,20 +30,20 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-      Authentication authentication) throws IOException, ServletException {
+    Authentication authentication) throws IOException, ServletException {
     try {
       String savedRedirectUrl;
       if (request.getHeader(NO_REDIRECT_HEADER) != null
-          && (savedRedirectUrl = getSavedRequestCacheRedirectUrl(request, response)) != null) {
+        && (savedRedirectUrl = getSavedRequestCacheRedirectUrl(request, response)) != null) {
         logger.debug("Header \'" + NO_REDIRECT_HEADER + "\' is present: Not sending redirect");
         response.setHeader(NO_REDIRECT_HEADER, savedRedirectUrl);
       } else {
         throw new IllegalArgumentException(noSavedRequestExceptionIdMessage);
       }
     } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException
-        | SecurityException e) {
+      | SecurityException e) {
       if (IllegalArgumentException.class.isAssignableFrom(e.getClass())
-          && !e.getLocalizedMessage().equals(noSavedRequestExceptionIdMessage)) {
+        && !e.getLocalizedMessage().equals(noSavedRequestExceptionIdMessage)) {
         throw (IllegalArgumentException) e;
       }
 
@@ -58,18 +58,18 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     logger.debug("Successfull authentication from " + requestIp);
 
     authenticationLogger.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, requestIp, null,
-        request.getParameter(USERNAME_PARAMETER));
+      request.getParameter(USERNAME_PARAMETER));
   }
 
   private String getSavedRequestCacheRedirectUrl(HttpServletRequest request,
-      HttpServletResponse response) throws IllegalAccessException, NoSuchFieldException {
+    HttpServletResponse response) throws IllegalAccessException, NoSuchFieldException {
     Field requestCache =
-        AuthenticationSuccessHandler.class.getSuperclass().getDeclaredField("requestCache");
+      AuthenticationSuccessHandler.class.getSuperclass().getDeclaredField("requestCache");
     requestCache.setAccessible(true);
 
     SavedRequest savedRequest;
     if ((savedRequest =
-        ((RequestCache) requestCache.get(this)).getRequest(request, response)) != null) {
+      ((RequestCache) requestCache.get(this)).getRequest(request, response)) != null) {
       return savedRequest.getRedirectUrl();
     }
 

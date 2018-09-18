@@ -21,18 +21,18 @@ public class ControllerAnnotationTest {
   @BeforeClass
   public static void beforeClassSetUp() {
     allControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
-        .getSubTypesOf(Object.class));
+      .getSubTypesOf(Object.class));
 
     annotatedControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
-        .getTypesAnnotatedWith(Controller.class));
+      .getTypesAnnotatedWith(Controller.class));
     annotatedControllers.addAll(new Reflections(Application.class.getPackage().getName() + ".web")
-        .getTypesAnnotatedWith(RestController.class));
+      .getTypesAnnotatedWith(RestController.class));
   }
 
   @Test
   public void packageShouldOnlyContainControllers() {
     allControllers.forEach(
-        controller -> assertThat(controller.getClass().getSimpleName()).contains("Controller"));
+      controller -> assertThat(controller.getClass().getSimpleName()).contains("Controller"));
   }
 
   @Test

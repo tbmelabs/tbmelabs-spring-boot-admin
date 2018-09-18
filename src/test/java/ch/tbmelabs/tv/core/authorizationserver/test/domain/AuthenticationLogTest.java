@@ -38,7 +38,7 @@ public class AuthenticationLogTest {
     assertThat(AuthenticationLog.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(AuthenticationLog.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
-        .isEqualTo("authentication_log");
+      .isEqualTo("authentication_log");
   }
 
   @Test
@@ -54,10 +54,10 @@ public class AuthenticationLogTest {
   @Test
   public void authenticationLogShouldHaveAllArgsConstructor() {
     assertThat(new AuthenticationLog(TEST_AUTHENTICATION_STATE, TEST_IP, TEST_MESSAGE, mockUser))
-        .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE)
-        .hasFieldOrPropertyWithValue("ip", TEST_IP)
-        .hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
-        .hasFieldOrPropertyWithValue("user", mockUser);
+      .hasFieldOrPropertyWithValue("state", TEST_AUTHENTICATION_STATE)
+      .hasFieldOrPropertyWithValue("ip", TEST_IP)
+      .hasFieldOrPropertyWithValue("message", TEST_MESSAGE)
+      .hasFieldOrPropertyWithValue("user", mockUser);
   }
 
   @Test

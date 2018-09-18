@@ -79,8 +79,13 @@ public class UserMailServiceImplTest {
   public void sendSignupConfirmationShouldCallMailService() {
     User user = new User();
     user.setUsername(RandomStringUtils.random(11));
+    user.setEmail(user.getUsername() + "@tbme.tv");
 
-    fixture.sendSignupConfirmation(user);
+    try {
+      fixture.sendSignupConfirmation(user);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     verify(fixture, times(1)).sendMail(ArgumentMatchers.eq(user),
         ArgumentMatchers.eq("Confirm registration to TBME Labs"), ArgumentMatchers.anyString());

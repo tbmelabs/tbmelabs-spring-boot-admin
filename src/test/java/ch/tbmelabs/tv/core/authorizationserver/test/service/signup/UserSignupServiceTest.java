@@ -10,7 +10,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import java.util.Optional;
 import java.util.Random;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
@@ -149,21 +148,7 @@ public class UserSignupServiceTest {
         .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
-  // TODO: Reimplement
   @Test
-  @Ignore
-  public void userSignupServiceShouldThrowErrorIfUserRoleDoesNotExist() {
-    doReturn(Optional.empty()).when(mockRoleRepository)
-        .findByName(UserRoleEnum.USER.getAuthority());
-
-    assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage(DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE);
-  }
-
-  // TODO: Reimplement
-  @Test
-  @Ignore
   public void userSignupServiceShouldSaveValidUser() {
     doReturn(Optional.of(new Role(UserRoleEnum.USER.getAuthority()))).when(mockRoleRepository)
         .findByName(UserRoleEnum.USER.getAuthority());

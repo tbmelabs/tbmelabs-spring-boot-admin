@@ -1,5 +1,6 @@
 package ch.tbmelabs.tv.core.authorizationserver.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -16,15 +17,14 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Getter
 @Setter
@@ -40,9 +40,9 @@ public class EmailConfirmationToken extends AbstractAuditingEntity {
 
   @Id
   @GenericGenerator(name = "pk_sequence",
-      strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
-      parameters = {@Parameter(name = "sequence_name", value = "email_confirmation_tokens_id_seq"),
-          @Parameter(name = "increment_size", value = "1")})
+    strategy = AbstractAuditingEntity.SEQUENCE_GENERATOR_STRATEGY,
+    parameters = {@Parameter(name = "sequence_name", value = "email_confirmation_tokens_id_seq"),
+      @Parameter(name = "increment_size", value = "1")})
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
   @Column(unique = true)
   private Long id;

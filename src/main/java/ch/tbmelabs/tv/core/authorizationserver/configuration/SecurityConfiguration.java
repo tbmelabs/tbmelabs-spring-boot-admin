@@ -26,9 +26,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   private OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter;
 
   public SecurityConfiguration(AuthenticationManager authenticationManager,
-      AuthenticationFailureHandler authenticationFailureHandler,
-      AuthenticationSuccessHandler authenticationSuccessHandler,
-      OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter) {
+    AuthenticationFailureHandler authenticationFailureHandler,
+    AuthenticationSuccessHandler authenticationSuccessHandler,
+    OAuth2BearerTokenAuthenticationFilter oAuth2AuthenticationFilter) {
     this.authenticationManager = authenticationManager;
     this.authenticationFailureHandler = authenticationFailureHandler;
     this.authenticationSuccessHandler = authenticationSuccessHandler;

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 
 public class TokenServiceConfigurationIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   @Autowired
   private TokenServiceConfiguration configuration;

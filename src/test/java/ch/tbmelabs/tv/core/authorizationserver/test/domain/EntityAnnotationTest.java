@@ -15,12 +15,12 @@ public class EntityAnnotationTest {
   @Test
   public void allEntitiesShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain")
-        .getTypesAnnotatedWith(Entity.class)).hasSize(EXPECTED_ENTITIES_COUNT);
+      .getTypesAnnotatedWith(Entity.class)).hasSize(EXPECTED_ENTITIES_COUNT);
   }
 
   @Test
   public void allEntitiesShouldExtendTheConfiguredSuperType() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain")
-        .getSubTypesOf(AbstractAuditingEntity.class)).hasSize(EXPECTED_ENTITIES_COUNT);
+      .getSubTypesOf(AbstractAuditingEntity.class)).hasSize(EXPECTED_ENTITIES_COUNT);
   }
 }

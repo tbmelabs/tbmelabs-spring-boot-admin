@@ -25,10 +25,10 @@ public class AbstractAuditingEntityTest {
   @Test
   public void nicelyDocumentedJDBCResourceShouldBeAnnotated() {
     assertThat(AbstractAuditingEntity.class).hasAnnotation(MappedSuperclass.class)
-        .hasAnnotation(EntityListeners.class);
+      .hasAnnotation(EntityListeners.class);
 
     assertThat(AbstractAuditingEntity.class.getDeclaredAnnotation(EntityListeners.class).value())
-        .containsExactly(AuditingEntityListener.class);
+      .containsExactly(AuditingEntityListener.class);
   }
 
   @Test

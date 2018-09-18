@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRoleAssociationCRUDRepository
-    extends CrudRepository<UserRoleAssociation, Long> {
+  extends CrudRepository<UserRoleAssociation, Long> {
 
   Set<UserRoleAssociation> findAllByUser(User user);
 }

@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PreAuthenticatedAuthenticationProviderImpl
-    extends PreAuthenticatedAuthenticationProvider {
+  extends PreAuthenticatedAuthenticationProvider {
 
   private static final Logger LOGGER =
-      LoggerFactory.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
+    LoggerFactory.getLogger(PreAuthenticatedAuthenticationProviderImpl.class);
 
   private PreAuthenticationUserDetailsServiceImpl userDetailsService;
 
   public PreAuthenticatedAuthenticationProviderImpl(
-      PreAuthenticationUserDetailsServiceImpl preAuthenticationUserDetailsService) {
+    PreAuthenticationUserDetailsServiceImpl preAuthenticationUserDetailsService) {
     this.userDetailsService = preAuthenticationUserDetailsService;
   }
 

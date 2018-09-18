@@ -6,6 +6,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.security.UserRoleEnum;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ScopeMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -23,12 +30,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ch.tbmelabs.serverconstants.security.UserRoleEnum;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Scope;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.ScopeDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.ScopeMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.ScopeCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.web.rest.ScopeController;
 
 public class ScopeControllerTest {
 
@@ -51,7 +52,7 @@ public class ScopeControllerTest {
     testScope = new Scope(RandomStringUtils.random(11));
 
     doReturn(new PageImpl<>(Collections.singletonList(testScope))).when(mockScopeRepository)
-        .findAll(ArgumentMatchers.any(Pageable.class));
+      .findAll(ArgumentMatchers.any(Pageable.class));
 
     doAnswer((Answer<ScopeDTO>) arg0 -> {
       ScopeDTO dto = new ScopeDTO();
@@ -63,11 +64,11 @@ public class ScopeControllerTest {
   @Test
   public void scopeControllerShouldBeAnnotated() {
     assertThat(ScopeController.class).hasAnnotation(RestController.class)
-        .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
+      .hasAnnotation(RequestMapping.class).hasAnnotation(PreAuthorize.class);
     assertThat(ScopeController.class.getDeclaredAnnotation(RequestMapping.class).value())
-        .containsExactly("${spring.data.rest.base-path}/scopes");
+      .containsExactly("${spring.data.rest.base-path}/scopes");
     assertThat(ScopeController.class.getDeclaredAnnotation(PreAuthorize.class).value())
-        .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
+      .isEqualTo("hasAuthority('" + UserRoleEnum.SERVER_ADMIN.getAuthority() + "')");
   }
 
   @Test
@@ -79,7 +80,7 @@ public class ScopeControllerTest {
   @Test
   public void getAllScopesShouldReturnAllAuthorities() {
     assertThat(fixture.getAllScopes(Mockito.mock(Pageable.class)).getContent()).hasSize(1)
-        .containsExactly(mockScopeMapper.toDto(testScope));
+      .containsExactly(mockScopeMapper.toDto(testScope));
     verify(mockScopeRepository, times(1)).findAll(ArgumentMatchers.any(Pageable.class));
   }
 }

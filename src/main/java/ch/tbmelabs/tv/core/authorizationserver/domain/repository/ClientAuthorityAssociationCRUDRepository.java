@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClientAuthorityAssociationCRUDRepository
-    extends CrudRepository<ClientAuthorityAssociation, Long> {
+  extends CrudRepository<ClientAuthorityAssociation, Long> {
 
   Set<ClientAuthorityAssociation> findAllByClient(Client client);
 }

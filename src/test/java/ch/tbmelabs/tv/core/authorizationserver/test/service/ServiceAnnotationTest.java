@@ -14,13 +14,13 @@ public class ServiceAnnotationTest {
   @Test
   public void packageShouldOnlyContainServices() {
     new Reflections(Application.class.getPackage().getName() + ".service")
-        .getSubTypesOf(Object.class)
-        .forEach(service -> assertThat(service.getClass().getSimpleName()).contains("Service"));
+      .getSubTypesOf(Object.class)
+      .forEach(service -> assertThat(service.getClass().getSimpleName()).contains("Service"));
   }
 
   @Test
   public void allServicesShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".service")
-        .getTypesAnnotatedWith(Service.class)).hasSize(EXPECTED_SERVICE_COUNT);
+      .getTypesAnnotatedWith(Service.class)).hasSize(EXPECTED_SERVICE_COUNT);
   }
 }

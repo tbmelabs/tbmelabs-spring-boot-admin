@@ -56,14 +56,14 @@ public class OAuth2AuthorizationServerConfigurationTest {
   @Test
   public void oAuth2AuthorizationServerConfigurationShouldBeAnnotated() {
     assertThat(OAuth2AuthorizationServerConfiguration.class).hasAnnotation(Configuration.class)
-        .hasAnnotation(EnableAuthorizationServer.class);
+      .hasAnnotation(EnableAuthorizationServer.class);
   }
 
   @Test
   public void configureAuthorizationServerEndpointsConfigurerShouldInitializeCorrectConfiguration()
-      throws Exception {
+    throws Exception {
     AuthorizationServerEndpointsConfigurer configurer =
-        Mockito.spy(AuthorizationServerEndpointsConfigurer.class);
+      Mockito.spy(AuthorizationServerEndpointsConfigurer.class);
 
     fixture.configure(configurer);
 
@@ -77,9 +77,9 @@ public class OAuth2AuthorizationServerConfigurationTest {
 
   @Test
   public void configureAuthorizationServerSecurityConfigurerShouldInitializeCorrectConfiguration()
-      throws Exception {
+    throws Exception {
     AuthorizationServerSecurityConfigurer configurer =
-        Mockito.spy(AuthorizationServerSecurityConfigurer.class);
+      Mockito.spy(AuthorizationServerSecurityConfigurer.class);
 
     fixture.configure(configurer);
 
@@ -89,7 +89,7 @@ public class OAuth2AuthorizationServerConfigurationTest {
 
   @Test
   public void configureClientDetailsServiceConfigurerShouldInitializeCorrectConfiguration()
-      throws Exception {
+    throws Exception {
     ClientDetailsServiceConfigurer configurer = Mockito.mock(ClientDetailsServiceConfigurer.class);
 
     fixture.configure(configurer);
