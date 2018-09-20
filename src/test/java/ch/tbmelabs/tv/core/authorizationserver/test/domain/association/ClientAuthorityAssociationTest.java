@@ -35,17 +35,17 @@ public class ClientAuthorityAssociationTest {
   @Test
   public void clientAuthorityAssociationShouldBeAnnotated() {
     assertThat(ClientAuthorityAssociation.class).hasAnnotation(Entity.class)
-        .hasAnnotation(Table.class);
+      .hasAnnotation(Table.class);
 
     assertThat(ClientAuthorityAssociation.class.getDeclaredAnnotation(Table.class).name())
-        .isNotNull().isEqualTo("client_has_authorities");
+      .isNotNull().isEqualTo("client_has_authorities");
   }
 
   @Test
   public void clientAuthorityAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(ClientAuthorityAssociation.class).hasAnnotation(IdClass.class);
     assertThat(ClientAuthorityAssociation.class.getDeclaredAnnotation(IdClass.class).value())
-        .isNotNull().isEqualTo(ClientAuthorityAssociationId.class);
+      .isNotNull().isEqualTo(ClientAuthorityAssociationId.class);
   }
 
   @Test
@@ -56,8 +56,8 @@ public class ClientAuthorityAssociationTest {
   @Test
   public void clientAuthorityAssociationShouldHaveAllArgsConstructor() {
     assertThat(new ClientAuthorityAssociation(clientFixture, authorityFixture))
-        .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("authority", authorityFixture);
+      .hasFieldOrPropertyWithValue("client", clientFixture)
+      .hasFieldOrPropertyWithValue("authority", authorityFixture);
   }
 
   @Test

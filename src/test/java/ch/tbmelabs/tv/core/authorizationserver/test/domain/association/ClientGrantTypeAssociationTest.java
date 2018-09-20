@@ -35,17 +35,17 @@ public class ClientGrantTypeAssociationTest {
   @Test
   public void clientGrantTypeAssociationShouldBeAnnotated() {
     assertThat(ClientGrantTypeAssociation.class).hasAnnotation(Entity.class)
-        .hasAnnotation(Table.class);
+      .hasAnnotation(Table.class);
 
     assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(Table.class).name())
-        .isNotNull().isEqualTo("client_has_grant_types");
+      .isNotNull().isEqualTo("client_has_grant_types");
   }
 
   @Test
   public void clientGrantTypeAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(ClientGrantTypeAssociation.class).hasAnnotation(IdClass.class);
     assertThat(ClientGrantTypeAssociation.class.getDeclaredAnnotation(IdClass.class).value())
-        .isNotNull().isEqualTo(ClientGrantTypeAssociationId.class);
+      .isNotNull().isEqualTo(ClientGrantTypeAssociationId.class);
   }
 
   @Test
@@ -56,8 +56,8 @@ public class ClientGrantTypeAssociationTest {
   @Test
   public void ShouldHaveAllArgsConstructor() {
     assertThat(new ClientGrantTypeAssociation(clientFixture, grantTypeFixture))
-        .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("grantType", grantTypeFixture);
+      .hasFieldOrPropertyWithValue("client", clientFixture)
+      .hasFieldOrPropertyWithValue("grantType", grantTypeFixture);
   }
 
   @Test

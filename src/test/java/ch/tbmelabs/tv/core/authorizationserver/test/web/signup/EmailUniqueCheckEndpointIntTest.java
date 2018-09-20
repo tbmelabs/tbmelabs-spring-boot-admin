@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class EmailUniqueCheckEndpointIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String EMAIL_UNIQUE_CHECK_ENDPOINT = "/signup/is-email-unique";
   private static final String EMAIL_PARAMETER_NAME = "email";
@@ -49,18 +49,18 @@ public class EmailUniqueCheckEndpointIntTest
   @Test
   public void registrationWithExistingEmailShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUser.getEmail()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(EMAIL_UNIQUE_CHECK_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new JSONObject().put(EMAIL_PARAMETER_NAME, testUser.getEmail()).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void registrationWithNewEmailShouldPassValidation() throws Exception {
     mockMvc
-        .perform(
-            post(EMAIL_UNIQUE_CHECK_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIL).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(
+        post(EMAIL_UNIQUE_CHECK_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIL).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

@@ -38,13 +38,13 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
   @Test
   public void oAuth2BearerTokenAuthenticationFilterShouldExtendsGenericFilterBean() {
     assertThat(GenericFilterBean.class)
-        .isAssignableFrom(OAuth2BearerTokenAuthenticationFilter.class);
+      .isAssignableFrom(OAuth2BearerTokenAuthenticationFilter.class);
   }
 
   @Test
   public void oAuth2BearerTokenAuthenticationConstructorShouldAcceptTokenStore() {
     assertThat(new OAuth2BearerTokenAuthenticationFilter(Mockito.mock(TokenStore.class)))
-        .isNotNull();
+      .isNotNull();
   }
 
   @Test
@@ -54,6 +54,6 @@ public class OAuth2BearerTokenAuthenticationFilterTest {
     fixture.initBean();
 
     assertThat(ReflectionTestUtils.getField(fixture, "bearerTokenExtractor")).isNotNull()
-        .isInstanceOf(BearerTokenExtractor.class);
+      .isInstanceOf(BearerTokenExtractor.class);
   }
 }

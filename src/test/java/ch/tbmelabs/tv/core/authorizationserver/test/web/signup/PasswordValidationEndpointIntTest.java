@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class PasswordValidationEndpointIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String PASSWORD_VALIDATION_ENDPOINT = "/signup/does-password-match-format";
   private static final String PASSWORD_PARAMETER_NAME = "password";
@@ -32,57 +32,57 @@ public class PasswordValidationEndpointIntTest
   @Test
   public void tooShortPasswordShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(PASSWORD_VALIDATION_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(PASSWORD_VALIDATION_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, TOO_SHORT_PASSWORD).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void passwordWithoutNumbersFailValidation() throws Exception {
     mockMvc
-        .perform(
-            post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS)
-                    .toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(
+        post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_NUMBERS)
+            .toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void passwordWithoutLowercaseLettersShouldFailValidation() throws Exception {
     mockMvc
-        .perform(
-            post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject()
-                    .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(
+        post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject()
+            .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_LOWERCASE_LETTERS).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void passwordWithoutUppercaseLettersShouldFailValidation() throws Exception {
     mockMvc
-        .perform(
-            post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject()
-                    .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(
+        post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject()
+            .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_UPPERCASE_LETTERS).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void passwordWithoutSpecialCharShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(PASSWORD_VALIDATION_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
-                .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(PASSWORD_VALIDATION_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
+          .put(PASSWORD_PARAMETER_NAME, PASSWORD_MISSING_SPECIAL_CHARS).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void validPasswordShouldPassValidation() throws Exception {
     mockMvc
-        .perform(
-            post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, VALID_PASSWORD).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(
+        post(PASSWORD_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(PASSWORD_PARAMETER_NAME, VALID_PASSWORD).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

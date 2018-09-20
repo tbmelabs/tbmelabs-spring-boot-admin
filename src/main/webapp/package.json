@@ -1,5 +1,5 @@
 {
-  "name": "tbme-labs-authorization-server",
+  "name": "tbmelabs-authorization-server",
   "description": "The webapplication for the TBME Labs authorization server.",
   "version": "1.0.0-SNAPSHOT",
   "author": "TBME Labs",
@@ -12,8 +12,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "yarn run build:browser:prod && yarn run build:server:prod && yarn run webpack:server",
-    "build:dev": "yarn run build:browser",
+    "build:dev": "yarn run build:browser && yarn run build:server && yarn run webpack:server",
     "build:browser": "ng build",
+    "build:browser:watch": "ng build --watch",
     "build:browser:prod": "yarn run build:browser --prod --deploy-url=/public/ --delete-output-path --progress",
     "build:server": "ng run tbme-labs-authorization-server:server",
     "build:server:prod": "ng run tbme-labs-authorization-server:server:production --delete-output-path --progress",

@@ -38,7 +38,7 @@ public class EmailConfirmationTokenServiceTest {
     initMocks(this);
 
     doReturn(Optional.empty()).when(mockEmailConfirmationTokenRepository)
-        .findByTokenString(ArgumentMatchers.anyString());
+      .findByTokenString(ArgumentMatchers.anyString());
     doAnswer((Answer<EmailConfirmationToken>) invocation -> {
       EmailConfirmationToken newEmailConfirmationToken = invocation.getArgument(0);
       newEmailConfirmationToken.setId(new Random().nextLong());
@@ -47,7 +47,7 @@ public class EmailConfirmationTokenServiceTest {
 
       return newEmailConfirmationToken;
     }).when(mockEmailConfirmationTokenRepository)
-        .save(ArgumentMatchers.any(EmailConfirmationToken.class));
+      .save(ArgumentMatchers.any(EmailConfirmationToken.class));
   }
 
   @Test

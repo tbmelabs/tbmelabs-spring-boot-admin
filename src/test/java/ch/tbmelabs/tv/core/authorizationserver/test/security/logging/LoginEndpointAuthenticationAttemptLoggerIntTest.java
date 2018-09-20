@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class LoginEndpointAuthenticationAttemptLoggerIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String LOGIN_PROCESSING_URL = "/login";
   private static final String USERNAME_PARAMETER_NAME = "username";
@@ -54,9 +54,9 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
   @Test
   public void loginWithInvalidUsernameShouldNotBeRegistered() throws Exception {
     mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).with(csrf()).param(USERNAME_PARAMETER_NAME, "invalid")
-            .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+      .perform(post(LOGIN_PROCESSING_URL).with(csrf()).param(USERNAME_PARAMETER_NAME, "invalid")
+        .param(PASSWORD_PARAMETER_NAME, "invalid"))
+      .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     assertThat(authenticationLogRepository.findAll()).isNullOrEmpty();
   }
@@ -64,35 +64,35 @@ public class LoginEndpointAuthenticationAttemptLoggerIntTest
   @Test
   public void loginWithValidUsernameAndInvalidPasswordShouldBeRegistered() throws Exception {
     mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
-            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
-            .param(PASSWORD_PARAMETER_NAME, "invalid"))
-        .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
+      .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+        .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .param(PASSWORD_PARAMETER_NAME, "invalid"))
+      .andDo(print()).andExpect(status().is(HttpStatus.UNAUTHORIZED.value()));
 
     List<AuthenticationLog> logs =
-        (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
+      (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 
     assertThat(logs).hasSize(1).extracting("state").containsExactly(AUTHENTICATION_STATE.NOK);
     assertThat(logs).extracting("user").extracting("username")
-        .containsExactly(testUser.getUsername());
+      .containsExactly(testUser.getUsername());
   }
 
   @Test
   public void loginWithValidUserShouldBeRegistered() throws Exception {
     String redirectUrl = mockMvc
-        .perform(post(LOGIN_PROCESSING_URL).with(csrf())
-            .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
-            .param(PASSWORD_PARAMETER_NAME, password))
-        .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
-        .getRedirectedUrl();
+      .perform(post(LOGIN_PROCESSING_URL).with(csrf())
+        .param(USERNAME_PARAMETER_NAME, testUser.getUsername())
+        .param(PASSWORD_PARAMETER_NAME, password))
+      .andDo(print()).andExpect(status().is(HttpStatus.FOUND.value())).andReturn().getResponse()
+      .getRedirectedUrl();
 
     assertThat(redirectUrl).isEqualTo("/");
 
     List<AuthenticationLog> logs =
-        (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
+      (ArrayList<AuthenticationLog>) authenticationLogRepository.findAll();
 
     assertThat(logs).hasSize(1).extracting("state").containsExactly(AUTHENTICATION_STATE.OK);
     assertThat(logs).extracting("user").extracting("username")
-        .containsExactly(testUser.getUsername());
+      .containsExactly(testUser.getUsername());
   }
 }

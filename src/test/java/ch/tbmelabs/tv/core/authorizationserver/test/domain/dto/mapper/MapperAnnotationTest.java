@@ -14,13 +14,13 @@ public class MapperAnnotationTest {
   @Test
   public void packageShouldOnlyContainMappers() {
     new Reflections(Application.class.getPackage().getName() + ".domain.dto.mapper")
-        .getSubTypesOf(Object.class)
-        .forEach(mapper -> assertThat(mapper.getClass().getSimpleName()).contains("Mapper"));
+      .getSubTypesOf(Object.class)
+      .forEach(mapper -> assertThat(mapper.getClass().getSimpleName()).contains("Mapper"));
   }
 
   @Test
   public void allMappersShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain.dto.mapper")
-        .getTypesAnnotatedWith(Mapper.class)).hasSize(EXPECTED_MAPPER_COUND);
+      .getTypesAnnotatedWith(Mapper.class)).hasSize(EXPECTED_MAPPER_COUND);
   }
 }

@@ -34,33 +34,33 @@ public class SignupControllerTest {
     initMocks(this);
 
     doReturn(true).when(userSignupServiceFixture)
-        .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
+      .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
+      .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
+      .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .isEmailAddress(ArgumentMatchers.any(UserDTO.class));
+      .isEmailAddress(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
+      .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
     doReturn(true).when(userSignupServiceFixture)
-        .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
+      .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void signupControllerShouldBeAnnotated() {
     assertThat(SignupController.class).hasAnnotation(RestController.class)
-        .hasAnnotation(RequestMapping.class);
+      .hasAnnotation(RequestMapping.class);
     assertThat(SignupController.class.getDeclaredAnnotation(RequestMapping.class).value())
-        .containsExactly("/signup");
+      .containsExactly("/signup");
   }
 
   @Test
   public void signupShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("signup", UserDTO.class);
+      SignupController.class.getDeclaredMethod("signup", UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/do-signup");
+      .containsExactly("/do-signup");
   }
 
   @Test
@@ -73,9 +73,9 @@ public class SignupControllerTest {
   @Test
   public void isUsernameUniqueShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isUsernameUnique",
-        UserDTO.class);
+      UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/is-username-unique");
+      .containsExactly("/is-username-unique");
   }
 
   @Test
@@ -83,16 +83,16 @@ public class SignupControllerTest {
     fixture.isUsernameUnique(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
+      .isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void doesUsernameMatchFormatShouldBeAnnotated()
-      throws NoSuchMethodException, SecurityException {
+    throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesUsernameMatchFormat",
-        UserDTO.class);
+      UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/does-username-match-format");
+      .containsExactly("/does-username-match-format");
   }
 
   @Test
@@ -100,33 +100,33 @@ public class SignupControllerTest {
     fixture.doesUsernameMatchFormat(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
+      .doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void isEmailAddressUniqueShouldBeAnnotated()
-      throws NoSuchMethodException, SecurityException {
+    throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("isEmailAddressUnique",
-        UserDTO.class);
+      UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/is-email-unique");
+      .containsExactly("/is-email-unique");
   }
 
   @Test
   public void isEmailAddressUniqueShouldCallServiceMethod()
-      throws SecurityException {
+    throws SecurityException {
     fixture.isEmailAddressUnique(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
+      .isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void isEmailAddressShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup =
-        SignupController.class.getDeclaredMethod("isEmailAddress", UserDTO.class);
+      SignupController.class.getDeclaredMethod("isEmailAddress", UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/is-email");
+      .containsExactly("/is-email");
   }
 
   @Test
@@ -138,11 +138,11 @@ public class SignupControllerTest {
 
   @Test
   public void doesPasswordMatchFormatShouldBeAnnotated()
-      throws NoSuchMethodException, SecurityException {
+    throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doesPasswordMatchFormat",
-        UserDTO.class);
+      UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/does-password-match-format");
+      .containsExactly("/does-password-match-format");
   }
 
   @Test
@@ -150,15 +150,15 @@ public class SignupControllerTest {
     fixture.doesPasswordMatchFormat(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
+      .doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
   }
 
   @Test
   public void doPasswordsMatchShouldBeAnnotated() throws NoSuchMethodException, SecurityException {
     Method signup = SignupController.class.getDeclaredMethod("doPasswordsMatch",
-        UserDTO.class);
+      UserDTO.class);
     assertThat(signup.getDeclaredAnnotation(PostMapping.class).value())
-        .containsExactly("/do-passwords-match");
+      .containsExactly("/do-passwords-match");
   }
 
   @Test
@@ -166,6 +166,6 @@ public class SignupControllerTest {
     fixture.doPasswordsMatch(new UserDTO());
 
     verify(userSignupServiceFixture, times(1))
-        .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
+      .doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
   }
 }

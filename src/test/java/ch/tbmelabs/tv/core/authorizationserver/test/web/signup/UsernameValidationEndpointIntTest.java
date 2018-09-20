@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class UsernameValidationEndpointIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String USERNAME_VALIDATION_ENDPOINT = "/signup/does-username-match-format";
   private static final String USERNAME_PARAMETER_NAME = "username";
@@ -28,37 +28,37 @@ public class UsernameValidationEndpointIntTest
   @Test
   public void tooShortUsernameShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(USERNAME_VALIDATION_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
-                .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(USERNAME_VALIDATION_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
+          .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(4)).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void tooLongUsernameShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(USERNAME_VALIDATION_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
-                .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(USERNAME_VALIDATION_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON).content(new JSONObject()
+          .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(65)).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void usernameWithSpecialCharsShouldFailValidation() throws Exception {
     mockMvc
-        .perform(
-            post(USERNAME_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject()
-                    .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(
+        post(USERNAME_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject()
+            .put(USERNAME_PARAMETER_NAME, RandomStringUtils.random(5) + "$").toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void validUsernameShouldPassValidation() throws Exception {
     mockMvc
-        .perform(
-            post(USERNAME_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(
+        post(USERNAME_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

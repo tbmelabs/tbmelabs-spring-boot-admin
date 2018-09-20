@@ -51,10 +51,10 @@ public class PreAuthenticationUserDetailsServiceImplTest {
     doReturn(RandomStringUtils.random(11)).when(mockAuthentication).getName();
 
     doReturn(mockAuthentication).when(mockTokenStore)
-        .readAuthentication(ArgumentMatchers.anyString());
+      .readAuthentication(ArgumentMatchers.anyString());
 
     doCallRealMethod().when(fixture)
-        .loadUserDetails(ArgumentMatchers.any(PreAuthenticatedAuthenticationToken.class));
+      .loadUserDetails(ArgumentMatchers.any(PreAuthenticatedAuthenticationToken.class));
   }
 
   @Test
@@ -65,26 +65,26 @@ public class PreAuthenticationUserDetailsServiceImplTest {
   @Test
   public void preAuthenticationUserDetailsServiceImplShouldExtendAuthenticationUserDetailsService() {
     assertThat(AuthenticationUserDetailsService.class)
-        .isAssignableFrom(PreAuthenticationUserDetailsServiceImpl.class);
+      .isAssignableFrom(PreAuthenticationUserDetailsServiceImpl.class);
   }
 
   @Test
   public void loadUserDetailsShouldLoadCorrectUserDetailsImpl() {
     doReturn(Optional.of(new User())).when(mockUserRepository)
-        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
+      .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThat(fixture.loadUserDetails(mockToken)).isInstanceOf(UserDetailsImpl.class)
-        .hasFieldOrPropertyWithValue("user",
-            mockUserRepository.findByUsernameIgnoreCase("").get());
+      .hasFieldOrPropertyWithValue("user",
+        mockUserRepository.findByUsernameIgnoreCase("").get());
   }
 
   @Test
   public void loadUserDetailsShouldThrowExceptionIfUserDoesNotExist() {
     doReturn(Optional.empty()).when(mockUserRepository)
-        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
+      .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
 
     assertThatThrownBy(() -> fixture.loadUserDetails(mockToken))
-        .isInstanceOf(UsernameNotFoundException.class)
-        .hasMessage("Username \'" + mockAuthentication.getName() + "\' does not exist!");
+      .isInstanceOf(UsernameNotFoundException.class)
+      .hasMessage("Username \'" + mockAuthentication.getName() + "\' does not exist!");
   }
 }

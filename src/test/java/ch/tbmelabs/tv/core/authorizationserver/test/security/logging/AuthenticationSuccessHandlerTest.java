@@ -46,23 +46,23 @@ public class AuthenticationSuccessHandlerTest {
   @Test
   public void authenticationSuccessHandlerShouldExtendsSimpleUrlAuthenticationFailureHandler() {
     assertThat(SavedRequestAwareAuthenticationSuccessHandler.class)
-        .isAssignableFrom(AuthenticationSuccessHandler.class);
+      .isAssignableFrom(AuthenticationSuccessHandler.class);
   }
 
   @Test
   public void authenticationSuccessHandlerShouldTriggerLoggerAndBruteforceFilter()
-      throws IOException, ServletException {
+    throws IOException, ServletException {
     MockHttpServletRequest mockRequest = new MockHttpServletRequest();
     mockRequest.setRemoteAddr("127.0.0.1");
     mockRequest.setParameter("username", "Testuser");
 
     fixture.onAuthenticationSuccess(mockRequest, new MockHttpServletResponse(),
-        new UsernamePasswordAuthenticationToken(new User(),
-            new UsernamePasswordCredentials("Testuser", "Testpassword")));
+      new UsernamePasswordAuthenticationToken(new User(),
+        new UsernamePasswordCredentials("Testuser", "Testpassword")));
 
     verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(
-        ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"),
-        ArgumentMatchers.isNull(),
-        ArgumentMatchers.anyString());
+      ArgumentMatchers.eq(AUTHENTICATION_STATE.OK), ArgumentMatchers.eq("127.0.0.1"),
+      ArgumentMatchers.isNull(),
+      ArgumentMatchers.anyString());
   }
 }

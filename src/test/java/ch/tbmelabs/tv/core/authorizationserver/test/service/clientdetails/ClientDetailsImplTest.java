@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 public class ClientDetailsImplTest {
 
   private static final String CLIENT_REDIRECT_URIS =
-      "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR + "uritwo";
+    "uirone" + ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR + "uritwo";
 
   @Mock
   private Client mockClient;
@@ -58,14 +58,14 @@ public class ClientDetailsImplTest {
     assertThat(fixture.isAutoApprove("")).isEqualTo(mockClient.getIsAutoApprove());
     assertThat(fixture.getClientSecret()).isEqualTo(mockClient.getSecret());
     assertThat(fixture.getAccessTokenValiditySeconds())
-        .isEqualTo(fixture.getAccessTokenValiditySeconds());
+      .isEqualTo(fixture.getAccessTokenValiditySeconds());
     assertThat(fixture.getRefreshTokenValiditySeconds())
-        .isEqualTo(fixture.getRefreshTokenValiditySeconds());
+      .isEqualTo(fixture.getRefreshTokenValiditySeconds());
     assertThat(fixture.isScoped()).isEqualTo(!mockClient.getScopes().isEmpty());
     assertThat(fixture.getRegisteredRedirectUri()).isEqualTo(new HashSet<>(Arrays
-        .asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
+      .asList(CLIENT_REDIRECT_URIS.split(ClientDetailsImpl.CLIENT_REDIRECT_URI_SPLITTERATOR))));
     assertThat(fixture.getAuthorities()).isEqualTo(mockClient.getAuthorities().stream()
-        .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList()));
+      .map(ClientAuthorityAssociation::getAuthority).collect(Collectors.toList()));
     assertThat(fixture.getAdditionalInformation()).isEqualTo(new HashMap<>());
   }
 }

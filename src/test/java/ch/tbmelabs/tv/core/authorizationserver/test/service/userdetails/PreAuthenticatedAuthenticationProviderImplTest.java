@@ -39,14 +39,14 @@ public class PreAuthenticatedAuthenticationProviderImplTest {
   @Test
   public void preAuthenticatedAuthenticationProviderImplShouldExtendPreAuthenticatedAuthenticationProvider() {
     assertThat(PreAuthenticatedAuthenticationProvider.class)
-        .isAssignableFrom(PreAuthenticatedAuthenticationProviderImpl.class);
+      .isAssignableFrom(PreAuthenticatedAuthenticationProviderImpl.class);
   }
 
   @Test
   public void preAuthenticatedAuthenticationProviderImplConstructorShouldAcceptBeans() {
     assertThat(
-        new PreAuthenticatedAuthenticationProviderImpl(mockPreAuthenticationUserDetailsServiceImpl))
-        .isNotNull();
+      new PreAuthenticatedAuthenticationProviderImpl(mockPreAuthenticationUserDetailsServiceImpl))
+      .isNotNull();
   }
 
   @Test
@@ -54,6 +54,6 @@ public class PreAuthenticatedAuthenticationProviderImplTest {
     fixture.initBean();
 
     assertThat(ReflectionTestUtils.getField(fixture, "preAuthenticatedUserDetailsService"))
-        .isEqualTo(mockPreAuthenticationUserDetailsServiceImpl);
+      .isEqualTo(mockPreAuthenticationUserDetailsServiceImpl);
   }
 }

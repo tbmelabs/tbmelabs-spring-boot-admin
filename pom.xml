@@ -45,6 +45,7 @@
 
         <!-- Dependency configuration -->
         <commons-validator.commons-validator.version>1.6</commons-validator.commons-validator.version>
+        <javax.interceptor.javax.interceptor-api.version>1.2.2</javax.interceptor.javax.interceptor-api.version>
         <org.mapstruct.mapstruct-jdk8.version>1.2.0.Final</org.mapstruct.mapstruct-jdk8.version>
         <org.mapstruct.mapstruct-processor.version>1.2.0.Final</org.mapstruct.mapstruct-processor.version>
 
@@ -123,17 +124,12 @@
             <version>${commons-validator.commons-validator.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
-        <!-- <dependency> -->
-        <!-- <groupId>javax.validation</groupId> -->
-        <!-- <artifactId>validation-api</artifactId> -->
-        <!-- </dependency> -->
-
-        <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-        <!-- <dependency> -->
-        <!-- <groupId>javax.servlet</groupId> -->
-        <!-- <artifactId>javax.servlet-api</artifactId> -->
-        <!-- </dependency> -->
+        <!-- https://mvnrepository.com/artifact/javax.interceptor/javax.interceptor-api -->
+        <dependency>
+            <groupId>javax.interceptor</groupId>
+            <artifactId>javax.interceptor-api</artifactId>
+            <version>${javax.interceptor.javax.interceptor-api.version}</version>
+        </dependency>
 
         <!-- DOTO: Update on release -->
         <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/server-constants/ -->

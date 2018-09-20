@@ -37,14 +37,14 @@ public class UserRoleAssociationTest {
     assertThat(UserRoleAssociation.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(UserRoleAssociation.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
-        .isEqualTo("user_has_roles");
+      .isEqualTo("user_has_roles");
   }
 
   @Test
   public void userRoleAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(UserRoleAssociation.class).hasAnnotation(IdClass.class);
     assertThat(UserRoleAssociation.class.getDeclaredAnnotation(IdClass.class).value()).isNotNull()
-        .isEqualTo(UserRoleAssociationId.class);
+      .isEqualTo(UserRoleAssociationId.class);
   }
 
   @Test
@@ -55,8 +55,8 @@ public class UserRoleAssociationTest {
   @Test
   public void userRoleAssociationShouldHaveAllArgsConstructor() {
     assertThat(new UserRoleAssociation(userFixture, roleFixture))
-        .hasFieldOrPropertyWithValue("user", userFixture)
-        .hasFieldOrPropertyWithValue("role", roleFixture);
+      .hasFieldOrPropertyWithValue("user", userFixture)
+      .hasFieldOrPropertyWithValue("role", roleFixture);
   }
 
   @Test

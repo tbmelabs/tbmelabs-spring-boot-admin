@@ -15,19 +15,19 @@ public class RepositoryAnnotationTest {
   @Test
   public void packageShouldOnlyContainRepositories() {
     new Reflections(Application.class.getPackage().getName() + ".domain.repository")
-        .getSubTypesOf(Object.class).forEach(
-        repository -> assertThat(repository.getClass().getSimpleName()).contains("Repository"));
+      .getSubTypesOf(Object.class).forEach(
+      repository -> assertThat(repository.getClass().getSimpleName()).contains("Repository"));
   }
 
   @Test
   public void allRepositoriesShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain.repository")
-        .getTypesAnnotatedWith(Repository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
+      .getTypesAnnotatedWith(Repository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
   }
 
   @Test
   public void allRepositoriesShouldExtendsTheCRUDRepositoryInterface() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".domain.repository")
-        .getSubTypesOf(CrudRepository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
+      .getSubTypesOf(CrudRepository.class)).hasSize(EXPECTED_REPOSITORY_COUNT);
   }
 }

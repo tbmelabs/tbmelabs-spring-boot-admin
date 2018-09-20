@@ -37,14 +37,14 @@ public class ClientScopeAssociationTest {
     assertThat(ClientScopeAssociation.class).hasAnnotation(Entity.class).hasAnnotation(Table.class);
 
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(Table.class).name()).isNotNull()
-        .isEqualTo("client_has_scopes");
+      .isEqualTo("client_has_scopes");
   }
 
   @Test
   public void clientScopeAssociationShouldBeAnnotatedWithComposedIdClass() {
     assertThat(ClientScopeAssociation.class).hasAnnotation(IdClass.class);
     assertThat(ClientScopeAssociation.class.getDeclaredAnnotation(IdClass.class).value())
-        .isNotNull().isEqualTo(ClientScopeAssociationId.class);
+      .isNotNull().isEqualTo(ClientScopeAssociationId.class);
   }
 
   @Test
@@ -55,8 +55,8 @@ public class ClientScopeAssociationTest {
   @Test
   public void clientScopeAssociationShouldHaveAllArgsConstructor() {
     assertThat(new ClientScopeAssociation(clientFixture, scopeFixture))
-        .hasFieldOrPropertyWithValue("client", clientFixture)
-        .hasFieldOrPropertyWithValue("scope", scopeFixture);
+      .hasFieldOrPropertyWithValue("client", clientFixture)
+      .hasFieldOrPropertyWithValue("scope", scopeFixture);
   }
 
   @Test

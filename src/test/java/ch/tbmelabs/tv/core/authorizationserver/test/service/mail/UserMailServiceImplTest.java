@@ -6,6 +6,13 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
+import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 import java.util.UUID;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
@@ -19,12 +26,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.test.util.ReflectionTestUtils;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
-import ch.tbmelabs.tv.core.authorizationserver.configuration.ApplicationProperties;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.MailService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.EmailConfirmationTokenService;
 
 public class UserMailServiceImplTest {
 
@@ -56,10 +57,10 @@ public class UserMailServiceImplTest {
     ReflectionTestUtils.setField(fixture, "contextPath", TEST_CONTEXT_PATH);
 
     doReturn(UUID.randomUUID().toString()).when(mockEmailConfirmationTokenService)
-        .createUniqueEmailConfirmationToken(ArgumentMatchers.any(User.class));
+      .createUniqueEmailConfirmationToken(ArgumentMatchers.any(User.class));
 
     doNothing().when(fixture).sendMail(ArgumentMatchers.any(User.class),
-        ArgumentMatchers.anyString(), ArgumentMatchers.anyString());
+      ArgumentMatchers.anyString(), ArgumentMatchers.anyString());
   }
 
   @Test
@@ -67,7 +68,7 @@ public class UserMailServiceImplTest {
     assertThat(UserMailServiceImpl.class).hasAnnotation(Service.class).hasAnnotation(Profile.class);
 
     assertThat(UserMailServiceImpl.class.getDeclaredAnnotation(Profile.class).value())
-        .containsExactly("!" + SpringApplicationProfileEnum.NO_MAIL.getName());
+      .containsExactly("!" + SpringApplicationProfileEnum.NO_MAIL.getName());
   }
 
   @Test
@@ -88,6 +89,6 @@ public class UserMailServiceImplTest {
     }
 
     verify(fixture, times(1)).sendMail(ArgumentMatchers.eq(user),
-        ArgumentMatchers.eq("Confirm registration to TBME Labs"), ArgumentMatchers.anyString());
+      ArgumentMatchers.eq("Confirm registration to TBME Labs"), ArgumentMatchers.anyString());
   }
 }

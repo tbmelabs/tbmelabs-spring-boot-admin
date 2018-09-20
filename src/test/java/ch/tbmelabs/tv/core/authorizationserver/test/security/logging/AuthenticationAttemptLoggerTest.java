@@ -38,7 +38,7 @@ public class AuthenticationAttemptLoggerTest {
     initMocks(this);
 
     doReturn(Optional.of(new User())).when(mockUserRepository)
-        .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
+      .findByUsernameIgnoreCase(ArgumentMatchers.anyString());
   }
 
   @Test
@@ -49,10 +49,10 @@ public class AuthenticationAttemptLoggerTest {
   @Test
   public void authenticationAttemptLoggerShouldSaveNewAttempt() {
     fixture.logAuthenticationAttempt(AUTHENTICATION_STATE.OK, "127.0.0.1", "This is some message.",
-        "Testuser");
+      "Testuser");
 
     verify(mockUserRepository, times(1)).findByUsernameIgnoreCase(ArgumentMatchers.anyString());
     verify(mockAuthenticationLogRepository, times(1))
-        .save(ArgumentMatchers.any(AuthenticationLog.class));
+      .save(ArgumentMatchers.any(AuthenticationLog.class));
   }
 }

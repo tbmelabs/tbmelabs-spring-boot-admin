@@ -7,6 +7,19 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
+
+import ch.tbmelabs.serverconstants.security.UserRoleEnum;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
+import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
+import ch.tbmelabs.tv.core.authorizationserver.service.signup.impl.UserSignupServiceImpl;
 import java.util.Optional;
 import java.util.Random;
 import org.junit.Before;
@@ -20,25 +33,13 @@ import org.mockito.stubbing.Answer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.mock.env.MockEnvironment;
 import org.springframework.stereotype.Service;
-import ch.tbmelabs.serverconstants.security.UserRoleEnum;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.RoleDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.UserDTO;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.RoleMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.dto.mapper.UserMapper;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.service.domain.UserService;
-import ch.tbmelabs.tv.core.authorizationserver.service.mail.impl.UserMailServiceImpl;
-import ch.tbmelabs.tv.core.authorizationserver.service.signup.impl.UserSignupServiceImpl;
 
 public class UserSignupServiceTest {
 
   private static final String SIGNUP_FAILED_ERROR_MESSAGE =
-      "An error occured. Please check your details!";
+    "An error occured. Please check your details!";
   private static final String DEFAULT_ROLE_NOT_FOUND_ERROR_MESSAGE =
-      "Unable to find default authority \'" + UserRoleEnum.USER.getAuthority() + "\'!";
+    "Unable to find default authority \'" + UserRoleEnum.USER.getAuthority() + "\'!";
 
   private final MockEnvironment mockEnvironment = new MockEnvironment();
 
@@ -70,10 +71,10 @@ public class UserSignupServiceTest {
 
     doReturn(mockEnvironment).when(mockApplicationContext).getEnvironment();
     doReturn(Mockito.mock(UserMailServiceImpl.class)).when(mockApplicationContext)
-        .getBean(UserMailServiceImpl.class);
+      .getBean(UserMailServiceImpl.class);
 
     doReturn(Optional.of(new Role(UserRoleEnum.USER.getAuthority()))).when(mockRoleRepository)
-        .findByName(UserRoleEnum.USER.getAuthority());
+      .findByName(UserRoleEnum.USER.getAuthority());
 
     doAnswer((Answer<RoleDTO>) invocation -> {
       RoleDTO dto = new RoleDTO();
@@ -105,7 +106,7 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).isUsernameUnique(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
@@ -113,7 +114,7 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).doesUsernameMatchFormat(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
@@ -121,7 +122,7 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).isEmailAddressUnique(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
@@ -129,7 +130,7 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).isEmailAddress(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
@@ -137,7 +138,7 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).doesPasswordMatchFormat(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
@@ -145,13 +146,13 @@ public class UserSignupServiceTest {
     doReturn(false).when(fixture).doPasswordsMatch(ArgumentMatchers.any(UserDTO.class));
 
     assertThatThrownBy(() -> fixture.signUpNewUser(new UserDTO()))
-        .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
+      .isInstanceOf(IllegalArgumentException.class).hasMessage(SIGNUP_FAILED_ERROR_MESSAGE);
   }
 
   @Test
   public void userSignupServiceShouldSaveValidUser() {
     doReturn(Optional.of(new Role(UserRoleEnum.USER.getAuthority()))).when(mockRoleRepository)
-        .findByName(UserRoleEnum.USER.getAuthority());
+      .findByName(UserRoleEnum.USER.getAuthority());
 
     fixture.signUpNewUser(new UserDTO());
 

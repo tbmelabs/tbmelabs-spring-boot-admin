@@ -14,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class EmailValidationEndpointIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String EMAIL_VALIDATION_ENDPOINT = "/signup/is-email";
   private static final String EMAIL_PARAMETER_NAME = "email";
@@ -28,18 +28,18 @@ public class EmailValidationEndpointIntTest
   @Test
   public void invalidEmailShouldFailValidation() throws Exception {
     mockMvc
-        .perform(
-            post(EMAIL_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(
+        post(EMAIL_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(EMAIL_PARAMETER_NAME, INVALID_EMAIL).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void validEmailShouldPassValidation() throws Exception {
     mockMvc
-        .perform(
-            post(EMAIL_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-                .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIl).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(
+        post(EMAIL_VALIDATION_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+          .content(new JSONObject().put(EMAIL_PARAMETER_NAME, VALID_EMAIl).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

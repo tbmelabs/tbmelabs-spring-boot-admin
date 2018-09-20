@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 public class UsernameUniqueCheckEndpointIntTest
-    extends AbstractOAuth2AuthorizationServerContextAwareTest {
+  extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
   private static final String USERNAME_UNIQUE_CHECK_ENDPOINT = "/signup/is-username-unique";
   private static final String USERNAME_PARAMETER_NAME = "username";
@@ -47,18 +47,18 @@ public class UsernameUniqueCheckEndpointIntTest
   @Test
   public void registrationWithExistingUsernameShouldFailValidation() throws Exception {
     mockMvc
-        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON).content(
-                new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
+      .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON).content(
+          new JSONObject().put(USERNAME_PARAMETER_NAME, testUser.getUsername()).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
   }
 
   @Test
   public void registrationWithNewUsernameShouldPassValidation() throws Exception {
     mockMvc
-        .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
+      .perform(post(USERNAME_UNIQUE_CHECK_ENDPOINT).with(csrf())
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(new JSONObject().put(USERNAME_PARAMETER_NAME, VALID_USERNAME).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value()));
   }
 }

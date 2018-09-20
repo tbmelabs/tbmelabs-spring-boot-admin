@@ -46,21 +46,21 @@ public class AuthenticationFailureHandlerTest {
   @Test
   public void authenticationFailureHandlerShouldExtendsSimpleUrlAuthenticationFailureHandler() {
     assertThat(SimpleUrlAuthenticationFailureHandler.class)
-        .isAssignableFrom(AuthenticationFailureHandler.class);
+      .isAssignableFrom(AuthenticationFailureHandler.class);
   }
 
   @Test
   public void authenticationFailureHandlerShouldTriggerLoggerAndBruteforceFilter()
-      throws IOException, ServletException {
+    throws IOException, ServletException {
     MockHttpServletRequest mockRequest = new MockHttpServletRequest();
     mockRequest.setRemoteAddr("127.0.0.1");
     mockRequest.setParameter("username", "Testuser");
 
     fixture.onAuthenticationFailure(mockRequest, new MockHttpServletResponse(),
-        new UsernameNotFoundException(AUTHENTICATION_FAILED_ERROR_MESSAGE));
+      new UsernameNotFoundException(AUTHENTICATION_FAILED_ERROR_MESSAGE));
 
     verify(mockAuthenticationAttemptLogger, times(1)).logAuthenticationAttempt(
-        ArgumentMatchers.eq(AUTHENTICATION_STATE.NOK), ArgumentMatchers.eq("127.0.0.1"),
-        ArgumentMatchers.eq(AUTHENTICATION_FAILED_ERROR_MESSAGE), ArgumentMatchers.anyString());
+      ArgumentMatchers.eq(AUTHENTICATION_STATE.NOK), ArgumentMatchers.eq("127.0.0.1"),
+      ArgumentMatchers.eq(AUTHENTICATION_FAILED_ERROR_MESSAGE), ArgumentMatchers.anyString());
   }
 }

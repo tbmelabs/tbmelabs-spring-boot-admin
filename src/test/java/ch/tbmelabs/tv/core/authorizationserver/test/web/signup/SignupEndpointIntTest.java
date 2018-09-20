@@ -6,6 +6,14 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import ch.tbmelabs.serverconstants.security.UserRoleEnum;
+import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
+import ch.tbmelabs.tv.core.authorizationserver.domain.User;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
+import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,13 +27,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.util.NestedServletException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import ch.tbmelabs.serverconstants.security.UserRoleEnum;
-import ch.tbmelabs.tv.core.authorizationserver.domain.Role;
-import ch.tbmelabs.tv.core.authorizationserver.domain.User;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.RoleCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.domain.repository.UserCRUDRepository;
-import ch.tbmelabs.tv.core.authorizationserver.test.AbstractOAuth2AuthorizationServerContextAwareTest;
 
 public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerContextAwareTest {
 
@@ -34,7 +35,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   private static final String CONFIRMATION_PARAMETER_NAME = "confirmation";
 
   private static final String USER_VALIDATION_ERROR_MESSAGE =
-      "An error occured. Please check your details!";
+    "An error occured. Please check your details!";
   private static final User unexistingUser = new User();
   private static User existingUser = new User();
 
@@ -76,7 +77,7 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
     Optional<User> checkUnexistingUser;
     if ((checkUnexistingUser =
-        userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
+      userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isPresent()) {
       userRepository.delete(checkUnexistingUser.get());
     }
   }
@@ -84,23 +85,23 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
   @Test
   public void postToSignupEndpointWithExistingUsernameOrEmailShouldFail() {
     assertThatThrownBy(() -> mockMvc
-        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new ObjectMapper().writeValueAsString(existingUser)))
-        .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
-            .isInstanceOf(NestedServletException.class)
-            .hasCauseInstanceOf(IllegalArgumentException.class)
-            .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
+      .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new ObjectMapper().writeValueAsString(existingUser)))
+      .andDo(print()).andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value())))
+      .isInstanceOf(NestedServletException.class)
+      .hasCauseInstanceOf(IllegalArgumentException.class)
+      .hasStackTraceContaining(USER_VALIDATION_ERROR_MESSAGE);
   }
 
   @Test
   public void postToSignupEndpointShouldCreateUser() throws Exception {
     JSONObject createdJsonUser = new JSONObject(mockMvc
-        .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
-            .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
-                .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
-                .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
-        .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
-        .getContentAsString());
+      .perform(post(SIGNUP_ENDPOINT).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+        .content(new JSONObject(new ObjectMapper().writeValueAsString(unexistingUser))
+          .put(PASSWORD_PARAMETER_NAME, unexistingUser.getConfirmation())
+          .put(CONFIRMATION_PARAMETER_NAME, unexistingUser.getConfirmation()).toString()))
+      .andDo(print()).andExpect(status().is(HttpStatus.OK.value())).andReturn().getResponse()
+      .getContentAsString());
 
     assertThat(userRepository.findByUsernameIgnoreCase(unexistingUser.getUsername())).isNotNull();
 
@@ -133,6 +134,6 @@ public class SignupEndpointIntTest extends AbstractOAuth2AuthorizationServerCont
 
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").length()).isEqualTo(1);
     assertThat(createdJsonUser.getJSONArray("grantedAuthorities").getString(0))
-        .isEqualTo(UserRoleEnum.USER.getAuthority());
+      .isEqualTo(UserRoleEnum.USER.getAuthority());
   }
 }
