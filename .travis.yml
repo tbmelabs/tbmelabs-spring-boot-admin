@@ -16,10 +16,9 @@ branches:
 
 env:
   global:
-    - secure: "cU5UMX3jAR/Zf3SUK3/+jcg7bYvDWPN+NVuECFkxO2mNakkR9l80a02Rue0GxEVDjP8RFfZLAvRLgj+kbezAo6kFviNe+TYrQ7RM6UcgsxHCYBncN7s7zxJ/6oBRXLqwLc+4bUn7f7hGqoGxyhtXXBe7/fKDTzdRZ/BQgYXqHJf6mvFEV+X/RWvD9EnwwCIbxv4va7686QzEf+3+wWKQ5D9kckWaVEAO8TH08pFgQWARD21EHMXql6S88IwGmTyQB7Ao9kxq9LsVQXzfHVMRykZdvopfgY7DGTUFXeVDC9BXIpGR5ZVmW42JngNska1j5VOZYzSnTjflKf1dQaiDubhxbKIYzTQwkGsTCOHYDU5rOyXo3qlxu4aOQwT48SMd7W+XGnxQoDz9m8i2uUt8cpvpd6ueIhP/cVCuijMtP11vEBYCQBTv71sXPKPrQHVD9znI4m17YRmJeUDhnx0hs/e3uiBOk4bL3+XWvfHi63zRzssoTAn8BZaO25TEQPdFlB51uKmsB2SE9OxYycGHKVyZtBtj6j9mh2REODV3nrwrPpHOYsRuiPaVxoruJ1ddu4CxDrxGJi1MLiA2FdkKnw4SzTx4Pnqx3sF18x/SnghI/mBxoGNHCFgPImGQm5Swud8WL0jEO2wGW/kJC489KBosa0onofRVVgn5zf/QiK8="
+    - secure:""
 
 addons:
-  chrome: stable
   sonarcloud:
     organization: "tbmelabs-github"
     token:

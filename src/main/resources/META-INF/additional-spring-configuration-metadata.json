@@ -1,39 +1,29 @@
 {
   "properties": [
     {
-      "name": "authorization-server.security.max-login-attempts",
+      "name": "eureka.administrator.name",
       "type": "java.lang.String",
-      "description": "The maximum login attempts a user can try before getting banned."
+      "description": "The username to authenticate with Eureka."
     },
     {
-      "name": "tokenstore.datasource.url",
+      "name": "eureka.administrator.password",
       "type": "java.lang.String",
-      "description": "The url of the tokenstore-datasource used in development environments (postgresql)."
+      "description": "The password to authenticate with Eureka."
     },
     {
-      "name": "tokenstore.datasource.name",
+      "name": "eureka.client.service-url.default-zone",
       "type": "java.lang.String",
-      "description": "The tokenstore-database name to connect to in development environments (postgresql)."
+      "description": "A list of available Eureka replicas."
     },
     {
-      "name": "tokenstore.datasource.username",
+      "name": "eureka.instance.metadata-map.user.name",
       "type": "java.lang.String",
-      "description": "The username used to connect to the tokenstore-datasource in development environments (postgresql)."
+      "description": "The username to authenticate all Actuator endpoints."
     },
     {
-      "name": "tokenstore.datasource.password",
+      "name": "eureka.instance.metadata-map.user.password",
       "type": "java.lang.String",
-      "description": "The password used to connect to the tokenstore-datasource in development environments (postgresql)."
-    },
-    {
-      "name": "tokenstore.datasource.driver-class-name",
-      "type": "java.lang.String",
-      "description": "The driver class used to connect to the tokenstore-datasource in development environments (postgresql)."
-    },
-    {
-      "name": "spring.datasource.jdbc-url",
-      "type": "java.lang.String",
-      "description": "Placeholder for 'spring.datasource.hikari.jdbc-url'"
+      "description": "The username to authenticate all Actuator endpoints."
     }
   ]
 }

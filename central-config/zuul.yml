@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: zuul-entry-server
+server:
+  port: ${SERVER_PORT}

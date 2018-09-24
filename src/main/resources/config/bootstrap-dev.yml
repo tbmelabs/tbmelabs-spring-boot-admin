@@ -1,7 +1,0 @@
-spring:
-  cloud:
-    config:
-      fail-fast: false
-      label: development
-      profile: dev
-      uri: http://localhost:8888/config

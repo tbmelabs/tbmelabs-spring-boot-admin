@@ -2,6 +2,7 @@
 .classpath
 .factorypath
 .settings/
+.springBeans
 
 # Intellij
 .idea/
