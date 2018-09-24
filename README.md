@@ -1,6 +1,6 @@
 # TBME Labs Configuration Server
 
-Configuration Server which allows to manage global configuration.
+Configuration server which allows to manage global configuration.
 
 [![Build Status](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server.svg?branch=master)](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eae98d8d1d4915b8f56ab8e7ce8d7b)](https://www.codacy.com/app/bbortt_2/tbmelabs-configuration-server?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tbmelabs/tbmelabs-configuration-server&amp;utm_campaign=Badge_Grade)

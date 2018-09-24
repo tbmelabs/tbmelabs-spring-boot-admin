@@ -5,7 +5,7 @@
     <artifactId>configuration-server</artifactId>
 
     <name>TBME Labs | Configuration-Server</name>
-    <description>Configuration Server which allows to manage global configuration.</description>
+    <description>Configuration server which allows to manage global configuration.</description>
     <url>https://github.com/tbmelabs/tbmelabs-configuration-server</url>
 
     <licenses>
@@ -67,6 +67,33 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+
+        <plugins>
+            <!-- https://mvnrepository.com/artifact/com.spotify/dockerfile-maven-plugin -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <!-- <version>1.4.4</version> -->
+
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <repository>tbmelabs/tbmelabs-configuration-server</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
