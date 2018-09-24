@@ -16,7 +16,7 @@ branches:
 
 env:
   global:
-    - secure: "vIxwiO+Vi+VRkTS540vH3G52ls8dSbhJlHr+jYD1PficgAIP/47yHHLeXezKaMxa/0SxXDnjn9GMVuQZjvPSeeEg2k4puK93xSIXUNPadJazdc0nTwQ1DqsGpwl+hHfq0Mv9FnuFBV7SFrA4i/rTZN1WOeeNEjquHKN09HBeRQOVlB/FaQmFppmH4BpgFHzAhEBbSj9ULndsYtSO2qICeDFzeXa+Pfp+uSD4Bs6EDS0czyknyBLPr5mvzrZaEKhGAoHkmI6TkCxq6UVs0GEiRkPh28yeklOREeaUSoHx8sPTKBa6XpyydFV1GiwdwpPhwYOfzFSvbvrpsqd+/Y6G8JhIpORDMPDyYcilich2jI1TLI+VoE3sUXze6+D+S7Svp0VhhG3Q8Ctyyt/EC+9KBcjdB53aH3YAR2fYbpH3qeO1uSenObgJRiPUhvjccb990GSJuBv4fg0wlnDj4VycccHLALOh0OHSX6r14/hoDjj4l5vocNKQ+o4pUr94h4dlivhul4NPq3N4TD8riOekff5Xma6Em/zuj7HNbFxt4ETLXnLdmzyAKpZaXdUY1BL4fWSyJxYMXLoC3Gg7sppArnHgPFpHI4iqUF8QWnDdwHh6TDtm2ppJjFFATEV++D4HvWTdGdXw485cCxnBo3G8K425fG+h366TMNc1Jh8JlBU="
+    - secure: "t5Z0YrjqvJKUd5xF4jOvxySgfMm0QE15JeE83bpFgeuCg9mdKmMQDeFTxTfYridLanoRaiMJMGbBRq7zj6REv5hxcHDApKwbkhVio10PaJteZog9zjlBXAjfJv6a69z5SDUQcqVTr7bxZAEF2CdWgmJb+resPhYEUR9q8rm3fjK5GFpsHsyu4FityDeLmuYIMaOOxmhyWk0+xty4o9KyZSV5+W52djemxOfk8cO3Fe11Vlxs6FQezsleCsgR1m3YbaLe7pkclUBukAj+JyYDhTP3LyqYlag4IFRVZBwUhpmrMBcvsvjLyQyAwkyY0Q0XP/2Q3re3IHc6HwzTkiP4O2lXHco/913leiq8dxbcKi35PjVJQ/kiUkS9AGxPigTZKwlwKAea5hmXgoGBveYnPjIwhKhKNbr2q+t3+IX4gG7ETWEkGQxzLd2GfyvNbJPNVqoUUjBvlij+XAXoSBKMCYhRTPqzgDZg4A9g3Z49FEGP6vJTEeMusbtNqsbYvQuPoMHfqHmNtrnJYbHxo4Skt/VTsDqgo3XYF39hkY0m/IoF++EEdaXY9KD+HQD+hKXriNm1Nh6qFbjWt5naIAbAhTHjZGYForyaHYmo9ne+52xPfSWaUAV3cXITeeIG3kAeJ341Y2tNIwL6kFrkXKuifaQSs9XT7kQSp7PzYo2sI5g="
 
 addons:
   sonarcloud:
@@ -24,16 +24,8 @@ addons:
     token:
       secure: ${SONAR_TOKEN}
 
-services:
-  - postgresql
-
-before_script:
-  - psql -c "CREATE DATABASE auth_test_database;" -U postgres
-  - psql -c "CREATE USER auth_test_user WITH PASSWORD 'auth_test_user_password';" -U postgres
-  - psql -c "GRANT ALL PRIVILEGES ON DATABASE auth_test_database TO auth_test_user;" -U postgres
-
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Pprod
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
 cache:
   directories:
