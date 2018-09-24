@@ -10,6 +10,7 @@ eureka:
       user:
         name: ${ACTUATOR_USERNAME}
         password: ${ACTUATOR_PASSWORD}
+        role: ${ACTUATOR_ROLE}
 management:
   endpoints:
     web:

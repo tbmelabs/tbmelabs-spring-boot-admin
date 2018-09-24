@@ -10,6 +10,7 @@ eureka:
       user:
         name: actuator-admin
         password: Welcome$18
+        role: ACTUATOR
 logging:
   level:
     org:
