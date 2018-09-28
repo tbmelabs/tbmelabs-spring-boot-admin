@@ -3,8 +3,7 @@
 Configuration server which allows to manage global configuration.
 
 [![Build Status](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server.svg?branch=master)](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eae98d8d1d4915b8f56ab8e7ce8d7b)](https://www.codacy.com/app/bbortt_2/tbmelabs-configuration-server?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tbmelabs/tbmelabs-configuration-server&amp;utm_campaign=Badge_Grade)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=https://sonarcloud.io/api/badges/gate?key=ch.tbmelabs:tbmelabs-configuration-server:master)](https://sonarcloud.io/dashboard/index/ch.tbmelabs:tbmelabs-configuration-server:master)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=configuration-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=configuration-server)
 
 ### Prerequisites
 

@@ -33,7 +33,7 @@
 
     <properties>
         <!-- General configuration -->
-        <exec.mainClass>ch.tbmelabs.configurationserver.Application</exec.mainClass>
+        <start-class>ch.tbmelabs.configurationserver.Application</start-class>
 
         <!-- TBME Labs specific configuration -->
         <ch.tbmelabs.version>1.0.0-SNAPSHOT</ch.tbmelabs.version>
