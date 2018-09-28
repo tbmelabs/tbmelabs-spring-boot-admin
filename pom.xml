@@ -107,7 +107,9 @@
                 </executions>
 
                 <configuration>
+                    <registryUrl>https://index.docker.io/v1/</registryUrl>
                     <repository>tbmelabs/tbmelabs-configuration-server</repository>
+                    <serverId>docker-hub</serverId>
                     <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
