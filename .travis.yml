@@ -25,9 +25,9 @@ addons:
 
 deploy:
   - provider: script
-  script: mvn deploy
-  on:
-    all_branches: true
+    script: mvn deploy
+    on:
+      all_branches: true
 
 env:
   global:
