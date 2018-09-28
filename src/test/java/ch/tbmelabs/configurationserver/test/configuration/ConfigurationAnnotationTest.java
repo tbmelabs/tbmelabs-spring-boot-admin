@@ -1,10 +1,11 @@
 package ch.tbmelabs.configurationserver.test.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import ch.tbmelabs.configurationserver.Application;
 import org.junit.Test;
 import org.reflections.Reflections;
 import org.springframework.context.annotation.Configuration;
-import ch.tbmelabs.configurationserver.Application;
 
 public class ConfigurationAnnotationTest {
 
@@ -13,14 +14,14 @@ public class ConfigurationAnnotationTest {
   @Test
   public void packageShouldOnlyContainConfigurations() {
     new Reflections(Application.class.getPackage().getName() + ".configuration")
-        .getSubTypesOf(Object.class)
-        .forEach(configuration -> assertThat(configuration.getClass().getSimpleName())
-            .contains("Configuration"));
+      .getSubTypesOf(Object.class)
+      .forEach(configuration -> assertThat(configuration.getClass().getSimpleName())
+        .contains("Configuration"));
   }
 
   @Test
   public void allConfigurationsShouldBeAnnotated() {
     assertThat(new Reflections(Application.class.getPackage().getName() + ".configuration")
-        .getTypesAnnotatedWith(Configuration.class)).hasSize(EXPECTED_CONFIGURATION_COUNT);
+      .getTypesAnnotatedWith(Configuration.class)).hasSize(EXPECTED_CONFIGURATION_COUNT);
   }
 }

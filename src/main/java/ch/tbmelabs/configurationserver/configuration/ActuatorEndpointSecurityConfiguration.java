@@ -1,7 +1,7 @@
 package ch.tbmelabs.configurationserver.configuration;
 
-import org.springframework.context.annotation.Configuration;
 import ch.tbmelabs.actuatorendpointssecurityutils.annotation.EnableActuatorEndpointSecurity;
+import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableActuatorEndpointSecurity

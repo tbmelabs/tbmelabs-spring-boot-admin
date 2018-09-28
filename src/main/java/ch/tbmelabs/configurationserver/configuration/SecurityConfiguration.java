@@ -16,7 +16,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     // @formatter:off
     http
 
-        .authorizeRequests().anyRequest().permitAll();
+      .authorizeRequests().anyRequest().permitAll();
     // @formatter:on
   }
 }

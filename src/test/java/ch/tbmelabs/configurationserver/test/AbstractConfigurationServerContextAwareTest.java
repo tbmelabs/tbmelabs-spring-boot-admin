@@ -1,5 +1,7 @@
 package ch.tbmelabs.configurationserver.test;
 
+import ch.tbmelabs.configurationserver.Application;
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +14,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.web.ServletTestExecutionListener;
-import ch.tbmelabs.configurationserver.Application;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
 
 @AutoConfigureMockMvc
 @ContextConfiguration
@@ -21,8 +21,8 @@ import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileConstants;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = {Application.class}, webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestExecutionListeners({ServletTestExecutionListener.class,
-    DirtiesContextBeforeModesTestExecutionListener.class,
-    DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+  DirtiesContextBeforeModesTestExecutionListener.class,
+  DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public abstract class AbstractConfigurationServerContextAwareTest {
 
 }

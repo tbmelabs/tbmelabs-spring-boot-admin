@@ -1,8 +1,8 @@
 package ch.tbmelabs.configurationserver.test.application;
 
-import org.junit.Test;
 import ch.tbmelabs.configurationserver.Application;
 import ch.tbmelabs.configurationserver.test.AbstractConfigurationServerContextAwareTest;
+import org.junit.Test;
 
 public class ApplicationIntTest extends AbstractConfigurationServerContextAwareTest {
 
@@ -12,6 +12,6 @@ public class ApplicationIntTest extends AbstractConfigurationServerContextAwareT
 
   @Test
   public void publicStaticVoidMainShouldStartSpringApplication() {
-    Application.main(new String[] {"--spring.profiles.active=test"});
+    Application.main(new String[]{"--spring.profiles.active=test"});
   }
 }

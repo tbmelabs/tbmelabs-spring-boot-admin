@@ -1,8 +1,9 @@
 package ch.tbmelabs.configurationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Test;
+
 import ch.tbmelabs.configurationserver.Application;
+import org.junit.Test;
 
 public class ApplicationPackageNamingTest {
 
