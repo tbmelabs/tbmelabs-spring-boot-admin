@@ -25,7 +25,7 @@ addons:
 
 deploy:
   - provider: script
-    script: mvn deploy
+    script: mvn deploy -DskipTests
     on:
       all_branches: true
 
