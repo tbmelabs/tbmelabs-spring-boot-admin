@@ -3,7 +3,7 @@ dist: trusty
 jdk:
   - oraclejdk8
 
-sudo: false
+sudo: required
 install: true
 
 notifications:
@@ -14,11 +14,25 @@ branches:
   - master
   - development
 
+services:
+  - docker
+
 addons:
   sonarcloud:
     organization: "tbmelabs-github"
     token:
       secure: "XicCVyfquanzSNztOKMG93NBCcnhlFc3XNOqZ9rpPiWVLFGEoxXcLHoKRoiXihklMumqgfRJoRMmD3NIFB4Fn3DAzo4ZUhvxgoaNjM8UcGiUhwrtyu0Xfn0V9vpNVPVDZiAeW8vG3tNdxa2k9Ro1jxD10KdcrxOObzofcqSyIJK/vko7rdL5RDjHx+XlJCl0TAgInCNQkiVyLVKavCvq3rWN7OKarlWNzMIPUV1DHNEN3Yoo9A1AcQu9rVMCwUs6afOUU2jCCxUenDxxyv8g5QYPkyeiUFsNVr6xo6uF7LfasTSBeKHTrDAiqC11nOcqg/QRYGrRa0HJI3Mgc/8L1BjFR/spTOJGh/bn4hcWgIZNYtd2MNh/7GqRtLedb4vmGSlfLSu5/YTODQOXlppFyvI+n+yNInCdsaySFWswAts7SucUt/ggmx2tsIoi3yvoCEtfCvClhBO4y0UDlgo14RQ64WzmEkchfE8NTmfeUK/f5Aa9G6u58OSys4gm+y/Xk2CMcictC0T2fenHIbEnwyJUrRq84sXbsZsz9qtqNR795kX3DALwBxk+aF3mjxI57taKmpt5G5vrW1A4XkcAjE/+fGCj1q7mvLQz/w8x0DcB6AHHir9OYMYG1X0X1c3qYlqU9nQiztJ543/h7C9VKSA5J7P1RgVcg8tOGEdc7nw="
+
+deploy:
+  - provider: script
+  script: mvn deploy
+
+env:
+  global:
+    - secure: "GVGdYVGYDP8mGtAF8FnJi98oYmsnclGO2fkQpbmdSvnqYMrpPQMXSOxwDfnUdV2Rl1TpMgARRyP+MimMDi7VbQ98wT2cY7LSpd8+pxxOQgAG0GCCp0vM+HXoVmILFfPVBrPtUx/6n7Hs6+qY7ryx042wtd/YQFEMuJ+B8Sv0fYSjshN1C235hkSWaGI5tJtFKW7p/ejMAaAa8hZX7WN25OpPc8fu0zN68nfUuWLcCq6SFPV+4UPHfEiqIQaPJP3YPApi1KOz8ehYEKK6S9zs4Ky20eqzFVgiW5cCQOFJKE3mONAOdqp3pzFae9Lo0ylU+gYOl/o0OUFofHkSFZIDwVNb7sctYqv5XiN5NPodbgV9OkFRkoAR7zrWcbXRfUQhyvhwB2cuK+8eWPCPOGNGXuRyuidLrkiDTFMdQqhqridSTyuROFE8VF8JIcqNM3N8z4rmVGXejxEayy90HvS3jZ1zWn8krPDIf0EAjRbhmGoEsf4/4LMHNwx3Sd1u4uGtWFPx9HA5viCCthLQi3J2vEh8KIsIm+Wb23uCIueJ6q5PKDqjxgqfydoW356+ce5fbiyN1A9XamCTdoePMZ4QFmAkP134eSOT6JIW4/db//O0hfeciZGeNQceIBsIwggqdqwiIGzhQxXVRmYkNHxFrLdP5lMQb6GWP4N4BPIqHgo="
+    # ^^ dockerfile.username
+    - secure: "iUB7crbVtdH5QXdPKXk9E881jo0OG32upqOBI+sNBEDwD2yu5Yb6PNc6xCkTICOkKPYKTDUBIqCUls8zBZtKKlYEqdpNL7tE8B/NVBUIewCirZp08DlTxIFPpCTKqW1QBuyAnZ2iD3ACrtzG5jXVf9ApD21ZTtWs/BcHUamn3Vzz1bCZyZ6CmEdjVTdvHT05q/bk51mmSj5MXYn3iZVkLnORA8Yn8VAgIx397dCV4VAeytTio+PS2g5d9lHQSRaERpw5YI9iZ1K/6kH7qmwY4GuxP/Y29qdh9zIu/dg1rxVHv1Osz1s1aDhosczMVd6xL+naNJQvgdMoQOKO7wbzYsFTM7B+l4tJmxiEy3uyGfxBKMOm4jIN5L5ZCxB6Q+m/wsPozOhi6VozfYi5LSE67aeBT6ytEk2K9gJfTjUUJeGYvTMmlmEI77l/9Utfunc+wPnW2taJv2wWnZgoMyUK+7WCz95qy6nRbtlwqsZfkXJBsoSk+ygQAPLuqS9KRiFa7HsU1bQgvvCw5kCUc/JYX5ULzKfPIhSRha8u+9yHH/o/U4hW7tJo15WlSr0COxtyILUimu/nuBJuJvByXvFCpipoj5Q7sBonupR7M+l0pm6CQMy2JChfR9VYSApC2v2EvR4aWkwyYLUMSDxWZSVXHfqt5tfbgiNwLwyfHoNS9Hs="
+    # ^^ dockerfile.password
 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
