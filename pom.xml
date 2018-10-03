@@ -111,10 +111,7 @@
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
 
-                    <registryUrl>https://index.docker.io/v1/</registryUrl>
                     <repository>tbmelabs/tbmelabs-configuration-server</repository>
-                    <serverId>docker-hub</serverId>
-
                     <tag>${project.version}</tag>
 
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
