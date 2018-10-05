@@ -3,6 +3,11 @@ MAINTAINER TBME Labs <info@tbmelabs.ch>
 
 ENTRYPOINT ["/usr/bin/java", "-jar", "/usr/share/configuration-server/configuration-server.jar"]
 
-# Java service
 ARG JAR_FILE
 ADD target/${JAR_FILE} /usr/share/configuration-server/configuration-server.jar
+
+RUN useradd -ms /bin/bash configurationserver
+RUN chown configurationserver /home/configurationserver/authorization-server.jar
+
+USER configurationserver
+WORKDIR /home/configurationserver
