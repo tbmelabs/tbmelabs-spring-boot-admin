@@ -27,7 +27,7 @@ deploy:
   - provider: script
     script: mvn dockerfile:push
     on:
-      all_branches: true
+      branch: development
 
 env:
   global:
