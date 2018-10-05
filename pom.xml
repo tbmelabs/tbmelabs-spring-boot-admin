@@ -102,8 +102,6 @@
 
                     <repository>tbmelabs/tbmelabs-configuration-server</repository>
                     <tag>${project.version}</tag>
-
-                    <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
                 </configuration>
             </plugin>
         </plugins>
