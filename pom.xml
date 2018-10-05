@@ -35,9 +35,6 @@
         <!-- General configuration -->
         <start-class>ch.tbmelabs.configurationserver.Application</start-class>
 
-        <!-- TBME Labs specific configuration -->
-        <ch.tbmelabs.version>1.0.0-SNAPSHOT</ch.tbmelabs.version>
-
         <!-- Plugin configuration -->
         <com.spotify.dockerfile-maven-plugin.version>1.4.4</com.spotify.dockerfile-maven-plugin.version>
 
