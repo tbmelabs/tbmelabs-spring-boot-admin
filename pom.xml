@@ -58,13 +58,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
-
-        <!-- DOTO: Update on release -->
-        <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/actuator-endpoints-security-utils/ -->
-        <dependency>
-            <groupId>ch.tbmelabs</groupId>
-            <artifactId>actuator-endpoints-security-utils</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
