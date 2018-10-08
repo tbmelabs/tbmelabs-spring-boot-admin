@@ -4,6 +4,7 @@ Configuration server which allows to manage global configuration.
 
 [![Build Status](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server.svg?branch=master)](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=configuration-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=configuration-server)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tbmelabs/tbmelabs-configuration-server.svg)](https://hub.docker.com/r/tbmelabs/tbmelabs-configuration-server)
 
 ### Prerequisites
 
