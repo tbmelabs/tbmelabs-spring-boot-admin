@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>configuration-server</artifactId>
 
@@ -35,9 +35,6 @@
         <!-- General configuration -->
         <start-class>ch.tbmelabs.configurationserver.Application</start-class>
 
-        <!-- TBME Labs specific configuration -->
-        <ch.tbmelabs.version>1.0.0-SNAPSHOT</ch.tbmelabs.version>
-
         <!-- Plugin configuration -->
         <com.spotify.dockerfile-maven-plugin.version>1.4.4</com.spotify.dockerfile-maven-plugin.version>
 
@@ -57,13 +54,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
-        </dependency>
-
-        <!-- DOTO: Update on release -->
-        <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/actuator-endpoints-security-utils/ -->
-        <dependency>
-            <groupId>ch.tbmelabs</groupId>
-            <artifactId>actuator-endpoints-security-utils</artifactId>
         </dependency>
     </dependencies>
 
@@ -96,11 +86,12 @@
                 </executions>
 
                 <configuration>
-                    <repository>tbmelabs/tbmelabs-configuration-server</repository>
-                    <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
+
+                    <repository>tbmelabs/tbmelabs-configuration-server</repository>
+                    <tag>${project.version}</tag>
                 </configuration>
             </plugin>
         </plugins>
