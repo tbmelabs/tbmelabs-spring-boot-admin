@@ -2,35 +2,35 @@ package ch.tbmelabs.configurationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.configurationserver.Application;
 import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
-import org.springframework.test.util.ReflectionTestUtils;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {
 
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
     "Do not attempt to run an application in productive and development environment at the same time!";
 
-  @Spy
-  @InjectMocks
-  private static Application fixture;
-  private final MockEnvironment mockEnvironment = new MockEnvironment();
+  private MockEnvironment mockEnvironment;
+
+  private Application fixture;
+
 
   @Before
   public void beforeTestSetUp() {
-    initMocks(this);
+    mockEnvironment = new MockEnvironment();
 
     mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
       SpringApplicationProfileEnum.DEV.getName());
-    ReflectionTestUtils.setField(fixture, "environment", mockEnvironment);
+
+    fixture = new Application(mockEnvironment);
   }
 
   @Test
