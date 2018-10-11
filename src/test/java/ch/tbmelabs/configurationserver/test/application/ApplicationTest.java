@@ -2,21 +2,17 @@ package ch.tbmelabs.configurationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import ch.tbmelabs.configurationserver.Application;
-import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
+import ch.tbmelabs.configurationserver.Application;
+import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {
 
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
-    "Do not attempt to run an application in productive and development environment at the same time!";
+      "Do not attempt to run an application in productive and development environment at the same time!";
 
   private MockEnvironment mockEnvironment;
 
@@ -26,9 +22,8 @@ public class ApplicationTest {
   @Before
   public void beforeTestSetUp() {
     mockEnvironment = new MockEnvironment();
-
     mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
-      SpringApplicationProfileEnum.DEV.getName());
+        SpringApplicationProfileEnum.DEV.getName());
 
     fixture = new Application(mockEnvironment);
   }
@@ -46,6 +41,6 @@ public class ApplicationTest {
   @Test
   public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
     assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
-      .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
+        .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
   }
 }
