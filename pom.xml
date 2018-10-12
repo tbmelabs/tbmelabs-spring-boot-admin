@@ -31,6 +31,14 @@
         </developer>
     </developers>
 
+    <!-- DOTO: Update on release -->
+    <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/server-parent/ -->
+    <parent>
+        <groupId>ch.tbmelabs</groupId>
+        <artifactId>server-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
     <properties>
         <!-- General configuration -->
         <start-class>ch.tbmelabs.configurationserver.Application</start-class>
@@ -42,12 +50,6 @@
         <sonar.projectKey>configuration-server</sonar.projectKey>
         <sonar.projectName>Configuration-Server</sonar.projectName>
     </properties>
-
-    <parent>
-        <groupId>ch.tbmelabs</groupId>
-        <artifactId>server-parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-    </parent>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-server -->
