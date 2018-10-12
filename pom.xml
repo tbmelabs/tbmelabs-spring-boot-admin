@@ -44,7 +44,7 @@
         <start-class>ch.tbmelabs.configurationserver.Application</start-class>
 
         <!-- Plugin configuration -->
-        <com.spotify.dockerfile-maven-plugin.version>1.4.4</com.spotify.dockerfile-maven-plugin.version>
+        <com.spotify.dockerfile-maven-plugin.version>1.4.7</com.spotify.dockerfile-maven-plugin.version>
 
         <!-- Sonar configuration -->
         <sonar.projectKey>configuration-server</sonar.projectKey>
