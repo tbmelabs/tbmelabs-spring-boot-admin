@@ -10,7 +10,7 @@ public class ApplicationPackageNamingTest {
   private static final String APPLICATION_PACKAGE_NAME = "ch.tbmelabs.configurationserver";
 
   @Test
-  public void applicationPackageShouldMatchNamingConvention() {
+  public void packageShouldMatchNamingConvention() {
     assertThat(Application.class.getPackage().getName()).isEqualTo(APPLICATION_PACKAGE_NAME);
   }
 }

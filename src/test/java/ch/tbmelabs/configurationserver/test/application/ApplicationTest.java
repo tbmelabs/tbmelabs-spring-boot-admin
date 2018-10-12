@@ -18,29 +18,43 @@ public class ApplicationTest {
 
   private Application fixture;
 
-
   @Before
   public void beforeTestSetUp() {
     mockEnvironment = new MockEnvironment();
-    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
-        SpringApplicationProfileEnum.DEV.getName());
 
     fixture = new Application(mockEnvironment);
   }
 
   @Test
-  public void applicationShouldBeAnnotated() {
+  public void shouldBeAnnotated() {
     assertThat(Application.class).hasAnnotation(SpringCloudApplication.class);
   }
 
   @Test
-  public void applicationConstructorShouldAcceptEnvironment() {
+  public void constructorShouldAcceptEnvironment() {
     assertThat(new Application(mockEnvironment)).isNotNull();
   }
 
   @Test
-  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
-    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
+  public void postConstructReportsNoErrorIfOnlyDevelopmentProfileIsActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.DEV.getName());
+
+    fixture.postConstruct();
+  }
+
+  @Test
+  public void postConstructReportsNoErrorIfOnlyProductiveProfileIsActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName());
+
+    fixture.postConstruct();
+  }
+
+  @Test
+  public void postConstructShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
+        SpringApplicationProfileEnum.DEV.getName());
+
+    assertThatThrownBy(() -> fixture.postConstruct()).isInstanceOf(IllegalArgumentException.class)
         .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
   }
 }

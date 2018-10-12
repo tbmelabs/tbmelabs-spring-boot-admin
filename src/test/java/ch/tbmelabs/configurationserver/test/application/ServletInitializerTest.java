@@ -22,7 +22,7 @@ public class ServletInitializerTest {
   }
 
   @Test
-  public void applicationExtendsSpringBootServletInitializer() {
+  public void extendsSpringBootServletInitializer() {
     assertThat(SpringBootServletInitializer.class).isAssignableFrom(ServletInitializer.class);
   }
 
