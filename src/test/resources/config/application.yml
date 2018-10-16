@@ -6,7 +6,6 @@ eureka:
       user:
         name: actuator-admin
         password: Welcome$18
-        role: ACTUATOR
 security:
   oauth2:
     client:
@@ -17,6 +16,3 @@ security:
     resource:
       prefer-token-info: false
       user-info-uri: http://localhost/user
-spring:
-  profiles:
-    include: native

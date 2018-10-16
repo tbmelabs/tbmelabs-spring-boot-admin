@@ -1,10 +1,10 @@
-# TBME Labs Configuration Server
+# TBME Labs Spring Boot Admin
 
-Configuration server which allows to manage global configuration.
+OAuth2 SSO capable Spring-Boot-Admin server.
 
-[![Build Status](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server.svg?branch=master)](https://travis-ci.org/tbmelabs/tbmelabs-configuration-server)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=configuration-server&metric=alert_status)](https://sonarcloud.io/dashboard?id=configuration-server)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tbmelabs/tbmelabs-configuration-server.svg)](https://hub.docker.com/r/tbmelabs/tbmelabs-configuration-server)
+[![Build Status](https://travis-ci.org/tbmelabs/tbmelabs-spring-boot-admin.svg?branch=master)](https://travis-ci.org/tbmelabs/tbmelabs-spring-boot-admin)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=spring-boot-admin&metric=alert_status)](https://sonarcloud.io/dashboard?id=spring-boot-admin)
+[![Docker Pulls](https://img.shields.io/docker/pulls/tbmelabs/tbmelabs-spring-boot-admin.svg)](https://hub.docker.com/r/tbmelabs/tbmelabs-spring-boot-admin)
 
 ### Prerequisites
 
@@ -47,4 +47,4 @@ See also the list of [contributors](https://github.com/tbmelabs/tbme-tv/contribu
 
 ## License
 
-This project is published under the terms of MIT License. For more information see the [license file](https://github.com/tbmelabs/tbmelabs-configuration-server/blob/development/LICENSE).
+This project is published under the terms of MIT License. For more information see the [license file](https://github.com/tbmelabs/tbmelabs-spring-boot-admin/blob/development/LICENSE).
