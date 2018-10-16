@@ -22,7 +22,7 @@ public class Application {
   }
 
   @PostConstruct
-  public void initBean() {
+  public void postConstruct() {
     if (environment.acceptsProfiles(SpringApplicationProfileEnum.PROD.getName())
       && environment.acceptsProfiles(SpringApplicationProfileEnum.DEV.getName())) {
       throw new IllegalArgumentException(

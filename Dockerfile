@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
+FROM openjdk:11-slim
 MAINTAINER TBME Labs <info@tbmelabs.ch>
 
 ENTRYPOINT ["/usr/bin/java", "-jar", "/home/configurationserver/configuration-server.jar"]

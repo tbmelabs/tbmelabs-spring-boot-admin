@@ -2,50 +2,60 @@ package ch.tbmelabs.configurationserver.test.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 import ch.tbmelabs.configurationserver.Application;
 import ch.tbmelabs.serverconstants.spring.SpringApplicationProfileEnum;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Spy;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.mock.env.MockEnvironment;
-import org.springframework.test.util.ReflectionTestUtils;
 
 public class ApplicationTest {
 
   private static final String PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE =
     "Do not attempt to run an application in productive and development environment at the same time!";
 
-  @Spy
-  @InjectMocks
-  private static Application fixture;
-  private final MockEnvironment mockEnvironment = new MockEnvironment();
+  private MockEnvironment mockEnvironment;
+
+  private Application fixture;
 
   @Before
   public void beforeTestSetUp() {
-    initMocks(this);
+    mockEnvironment = new MockEnvironment();
 
-    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
-      SpringApplicationProfileEnum.DEV.getName());
-    ReflectionTestUtils.setField(fixture, "environment", mockEnvironment);
+    fixture = new Application(mockEnvironment);
   }
 
   @Test
-  public void applicationShouldBeAnnotated() {
+  public void shouldBeAnnotated() {
     assertThat(Application.class).hasAnnotation(SpringCloudApplication.class);
   }
 
   @Test
-  public void applicationConstructorShouldAcceptEnvironment() {
+  public void constructorShouldAcceptEnvironment() {
     assertThat(new Application(mockEnvironment)).isNotNull();
   }
 
   @Test
-  public void initBeanShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
-    assertThatThrownBy(() -> fixture.initBean()).isInstanceOf(IllegalArgumentException.class)
+  public void postConstructReportsNoErrorIfOnlyDevelopmentProfileIsActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.DEV.getName());
+
+    fixture.postConstruct();
+  }
+
+  @Test
+  public void postConstructReportsNoErrorIfOnlyProductiveProfileIsActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName());
+
+    fixture.postConstruct();
+  }
+
+  @Test
+  public void postConstructShouldThrowExceptionIfProductiveAndDevelopmentProfilesAreActive() {
+    mockEnvironment.setActiveProfiles(SpringApplicationProfileEnum.PROD.getName(),
+      SpringApplicationProfileEnum.DEV.getName());
+
+    assertThatThrownBy(() -> fixture.postConstruct()).isInstanceOf(IllegalArgumentException.class)
       .hasMessage(PRODUCTIVE_AND_DEVELOPMENT_ENVIRONMENT_ACTIVE_ERROR_MESSAGE);
   }
 }
