@@ -45,6 +45,7 @@
 
         <!-- Dependency configuration -->
         <de.codecentric.spring-boot-admin-starter-server.version>2.0.3</de.codecentric.spring-boot-admin-starter-server.version>
+        <org.springframework.spring-web-reactive.version>5.0.0.M4</org.springframework.spring-web-reactive.version>
 
         <!-- Plugin configuration -->
         <com.spotify.dockerfile-maven-plugin.version>1.4.7</com.spotify.dockerfile-maven-plugin.version>
@@ -55,6 +56,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web-reactive -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web-reactive</artifactId>
+            <version>${org.springframework.spring-web-reactive.version}</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
         <dependency>
             <groupId>de.codecentric</groupId>
